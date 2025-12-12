@@ -1,14 +1,24 @@
 # AI Coding Template
 
-AI 协作开发框架模板 - 让 Claude Code 成为你的得力助手。
+> **比 BMAD 更轻量，比 Mini-Spec 更注重工程落地**
+>
+> 一键启动，三条命令开始你的第一个 AI 协作功能
+
+```bash
+git clone https://github.com/oowanghuan/ai-coding-template.git && cd ai-coding-template
+./scripts/init-claude-tools.sh --target=.
+# 然后在 Claude Code 中执行：/new-feature my-first-feature
+```
+
+---
 
 ## 这是什么？
 
 一套经过实战验证的 **AI 协作开发框架**，包含：
 
-- **8 阶段工作流** - 从需求到上线的完整流程定义
+- **8 阶段工作流** - 可裁剪，按需选用，保持 Context 文档是基础
 - **标准化模板** - Context、Spec、Design、Test 等文档模板
-- **Claude Code 工具库** - 10 个 Slash Commands + 13 个 Skills + 4 个 Subagents
+- **Claude Code 工具库** - Slash Commands + Skills + Subagents
 - **项目看板**（可选）- 可视化进度追踪
 
 ## 解决什么问题？
