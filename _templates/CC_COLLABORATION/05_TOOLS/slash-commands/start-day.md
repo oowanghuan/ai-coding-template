@@ -67,9 +67,9 @@ git pull origin <当前分支>
 请选择要恢复的功能，或输入 "all" 查看全局进度。
 ```
 
-### 4. 执行 /resume
+### 4. 执行 /iresume
 
-调用 `/resume <feature>` 恢复工作上下文。
+调用 `/iresume <feature>` 恢复工作上下文。
 
 ### 5. 显示今日待办
 

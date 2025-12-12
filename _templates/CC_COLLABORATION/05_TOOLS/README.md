@@ -87,7 +87,7 @@ cp /path/to/ai-coding-org/docs/_system/CC_COLLABORATION/05_TOOLS/slash-commands/
 | `/end-day [feature]` | P0 | 跨阶段 | 每日结束：更新进度 + commit + push |
 | `/gen-demo <feature>` | P2 | Phase 3 | 生成 Demo.vue + Mock API |
 | `/check-progress <feature>` | P1 | Phase 5 | 查看当前进度状态 |
-| `/resume <feature>` | P0 | Phase 5 | 断点恢复，读取 checkpoint 继续 |
+| `/iresume <feature>` | P0 | Phase 5 | 断点恢复，读取 checkpoint 继续 |
 | `/daily-summary` | P0 | Phase 5 | 从 PROGRESS_LOG 生成今日总结 |
 | `/run-tests <feature>` | P2 | Phase 6 | 执行测试并生成报告 |
 | `/release <feature> <version>` | P2 | Phase 7 | 生成 RELEASE_NOTE 并打 tag |
@@ -137,7 +137,7 @@ CC：好的，我来为你创建 user-auth 功能模块...
 ### 2. 恢复工作
 
 ```
-你：/resume user-auth
+你：/iresume user-auth
 
 CC：正在读取 user-auth 的断点信息...
 
@@ -177,7 +177,7 @@ CC：正在生成今日工作总结...
 
 1. **依赖项目结构**：这些工具假设项目遵循 `04_AI_WORKFLOW.md` 定义的目录结构
 2. **文档模板**：部分命令会引用 `03_TEMPLATES/` 下的模板
-3. **YAML 解析**：`/resume` 和 `/check-progress` 需要读取 YAML 文件
+3. **YAML 解析**：`/iresume` 和 `/check-progress` 需要读取 YAML 文件
 
 ## 更新日志
 

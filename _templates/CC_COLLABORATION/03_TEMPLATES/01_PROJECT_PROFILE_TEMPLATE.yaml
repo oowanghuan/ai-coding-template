@@ -117,9 +117,9 @@ ai_collaboration:
       purpose: "检查当前功能模块的进度状态"
       usage: "/check-progress {feature-name}"
 
-    - name: "/resume"
+    - name: "/iresume"
       purpose: "断点恢复，读取 checkpoint 继续工作"
-      usage: "/resume {feature-name}"
+      usage: "/iresume {feature-name}"
 
 # ============ 工作流配置 ============
 workflow:
@@ -154,7 +154,7 @@ rules:
   - "所有文档变更必须更新对应的 CHANGELOG"
   - "每日工作结束前必须更新 PROGRESS_LOG"
   - "新功能模块必须使用 /new-feature 命令初始化"
-  - "上下文压缩后必须执行 /resume 恢复"
+  - "上下文压缩后必须执行 /iresume 恢复"
   - "Claude Code 必须遵守 CC_COLLABORATION/ 下的所有规范"
 
 # ============ 环境配置 ============

@@ -252,7 +252,7 @@ docs/{feature-name}/
 
 💡 提示：
 - 使用 /check-progress {feature-name} 查看进度
-- 使用 /resume {feature-name} 恢复工作上下文
+- 使用 /iresume {feature-name} 恢复工作上下文
 ```
 
 ## 注意事项

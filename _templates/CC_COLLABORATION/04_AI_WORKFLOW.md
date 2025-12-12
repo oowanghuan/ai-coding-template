@@ -201,7 +201,7 @@ Architect
 | 类型 | 名称 | 用途 | 状态 |
 |------|------|------|------|
 | Slash Command | `/check-progress <feature>` | 查看当前进度状态 | ✅ 已实现 |
-| Slash Command | `/resume <feature>` | 断点恢复，读取 checkpoint 继续 | ✅ 已实现 |
+| Slash Command | `/iresume <feature>` | 断点恢复，读取 checkpoint 继续 | ✅ 已实现 |
 | Slash Command | `/daily-summary` | 从 PROGRESS_LOG 生成今日总结 | ✅ 已实现 |
 | Skill | `review_alignment` | 检查代码与 DESIGN 一致性 | ✅ 已实现 |
 | Skill | `progress_updater` | 自动更新 PROGRESS_LOG | ✅ 已实现 |
@@ -297,7 +297,7 @@ PM
 | 工具 | 类型 | 阶段 | 说明 |
 |------|------|------|------|
 | `/new-feature` | Slash Command | Phase 1 | 新功能的入口 |
-| `/resume` | Slash Command | Phase 5 | 断点恢复，解决 compact 问题 |
+| `/iresume` | Slash Command | Phase 5 | 断点恢复，解决 compact 问题 |
 | `/daily-summary` | Slash Command | Phase 5 | 每日必用 |
 | `progress_updater` | Skill | Phase 5 | 进度追踪核心 |
 
@@ -337,7 +337,7 @@ PM
 | `/new-feature <name>` | Phase 1 | 创建功能模块 | P0 |
 | `/gen-demo <feature>` | Phase 3 | 生成 Demo + Mock API | P2 |
 | `/check-progress <feature>` | Phase 5 | 查看进度状态 | P1 |
-| `/resume <feature>` | Phase 5 | 断点恢复 | P0 |
+| `/iresume <feature>` | Phase 5 | 断点恢复 | P0 |
 | `/daily-summary` | Phase 5 | 生成今日总结 | P0 |
 | `/run-tests <feature>` | Phase 6 | 执行测试 | P2 |
 | `/release <feature> <version>` | Phase 7 | 生成 RELEASE_NOTE | P2 |
@@ -396,7 +396,7 @@ Phase 4: Design
 
 Phase 5: Code
 ├── 文档: 20_DEV_PLAN ✅, 30_PROGRESS_LOG ✅, 31_DAILY_SUMMARY/* ✅
-└── 工具: /check-progress, /resume, /daily-summary, review_alignment, progress_updater, progress_tracker (subagent)
+└── 工具: /check-progress, /iresume, /daily-summary, review_alignment, progress_updater, progress_tracker (subagent)
 
 Phase 6: Test
 ├── 文档: 40_TEST_PLAN ✅, 41_TEST_REPORT ✅

@@ -4,7 +4,7 @@
 > 版本：v1.0
 > 最后更新：2024-12-10
 > 阶段：Phase 5 Code
-> 触发：新会话开始时 / 上下文压缩后 / 执行 /resume 命令
+> 触发：新会话开始时 / 上下文压缩后 / 执行 /iresume 命令
 
 ---
 
@@ -23,7 +23,7 @@
 以下情况需要执行本流程：
 - 新的对话会话开始
 - 上下文窗口压缩后
-- 用户执行 `/resume` 命令
+- 用户执行 `/iresume` 命令
 - 用户要求"继续之前的工作"
 
 ---
@@ -188,16 +188,16 @@ cc_checkpoint:
 
 ---
 
-## 6. /resume 命令
+## 6. /iresume 命令
 
 ### 6.1 使用方式
 
 ```bash
 # 恢复指定功能模块
-/resume {feature-name}
+/iresume {feature-name}
 
 # 恢复当前目录的功能模块
-/resume
+/iresume
 ```
 
 ### 6.2 执行逻辑
@@ -285,7 +285,7 @@ cc_checkpoint:
 ### 场景 1: 正常恢复
 
 ```yaml
-# 用户发送 /resume user-management
+# 用户发送 /iresume user-management
 
 输入:
   feature: user-management

@@ -660,7 +660,7 @@ export function generateRealProgressData(): FeatureProgress {
         { id: 'DASH-002', task: 'progressLogParser.ts 解析器', status: 'done', verification: '能正确解析 YAML' },
         { id: 'DASH-003', task: 'ProjectDashboard.vue 8-phase', status: 'done', verification: '使用新数据结构' },
         { id: 'DASH-004', task: 'FeatureWorkbench.vue 8-phase', status: 'done', verification: '使用 PHASE_COLORS' },
-        { id: 'P5-TOOL-001', task: '/resume Slash Command', status: 'pending', priority: 'P0' },
+        { id: 'P5-TOOL-001', task: '/iresume Slash Command', status: 'pending', priority: 'P0' },
         { id: 'P5-TOOL-002', task: '/daily-summary Slash Command', status: 'pending', priority: 'P0' },
         { id: 'P5-TOOL-003', task: '/check-progress Slash Command', status: 'pending', priority: 'P1' },
         { id: 'P5-TOOL-004', task: 'progress_updater Skill', status: 'pending', priority: 'P0' }

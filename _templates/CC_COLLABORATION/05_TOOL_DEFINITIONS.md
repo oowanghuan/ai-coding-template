@@ -80,7 +80,7 @@
 
 ---
 
-### 2.2 /resume
+### 2.2 /iresume
 
 | 属性 | 值 |
 |------|-----|
@@ -92,9 +92,9 @@
 
 **使用方式**：
 ```bash
-/resume {feature-name}
+/iresume {feature-name}
 # 示例
-/resume user-subscription
+/iresume user-subscription
 ```
 
 **执行逻辑**：
@@ -427,7 +427,7 @@ blockers:
 
 tomorrow:
   - feature_id: "slash-commands"
-    plan: "开始设计 /resume 命令"
+    plan: "开始设计 /iresume 命令"
 
 milestones:
   - date: "2025-12-10"
@@ -460,7 +460,7 @@ export const currentDailyStandup: DailyStandup = {
   无
 
 📌 明日计划 (2):
-  • [slash-commands] 开始设计 /resume 命令
+  • [slash-commands] 开始设计 /iresume 命令
   • [project-dashboard-system] 完善测试用例
 
 📁 已更新文件：
@@ -743,7 +743,7 @@ export const currentDailyStandup: DailyStandup = {
 | 工具 | 类型 | 阶段 | 说明 |
 |------|------|------|------|
 | /new-feature | Command | Phase 1 | 初始化功能模块 |
-| /resume | Command | Phase 5 | 恢复上下文继续工作 |
+| /iresume | Command | Phase 5 | 恢复上下文继续工作 |
 | /daily-summary | Command | Phase 5 | 生成单模块日报 |
 | /sync-progress 🆕 | Command | Phase 5 | **PM 工具包** - 同步进度到甘特图 |
 | /daily-standup 🆕 | Command | Phase 5 | **PM 工具包** - 生成项目级站会摘要 |

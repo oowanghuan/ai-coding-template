@@ -73,7 +73,7 @@ docs/user-login/
 /start-day
 
 # 恢复之前的工作
-/resume
+/iresume
 
 # 每天结束时
 /end-day
@@ -208,7 +208,7 @@ my-project/
 | `/new-feature` | 创建新功能目录 |
 | `/start-day` | 每日开始，同步上下文 |
 | `/end-day` | 每日结束，生成总结 |
-| `/resume` | 恢复上次工作 |
+| `/iresume` | 恢复上次工作 |
 | `/check-progress` | 检查进度状态 |
 | `/run-tests` | 执行测试 |
 | `/release` | 发布流程 |
@@ -274,7 +274,7 @@ npm run dev
 
 1. **开发过程中**：进度、决策、问题自动记录到 `30_PROGRESS_LOG.yaml`
 2. **每天结束时**：`/end-day` 生成当日总结到 `31_DAILY_SUMMARY/`
-3. **恢复上下文时**：`/resume` 或 `/start-day` 读取这些文件，重建上下文
+3. **恢复上下文时**：`/iresume` 或 `/start-day` 读取这些文件，重建上下文
 
 ### 恢复的内容
 

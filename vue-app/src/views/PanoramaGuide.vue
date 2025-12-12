@@ -545,7 +545,7 @@ const phases = [
     },
     templates: ['00_CONTEXT', '30_PROGRESS_LOG'],
     tools: {
-      slashCommands: ['/resume', '/start-day', '/end-day'],
+      slashCommands: ['/iresume', '/start-day', '/end-day'],
       skills: ['context_writer', 'progress_updater'],
       subagents: []
     }
@@ -665,7 +665,7 @@ const phases = [
     },
     templates: ['20_DEV_PLAN', '31_DAILY_SUMMARY'],
     tools: {
-      slashCommands: ['/resume', '/check-progress', '/daily-summary'],
+      slashCommands: ['/iresume', '/check-progress', '/daily-summary'],
       skills: ['progress_updater'],
       subagents: ['progress_tracker']
     }
@@ -748,7 +748,7 @@ const roles = [
     icon: '👨‍💻',
     name: '我是开发者',
     focusPhases: [4, 5, 6],
-    tools: ['/resume', '/run-tests', '/release'],
+    tools: ['/iresume', '/run-tests', '/release'],
     actionLabel: '进入开发者视图',
     actionRoute: '/role/ai-pe'
   },

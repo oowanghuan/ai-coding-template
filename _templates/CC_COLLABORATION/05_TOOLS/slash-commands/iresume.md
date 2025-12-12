@@ -1,4 +1,4 @@
-# /resume - 断点恢复
+# /iresume - 断点恢复
 
 你是一个 AI 协作开发助手。用户请求恢复之前的工作上下文。
 
@@ -17,7 +17,7 @@
 2. payment-system
 3. ...
 
-请指定要恢复的功能，例如：/resume user-auth
+请指定要恢复的功能，例如：/iresume user-auth
 ```
 
 ### 2. 读取进度日志

@@ -411,7 +411,7 @@ const phaseConfigs = computed(() => {
           actions: [
             { actor: 'human', text: '输入 /start-day 或 "开始工作"' },
             { actor: 'cc', text: '执行 git pull，检查是否有冲突' },
-            { actor: 'cc', text: '执行 /resume 恢复上下文，显示今日待办' }
+            { actor: 'cc', text: '执行 /iresume 恢复上下文，显示今日待办' }
           ],
           isDaily: true
         },
@@ -504,7 +504,7 @@ const phaseConfigs = computed(() => {
           actions: [
             { actor: 'human', text: '输入 /start-day 或 "开始工作"' },
             { actor: 'cc', text: '执行 git pull，检查是否有冲突' },
-            { actor: 'cc', text: '执行 /resume 恢复上下文，显示今日待办' }
+            { actor: 'cc', text: '执行 /iresume 恢复上下文，显示今日待办' }
           ],
           isDaily: true
         },
@@ -588,7 +588,7 @@ const phaseConfigs = computed(() => {
           actions: [
             { actor: 'human', text: '输入 /start-day 或 "开始工作"' },
             { actor: 'cc', text: '执行 git pull，检查是否有冲突' },
-            { actor: 'cc', text: '执行 /resume 恢复上下文，显示今日待办' }
+            { actor: 'cc', text: '执行 /iresume 恢复上下文，显示今日待办' }
           ],
           isDaily: true
         },
@@ -681,7 +681,7 @@ const phaseConfigs = computed(() => {
           actions: [
             { actor: 'human', text: '输入 /start-day 或 "开始工作"' },
             { actor: 'cc', text: '执行 git pull，检查是否有冲突' },
-            { actor: 'cc', text: '执行 /resume 恢复上下文，显示今日待办' }
+            { actor: 'cc', text: '执行 /iresume 恢复上下文，显示今日待办' }
           ],
           isDaily: true
         },
@@ -765,7 +765,7 @@ const phaseConfigs = computed(() => {
           actions: [
             { actor: 'human', text: '输入 /start-day 或 "开始工作"' },
             { actor: 'cc', text: '执行 git pull，检查是否有冲突' },
-            { actor: 'cc', text: '执行 /resume 恢复上下文，显示今日待办' }
+            { actor: 'cc', text: '执行 /iresume 恢复上下文，显示今日待办' }
           ],
           isDaily: true
         },
@@ -820,7 +820,7 @@ const phaseConfigs = computed(() => {
           output: '显示当前进度摘要'
         },
         {
-          command: '/resume <feature>',
+          command: '/iresume <feature>',
           type: 'slash',
           description: '断点恢复，读取 checkpoint 继续',
           status: 'implemented' as ToolStatus,
@@ -878,7 +878,7 @@ const phaseConfigs = computed(() => {
           actions: [
             { actor: 'human', text: '输入 /start-day 或 "开始工作"' },
             { actor: 'cc', text: '执行 git pull，检查是否有冲突' },
-            { actor: 'cc', text: '执行 /resume 恢复上下文，显示今日待办' }
+            { actor: 'cc', text: '执行 /iresume 恢复上下文，显示今日待办' }
           ],
           isDaily: true
         },
@@ -987,7 +987,7 @@ const phaseConfigs = computed(() => {
           actions: [
             { actor: 'human', text: '输入 /start-day 或 "开始工作"' },
             { actor: 'cc', text: '执行 git pull，检查是否有冲突' },
-            { actor: 'cc', text: '执行 /resume 恢复上下文，显示今日待办' }
+            { actor: 'cc', text: '执行 /iresume 恢复上下文，显示今日待办' }
           ],
           isDaily: true
         },
@@ -1078,7 +1078,7 @@ const phaseConfigs = computed(() => {
           actions: [
             { actor: 'human', text: '输入 /start-day 或 "开始工作"' },
             { actor: 'cc', text: '执行 git pull，检查是否有冲突' },
-            { actor: 'cc', text: '执行 /resume 恢复上下文，显示今日待办' }
+            { actor: 'cc', text: '执行 /iresume 恢复上下文，显示今日待办' }
           ],
           isDaily: true
         },

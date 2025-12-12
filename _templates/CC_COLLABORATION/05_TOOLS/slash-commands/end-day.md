@@ -235,5 +235,5 @@ git push origin <branch>
 
 - `/start-day` - 每日开始工作
 - `/daily-summary` - 生成每日总结
-- `/resume` - 断点恢复
+- `/iresume` - 断点恢复
 - `progress_updater` - 更新进度日志 skill

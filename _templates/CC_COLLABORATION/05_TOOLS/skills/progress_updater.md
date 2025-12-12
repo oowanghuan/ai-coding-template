@@ -151,4 +151,4 @@ Session: cc-2024-12-11-002
 
 - `/check-progress` - 调用此 skill 显示进度
 - `/daily-summary` - 读取此 skill 更新的数据
-- `/resume` - 依赖 cc_checkpoint 数据
+- `/iresume` - 依赖 cc_checkpoint 数据
