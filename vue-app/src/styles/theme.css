@@ -1,0 +1,149 @@
+/* ============================================
+   AI 时代团队转型蓝图 - 设计系统变量
+   ============================================ */
+
+:root {
+  /* ========== 颜色系统 ========== */
+
+  /* 主色调 - 基于 Element Plus 但更柔和 */
+  --color-primary: #5470c6;
+  --color-primary-light: #7792d4;
+  --color-primary-lighter: #a3b9e3;
+  --color-primary-dark: #3c52a1;
+
+  /* 辅助色 */
+  --color-success: #67c23a;
+  --color-warning: #e6a23c;
+  --color-danger: #f56c6c;
+  --color-info: #909399;
+
+  /* 背景色 */
+  --color-bg-page: #f5f7fa;
+  --color-bg-card: #ffffff;
+  --color-bg-aside: #1f2933;
+  --color-bg-aside-hover: #2c3740;
+
+  /* 文字颜色 */
+  --color-text-primary: #1a1a1a;
+  --color-text-regular: #303133;
+  --color-text-secondary: #606266;
+  --color-text-placeholder: #909399;
+  --color-text-disabled: #c0c4cc;
+
+  /* 边框颜色 */
+  --color-border-light: #e4e7ed;
+  --color-border-base: #dcdfe6;
+  --color-border-dark: #c0c4cc;
+
+  /* ========== 间距系统 ========== */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+
+  /* ========== 字体系统 ========== */
+  --font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* 字号 */
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-md: 15px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-xxl: 20px;
+  --font-size-title: 24px;
+  --font-size-hero: 28px;
+
+  /* 字重 */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* 行高 */
+  --line-height-tight: 1.4;
+  --line-height-base: 1.6;
+  --line-height-relaxed: 1.8;
+  --line-height-loose: 2.0;
+
+  /* ========== 圆角系统 ========== */
+  --border-radius-sm: 4px;
+  --border-radius-base: 8px;
+  --border-radius-lg: 10px;
+  --border-radius-xl: 12px;
+  --border-radius-round: 50%;
+
+  /* ========== 阴影系统 ========== */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-base: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+  --shadow-lg: 0 6px 16px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+  /* ========== 过渡动画 ========== */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.4s ease;
+
+  /* ========== 布局尺寸 ========== */
+  --aside-width: 260px;
+  --aside-width-collapsed: 64px;
+  --header-height: 60px;
+  --content-max-width: 1200px;
+
+  /* ========== Z-index 层级 ========== */
+  --z-index-base: 1;
+  --z-index-header: 100;
+  --z-index-aside: 200;
+  --z-index-dropdown: 1000;
+  --z-index-modal: 2000;
+  --z-index-message: 3000;
+}
+
+/* ========== 全局重置 ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-regular);
+  background-color: var(--color-bg-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========== 通用工具类 ========== */
+.text-primary { color: var(--color-text-primary); }
+.text-regular { color: var(--color-text-regular); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-placeholder { color: var(--color-text-placeholder); }
+
+.font-light { font-weight: var(--font-weight-light); }
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
+.container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl);
+}
+
+.card-hover {
+  transition: all var(--transition-base);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}

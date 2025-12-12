@@ -1,0 +1,378 @@
+# release_summarizer - 生成 RELEASE_NOTE
+
+## 能力描述
+
+汇总 `30_PROGRESS_LOG.yaml` 和 `41_TEST_REPORT.md` 的信息，自动生成完整的发布说明 `50_RELEASE_NOTE.md`。
+
+## 输入
+
+| 参数 | 类型 | 必需 | 说明 |
+|------|------|------|------|
+| feature | string | 是 | 功能模块名称 |
+| version | string | 是 | 版本号（如 v1.0.0） |
+| release_type | string | 否 | 发布类型：`major`, `minor`（默认）, `patch` |
+| include_changelog | boolean | 否 | 是否包含所有 CHANGELOG，默认 true |
+
+## 输出
+
+- `docs/{feature}/50_RELEASE_NOTE.md` - 发布说明文档
+
+## 工作流程
+
+```
+┌─────────────────────────────────────────────────────┐
+│                  release_summarizer                  │
+├─────────────────────────────────────────────────────┤
+│                                                      │
+│  1. 收集发布信息                                     │
+│     ├── 读取 30_PROGRESS_LOG.yaml                   │
+│     ├── 读取 41_TEST_REPORT.md                      │
+│     ├── 读取 *_CHANGELOG.md                         │
+│     └── 读取 00_CONTEXT.md                          │
+│     ↓                                                │
+│  2. 分析变更内容                                     │
+│     ├── 新功能                                      │
+│     ├── 改进                                        │
+│     ├── 修复                                        │
+│     └── 已知问题                                    │
+│     ↓                                                │
+│  3. 汇总测试结果                                     │
+│     ├── 测试覆盖率                                  │
+│     ├── 通过率                                      │
+│     └── 遗留问题                                    │
+│     ↓                                                │
+│  4. 生成发布说明                                     │
+│     └── 调用 doc_generator skill                    │
+│     ↓                                                │
+│  5. 更新 PROGRESS_LOG                                │
+│     └── 调用 progress_updater skill                 │
+│     ↓                                                │
+│  6. 输出结果                                         │
+│                                                      │
+└─────────────────────────────────────────────────────┘
+```
+
+## 调用的 Skills
+
+| Skill | 用途 |
+|-------|------|
+| `doc_generator` | 生成 RELEASE_NOTE 文档框架 |
+| `progress_updater` | 更新发布状态 |
+
+## 执行步骤
+
+### 1. 收集发布信息
+
+```yaml
+# 从各文档收集信息
+sources:
+  progress_log:
+    total_tasks: 25
+    completed_tasks: 25
+    phases_completed: [1, 2, 3, 4, 5, 6]
+    development_days: 5
+    contributors: ["@Huan"]
+
+  test_report:
+    total_cases: 24
+    passed: 23
+    failed: 1
+    pass_rate: 95.8%
+    coverage: 85%
+
+  changelogs:
+    context_changes: 3
+    spec_changes: 5
+    design_changes: 2
+
+  context:
+    feature_name: "用户认证"
+    description: "完整的用户认证模块..."
+```
+
+### 2. 分析变更内容
+
+从 CHANGELOG 和 PROGRESS_LOG 中提取变更：
+
+```yaml
+changes:
+  features:
+    - "邮箱密码登录"
+    - "用户注册"
+    - "邮箱验证"
+    - "密码重置"
+    - "记住我功能"
+
+  improvements:
+    - "表单验证优化"
+    - "错误提示改进"
+
+  fixes:
+    - "修复密码强度检测误报"
+
+  known_issues:
+    - "Safari 浏览器下密码自动填充可能失效"
+```
+
+### 3. 生成发布说明
+
+```markdown
+# Release Notes - {Feature Name} {version}
+
+> 发布日期：{release_date}
+> 功能模块：{feature}
+> 版本：{version}
+> 发布类型：{release_type}
+
+---
+
+## 概述
+
+{Feature Name} 是一个完整的用户认证解决方案，提供安全可靠的用户身份验证功能。
+
+### 主要特性
+
+- 邮箱密码登录
+- 用户注册与邮箱验证
+- 密码重置功能
+- "记住我"持久登录
+
+---
+
+## 新功能 ✨
+
+### 用户登录
+支持邮箱 + 密码登录，包含表单验证和错误提示。
+
+**关键特性**：
+- 实时表单验证
+- 密码强度检测
+- 登录失败次数限制
+- 记住我（7天免登录）
+
+### 用户注册
+新用户可通过邮箱注册账号。
+
+**关键特性**：
+- 邮箱唯一性检查
+- 密码确认验证
+- 邮箱验证流程
+
+### 密码重置
+用户可通过邮箱重置忘记的密码。
+
+**关键特性**：
+- 安全的重置链接（24小时有效）
+- 新密码强度要求
+
+---
+
+## 改进 🔧
+
+- **表单验证**：优化了验证规则的提示文案
+- **错误处理**：统一了错误提示的样式和位置
+- **用户体验**：添加了加载状态和过渡动画
+
+---
+
+## 修复 🐛
+
+- 修复了密码强度检测对特殊字符的误报 (#123)
+- 修复了邮箱验证链接在某些邮件客户端中无法点击的问题 (#125)
+
+---
+
+## 开发统计
+
+| 指标 | 数值 |
+|------|------|
+| 开发周期 | 5 天 |
+| 完成任务 | 25 个 |
+| 代码提交 | 48 次 |
+| 贡献者 | 1 人 |
+
+### 阶段完成情况
+
+| 阶段 | 状态 |
+|------|------|
+| Phase 1 - Kickoff | ✅ 完成 |
+| Phase 2 - Spec | ✅ 完成 |
+| Phase 3 - Demo | ✅ 完成 |
+| Phase 4 - Design | ✅ 完成 |
+| Phase 5 - Code | ✅ 完成 |
+| Phase 6 - Test | ✅ 完成 |
+
+---
+
+## 测试报告摘要
+
+| 指标 | 数值 |
+|------|------|
+| 测试用例总数 | 24 |
+| 通过 | 23 |
+| 失败 | 1 |
+| 通过率 | 95.8% |
+| 代码覆盖率 | 85% |
+
+### 失败用例
+
+| ID | 名称 | 严重程度 | 状态 |
+|----|------|---------|------|
+| TC-UI-008 | Safari 密码自动填充 | P3 | 已知问题 |
+
+详细报告：[41_TEST_REPORT.md](./41_TEST_REPORT.md)
+
+---
+
+## 已知问题 ⚠️
+
+1. **Safari 密码自动填充**
+   - 描述：Safari 浏览器的密码自动填充功能可能不生效
+   - 影响：用户需要手动输入密码
+   - 计划修复：v1.1.0
+
+---
+
+## 升级指南
+
+### 依赖更新
+
+```json
+{
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0"
+  }
+}
+```
+
+### 配置变更
+
+```yaml
+# 新增环境变量
+JWT_SECRET=your-secret-key
+JWT_EXPIRES_IN=24h
+REMEMBER_ME_EXPIRES_IN=7d
+```
+
+### 数据库迁移
+
+```sql
+-- 运行迁移
+npx prisma db push
+
+-- 新增表
+-- users, tokens, email_verifications
+```
+
+---
+
+## 贡献者
+
+- @Huan - 开发 & 测试
+
+---
+
+## 相关链接
+
+- [功能文档](./00_CONTEXT.md)
+- [设计文档](./10_DESIGN_FINAL.md)
+- [UI 规格](./11_UI_FLOW_SPEC.md)
+- [进度日志](./30_PROGRESS_LOG.yaml)
+- [测试报告](./41_TEST_REPORT.md)
+
+---
+
+## 版本历史
+
+| 版本 | 日期 | 说明 |
+|------|------|------|
+| v1.0.0 | {release_date} | 初始发布 |
+
+---
+
+_Generated by release_summarizer | {datetime}_
+```
+
+### 4. 更新 PROGRESS_LOG
+
+调用 `progress_updater` skill：
+
+```yaml
+# 更新 meta.status 为 released
+meta:
+  status: released
+
+# 添加 release 信息
+release:
+  version: "{version}"
+  released_at: "{datetime}"
+  release_notes: "docs/{feature}/50_RELEASE_NOTE.md"
+```
+
+### 5. 输出结果
+
+```
+✅ 发布说明生成成功
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📄 生成的文档
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• docs/{feature}/50_RELEASE_NOTE.md
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 发布信息
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• 功能模块: {feature}
+• 版本号: {version}
+• 发布类型: {release_type}
+• 发布日期: {release_date}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 发布摘要
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• 新功能: 5
+• 改进: 3
+• 修复: 2
+• 已知问题: 1
+• 测试通过率: 95.8%
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 功能状态已更新为 released
+
+💡 下一步：
+1. 检查发布说明内容
+2. 创建 Git tag: git tag {feature}-{version}
+3. 推送 tag: git push origin {feature}-{version}
+4. 通知相关人员
+```
+
+## 示例
+
+### 示例输入
+
+```
+请使用 release_summarizer subagent：
+- feature: user-auth
+- version: v1.0.0
+- release_type: minor
+```
+
+### 示例输出
+
+生成完整的发布说明，包含功能列表、测试报告、升级指南等。
+
+## 注意事项
+
+1. **测试完成**：必须先通过测试阶段
+2. **版本号规范**：遵循语义化版本
+3. **Git Tag**：可选创建 Git tag
+4. **通知机制**：可集成通知（如 Slack、邮件）
+
+## 关联工具
+
+- `/release` - Slash Command 封装
+- `progress_updater` - 更新发布状态
+- `changelog_updater` - 汇总所有 CHANGELOG

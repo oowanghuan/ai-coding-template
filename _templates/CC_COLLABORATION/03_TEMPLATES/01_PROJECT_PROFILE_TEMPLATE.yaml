@@ -1,0 +1,178 @@
+# PROJECT_PROFILE_TEMPLATE.yaml
+# 项目画像模板
+#
+# 使用说明：
+# 1. 复制此模板到 Docs/_system/01_PROJECT_PROFILE.yaml
+# 2. 根据项目实际情况填写各字段
+# 3. 删除不需要的可选字段
+# 4. 删除本注释块
+
+# ============ 基本信息 ============
+project:
+  name: "{项目名称}"
+  code: "{项目代号}"                      # 用于文件夹命名，如 my-project
+  domain: "{业务领域}"                    # 如 电商/SaaS/社交/工具
+  description: |
+    {项目描述，1-3 句话说明项目目标}
+  owner: "{@主要负责人}"
+  team:
+    - "{@团队成员1}"
+    - "{@团队成员2}"
+
+# ============ 前端能力 ============
+ui:
+  has_ui: true                            # 是否有前端 UI
+
+  # 技术栈选项：vue2-element | vue3-element-plus | react | none
+  stack: "vue3-element-plus"
+
+  ui_system:
+    enabled: true                         # 是否启用 UI System 规范
+    path: "Docs/_system/_ui_system/"      # UI System 文档路径
+
+  demo_policy:
+    required_before_implementation: true  # 实现前是否必须先做 Demo
+    demo_location: "playgrounds/{feature}/"
+    mock_api_required: true               # Demo 是否需要 Mock API
+
+# ============ 后端能力 ============
+backend:
+  has_backend: true                       # 是否有后端
+
+  # 技术栈选项：nodejs-express | nodejs-nest | python-fastapi | go | none
+  stack: "nodejs-express"
+
+  # API 风格：rest | graphql | grpc
+  api_style: "rest"
+
+  # 数据库
+  database:
+    type: "postgresql"                    # postgresql | mysql | mongodb | supabase
+    orm: "prisma"                         # prisma | typeorm | drizzle | none
+
+# ============ AI 协作配置 ============
+ai_collaboration:
+  uses_claude_code: true
+  uses_other_ai:
+    - "gpt-4"                             # 可选的其他 AI 工具
+
+  # MCP 工具配置
+  mcp_tools:
+    - name: "chrome_devtools"
+      purpose: "UI 测试和调试"
+    - name: "supabase"
+      purpose: "数据库操作"
+      enabled: true                       # false 表示暂未启用
+
+  # Skills 定义
+  skills:
+    - name: "ui_demo"
+      trigger: "Phase 3 (Demo)"
+      enabled: true
+      description: "根据 UI SPEC 生成可交互 Demo"
+
+    - name: "review_alignment"
+      trigger: "每个 task 完成后"
+      enabled: true
+      description: "检查代码与设计文档的一致性"
+
+    - name: "test_runner"
+      trigger: "Phase 6 (Test)"
+      enabled: true
+      description: "执行测试计划，生成测试报告"
+
+    - name: "doc_generator"
+      trigger: "任意阶段"
+      enabled: true
+      description: "根据模板生成标准文档"
+
+  # Subagents 定义
+  subagents:
+    - name: "spec_writer"
+      purpose: "根据 CONTEXT 生成 UI_FLOW_SPEC 或 API_SPEC"
+      input: "00_CONTEXT.md"
+      output: "11_*_SPEC.md"
+
+    - name: "progress_tracker"
+      purpose: "解析 PROGRESS_LOG，生成 DAILY_SUMMARY"
+      input: "30_PROGRESS_LOG.yaml"
+      output: "31_DAILY_SUMMARY/{date}.md"
+
+    - name: "release_summarizer"
+      purpose: "汇总进度和测试报告，生成 RELEASE_NOTE"
+      input: ["30_PROGRESS_LOG.yaml", "41_TEST_REPORT.md"]
+      output: "50_RELEASE_NOTE.md"
+
+  # Slash Commands 定义
+  slash_commands:
+    - name: "/new-feature"
+      purpose: "初始化新功能模块目录和基础文档"
+      usage: "/new-feature {feature-name}"
+
+    - name: "/daily-summary"
+      purpose: "从 PROGRESS_LOG 生成今日总结"
+      usage: "/daily-summary"
+
+    - name: "/check-progress"
+      purpose: "检查当前功能模块的进度状态"
+      usage: "/check-progress {feature-name}"
+
+    - name: "/resume"
+      purpose: "断点恢复，读取 checkpoint 继续工作"
+      usage: "/resume {feature-name}"
+
+# ============ 工作流配置 ============
+workflow:
+  # 启用的阶段
+  phases:
+    foundation: true                      # Phase 0: 系统级文档
+    kickoff: true                         # Phase 1: 功能启动
+    spec: true                            # Phase 2: 规格定义
+    demo: true                            # Phase 3: UI Demo
+    design: true                          # Phase 4: 详细设计
+    code: true                            # Phase 5: 开发
+    test: true                            # Phase 6: 测试
+    deploy: true                          # Phase 7: 发布
+
+  # 必需文档
+  required_docs:
+    - "00_CONTEXT.md"
+    - "10_DESIGN_FINAL.md"
+    - "20_DEV_PLAN.md"
+    - "30_PROGRESS_LOG.yaml"
+    - "40_TEST_PLAN.md"
+    - "50_RELEASE_NOTE.md"
+
+  # 可选文档（根据功能类型选用）
+  optional_docs:
+    - "11_UI_FLOW_SPEC.md"               # 有 UI 时需要
+    - "11_API_SPEC.md"                    # 有 API 时需要
+    - "31_DAILY_SUMMARY/"                 # 每日总结目录
+
+# ============ 特殊约定 ============
+rules:
+  - "所有文档变更必须更新对应的 CHANGELOG"
+  - "每日工作结束前必须更新 PROGRESS_LOG"
+  - "新功能模块必须使用 /new-feature 命令初始化"
+  - "上下文压缩后必须执行 /resume 恢复"
+  - "Claude Code 必须遵守 CC_COLLABORATION/ 下的所有规范"
+
+# ============ 环境配置 ============
+environments:
+  development:
+    url: "http://localhost:3000"
+    api_url: "http://localhost:8080"
+
+  staging:
+    url: "https://staging.example.com"
+    api_url: "https://api.staging.example.com"
+
+  production:
+    url: "https://www.example.com"
+    api_url: "https://api.example.com"
+
+# ============ 版本信息 ============
+version:
+  profile_version: "1.0.0"
+  last_updated: "{YYYY-MM-DD}"
+  changelog: "Docs/_system/CHANGELOGS/PROJECT_PROFILE_CHANGELOG.md"

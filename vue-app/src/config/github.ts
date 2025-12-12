@@ -1,0 +1,43 @@
+// GitHub 文档服务配置（前端）
+export const GITHUB_DOC_CONFIG = {
+  // 仓库信息（用于显示 GitHub 链接）
+  owner: 'oowanghuan',
+  repo: 'ai-coding-org',
+  branch: 'main',
+  docsBasePath: 'docs',
+
+  // Supabase Edge Function URL
+  proxyBaseUrl: import.meta.env.VITE_SUPABASE_URL
+    ? `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/github-docs-proxy`
+    : '/api/github-docs-proxy', // 本地开发 fallback
+}
+
+// 文档类型映射
+export const DOC_TYPE_MAP: Record<string, 'markdown' | 'yaml'> = {
+  '.md': 'markdown',
+  '.yaml': 'yaml',
+  '.yml': 'yaml',
+}
+
+// 文档路径模板
+export const DOC_PATHS = {
+  // 功能级文档
+  context: (featureId: string) => `docs/${featureId}/00_CONTEXT.md`,
+  design: (featureId: string) => `docs/${featureId}/10_DESIGN.md`,
+  uiSpec: (featureId: string) => `docs/${featureId}/11_UI_FLOW_SPEC.md`,
+  progressLog: (featureId: string) => `docs/${featureId}/30_PROGRESS_LOG.yaml`,
+  dailySummaryDir: (featureId: string) => `docs/${featureId}/31_DAILY_SUMMARY`,
+  dailySummary: (featureId: string, date: string) =>
+    `docs/${featureId}/31_DAILY_SUMMARY/${date}.md`,
+
+  // 系统级文档
+  projectStandup: () => `docs/_foundation/PROJECT_DAILY_STANDUP.yaml`,
+  projectProfile: () => `docs/_foundation/01_PROJECT_PROFILE.yaml`,
+}
+
+// 缓存配置
+export const CACHE_CONFIG = {
+  enabled: true,
+  ttlMs: 5 * 60 * 1000, // 5 分钟缓存
+  storageKey: 'github-doc-cache',
+}
