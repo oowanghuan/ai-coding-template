@@ -4,12 +4,6 @@
 >
 > 一键启动，三条命令开始你的第一个 AI 协作功能
 
-```bash
-git clone https://github.com/oowanghuan/ai-coding-template.git && cd ai-coding-template
-./scripts/init-claude-tools.sh --target=.
-# 然后在 Claude Code 中执行：/new-feature my-first-feature
-```
-
 ---
 
 ## 这是什么？
