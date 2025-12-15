@@ -8,11 +8,13 @@
 - 检查 `required_outputs` 是否存在
 - 执行 `quality_checks` 验证
 - 检查 `approvals` 审批状态
+- **检查 External Gate（Expert Review 结果）**
 - 更新 `PHASE_GATE_STATUS.yaml` 的检查结果
 
 **设计原则**：
 - Gate 状态只能由此 skill 和 `/approve-gate` 命令写入
 - 禁止手动修改 `gate_state` 字段
+- **External Gate 优先级最高，不可被 Phase Gate 覆盖**
 
 ## 输入
 
@@ -268,10 +270,102 @@ if pending_roles:
     )
 ```
 
-### 7. 计算最终状态
+### 7. 检查 External Gate（Expert Review）
+
+**硬规则**：External Gate 的 BLOCK 优先级最高，不可被 Phase Gate 覆盖。
 
 ```python
-if blocked_reasons:
+def check_external_gate(feature_dir):
+    """
+    检查 External Gate（Expert Review 结果）
+
+    返回：
+    - status: 'not_applicable' | 'passed' | 'blocked'
+    - reason: 结构化原因对象
+    """
+    actions_file = f"{feature_dir}/REVIEW_ACTIONS.yaml"
+
+    # 如果文件不存在，不适用
+    if not exists(actions_file):
+        return {
+            "status": "not_applicable",
+            "reason": None
+        }
+
+    actions = load_yaml(actions_file)
+
+    # 检查 verdict
+    if actions.verdict == "BLOCK":
+        # 检查是否有有效的 override
+        if is_override_valid(actions.get("override", {})):
+            return {
+                "status": "passed",
+                "reason": {
+                    "type": "override_approved",
+                    "approved_by": actions.override.approved_by,
+                    "approved_at": actions.override.approved_at
+                }
+            }
+
+        # 返回结构化 reason（用于 UI / Agent / Progress Log 消费）
+        return {
+            "status": "blocked",
+            "reason": {
+                "type": "external_review_block",
+                "source": "expert_reviewer",
+                "block_count": actions.summary.block_count,
+                "warn_count": actions.summary.warn_count,
+                "reference": "REVIEW_REPORT.md",
+                "actions_file": "REVIEW_ACTIONS.yaml"
+            }
+        }
+
+    # GO 或 REVISE 都视为通过
+    return {
+        "status": "passed",
+        "reason": None
+    }
+
+def is_override_valid(override):
+    """
+    检查 override 是否有效
+
+    规则：
+    - override.enabled == true
+    - override.approved_by 不为空
+    - override.expires_at 未过期（或为空表示不过期）
+    """
+    if not override.get("enabled", False):
+        return False
+    if not override.get("approved_by"):
+        return False
+    if override.get("expires_at"):
+        if parse_datetime(override.expires_at) < now():
+            return False
+    return True
+```
+
+**在计算最终状态前检查 External Gate**：
+
+```python
+# 先检查 External Gate
+external_gate_result = check_external_gate(feature_dir)
+
+if external_gate_result["status"] == "blocked":
+    # External Gate 阻断优先级最高
+    blocked_reasons.insert(0, "External Gate (Expert Review) 阻断")
+    external_gate_blocked = True
+else:
+    external_gate_blocked = False
+```
+
+### 8. 计算最终状态
+
+```python
+# External Gate 阻断优先级最高
+if external_gate_blocked:
+    overall_state = "blocked"
+elif blocked_reasons:
     overall_state = "blocked"
 elif pending_roles:
     overall_state = "pending"
@@ -279,7 +373,7 @@ else:
     overall_state = "passed"
 ```
 
-### 8. 更新 PHASE_GATE_STATUS.yaml
+### 9. 更新 PHASE_GATE_STATUS.yaml
 
 ```python
 # 只更新 last_check，不直接设置 gate_state（除非是 blocked）
@@ -309,7 +403,7 @@ phase_status.check_history.append({
 save_yaml(status, "docs/{feature}/PHASE_GATE_STATUS.yaml")
 ```
 
-### 9. 生成 next_actions
+### 10. 生成 next_actions
 
 ```python
 next_actions = []
@@ -336,9 +430,37 @@ for role in pending_roles:
     })
 ```
 
-### 10. 输出结果
+### 11. 输出结果
 
 输出结构化的检查结果，格式参见「输出」部分。
+
+**External Gate 被阻断时的输出**：
+
+```
+📋 Phase Gate 检查结果
+
+功能模块: {feature}
+阶段: Phase {N} {Name}
+检查时间: {datetime}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+状态: ❌ BLOCKED (External Gate)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚫 External Gate (Expert Review) 阻断
+
+Block 级问题: {block_count}
+Warn 级问题: {warn_count}
+
+查看详情：
+  • docs/{feature}/REVIEW_ACTIONS.yaml
+  • docs/{feature}/REVIEW_REPORT.md
+
+📝 下一步操作:
+  1. 修复所有 block 级问题
+  2. 重新执行评审：/expert-review {feature}
+  3. 或申请 override（需要说明理由）
+```
 
 ## 输出示例
 
@@ -419,4 +541,6 @@ for role in pending_roles:
 - `/check-gate` - 调用此 skill 显示 Gate 状态
 - `/approve-gate` - 在此 skill 检查通过后记录审批
 - `/next-phase` - 在执行前调用此 skill 验证
+- `/expert-review` - 执行 External Gate 评审
+- `expert_reviewer` - External Gate 评审 Subagent
 - `progress_updater` - 协同更新进度信息

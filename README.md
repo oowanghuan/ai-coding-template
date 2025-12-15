@@ -77,20 +77,32 @@ docs/user-login/
 
 ```
 my-project/
-├── _templates/           # 模板库（核心，勿删）
-│   ├── CC_COLLABORATION/ # 协作框架定义
-│   │   ├── 04_AI_WORKFLOW.md      # 8 阶段工作流
-│   │   ├── 03_TEMPLATES/          # 文档模板
-│   │   └── 05_TOOLS/              # 工具定义
-│   └── _foundation_templates/     # 基础配置模板
+├── .env.example              # 环境变量示例（含 OpenAI API Key）
+├── CC_COLLABORATION/         # 协作框架（核心，勿删）
+│   ├── 00_overview/          # 框架概述
+│   ├── 01_commit_rules/      # 提交规范
+│   ├── 02_workflows/         # 工作流定义
+│   ├── 03_templates/         # 文档模板
+│   │   ├── 01_kickoff/       # Phase 1 模板
+│   │   ├── 02_spec/          # Phase 2 模板
+│   │   ├── ...               # Phase 3-7 模板
+│   │   ├── _common/          # 通用模板（评审报告等）
+│   │   └── _foundation/      # 基础配置模板
+│   ├── 04_ai_workflow/       # 8 阶段工作流说明
+│   ├── 05_tools/             # 工具定义
+│   │   ├── slash-commands/   # Slash 命令
+│   │   ├── skills/           # Skills（执行器）
+│   │   └── subagents/        # Subagents（智能体）
+│   ├── 06_roles_guide/       # 角色指南
+│   └── 07_phase_gate/        # Phase Gate 定义
 │
-├── docs/                 # 功能文档（按功能组织）
-│   ├── _foundation/      # 项目级配置
-│   └── {feature}/        # 功能模块文档
+├── docs/                     # 功能文档（按功能组织）
+│   ├── _foundation/          # 项目级配置
+│   └── {feature}/            # 功能模块文档
 │
-├── _backup/              # 临时备份（定期清理）
-├── scripts/              # 工具脚本
-└── vue-app/              # 项目看板（可选）
+├── _backup/                  # 临时备份（定期清理）
+├── scripts/                  # 工具脚本
+└── vue-app/                  # 项目看板（可选）
 ```
 
 ## 8 阶段工作流
@@ -191,7 +203,7 @@ my-project/
 
 ---
 
-> 详细说明见 `_templates/CC_COLLABORATION/04_AI_WORKFLOW.md`
+> 详细说明见 `CC_COLLABORATION/04_ai_workflow/`
 
 ## 工具列表
 
@@ -207,6 +219,10 @@ my-project/
 | `/run-tests` | 执行测试 |
 | `/release` | 发布流程 |
 | `/init-project` | 初始化项目配置 |
+| `/expert-review` | 调用 OpenAI 独立专家评审 |
+| `/check-gate` | 检查 Phase Gate 状态 |
+| `/approve-gate` | 审批 Phase Gate |
+| `/next-phase` | 进入下一阶段 |
 
 ### Skills
 
@@ -217,8 +233,16 @@ my-project/
 | `progress_tracker` | 更新进度日志 |
 | `code_reviewer` | 代码评审 |
 | `test_generator` | 生成测试用例 |
+| `openai_expert_review` | 调用 OpenAI API 执行独立评审 |
+| `gate_checker` | 检查 Phase Gate 通过条件 |
 
-完整列表见 `_templates/CC_COLLABORATION/05_TOOLS/`
+### Subagents
+
+| Agent | 用途 |
+|-------|------|
+| `expert_reviewer` | 构建评审 Prompt，管理评审规则 |
+
+完整列表见 `CC_COLLABORATION/05_tools/`
 
 ## 项目看板（可选）
 
@@ -242,7 +266,7 @@ npm run dev
 
 所有模板都可以根据项目需求修改：
 
-1. 编辑 `_templates/` 下的模板文件
+1. 编辑 `CC_COLLABORATION/03_templates/` 下的模板文件
 2. 模板会在下次创建功能时生效
 3. 保持文件名和结构不变，只修改内容
 
@@ -253,6 +277,51 @@ npm run dev
 3. **保持文档更新** - Context 和 Spec 是 AI 理解需求的关键
 4. **定期清理 `_backup/`** - 避免历史文件堆积
 5. **先 Spec 后 Code** - 先定义清楚再动手
+6. **关键阶段使用 Expert Review** - 让独立 AI 评审你的设计
+
+## Expert Review（独立专家评审）
+
+解决 AI 协作开发中的核心问题：**AI 自己审自己，没有真正的质量门禁**。
+
+### 工作原理
+
+```
+Claude Code 生成设计文档 → /expert-review → OpenAI GPT-4 独立评审 → 发现问题阻断流程
+```
+
+### 核心价值
+
+| 特性 | 说明 |
+|------|------|
+| **独立性** | 使用 OpenAI (GPT-4) 作为独立评审方，避免 Claude 自己审自己 |
+| **硬约束** | 评审结果 verdict=BLOCK 可真正阻断 `/next-phase` |
+| **可执行** | 每个问题都有明确的修复建议和负责角色 |
+
+### 使用方式
+
+```bash
+# 1. 完成设计文档后执行评审
+/expert-review docs/my-feature --phase=4
+
+# 2. 查看评审结果
+# - REVIEW_ACTIONS.yaml (结构化结果)
+# - REVIEW_REPORT.md (人类可读报告)
+
+# 3. 评审判定
+# - GO: 无问题，可继续
+# - REVISE: 有建议，可选修复
+# - BLOCK: 有严重问题，必须修复后重新评审
+```
+
+### 配置要求
+
+```bash
+# 在 ~/.zshrc 中添加 OpenAI API Key
+export OPENAI_API_KEY="sk-your-api-key"
+source ~/.zshrc
+```
+
+> 详细说明见 `.env.example` 和 `CC_COLLABORATION/05_tools/skills/openai_expert_review.md`
 
 ## 核心机制：上下文恢复
 

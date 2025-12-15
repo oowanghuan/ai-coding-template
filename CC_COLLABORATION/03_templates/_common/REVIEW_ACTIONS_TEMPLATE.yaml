@@ -1,0 +1,68 @@
+# REVIEW_ACTIONS_TEMPLATE.yaml
+# Expert Review 结果模板 - 权威来源
+# 用途：记录第三方专家评审的结构化结果
+# 版本：v1.0
+
+# ============================================================
+# 元信息
+# ============================================================
+meta:
+  feature: "{{feature}}"                    # 功能模块名称
+  phase: {{phase}}                          # 评审阶段 (1-7)
+  target_file: "{{target_file}}"            # 被评审文件
+  reviewed_at: "{{reviewed_at}}"            # 评审时间 ISO 8601
+  reviewer: "openai/{{model}}"              # 评审模型
+
+# ============================================================
+# 评审结论
+# ============================================================
+verdict: {{verdict}}                        # GO | REVISE | BLOCK
+
+summary:
+  total_issues: {{total_issues}}            # 问题总数
+  block_count: {{block_count}}              # Block 级问题数
+  warn_count: {{warn_count}}                # Warn 级问题数
+
+# ============================================================
+# 问题清单
+# ============================================================
+actions:
+  # 示例条目（实际使用时由 AI 生成）
+  - id: "MUST-001"                          # 问题 ID
+    severity: block                         # block | warn
+    category: design                        # design | security | testability | clarity | consistency
+    target: "{{target_file}}"               # 问题所在文件
+    location: "Section 3.2"                 # 章节/行号
+    issue: "问题一句话描述"                   # 问题摘要
+    evidence: "引用文档中的原文"              # 证据
+    impact: "影响范围描述"                    # 影响分析
+    fix: "明确、可执行的修改建议"             # 修复建议
+    owner_role: Architect                   # PM | Architect | Developer | QA
+
+  # - id: "SHOULD-001"
+  #   severity: warn
+  #   ...
+
+# ============================================================
+# 豁免机制（慎用）
+# ============================================================
+override:
+  enabled: false                            # 是否启用豁免
+  approved_by: []                           # 审批人列表
+  # - role: Architect
+  #   user: "@username"
+  #   approved_at: "2024-12-16T10:00:00"
+  # - role: PM
+  #   user: "@username"
+  #   approved_at: "2024-12-16T10:30:00"
+  reason: null                              # 豁免原因
+  expires_at: null                          # 豁免过期时间（可选）
+
+# ============================================================
+# 使用说明
+# ============================================================
+# 1. 此文件由 /expert-review 命令自动生成
+# 2. verdict 字段是 Phase Gate 判定的唯一依据
+# 3. verdict=BLOCK 时，/next-phase 将被阻止
+# 4. 豁免（override）需要 Architect + PM 双签
+# 5. 修复问题后重新执行 /expert-review 生成新文件
