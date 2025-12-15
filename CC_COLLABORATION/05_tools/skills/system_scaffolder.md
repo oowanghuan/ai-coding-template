@@ -145,7 +145,7 @@ docs/_system/
 ├── CC_COLLABORATION/
 │   ├── 01_OVERVIEW.md
 │   ├── 02_ROLES.md
-│   ├── 03_TEMPLATES/
+│   ├── 03_templates/
 │   ├── 04_AI_WORKFLOW.md
 │   └── 05_TOOLS/
 └── _ui_system/
@@ -182,7 +182,7 @@ docs/_system/
 ✓ tests/e2e/
 ✓ docs/_system/
 ✓ docs/_system/CC_COLLABORATION/
-✓ docs/_system/CC_COLLABORATION/03_TEMPLATES/
+✓ docs/_system/CC_COLLABORATION/03_templates/
 ✓ docs/_system/CC_COLLABORATION/05_TOOLS/
 ✓ docs/_system/_ui_system/
 

@@ -2,7 +2,7 @@
 
 ## 能力描述
 
-根据 `03_TEMPLATES/` 目录下的标准模板，生成任意阶段的文档。这是一个通用的文档生成工具，被多个 Slash Commands 和 Subagents 调用。
+根据 `03_templates/` 目录下的标准模板，生成任意阶段的文档。这是一个通用的文档生成工具，被多个 Slash Commands 和 Subagents 调用。
 
 ## 输入
 
@@ -41,7 +41,7 @@
 ### 1. 加载模板
 
 ```
-读取：docs/_system/CC_COLLABORATION/03_TEMPLATES/{template}_TEMPLATE.md
+读取：docs/_system/CC_COLLABORATION/03_templates/{phase}/{template}_TEMPLATE.md
 ```
 
 ### 2. 解析变量
@@ -174,7 +174,7 @@
 
 ## 注意事项
 
-1. **模板位置**：所有模板位于 `03_TEMPLATES/` 目录
+1. **模板位置**：所有模板位于 `03_templates/` 目录，按阶段组织
 2. **变量格式**：使用 `{variable}` 格式，不要使用 `${variable}` 或 `{{variable}}`
 3. **YAML 文件**：PROGRESS_LOG 等 YAML 文件需特别注意格式
 4. **TODO 标记**：未填充的变量会标记为 TODO，方便后续补充

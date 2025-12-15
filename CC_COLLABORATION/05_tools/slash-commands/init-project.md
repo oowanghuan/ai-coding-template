@@ -50,7 +50,7 @@ docs/
 │   └── CC_COLLABORATION/
 │       ├── 01_OVERVIEW.md           # 框架概述
 │       ├── 02_ROLES.md              # 角色定义
-│       ├── 03_TEMPLATES/            # 文档模板
+│       ├── 03_templates/            # 文档模板
 │       │   ├── 00_CONTEXT.md
 │       │   ├── 10_DESIGN_FINAL.md
 │       │   ├── 20_UI_FLOW_SPEC.md
@@ -231,7 +231,7 @@ docs/
 │   └── CC_COLLABORATION/
 │       ├── 01_OVERVIEW.md
 │       ├── 02_ROLES.md
-│       ├── 03_TEMPLATES/
+│       ├── 03_templates/
 │       ├── 04_AI_WORKFLOW.md
 │       └── 05_TOOLS/
 

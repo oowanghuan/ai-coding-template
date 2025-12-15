@@ -1,8 +1,8 @@
 # 04_AI_WORKFLOW.md
 # AI 协作工作流总纲
 
-> 版本：v1.2
-> 最后更新：2024-12-12
+> 版本：v1.3
+> 最后更新：2024-12-15
 > 状态：框架定稿，工具已实现
 
 ---
@@ -19,8 +19,8 @@
 
 | 图标 | 含义 |
 |------|------|
-| ✅ | 有标准模板，位于 `_templates/CC_COLLABORATION/03_TEMPLATES/` 目录 |
-| 📄 | 有模板，位于 `_templates/_foundation_templates/` 目录 |
+| ✅ | 有标准模板，位于 `CC_COLLABORATION/03_templates/{phase}/` 目录 |
+| 📄 | 有模板，位于 `CC_COLLABORATION/03_templates/_foundation/` 目录 |
 | 📝 | 文件名固定，内容自由编写（无模板） |
 
 ---
@@ -34,13 +34,13 @@
 
 | 文档 | 用途 | 模板/参考 | 状态 |
 |------|------|----------|------|
-| `_foundation/00_PROJECT_CONTEXT.md` | 项目背景、团队、领域知识 | `00_CONTEXT_TEMPLATE.md` | ✅ 有模板 |
-| `_foundation/01_PROJECT_PROFILE.yaml` | 技术栈配置、工作流开关 | `01_PROJECT_PROFILE_TEMPLATE.yaml` | ✅ 有模板 |
-| `_foundation/02_API_CONVENTIONS.md` | API 命名、错误码、响应格式 | `02_API_CONVENTIONS_TEMPLATE.md` | 📄 有模板 |
-| `_foundation/03_DB_CONVENTIONS.md` | 数据库命名、索引策略 | `03_DB_CONVENTIONS_TEMPLATE.md` | 📄 有模板 |
-| `_foundation/_ui_system/*` | UI 规则体系（6 层） | `_ui_system_template/` | 📄 有模板 |
+| `_foundation/00_PROJECT_CONTEXT.md` | 项目背景、团队、领域知识 | `03_templates/01_kickoff/00_CONTEXT_TEMPLATE.md` | ✅ 有模板 |
+| `_foundation/01_PROJECT_PROFILE.yaml` | 技术栈配置、工作流开关 | `03_templates/_common/01_PROJECT_PROFILE_TEMPLATE.yaml` | ✅ 有模板 |
+| `_foundation/_api_system/*` | API 规则体系（4 层） | `03_templates/_foundation/_api_system_template/` | 📄 有模板 |
+| `_foundation/03_DB_CONVENTIONS.md` | 数据库命名、索引策略 | `03_templates/_foundation/03_DB_CONVENTIONS_TEMPLATE.md` | 📄 有模板 |
+| `_foundation/_ui_system/*` | UI 规则体系（6 层） | `03_templates/_foundation/_ui_system_template/` | 📄 有模板 |
 
-> **说明**：`/init-project` 命令会根据 `_templates/_foundation_templates/` 中的模板生成 `docs/_foundation/` 目录下的项目基础文件。
+> **说明**：`/init-project` 命令会根据 `CC_COLLABORATION/03_templates/_foundation/` 中的模板生成 `docs/_foundation/` 目录下的项目基础文件。
 
 ### 环节工具
 
@@ -416,33 +416,66 @@ Phase 7: Deploy
 
 ## 附录 B：模板文件清单
 
-所有模板位于 `docs/_system/CC_COLLABORATION/03_TEMPLATES/` 目录：
+所有模板位于 `CC_COLLABORATION/03_templates/` 目录：
+
+```
+03_templates/
+├── _common/                              # 通用模板
+│   ├── 01_PROJECT_PROFILE_TEMPLATE.yaml
+│   ├── 30_PROGRESS_LOG_TEMPLATE.yaml
+│   └── 31_DAILY_SUMMARY_TEMPLATE.md
+├── _foundation/                          # Foundation 级模板
+│   ├── _api_system_template/
+│   │   ├── 00_REST_CONVENTIONS_TEMPLATE.md
+│   │   ├── 01_COMMAND_CONVENTIONS_TEMPLATE.md
+│   │   ├── 02_YAML_SCHEMA_CONVENTIONS_TEMPLATE.md
+│   │   └── 03_EXTERNAL_API_CONVENTIONS_TEMPLATE.md
+│   ├── _ui_system_template/
+│   └── 03_DB_CONVENTIONS_TEMPLATE.md
+├── 01_kickoff/
+│   └── 00_CONTEXT_TEMPLATE.md
+├── 02_spec/
+│   ├── 11_API_SPEC_TEMPLATE.md
+│   └── 11_UI_FLOW_SPEC_TEMPLATE.md
+├── 03_demo/
+│   └── 12_DEMO_REVIEW_TEMPLATE.md
+├── 04_design/
+│   └── 10_DESIGN_TEMPLATE.md
+├── 05_code/
+│   └── 20_DEV_PLAN_TEMPLATE.md
+├── 06_test/
+│   ├── 40_TEST_PLAN_TEMPLATE.md
+│   └── 41_TEST_REPORT_TEMPLATE.md
+└── 07_deploy/
+    ├── 50_RELEASE_NOTE_TEMPLATE.md
+    └── 51_CHANGELOG_TEMPLATE.md
+```
 
 | 模板文件 | 对应文档 | 阶段 |
 |---------|---------|------|
-| `00_CONTEXT_TEMPLATE.md` | `00_CONTEXT.md`, `00_PROJECT_CONTEXT.md` | Phase 0, 1 |
-| `PROJECT_PROFILE_TEMPLATE.yaml` | `01_PROJECT_PROFILE.yaml` | Phase 0 |
-| `CHANGELOG_TEMPLATE.md` | `*_CHANGELOG.md` | 通用 |
-| `11_UI_FLOW_SPEC_TEMPLATE.md` | `11_UI_FLOW_SPEC.md` | Phase 2 |
-| `11_API_SPEC_TEMPLATE.md` | `11_API_SPEC.md` | Phase 2 |
-| `12_DEMO_REVIEW_TEMPLATE.md` | `12_DEMO_REVIEW.md` | Phase 3 |
-| `10_DESIGN_TEMPLATE.md` | `10_DESIGN_FINAL.md` | Phase 4 |
-| `20_DEV_PLAN_TEMPLATE.md` | `20_DEV_PLAN.md` | Phase 5 |
-| `30_PROGRESS_LOG_TEMPLATE.yaml` | `30_PROGRESS_LOG.yaml` | Phase 5 |
-| `31_DAILY_SUMMARY_TEMPLATE.md` | `31_DAILY_SUMMARY/{date}.md` | Phase 5 |
-| `40_TEST_PLAN_TEMPLATE.md` | `40_TEST_PLAN.md` | Phase 6 |
-| `41_TEST_REPORT_TEMPLATE.md` | `41_TEST_REPORT.md` | Phase 6 |
-| `50_RELEASE_NOTE_TEMPLATE.md` | `50_RELEASE_NOTE.md` | Phase 7 |
+| `01_kickoff/00_CONTEXT_TEMPLATE.md` | `00_CONTEXT.md` | Phase 1 |
+| `_common/01_PROJECT_PROFILE_TEMPLATE.yaml` | `01_PROJECT_PROFILE.yaml` | Phase 0 |
+| `02_spec/11_UI_FLOW_SPEC_TEMPLATE.md` | `11_UI_FLOW_SPEC.md` | Phase 2 |
+| `02_spec/11_API_SPEC_TEMPLATE.md` | `11_API_SPEC.md` | Phase 2 |
+| `03_demo/12_DEMO_REVIEW_TEMPLATE.md` | `12_DEMO_REVIEW.md` | Phase 3 |
+| `04_design/10_DESIGN_TEMPLATE.md` | `10_DESIGN_FINAL.md` | Phase 4 |
+| `05_code/20_DEV_PLAN_TEMPLATE.md` | `20_DEV_PLAN.md` | Phase 5 |
+| `_common/30_PROGRESS_LOG_TEMPLATE.yaml` | `30_PROGRESS_LOG.yaml` | Phase 5 |
+| `_common/31_DAILY_SUMMARY_TEMPLATE.md` | `31_DAILY_SUMMARY/{date}.md` | Phase 5 |
+| `06_test/40_TEST_PLAN_TEMPLATE.md` | `40_TEST_PLAN.md` | Phase 6 |
+| `06_test/41_TEST_REPORT_TEMPLATE.md` | `41_TEST_REPORT.md` | Phase 6 |
+| `07_deploy/50_RELEASE_NOTE_TEMPLATE.md` | `50_RELEASE_NOTE.md` | Phase 7 |
+| `07_deploy/51_CHANGELOG_TEMPLATE.md` | `*_CHANGELOG.md` | 通用 |
 
-### 参考示例（无模板）
+### Foundation 模板
 
-以下文档需要根据项目技术栈自行编写，本项目的实例可作为参考：
+Foundation 级别的规范模板位于 `03_templates/_foundation/`：
 
-| 参考文件 | 位置 | 说明 |
-|---------|------|------|
-| `02_API_CONVENTIONS.md` | `docs/_system/` | API 设计规范示例 |
-| `03_DB_CONVENTIONS.md` | `docs/_system/` | 数据库设计规范示例 |
-| `_ui_system/` | `docs/_system/` | UI 设计系统示例（6 层） |
+| 模板目录/文件 | 说明 |
+|--------------|------|
+| `_api_system_template/` | API 规则体系（REST、Command、YAML、External API） |
+| `_ui_system_template/` | UI 设计系统（6 层） |
+| `03_DB_CONVENTIONS_TEMPLATE.md` | 数据库设计规范 |
 
 ---
 
