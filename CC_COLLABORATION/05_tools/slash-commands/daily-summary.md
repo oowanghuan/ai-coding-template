@@ -11,15 +11,15 @@
 ### 1. 确定范围
 
 **如果指定了功能名称：**
-- 仅读取 `docs/{feature-name}/30_PROGRESS_LOG.yaml`
+- 仅读取 `docs/{feature-name}/90_PROGRESS_LOG.yaml`
 
 **如果未指定功能名称：**
-- 扫描 `docs/` 目录，找到所有包含 `30_PROGRESS_LOG.yaml` 的功能模块
+- 扫描 `docs/` 目录，找到所有包含 `90_PROGRESS_LOG.yaml` 的功能模块
 - 汇总所有功能的进度
 
 ### 2. 读取进度日志
 
-从每个 `30_PROGRESS_LOG.yaml` 中提取：
+从每个 `90_PROGRESS_LOG.yaml` 中提取：
 - `meta.last_updated` - 最后更新时间
 - 所有 `status: done` 且 `completed_at` 为今天的任务
 - 所有 `status: wip` 的任务
@@ -27,8 +27,8 @@
 
 ### 3. 生成每日总结
 
-创建 `docs/{feature-name}/31_DAILY_SUMMARY/{date}.md` 文件（如果是单功能）
-或 `docs/_system/31_DAILY_SUMMARY/{date}.md`（如果是全局汇总）
+创建 `docs/{feature-name}/91_DAILY_SUMMARY/{date}.md` 文件（如果是单功能）
+或 `docs/_system/91_DAILY_SUMMARY/{date}.md`（如果是全局汇总）
 
 ### 4. 总结模板
 
@@ -130,12 +130,12 @@ _由 /daily-summary 自动生成_
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📝 已生成: docs/{path}/31_DAILY_SUMMARY/{date}.md
+📝 已生成: docs/{path}/91_DAILY_SUMMARY/{date}.md
 ```
 
 ### 6. 更新进度日志
 
-在对应的 `30_PROGRESS_LOG.yaml` 中：
+在对应的 `90_PROGRESS_LOG.yaml` 中：
 - 更新 `meta.last_updated` 为当前时间
 - 如果有 `daily_summaries` 字段，添加今日记录
 
@@ -170,7 +170,7 @@ cc-tools-library: ████░░░░░░ 40% (+20%)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📝 已生成: docs/_system/31_DAILY_SUMMARY/2024-12-11.md
+📝 已生成: docs/_system/91_DAILY_SUMMARY/2024-12-11.md
 ```
 
 ## 注意事项
@@ -179,4 +179,4 @@ cc-tools-library: ████░░░░░░ 40% (+20%)
 - 时间格式：YYYY-MM-DDTHH:mm:ss+08:00
 - 如果当天没有任何更新，仍然生成总结，显示"今日无更新"
 - 进度变化（+delta%）基于与昨日总结的对比，如果没有昨日数据则不显示
-- 自动创建 `31_DAILY_SUMMARY/` 目录（如果不存在）
+- 自动创建 `91_DAILY_SUMMARY/` 目录（如果不存在）

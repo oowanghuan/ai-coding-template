@@ -34,7 +34,7 @@
 
 | 文档 | 用途 | 模板/参考 | 状态 |
 |------|------|----------|------|
-| `_foundation/00_PROJECT_CONTEXT.md` | 项目背景、团队、领域知识 | `03_templates/01_kickoff/00_CONTEXT_TEMPLATE.md` | ✅ 有模板 |
+| `_foundation/00_PROJECT_CONTEXT.md` | 项目背景、团队、领域知识 | `03_templates/01_kickoff/10_CONTEXT_TEMPLATE.md` | ✅ 有模板 |
 | `_foundation/01_PROJECT_PROFILE.yaml` | 技术栈配置、工作流开关 | `03_templates/_common/01_PROJECT_PROFILE_TEMPLATE.yaml` | ✅ 有模板 |
 | `_foundation/_api_system/*` | API 规则体系（4 层） | `03_templates/_foundation/_api_system_template/` | 📄 有模板 |
 | `_foundation/03_DB_CONVENTIONS.md` | 数据库命名、索引策略 | `03_templates/_foundation/03_DB_CONVENTIONS_TEMPLATE.md` | 📄 有模板 |
@@ -68,19 +68,19 @@ System Architect
 
 | 文档 | 用途 | 模板/参考 | 状态 |
 |------|------|----------|------|
-| `{feature}/00_CONTEXT.md` | 功能背景、边界、用户故事 | `00_CONTEXT_TEMPLATE.md` | ✅ 有模板 |
-| `{feature}/00_CONTEXT_CHANGELOG.md` | 变更记录 | `CHANGELOG_TEMPLATE.md` | ✅ 有模板 |
+| `{feature}/10_CONTEXT.md` | 功能背景、边界、用户故事 | `10_CONTEXT_TEMPLATE.md` | ✅ 有模板 |
+| `{feature}/10_CONTEXT_CHANGELOG.md` | 变更记录 | `CHANGELOG_TEMPLATE.md` | ✅ 有模板 |
 
 ### 环节工具
 
 | 类型 | 名称 | 用途 | 状态 |
 |------|------|------|------|
 | Slash Command | `/new-feature <name>` | 创建功能模块目录和初始文档 | ✅ 已实现 |
-| Skill | `context_writer` | 根据需求描述生成 00_CONTEXT.md | ✅ 已实现 |
+| Skill | `context_writer` | 根据需求描述生成 10_CONTEXT.md | ✅ 已实现 |
 
 ### 完成标准
 - [ ] `{feature}/` 目录已创建
-- [ ] `00_CONTEXT.md` 已填写完整
+- [ ] `10_CONTEXT.md` 已填写完整
 - [ ] 功能边界已明确，无歧义
 
 ### 负责角色
@@ -97,8 +97,8 @@ Architect / PM
 
 | 文档 | 用途 | 模板/参考 | 状态 | 适用场景 |
 |------|------|----------|------|----------|
-| `{feature}/11_UI_FLOW_SPEC.md` | UI 流程、交互规则、边界条件 | `11_UI_FLOW_SPEC_TEMPLATE.md` | ✅ 有模板 | has_ui=true |
-| `{feature}/11_API_SPEC.md` | API 端点、请求响应、错误码 | `11_API_SPEC_TEMPLATE.md` | ✅ 有模板 | has_ui=false |
+| `{feature}/21_UI_FLOW_SPEC.md` | UI 流程、交互规则、边界条件 | `21_UI_FLOW_SPEC_TEMPLATE.md` | ✅ 有模板 | has_ui=true |
+| `{feature}/20_API_SPEC.md` | API 端点、请求响应、错误码 | `20_API_SPEC_TEMPLATE.md` | ✅ 有模板 | has_ui=false |
 | `{feature}/11_SPEC_CHANGELOG.md` | 变更记录 | `CHANGELOG_TEMPLATE.md` | ✅ 有模板 | - |
 
 ### 环节工具
@@ -132,7 +132,7 @@ AI Product Engineer
 |------|------|----------|------|
 | UI Demo | `playgrounds/{feature}/Demo.vue` | 工具自动生成 | 📝 代码产物 |
 | Mock API | `playgrounds/{feature}/mock/api.js` | 工具自动生成 | 📝 代码产物 |
-| Demo 评审记录 | `{feature}/12_DEMO_REVIEW.md` | `12_DEMO_REVIEW_TEMPLATE.md` | ✅ 有模板 |
+| Demo 评审记录 | `{feature}/30_DEMO_REVIEW.md` | `30_DEMO_REVIEW_TEMPLATE.md` | ✅ 有模板 |
 
 ### 环节工具
 
@@ -162,8 +162,8 @@ AI Product Engineer
 
 | 文档 | 用途 | 模板/参考 | 状态 |
 |------|------|----------|------|
-| `{feature}/10_DESIGN_FINAL.md` | 技术架构、API 契约、数据模型 | `10_DESIGN_TEMPLATE.md` | ✅ 有模板 |
-| `{feature}/10_DESIGN_CHANGELOG.md` | 变更记录 | `CHANGELOG_TEMPLATE.md` | ✅ 有模板 |
+| `{feature}/40_DESIGN_FINAL.md` | 技术架构、API 契约、数据模型 | `40_DESIGN_TEMPLATE.md` | ✅ 有模板 |
+| `{feature}/40_DESIGN_CHANGELOG.md` | 变更记录 | `CHANGELOG_TEMPLATE.md` | ✅ 有模板 |
 
 ### 环节工具
 
@@ -192,9 +192,9 @@ Architect
 
 | 文档 | 用途 | 模板/参考 | 状态 |
 |------|------|----------|------|
-| `{feature}/20_DEV_PLAN.md` | 任务拆解、验证方式、依赖关系 | `20_DEV_PLAN_TEMPLATE.md` | ✅ 有模板 |
-| `{feature}/30_PROGRESS_LOG.yaml` | 执行进度、断点信息 | `30_PROGRESS_LOG_TEMPLATE.yaml` | ✅ 有模板 |
-| `{feature}/31_DAILY_SUMMARY/{date}.md` | 每日总结 | `31_DAILY_SUMMARY_TEMPLATE.md` | ✅ 有模板 |
+| `{feature}/50_DEV_PLAN.md` | 任务拆解、验证方式、依赖关系 | `50_DEV_PLAN_TEMPLATE.md` | ✅ 有模板 |
+| `{feature}/90_PROGRESS_LOG.yaml` | 执行进度、断点信息 | `90_PROGRESS_LOG_TEMPLATE.yaml` | ✅ 有模板 |
+| `{feature}/91_DAILY_SUMMARY/{date}.md` | 每日总结 | `91_DAILY_SUMMARY_TEMPLATE.md` | ✅ 有模板 |
 
 ### 环节工具
 
@@ -226,8 +226,8 @@ Developer / Claude Code
 
 | 文档 | 用途 | 模板/参考 | 状态 |
 |------|------|----------|------|
-| `{feature}/40_TEST_PLAN.md` | 测试用例、预期结果、工具 | `40_TEST_PLAN_TEMPLATE.md` | ✅ 有模板 |
-| `{feature}/41_TEST_REPORT.md` | 测试执行结果、Bug 列表 | `41_TEST_REPORT_TEMPLATE.md` | ✅ 有模板 |
+| `{feature}/60_TEST_PLAN.md` | 测试用例、预期结果、工具 | `60_TEST_PLAN_TEMPLATE.md` | ✅ 有模板 |
+| `{feature}/61_TEST_REPORT.md` | 测试执行结果、Bug 列表 | `61_TEST_REPORT_TEMPLATE.md` | ✅ 有模板 |
 
 ### 环节工具
 
@@ -258,7 +258,7 @@ QA / Claude Code
 
 | 文档 | 用途 | 模板/参考 | 状态 |
 |------|------|----------|------|
-| `{feature}/50_RELEASE_NOTE.md` | 版本、特性、修复、已知问题 | `50_RELEASE_NOTE_TEMPLATE.md` | ✅ 有模板 |
+| `{feature}/70_RELEASE_NOTE.md` | 版本、特性、修复、已知问题 | `70_RELEASE_NOTE_TEMPLATE.md` | ✅ 有模板 |
 
 ### 环节工具
 
@@ -379,31 +379,31 @@ Phase 0: Foundation
 └── 工具: /init-project, system_scaffolder
 
 Phase 1: Kickoff
-├── 文档: 00_CONTEXT ✅, 00_CONTEXT_CHANGELOG ✅
+├── 文档: 10_CONTEXT ✅, 10_CONTEXT_CHANGELOG ✅
 └── 工具: /new-feature, context_writer
 
 Phase 2: Spec
-├── 文档: 11_UI_FLOW_SPEC ✅ 或 11_API_SPEC ✅, 11_SPEC_CHANGELOG ✅
+├── 文档: 21_UI_FLOW_SPEC ✅ 或 20_API_SPEC ✅, 11_SPEC_CHANGELOG ✅
 └── 工具: spec_writer (subagent), spec_validator
 
 Phase 3: Demo
-├── 产物: playgrounds/{feature}/Demo.vue 📝, mock/api.js 📝, 12_DEMO_REVIEW ✅
+├── 产物: playgrounds/{feature}/Demo.vue 📝, mock/api.js 📝, 30_DEMO_REVIEW ✅
 └── 工具: /gen-demo, ui_demo, mock_api_generator
 
 Phase 4: Design
-├── 文档: 10_DESIGN_FINAL ✅, 10_DESIGN_CHANGELOG ✅
+├── 文档: 40_DESIGN_FINAL ✅, 40_DESIGN_CHANGELOG ✅
 └── 工具: design_from_demo, schema_generator
 
 Phase 5: Code
-├── 文档: 20_DEV_PLAN ✅, 30_PROGRESS_LOG ✅, 31_DAILY_SUMMARY/* ✅
+├── 文档: 50_DEV_PLAN ✅, 90_PROGRESS_LOG ✅, 91_DAILY_SUMMARY/* ✅
 └── 工具: /check-progress, /iresume, /daily-summary, review_alignment, progress_updater, progress_tracker (subagent)
 
 Phase 6: Test
-├── 文档: 40_TEST_PLAN ✅, 41_TEST_REPORT ✅
+├── 文档: 60_TEST_PLAN ✅, 61_TEST_REPORT ✅
 └── 工具: /run-tests, test_plan_writer (subagent), test_runner, test_report_generator
 
 Phase 7: Deploy
-├── 文档: 50_RELEASE_NOTE ✅
+├── 文档: 70_RELEASE_NOTE ✅
 └── 工具: /release, release_summarizer (subagent)
 
 跨阶段
@@ -422,8 +422,8 @@ Phase 7: Deploy
 03_templates/
 ├── _common/                              # 通用模板
 │   ├── 01_PROJECT_PROFILE_TEMPLATE.yaml
-│   ├── 30_PROGRESS_LOG_TEMPLATE.yaml
-│   └── 31_DAILY_SUMMARY_TEMPLATE.md
+│   ├── 90_PROGRESS_LOG_TEMPLATE.yaml
+│   └── 91_DAILY_SUMMARY_TEMPLATE.md
 ├── _foundation/                          # Foundation 级模板
 │   ├── _api_system_template/
 │   │   ├── 00_REST_CONVENTIONS_TEMPLATE.md
@@ -433,39 +433,39 @@ Phase 7: Deploy
 │   ├── _ui_system_template/
 │   └── 03_DB_CONVENTIONS_TEMPLATE.md
 ├── 01_kickoff/
-│   └── 00_CONTEXT_TEMPLATE.md
+│   └── 10_CONTEXT_TEMPLATE.md
 ├── 02_spec/
-│   ├── 11_API_SPEC_TEMPLATE.md
-│   └── 11_UI_FLOW_SPEC_TEMPLATE.md
+│   ├── 20_API_SPEC_TEMPLATE.md
+│   └── 21_UI_FLOW_SPEC_TEMPLATE.md
 ├── 03_demo/
-│   └── 12_DEMO_REVIEW_TEMPLATE.md
+│   └── 30_DEMO_REVIEW_TEMPLATE.md
 ├── 04_design/
-│   └── 10_DESIGN_TEMPLATE.md
+│   └── 40_DESIGN_TEMPLATE.md
 ├── 05_code/
-│   └── 20_DEV_PLAN_TEMPLATE.md
+│   └── 50_DEV_PLAN_TEMPLATE.md
 ├── 06_test/
-│   ├── 40_TEST_PLAN_TEMPLATE.md
-│   └── 41_TEST_REPORT_TEMPLATE.md
+│   ├── 60_TEST_PLAN_TEMPLATE.md
+│   └── 61_TEST_REPORT_TEMPLATE.md
 └── 07_deploy/
-    ├── 50_RELEASE_NOTE_TEMPLATE.md
-    └── 51_CHANGELOG_TEMPLATE.md
+    ├── 70_RELEASE_NOTE_TEMPLATE.md
+    └── 71_CHANGELOG_TEMPLATE.md
 ```
 
 | 模板文件 | 对应文档 | 阶段 |
 |---------|---------|------|
-| `01_kickoff/00_CONTEXT_TEMPLATE.md` | `00_CONTEXT.md` | Phase 1 |
+| `01_kickoff/10_CONTEXT_TEMPLATE.md` | `10_CONTEXT.md` | Phase 1 |
 | `_common/01_PROJECT_PROFILE_TEMPLATE.yaml` | `01_PROJECT_PROFILE.yaml` | Phase 0 |
-| `02_spec/11_UI_FLOW_SPEC_TEMPLATE.md` | `11_UI_FLOW_SPEC.md` | Phase 2 |
-| `02_spec/11_API_SPEC_TEMPLATE.md` | `11_API_SPEC.md` | Phase 2 |
-| `03_demo/12_DEMO_REVIEW_TEMPLATE.md` | `12_DEMO_REVIEW.md` | Phase 3 |
-| `04_design/10_DESIGN_TEMPLATE.md` | `10_DESIGN_FINAL.md` | Phase 4 |
-| `05_code/20_DEV_PLAN_TEMPLATE.md` | `20_DEV_PLAN.md` | Phase 5 |
-| `_common/30_PROGRESS_LOG_TEMPLATE.yaml` | `30_PROGRESS_LOG.yaml` | Phase 5 |
-| `_common/31_DAILY_SUMMARY_TEMPLATE.md` | `31_DAILY_SUMMARY/{date}.md` | Phase 5 |
-| `06_test/40_TEST_PLAN_TEMPLATE.md` | `40_TEST_PLAN.md` | Phase 6 |
-| `06_test/41_TEST_REPORT_TEMPLATE.md` | `41_TEST_REPORT.md` | Phase 6 |
-| `07_deploy/50_RELEASE_NOTE_TEMPLATE.md` | `50_RELEASE_NOTE.md` | Phase 7 |
-| `07_deploy/51_CHANGELOG_TEMPLATE.md` | `*_CHANGELOG.md` | 通用 |
+| `02_spec/21_UI_FLOW_SPEC_TEMPLATE.md` | `21_UI_FLOW_SPEC.md` | Phase 2 |
+| `02_spec/20_API_SPEC_TEMPLATE.md` | `20_API_SPEC.md` | Phase 2 |
+| `03_demo/30_DEMO_REVIEW_TEMPLATE.md` | `30_DEMO_REVIEW.md` | Phase 3 |
+| `04_design/40_DESIGN_TEMPLATE.md` | `40_DESIGN_FINAL.md` | Phase 4 |
+| `05_code/50_DEV_PLAN_TEMPLATE.md` | `50_DEV_PLAN.md` | Phase 5 |
+| `_common/90_PROGRESS_LOG_TEMPLATE.yaml` | `90_PROGRESS_LOG.yaml` | Phase 5 |
+| `_common/91_DAILY_SUMMARY_TEMPLATE.md` | `91_DAILY_SUMMARY/{date}.md` | Phase 5 |
+| `06_test/60_TEST_PLAN_TEMPLATE.md` | `60_TEST_PLAN.md` | Phase 6 |
+| `06_test/61_TEST_REPORT_TEMPLATE.md` | `61_TEST_REPORT.md` | Phase 6 |
+| `07_deploy/70_RELEASE_NOTE_TEMPLATE.md` | `70_RELEASE_NOTE.md` | Phase 7 |
+| `07_deploy/71_CHANGELOG_TEMPLATE.md` | `*_CHANGELOG.md` | 通用 |
 
 ### Foundation 模板
 
@@ -489,7 +489,7 @@ Foundation 级别的规范模板位于 `03_templates/_foundation/`：
 
 1. **保留核心阶段**：Phase 1 (Kickoff) 和 Phase 7 (Deploy) 始终保留
 2. **按需跳过**：根据功能特点跳过不适用的阶段
-3. **文档记录**：在 `00_CONTEXT.md` 中记录裁剪决策和原因
+3. **文档记录**：在 `10_CONTEXT.md` 中记录裁剪决策和原因
 
 ### 预设裁剪模式
 
@@ -592,10 +592,10 @@ Kickoff → Code → Test → Deploy
 | 模式 | 必需文档 |
 |------|---------|
 | Full | 所有文档 |
-| Standard | 00_CONTEXT, 11_SPEC, 12_DEMO_REVIEW, 10_DESIGN, 20_DEV_PLAN, 40_TEST, 50_RELEASE |
-| Lean | 00_CONTEXT, 11_SPEC, 20_DEV_PLAN, 40_TEST, 50_RELEASE |
-| API-Only | 00_CONTEXT, 11_API_SPEC, 10_DESIGN, 20_DEV_PLAN, 40_TEST, 50_RELEASE |
-| Hotfix | 00_CONTEXT (简化), 50_RELEASE |
+| Standard | 10_CONTEXT, 11_SPEC, 30_DEMO_REVIEW, 40_DESIGN, 50_DEV_PLAN, 40_TEST, 70_RELEASE |
+| Lean | 10_CONTEXT, 11_SPEC, 50_DEV_PLAN, 40_TEST, 70_RELEASE |
+| API-Only | 10_CONTEXT, 20_API_SPEC, 40_DESIGN, 50_DEV_PLAN, 40_TEST, 70_RELEASE |
+| Hotfix | 10_CONTEXT (简化), 70_RELEASE |
 
 ### 最佳实践
 

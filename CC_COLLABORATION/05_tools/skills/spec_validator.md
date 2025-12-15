@@ -2,7 +2,7 @@
 
 ## 能力描述
 
-检查 `11_UI_FLOW_SPEC.md` 或 `11_API_SPEC.md` 的完整性和一致性，确保规格文档符合标准，可以进入下一阶段。
+检查 `21_UI_FLOW_SPEC.md` 或 `20_API_SPEC.md` 的完整性和一致性，确保规格文档符合标准，可以进入下一阶段。
 
 ## 输入
 
@@ -48,9 +48,9 @@
 
 ```
 读取：
-- docs/{feature}/11_UI_FLOW_SPEC.md
-- docs/{feature}/11_API_SPEC.md
-- docs/{feature}/00_CONTEXT.md（用于交叉验证）
+- docs/{feature}/21_UI_FLOW_SPEC.md
+- docs/{feature}/20_API_SPEC.md
+- docs/{feature}/10_CONTEXT.md（用于交叉验证）
 ```
 
 ### 2. 解析文档结构
@@ -134,27 +134,27 @@ endpoints:
 ### ❌ ERROR（必须修复）
 
 1. **缺少页面定义：ForgotPasswordPage**
-   - 位置：11_UI_FLOW_SPEC.md
+   - 位置：21_UI_FLOW_SPEC.md
    - 说明：CONTEXT 中提到"忘记密码"功能，但 SPEC 未定义对应页面
    - 建议：添加 ForgotPasswordPage 的完整定义
 
 2. **缺少功能覆盖：邮箱验证**
-   - 位置：11_UI_FLOW_SPEC.md
+   - 位置：21_UI_FLOW_SPEC.md
    - 说明：CONTEXT 中要求的邮箱验证流程未在 SPEC 中体现
    - 建议：添加 EmailVerification 页面或流程
 
 ### ⚠️ WARNING（建议修复）
 
 1. **缺少验证规则：confirmPassword**
-   - 位置：11_UI_FLOW_SPEC.md > RegisterPage
+   - 位置：21_UI_FLOW_SPEC.md > RegisterPage
    - 建议：添加 `validation: required|same:password`
 
 2. **缺少状态定义：RegisterPage.empty**
-   - 位置：11_UI_FLOW_SPEC.md > RegisterPage
+   - 位置：21_UI_FLOW_SPEC.md > RegisterPage
    - 建议：定义表单初始状态
 
 3. **缺少错误码：409 Conflict**
-   - 位置：11_API_SPEC.md > POST /register
+   - 位置：20_API_SPEC.md > POST /register
    - 建议：添加"邮箱已注册"的错误响应
 
 ### ℹ️ INFO（可选优化）

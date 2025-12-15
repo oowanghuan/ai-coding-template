@@ -22,11 +22,11 @@
 
 ### 2. 读取进度日志
 
-读取 `docs/{feature-name}/30_PROGRESS_LOG.yaml` 文件。
+读取 `docs/{feature-name}/90_PROGRESS_LOG.yaml` 文件。
 
 如果文件不存在，提示：
 ```
-❌ 未找到 docs/{feature-name}/30_PROGRESS_LOG.yaml
+❌ 未找到 docs/{feature-name}/90_PROGRESS_LOG.yaml
 该功能可能未初始化，请先运行 /new-feature {feature-name}
 ```
 
@@ -41,8 +41,8 @@ cc_checkpoint:
   last_action: "完成登录表单 UI"
   next_step: "实现登录 API 调用"
   context_files:
-    - "docs/user-auth/10_DESIGN_FINAL.md"
-    - "docs/user-auth/30_PROGRESS_LOG.yaml"
+    - "docs/user-auth/40_DESIGN_FINAL.md"
+    - "docs/user-auth/90_PROGRESS_LOG.yaml"
 ```
 
 ### 4. 读取上下文文件
@@ -100,9 +100,9 @@ cc_checkpoint:
 ### 6. 预加载上下文
 
 自动读取以下文件到上下文中（如果存在）：
-- `docs/{feature-name}/00_CONTEXT.md` - 功能上下文
-- `docs/{feature-name}/10_DESIGN_FINAL.md` - 设计文档
-- `docs/{feature-name}/30_PROGRESS_LOG.yaml` - 进度日志
+- `docs/{feature-name}/10_CONTEXT.md` - 功能上下文
+- `docs/{feature-name}/40_DESIGN_FINAL.md` - 设计文档
+- `docs/{feature-name}/90_PROGRESS_LOG.yaml` - 进度日志
 - `{last_file_edited}` - 上次编辑的文件
 
 ### 7. 更新断点信息
@@ -136,8 +136,8 @@ cc_checkpoint:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📂 相关文件
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• docs/user-auth/10_DESIGN_FINAL.md
-• docs/user-auth/30_PROGRESS_LOG.yaml
+• docs/user-auth/40_DESIGN_FINAL.md
+• docs/user-auth/90_PROGRESS_LOG.yaml
 • src/auth/login.vue
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

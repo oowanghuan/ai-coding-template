@@ -111,15 +111,15 @@ commits: {count}
 <!--
 模板使用说明（创建后删除）：
 
-1. 文件命名：31_DAILY_SUMMARY/{YYYY-MM-DD}.md
-   例如：31_DAILY_SUMMARY/2024-12-11.md
+1. 文件命名：91_DAILY_SUMMARY/{YYYY-MM-DD}.md
+   例如：91_DAILY_SUMMARY/2024-12-11.md
 
 2. 替换占位符：
    - {date}: 日期，如 "2024-12-11"
    - {feature_name}: 功能名称
    - {feature_id}: 功能 ID
    - {author}: 作者名
-   - {TASK-XXX}: 任务 ID（对应 30_PROGRESS_LOG.yaml）
+   - {TASK-XXX}: 任务 ID（对应 90_PROGRESS_LOG.yaml）
    - {current_phase}: 当前阶段号 (0-7)
 
 3. 删除不需要的节：

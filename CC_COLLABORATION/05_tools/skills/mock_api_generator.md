@@ -2,7 +2,7 @@
 
 ## 能力描述
 
-根据 `11_UI_FLOW_SPEC.md` 或 `11_API_SPEC.md` 自动生成 Mock API 代码，用于前端独立开发和 Demo 演示。
+根据 `21_UI_FLOW_SPEC.md` 或 `20_API_SPEC.md` 自动生成 Mock API 代码，用于前端独立开发和 Demo 演示。
 
 ## 输入
 
@@ -24,8 +24,8 @@
 
 ```
 读取：
-- docs/{feature}/11_UI_FLOW_SPEC.md - UI 流程规格
-- docs/{feature}/11_API_SPEC.md - API 规格（如有）
+- docs/{feature}/21_UI_FLOW_SPEC.md - UI 流程规格
+- docs/{feature}/20_API_SPEC.md - API 规格（如有）
 - docs/_system/02_API_CONVENTIONS.md - API 约定
 ```
 

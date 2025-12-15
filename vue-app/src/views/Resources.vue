@@ -336,7 +336,7 @@ const aipePrompts = ref([
     template: `你现在要使用 ui_demo skill 来生成 UI Demo。
 
 输入文件：
-- docs/<feature-slug>/11_UI_FLOW_SPEC.md
+- docs/<feature-slug>/21_UI_FLOW_SPEC.md
 
 请按照以下步骤：
 1. 读取 UI Flow Spec
@@ -404,7 +404,7 @@ const aipePrompts = ref([
 - 依赖风险
 - 需要特别注意的点
 
-请使用 Markdown 格式输出到 docs/<feature-slug>/20_DEV_PLAN_FINAL.md`
+请使用 Markdown 格式输出到 docs/<feature-slug>/50_DEV_PLAN_FINAL.md`
   },
   {
     icon: '💻',
@@ -418,8 +418,8 @@ const aipePrompts = ref([
 当前任务：[任务名称]
 
 参考文档：
-- docs/<feature-slug>/11_UI_FLOW_SPEC.md
-- docs/<feature-slug>/20_DEV_PLAN_FINAL.md
+- docs/<feature-slug>/21_UI_FLOW_SPEC.md
+- docs/<feature-slug>/50_DEV_PLAN_FINAL.md
 - _templates/_foundation_templates/_ui_system_template/ (Design System 模板)
 
 请按照以下步骤执行：
@@ -446,7 +446,7 @@ const aipePrompts = ref([
    - 记录遇到的问题和解决方案
    - 更新任务状态
 
-请开始执行任务，并在完成后更新 docs/<feature-slug>/30_PROGRESS_LOG.md`
+请开始执行任务，并在完成后更新 docs/<feature-slug>/90_PROGRESS_LOG.md`
   }
 ])
 
@@ -567,8 +567,8 @@ const qaPrompts = ref([
     template: `你是 AI QA，负责制定测试计划。
 
 参考文档：
-- docs/<feature-slug>/11_UI_FLOW_SPEC.md
-- docs/<feature-slug>/20_DEV_PLAN_FINAL.md
+- docs/<feature-slug>/21_UI_FLOW_SPEC.md
+- docs/<feature-slug>/50_DEV_PLAN_FINAL.md
 
 请生成完整的测试计划：
 
@@ -602,7 +602,7 @@ const qaPrompts = ref([
 - 并发用户数要求
 - 资源使用要求
 
-请使用 Markdown 格式输出到 docs/<feature-slug>/40_TEST_PLAN.md`
+请使用 Markdown 格式输出到 docs/<feature-slug>/60_TEST_PLAN.md`
   },
   {
     icon: '🤖',
@@ -628,7 +628,7 @@ const qaPrompts = ref([
    - 登录测试账号
 
 2. **执行测试用例**
-   按照 docs/<feature-slug>/40_TEST_PLAN.md 中的测试用例：
+   按照 docs/<feature-slug>/60_TEST_PLAN.md 中的测试用例：
    - 执行每个测试步骤
    - 记录实际结果
    - 截图保存证据
@@ -1073,7 +1073,7 @@ echo "🚀 Initializing feature: $FEATURE_NAME ($FEATURE_SLUG)"
 mkdir -p "$FEATURE_DIR"
 
 # 创建 8 个文档
-cat > "$FEATURE_DIR/00_CONTEXT.md" << EOF
+cat > "$FEATURE_DIR/10_CONTEXT.md" << EOF
 # $FEATURE_NAME - Context
 
 ## 业务背景
@@ -1092,7 +1092,7 @@ TODO: 技术限制和依赖
 TODO: 如何与现有系统集成
 EOF
 
-cat > "$FEATURE_DIR/11_UI_FLOW_SPEC.md" << EOF
+cat > "$FEATURE_DIR/21_UI_FLOW_SPEC.md" << EOF
 # $FEATURE_NAME - UI Flow Spec
 
 ## 1. 功能概述
@@ -1129,7 +1129,7 @@ TODO: 记录设计评审反馈
 TODO: 记录修改内容
 EOF
 
-cat > "$FEATURE_DIR/20_DEV_PLAN_FINAL.md" << EOF
+cat > "$FEATURE_DIR/50_DEV_PLAN_FINAL.md" << EOF
 # $FEATURE_NAME - Development Plan
 
 ## 1. 任务分解
@@ -1151,7 +1151,7 @@ TODO
 TODO
 EOF
 
-cat > "$FEATURE_DIR/30_PROGRESS_LOG.md" << EOF
+cat > "$FEATURE_DIR/90_PROGRESS_LOG.md" << EOF
 # $FEATURE_NAME - Progress Log
 
 ## 进度概览
@@ -1165,7 +1165,7 @@ cat > "$FEATURE_DIR/30_PROGRESS_LOG.md" << EOF
 - 初始化项目文档
 EOF
 
-cat > "$FEATURE_DIR/40_TEST_PLAN.md" << EOF
+cat > "$FEATURE_DIR/60_TEST_PLAN.md" << EOF
 # $FEATURE_NAME - Test Plan
 
 ## 1. 测试范围
@@ -1202,7 +1202,7 @@ TODO
 TODO
 EOF
 
-cat > "$FEATURE_DIR/50_RELEASE_NOTE.md" << EOF
+cat > "$FEATURE_DIR/70_RELEASE_NOTE.md" << EOF
 # $FEATURE_NAME - Release Note
 
 ## 版本
@@ -1227,8 +1227,8 @@ EOF
 echo "✅ Feature initialized at $FEATURE_DIR"
 echo ""
 echo "Next steps:"
-echo "1. Fill in docs/$FEATURE_SLUG/00_CONTEXT.md"
-echo "2. Write UI Flow Spec in 11_UI_FLOW_SPEC.md"
+echo "1. Fill in docs/$FEATURE_SLUG/10_CONTEXT.md"
+echo "2. Write UI Flow Spec in 21_UI_FLOW_SPEC.md"
 echo "3. Generate UI Demo"
 echo "4. Start development"
 `
@@ -1253,7 +1253,7 @@ if [ "$#" -lt 1 ]; then
 fi
 
 FEATURE_SLUG=$1
-PROGRESS_FILE="docs/$FEATURE_SLUG/30_PROGRESS_LOG.md"
+PROGRESS_FILE="docs/$FEATURE_SLUG/90_PROGRESS_LOG.md"
 
 if [ ! -f "$PROGRESS_FILE" ]; then
   echo "Error: $PROGRESS_FILE not found"
@@ -1308,7 +1308,7 @@ fi
 
 FEATURE_SLUG=$1
 VERSION=$2
-RELEASE_FILE="docs/$FEATURE_SLUG/50_RELEASE_NOTE.md"
+RELEASE_FILE="docs/$FEATURE_SLUG/70_RELEASE_NOTE.md"
 TODAY=$(date +%Y-%m-%d)
 
 echo "📝 Generating release note for $FEATURE_SLUG $VERSION..."
@@ -1399,17 +1399,17 @@ cat "$RELEASE_FILE"`
     {
       "name": "ui_demo",
       "description": "Generate UI Demo from Spec",
-      "prompt": "你是 UI System Architect，负责根据 UI Flow Spec 生成可运行的 Demo。\\n\\n请按照以下步骤：\\n1. 读取 docs/<feature-slug>/11_UI_FLOW_SPEC.md\\n2. 读取 _templates/_foundation_templates/_ui_system_template/ 下的全局 Design System 模板\\n3. 生成符合 Design System 的可运行 HTML/JS/CSS Demo\\n4. 确保 Demo 包含所有关键交互流程\\n5. 添加必要的 mock 数据\\n\\nDemo 要求：\\n- 使用真实的组件（不是占位符）\\n- 完整实现用户流程\\n- 包含所有状态（loading、error、success）\\n- 响应式设计\\n- 可以在浏览器中运行\\n\\n生成完成后，将 Demo 保存到 demos/<feature-slug>/ 目录"
+      "prompt": "你是 UI System Architect，负责根据 UI Flow Spec 生成可运行的 Demo。\\n\\n请按照以下步骤：\\n1. 读取 docs/<feature-slug>/21_UI_FLOW_SPEC.md\\n2. 读取 _templates/_foundation_templates/_ui_system_template/ 下的全局 Design System 模板\\n3. 生成符合 Design System 的可运行 HTML/JS/CSS Demo\\n4. 确保 Demo 包含所有关键交互流程\\n5. 添加必要的 mock 数据\\n\\nDemo 要求：\\n- 使用真实的组件（不是占位符）\\n- 完整实现用户流程\\n- 包含所有状态（loading、error、success）\\n- 响应式设计\\n- 可以在浏览器中运行\\n\\n生成完成后，将 Demo 保存到 demos/<feature-slug>/ 目录"
     },
     {
       "name": "review_alignment",
       "description": "Update Progress Log with completed work",
-      "prompt": "你是 review_alignment agent，负责更新 Progress Log。\\n\\n请执行：\\n1. 检查最近完成的 commits\\n2. 识别完成的任务\\n3. 更新 docs/<feature-slug>/30_PROGRESS_LOG.md\\n4. 记录遇到的问题和解决方案\\n5. 更新进度状态\\n\\n更新格式：\\n### YYYY-MM-DD\\n- [完成] 任务名称\\n  - 完成内容描述\\n  - 遇到的问题\\n  - 解决方案\\n- [进行中] 当前任务\\n  - 进度说明"
+      "prompt": "你是 review_alignment agent，负责更新 Progress Log。\\n\\n请执行：\\n1. 检查最近完成的 commits\\n2. 识别完成的任务\\n3. 更新 docs/<feature-slug>/90_PROGRESS_LOG.md\\n4. 记录遇到的问题和解决方案\\n5. 更新进度状态\\n\\n更新格式：\\n### YYYY-MM-DD\\n- [完成] 任务名称\\n  - 完成内容描述\\n  - 遇到的问题\\n  - 解决方案\\n- [进行中] 当前任务\\n  - 进度说明"
     },
     {
       "name": "test_runner",
       "description": "Run automated tests and generate report",
-      "prompt": "你是 test_runner agent，负责执行自动化测试。\\n\\n请执行：\\n1. 读取 docs/<feature-slug>/40_TEST_PLAN.md\\n2. 运行单元测试\\n3. 运行集成测试\\n4. 运行 E2E 测试（使用 Chrome Dev MCP）\\n5. 生成测试报告\\n\\n报告包含：\\n- 测试通过率\\n- 失败的测试用例\\n- 测试覆盖率\\n- 发现的问题\\n- 测试截图（E2E）\\n\\n将结果保存到 docs/<feature-slug>/41_TEST_RESULTS.md"
+      "prompt": "你是 test_runner agent，负责执行自动化测试。\\n\\n请执行：\\n1. 读取 docs/<feature-slug>/60_TEST_PLAN.md\\n2. 运行单元测试\\n3. 运行集成测试\\n4. 运行 E2E 测试（使用 Chrome Dev MCP）\\n5. 生成测试报告\\n\\n报告包含：\\n- 测试通过率\\n- 失败的测试用例\\n- 测试覆盖率\\n- 发现的问题\\n- 测试截图（E2E）\\n\\n将结果保存到 docs/<feature-slug>/41_TEST_RESULTS.md"
     },
     {
       "name": "main_agent",

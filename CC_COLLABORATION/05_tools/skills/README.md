@@ -42,7 +42,7 @@ skills/
 | `ui_demo` | Phase 3 | P1 | 根据 SPEC + UI System 生成 Demo | ✅ 已实现 |
 | `mock_api_generator` | Phase 3 | P1 | 根据 SPEC 生成 Mock API | ✅ 已实现 |
 | `doc_generator` | 跨阶段 | P1 | 根据模板生成任意标准文档 | ✅ 已实现 |
-| `context_writer` | Phase 1 | P2 | 根据需求描述生成 00_CONTEXT.md | ✅ 已实现 |
+| `context_writer` | Phase 1 | P2 | 根据需求描述生成 10_CONTEXT.md | ✅ 已实现 |
 | `spec_validator` | Phase 2 | P2 | 检查 SPEC 完整性和一致性 | ✅ 已实现 |
 | `design_from_demo` | Phase 4 | P2 | 从 Demo Mock API 反推正式 API 契约 | ✅ 已实现 |
 | `test_runner` | Phase 6 | P2 | 执行测试计划（Chrome MCP / API 测试） | ✅ 已实现 |
@@ -66,7 +66,7 @@ Skills 可以通过以下方式调用：
 ### 2. 直接调用
 
 ```
-请使用 progress_updater skill 更新 docs/user-auth/30_PROGRESS_LOG.yaml，
+请使用 progress_updater skill 更新 docs/user-auth/90_PROGRESS_LOG.yaml，
 将任务 CODE-003 标记为 done。
 ```
 

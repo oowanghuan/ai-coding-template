@@ -360,7 +360,7 @@ export const ganttFeatures: GanttFeatureEntry[] = [
       }
     ],
     progressSummary: '功能已完成！10 个 Slash Commands + 13 个 Skills + 4 个 Subagents 全部实现。完成率 100%。',
-    progressLogPath: 'docs/cc-tools-library/30_PROGRESS_LOG.yaml',
+    progressLogPath: 'docs/cc-tools-library/90_PROGRESS_LOG.yaml',
     archived: true  // 已完成交付，归档隐藏
   },
   {
@@ -396,7 +396,7 @@ export const ganttFeatures: GanttFeatureEntry[] = [
       }
     ],
     progressSummary: '功能已完成！甘特图看板系统开发完成，支持 TODAY 标志线、日/周/月切换。完成率 100%。',
-    progressLogPath: 'docs/gantt-dashboard/30_PROGRESS_LOG.yaml',
+    progressLogPath: 'docs/gantt-dashboard/90_PROGRESS_LOG.yaml',
     archived: true  // 已完成交付，归档隐藏
   },
   {
@@ -448,7 +448,7 @@ export const ganttFeatures: GanttFeatureEntry[] = [
       }
     ],
     progressSummary: '功能已完成！Edge Function 部署成功，文档查看器正常工作。完成率 89%。',
-    progressLogPath: 'docs/github-doc-viewer/30_PROGRESS_LOG.yaml',
+    progressLogPath: 'docs/github-doc-viewer/90_PROGRESS_LOG.yaml',
     archived: true  // 已完成交付，归档隐藏
   },
   {
@@ -500,7 +500,7 @@ export const ganttFeatures: GanttFeatureEntry[] = [
       }
     ],
     progressSummary: '功能已完成！5 屏渐进式引导页面已部署为应用首页。完成率 100%。',
-    progressLogPath: 'docs/panorama-guide/30_PROGRESS_LOG.yaml',
+    progressLogPath: 'docs/panorama-guide/90_PROGRESS_LOG.yaml',
     archived: true  // 已完成交付，归档隐藏
   },
   {
@@ -552,7 +552,7 @@ export const ganttFeatures: GanttFeatureEntry[] = [
       }
     ],
     progressSummary: '📚 框架样例：8 阶段工作流 + 全套模板文档 + 10 个 Slash Commands + 13 个 Skills + 4 个 Subagents。点击查看完整工作流演示。',
-    progressLogPath: 'docs/project-dashboard-system/30_PROGRESS_LOG.yaml',
+    progressLogPath: 'docs/project-dashboard-system/90_PROGRESS_LOG.yaml',
     archived: false  // 作为样例项目展示，不归档
   }
 ]

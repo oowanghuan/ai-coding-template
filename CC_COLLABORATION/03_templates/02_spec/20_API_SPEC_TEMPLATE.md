@@ -4,21 +4,21 @@
 ---
 
 > **使用说明**
-> 1. 复制此模板到功能目录，重命名为 `11_API_SPEC.md`
+> 1. 复制此模板到功能目录，重命名为 `20_API_SPEC.md`
 > 2. 替换 `{placeholder}` 为实际内容
 > 3. 根据功能复杂度增删接口
 > 4. 删除本使用说明块
 
 ---
 
-# 11_API_SPEC.md
+# 20_API_SPEC.md
 # {功能名称} - API 规格
 
 > 版本：v1.0
 > 最后更新：{YYYY-MM-DD}
 > 状态：{Draft | Review | Approved}
 > 设计者：{@username}
-> 关联文档：`00_CONTEXT.md`
+> 关联文档：`10_CONTEXT.md`
 
 ---
 

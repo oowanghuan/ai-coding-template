@@ -55,8 +55,8 @@ cd my-project
 
 ```
 docs/user-login/
-├── 00_CONTEXT.md        # 待填写：功能背景和目标
-├── 30_PROGRESS_LOG.yaml # 自动更新：进度日志
+├── 10_CONTEXT.md        # 待填写：功能背景和目标
+├── 90_PROGRESS_LOG.yaml # 自动更新：进度日志
 └── ...
 ```
 
@@ -266,18 +266,18 @@ npm run dev
 
 ### 工作原理
 
-1. **开发过程中**：进度、决策、问题自动记录到 `30_PROGRESS_LOG.yaml`
-2. **每天结束时**：`/end-day` 生成当日总结到 `31_DAILY_SUMMARY/`
+1. **开发过程中**：进度、决策、问题自动记录到 `90_PROGRESS_LOG.yaml`
+2. **每天结束时**：`/end-day` 生成当日总结到 `91_DAILY_SUMMARY/`
 3. **恢复上下文时**：`/iresume` 或 `/start-day` 读取这些文件，重建上下文
 
 ### 恢复的内容
 
 | 文档 | 恢复的信息 |
 |------|------------|
-| `00_CONTEXT.md` | 功能背景、目标、范围 |
-| `10_DESIGN.md` | 技术方案、架构决策 |
-| `30_PROGRESS_LOG.yaml` | 已完成任务、当前进度、阻塞问题 |
-| `31_DAILY_SUMMARY/` | 历史工作记录 |
+| `10_CONTEXT.md` | 功能背景、目标、范围 |
+| `40_DESIGN.md` | 技术方案、架构决策 |
+| `90_PROGRESS_LOG.yaml` | 已完成任务、当前进度、阻塞问题 |
+| `91_DAILY_SUMMARY/` | 历史工作记录 |
 
 ### 为什么有效
 

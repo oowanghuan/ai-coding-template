@@ -1,4 +1,4 @@
-# 30_PROGRESS_LOG.yaml
+# 90_PROGRESS_LOG.yaml
 # 功能模块：{feature_name}
 # 最后更新：{timestamp}
 
@@ -40,7 +40,7 @@ phase_1_kickoff:
       notes: ""
 
     - id: "{PREFIX}-KICK-002"
-      task: "编写 00_CONTEXT.md 功能背景文档"
+      task: "编写 10_CONTEXT.md 功能背景文档"
       status: pending
       priority: P0
       verification: "包含功能概述、边界定义、用户故事、约束条件"
@@ -57,7 +57,7 @@ phase_2_spec:
 
   tasks:
     - id: "{PREFIX}-SPEC-001"
-      task: "编写 11_UI_FLOW_SPEC.md 或 11_API_SPEC.md"
+      task: "编写 21_UI_FLOW_SPEC.md 或 20_API_SPEC.md"
       status: pending
       priority: P0
       verification: "包含组件清单、交互规则、边界条件"
@@ -91,7 +91,7 @@ phase_3_demo:
       task: "完成 Demo Review 并记录"
       status: pending
       priority: P0
-      verification: "12_DEMO_REVIEW.md 已创建"
+      verification: "30_DEMO_REVIEW.md 已创建"
       completed_at: null
 
 # ============================================================
@@ -105,7 +105,7 @@ phase_4_design:
 
   tasks:
     - id: "{PREFIX}-DESIGN-001"
-      task: "编写 10_DESIGN_FINAL.md 技术设计文档"
+      task: "编写 40_DESIGN_FINAL.md 技术设计文档"
       status: pending
       priority: P0
       verification: "包含架构图、API 设计、组件设计、数据流"
@@ -132,7 +132,7 @@ phase_5_code:
     #   notes: ""
 
     - id: "{PREFIX}-001"
-      task: "【待拆分】根据 20_DEV_PLAN.md 添加具体任务"
+      task: "【待拆分】根据 50_DEV_PLAN.md 添加具体任务"
       status: pending
       priority: P0
       completed_at: null
@@ -148,13 +148,13 @@ phase_6_test:
 
   tasks:
     - id: "{PREFIX}-TEST-001"
-      task: "编写 40_TEST_PLAN.md 测试计划"
+      task: "编写 60_TEST_PLAN.md 测试计划"
       status: pending
       priority: P0
       completed_at: null
 
     - id: "{PREFIX}-TEST-002"
-      task: "执行测试并记录 41_TEST_REPORT.md"
+      task: "执行测试并记录 61_TEST_REPORT.md"
       status: pending
       priority: P0
       verification: "所有测试用例通过"
@@ -171,7 +171,7 @@ phase_7_deploy:
 
   tasks:
     - id: "{PREFIX}-DEPLOY-001"
-      task: "编写 50_RELEASE_NOTE.md 发布说明"
+      task: "编写 70_RELEASE_NOTE.md 发布说明"
       status: pending
       priority: P0
       completed_at: null
@@ -249,7 +249,7 @@ stats:
 # 模板使用说明（创建后删除此段）
 # ============================================================
 # 使用方法：
-# 1. 复制此文件到 docs/{feature_id}/30_PROGRESS_LOG.yaml
+# 1. 复制此文件到 docs/{feature_id}/90_PROGRESS_LOG.yaml
 # 2. 替换所有 {placeholder} 占位符：
 #    - {feature_id}: 功能目录名，如 "github-doc-viewer"
 #    - {feature_name}: 功能显示名，如 "GitHub 文档查看器"

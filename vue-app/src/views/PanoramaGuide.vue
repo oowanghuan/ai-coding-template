@@ -322,15 +322,15 @@
             </div>
             <div class="feature-result">
               <pre>docs/my-login/
-├── 00_CONTEXT.md        ← 待填写
-└── 30_PROGRESS_LOG.yaml ← 自动更新</pre>
+├── 10_CONTEXT.md        ← 待填写
+└── 90_PROGRESS_LOG.yaml ← 自动更新</pre>
             </div>
           </div>
 
           <div class="feature-right">
             <h4>接下来</h4>
             <ol>
-              <li>填写 <code>00_CONTEXT.md</code></li>
+              <li>填写 <code>10_CONTEXT.md</code></li>
               <li>进入 Phase 2 编写规格</li>
               <li>按 8 阶段流程推进</li>
             </ol>
@@ -498,7 +498,7 @@ const phases = [
     details: {
       what: [
         '执行标准化命令：/new-feature user-login',
-        '自动创建目录结构：00_CONTEXT.md / 11_SPEC.md / 10_DESIGN.md ...',
+        '自动创建目录结构：10_CONTEXT.md / 11_SPEC.md / 40_DESIGN.md ...',
         '自动生成文档模板和可编辑占位符',
         '自动登记任务 ID、负责人、上下游依赖'
       ],
@@ -543,7 +543,7 @@ const phases = [
         '为 Spec、设计、代码奠定高质量基础'
       ]
     },
-    templates: ['00_CONTEXT', '30_PROGRESS_LOG'],
+    templates: ['10_CONTEXT', '90_PROGRESS_LOG'],
     tools: {
       slashCommands: ['/iresume', '/start-day', '/end-day'],
       skills: ['context_writer', 'progress_updater'],
@@ -573,7 +573,7 @@ const phases = [
         '产品最终效果更一致、更少缺失功能点'
       ]
     },
-    templates: ['11_UI_FLOW_SPEC', '11_API_SPEC'],
+    templates: ['21_UI_FLOW_SPEC', '20_API_SPEC'],
     tools: {
       slashCommands: [],
       skills: ['spec_validator'],
@@ -603,7 +603,7 @@ const phases = [
         '让需求方、PM、研发在视觉上达成一致'
       ]
     },
-    templates: ['12_DEMO_REVIEW'],
+    templates: ['30_DEMO_REVIEW'],
     tools: {
       slashCommands: ['/gen-demo'],
       skills: ['ui_demo', 'mock_api_generator'],
@@ -633,7 +633,7 @@ const phases = [
         '多人协作时不再互相踩逻辑'
       ]
     },
-    templates: ['10_DESIGN'],
+    templates: ['40_DESIGN'],
     tools: {
       slashCommands: [],
       skills: ['design_from_demo'],
@@ -663,7 +663,7 @@ const phases = [
         '项目追踪更透明、更容易管理'
       ]
     },
-    templates: ['20_DEV_PLAN', '31_DAILY_SUMMARY'],
+    templates: ['50_DEV_PLAN', '91_DAILY_SUMMARY'],
     tools: {
       slashCommands: ['/iresume', '/check-progress', '/daily-summary'],
       skills: ['progress_updater'],
@@ -693,7 +693,7 @@ const phases = [
         'Bug 变成可控成本，而不是无限返工'
       ]
     },
-    templates: ['40_TEST_PLAN', '41_TEST_REPORT'],
+    templates: ['60_TEST_PLAN', '61_TEST_REPORT'],
     tools: {
       slashCommands: ['/run-tests'],
       skills: ['test_runner', 'test_report_generator'],
@@ -723,7 +723,7 @@ const phases = [
         '上线过程可复盘、可自动化、可重复执行'
       ]
     },
-    templates: ['50_RELEASE_NOTE', '51_CHANGELOG'],
+    templates: ['70_RELEASE_NOTE', '71_CHANGELOG'],
     tools: {
       slashCommands: ['/release'],
       skills: ['changelog_updater'],

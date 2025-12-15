@@ -297,10 +297,10 @@ all_approved = all(
 
   ❌ spec_has_error_cases: SPEC 未定义错误处理
      └─ 搜索: ["错误处理", "Error", "异常"]
-     └─ 文件: 11_UI_FLOW_SPEC.md
+     └─ 文件: 21_UI_FLOW_SPEC.md
 
 📝 建议操作：
-  1. 在 11_UI_FLOW_SPEC.md 中添加「错误处理」章节
+  1. 在 21_UI_FLOW_SPEC.md 中添加「错误处理」章节
   2. 修复后运行 /check-gate user-auth --phase=2
   3. 确认通过后重新执行此命令
 ```

@@ -4,6 +4,37 @@ All notable changes to ai-coding-template will be documented in this file.
 
 ---
 
+## [v1.3.0] - 2024-12-15
+
+### 🔧 Breaking Change: 文件编号规范化
+
+**修复文件编号约定**：将所有模板文件编号调整为按 Phase 顺序排列。
+
+#### 编号变更
+
+| Phase | 旧编号 | 新编号 | 文件 |
+|-------|--------|--------|------|
+| 1 Kickoff | 00_ | 10_ | 10_CONTEXT |
+| 2 Spec | 11_ | 20_/21_ | 20_API_SPEC, 21_UI_FLOW_SPEC |
+| 3 Demo | 12_ | 30_ | 30_DEMO_REVIEW |
+| 4 Design | 10_ | 40_ | 40_DESIGN_FINAL |
+| 5 Code | 20_ | 50_ | 50_DEV_PLAN |
+| 6 Test | 40_/41_ | 60_/61_ | 60_TEST_PLAN, 61_TEST_REPORT |
+| 7 Deploy | 50_/51_ | 70_/71_ | 70_RELEASE_NOTE, 71_CHANGELOG |
+| 通用 | 30_/31_ | 90_/91_ | 90_PROGRESS_LOG, 91_DAILY_SUMMARY |
+
+#### 迁移指南
+
+如果项目中已有旧编号的文件，需要重命名：
+```bash
+mv 00_CONTEXT.md 10_CONTEXT.md
+mv 11_API_SPEC.md 20_API_SPEC.md
+mv 10_DESIGN_FINAL.md 40_DESIGN_FINAL.md
+mv 30_PROGRESS_LOG.yaml 90_PROGRESS_LOG.yaml
+```
+
+---
+
 ## [v1.2.0] - 2024-12-15
 
 ### 🚀 New Feature: Phase Gate System

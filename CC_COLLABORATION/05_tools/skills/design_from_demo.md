@@ -2,7 +2,7 @@
 
 ## 能力描述
 
-从 Demo 中使用的 Mock API 反向推导出正式的 API 契约，生成 `10_DESIGN_FINAL.md` 中的 API 部分。这在 Demo 先行的开发模式中特别有用。
+从 Demo 中使用的 Mock API 反向推导出正式的 API 契约，生成 `40_DESIGN_FINAL.md` 中的 API 部分。这在 Demo 先行的开发模式中特别有用。
 
 ## 输入
 
@@ -172,7 +172,7 @@ mock_analysis:
 💡 下一步：
 1. 确认 API 契约是否符合预期
 2. 更新 Mock API 以消除差异
-3. 将契约合并到 10_DESIGN_FINAL.md
+3. 将契约合并到 40_DESIGN_FINAL.md
 ```
 
 ## 示例
@@ -187,7 +187,7 @@ mock_analysis:
 
 ### 示例输出
 
-自动更新 `docs/user-auth/10_DESIGN_FINAL.md` 的 API 契约部分。
+自动更新 `docs/user-auth/40_DESIGN_FINAL.md` 的 API 契约部分。
 
 ## 注意事项
 

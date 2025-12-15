@@ -31,10 +31,10 @@
 ### 2. 收集发布信息
 
 读取以下文件收集信息：
-- `docs/{feature-name}/00_CONTEXT.md` - 功能描述
-- `docs/{feature-name}/30_PROGRESS_LOG.yaml` - 完成的任务
+- `docs/{feature-name}/10_CONTEXT.md` - 功能描述
+- `docs/{feature-name}/90_PROGRESS_LOG.yaml` - 完成的任务
 - `docs/{feature-name}/40_TEST_REPORT.md` - 测试结果（如有）
-- `docs/{feature-name}/31_DAILY_SUMMARY/` - 历史工作记录
+- `docs/{feature-name}/91_DAILY_SUMMARY/` - 历史工作记录
 
 ### 3. 验证发布条件
 
@@ -57,7 +57,7 @@
 
 ### 4. 生成发布说明
 
-创建 `docs/{feature-name}/50_RELEASE_NOTES/{version}.md`：
+创建 `docs/{feature-name}/70_RELEASE_NOTES/{version}.md`：
 
 ```markdown
 # Release Notes - {Feature Name} {version}
@@ -70,7 +70,7 @@
 
 ## 概述
 
-{从 00_CONTEXT.md 提取功能概述}
+{从 10_CONTEXT.md 提取功能概述}
 
 ---
 
@@ -153,8 +153,8 @@
 ## 相关链接
 
 - 功能文档：`docs/{feature-name}/`
-- 设计文档：`docs/{feature-name}/10_DESIGN_FINAL.md`
-- 进度日志：`docs/{feature-name}/30_PROGRESS_LOG.yaml`
+- 设计文档：`docs/{feature-name}/40_DESIGN_FINAL.md`
+- 进度日志：`docs/{feature-name}/90_PROGRESS_LOG.yaml`
 
 ---
 
@@ -171,7 +171,7 @@ git tag -a {feature-name}-{version} -m "Release {feature-name} {version}"
 
 ### 6. 更新进度日志
 
-更新 `30_PROGRESS_LOG.yaml`：
+更新 `90_PROGRESS_LOG.yaml`：
 - 将 Phase 7 Deploy 阶段标记为 done
 - 更新 `meta.status` 为 `released`
 - 添加 release 信息
@@ -180,7 +180,7 @@ git tag -a {feature-name}-{version} -m "Release {feature-name} {version}"
 release:
   version: "{version}"
   released_at: "{current_datetime}"
-  release_notes: "docs/{feature-name}/50_RELEASE_NOTES/{version}.md"
+  release_notes: "docs/{feature-name}/70_RELEASE_NOTES/{version}.md"
 ```
 
 ### 7. 输出结果
@@ -194,7 +194,7 @@ release:
 • 功能模块: {feature-name}
 • 版本号: {version}
 • 发布日期: {release_date}
-• 发布说明: docs/{feature-name}/50_RELEASE_NOTES/{version}.md
+• 发布说明: docs/{feature-name}/70_RELEASE_NOTES/{version}.md
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 统计摘要
@@ -213,7 +213,7 @@ Tag: {feature-name}-{version}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📝 生成的文件:
-• docs/{feature-name}/50_RELEASE_NOTES/{version}.md
+• docs/{feature-name}/70_RELEASE_NOTES/{version}.md
 
 ✅ 功能模块 {feature-name} 已标记为已发布状态
 

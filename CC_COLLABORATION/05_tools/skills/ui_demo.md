@@ -2,7 +2,7 @@
 
 ## 能力描述
 
-根据 `11_UI_FLOW_SPEC.md` 和项目的 UI System 规范，自动生成可运行的 Vue 3 Demo 组件，用于快速验证 UI 设计。
+根据 `21_UI_FLOW_SPEC.md` 和项目的 UI System 规范，自动生成可运行的 Vue 3 Demo 组件，用于快速验证 UI 设计。
 
 ## 输入
 
@@ -24,13 +24,13 @@
 
 ```
 读取：
-- docs/{feature}/11_UI_FLOW_SPEC.md - UI 流程规格
+- docs/{feature}/21_UI_FLOW_SPEC.md - UI 流程规格
 - docs/_system/_ui_system/* - 项目 UI System 规范（如有）
 ```
 
 ### 2. 解析 UI 规格
 
-从 `11_UI_FLOW_SPEC.md` 提取：
+从 `21_UI_FLOW_SPEC.md` 提取：
 
 ```yaml
 pages:

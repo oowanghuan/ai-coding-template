@@ -51,10 +51,10 @@ docs/
 │       ├── 01_OVERVIEW.md           # 框架概述
 │       ├── 02_ROLES.md              # 角色定义
 │       ├── 03_templates/            # 文档模板
-│       │   ├── 00_CONTEXT.md
-│       │   ├── 10_DESIGN_FINAL.md
+│       │   ├── 10_CONTEXT.md
+│       │   ├── 40_DESIGN_FINAL.md
 │       │   ├── 20_UI_FLOW_SPEC.md
-│       │   └── 30_PROGRESS_LOG.yaml
+│       │   └── 90_PROGRESS_LOG.yaml
 │       ├── 04_AI_WORKFLOW.md        # 工作流定义
 │       └── 05_TOOLS/                # 工具库
 │           ├── README.md
@@ -109,12 +109,12 @@ docs/
 ### 文档体系
 
 每个功能模块在 `docs/{feature-name}/` 下维护独立文档：
-- `00_CONTEXT.md` - 功能上下文
-- `10_DESIGN_FINAL.md` - 设计文档
+- `10_CONTEXT.md` - 功能上下文
+- `40_DESIGN_FINAL.md` - 设计文档
 - `20_UI_FLOW_SPEC.md` - UI 流程规格
-- `30_PROGRESS_LOG.yaml` - 进度日志
+- `90_PROGRESS_LOG.yaml` - 进度日志
 - `40_TEST_REPORT.md` - 测试报告
-- `50_RELEASE_NOTES/` - 发布说明
+- `70_RELEASE_NOTES/` - 发布说明
 
 ## 快速开始
 
@@ -173,7 +173,7 @@ docs/
 - 协调资源
 
 **交付物**：
-- 功能上下文（00_CONTEXT.md）
+- 功能上下文（10_CONTEXT.md）
 - 需求清单
 - 优先级排序
 
@@ -186,7 +186,7 @@ docs/
 - 主持方案评审
 
 **交付物**：
-- 设计文档（10_DESIGN_FINAL.md）
+- 设计文档（40_DESIGN_FINAL.md）
 - UI 流程规格（20_UI_FLOW_SPEC.md）
 - 评审记录
 
@@ -201,7 +201,7 @@ docs/
 **交付物**：
 - 功能代码
 - 测试报告（40_TEST_REPORT.md）
-- 发布说明（50_RELEASE_NOTES/）
+- 发布说明（70_RELEASE_NOTES/）
 
 ## 协作流程
 

@@ -46,24 +46,24 @@ has_api: true/false                   # 是否有后端 API
 ```bash
 # 在 Docs/ 下创建功能目录
 Docs/{feature-name}/
-├── 00_CONTEXT.md              # 功能上下文（必须）
-├── 10_DESIGN_FINAL.md         # 设计文档（Phase 4 创建）
-├── 11_UI_FLOW_SPEC.md         # UI 规格（如有 UI）
-├── 11_API_SPEC.md             # API 规格（如有 API）
-├── 20_DEV_PLAN.md             # 开发计划（Phase 5 创建）
-├── 30_PROGRESS_LOG.yaml       # 进度日志（必须）
-├── 31_DAILY_SUMMARY/          # 每日总结目录
-├── 40_TEST_PLAN.md            # 测试计划（Phase 6 创建）
-├── 41_TEST_REPORT.md          # 测试报告（Phase 6 创建）
-└── 50_RELEASE_NOTE.md         # 发布说明（Phase 7 创建）
+├── 10_CONTEXT.md              # 功能上下文（必须）
+├── 40_DESIGN_FINAL.md         # 设计文档（Phase 4 创建）
+├── 21_UI_FLOW_SPEC.md         # UI 规格（如有 UI）
+├── 20_API_SPEC.md             # API 规格（如有 API）
+├── 50_DEV_PLAN.md             # 开发计划（Phase 5 创建）
+├── 90_PROGRESS_LOG.yaml       # 进度日志（必须）
+├── 91_DAILY_SUMMARY/          # 每日总结目录
+├── 60_TEST_PLAN.md            # 测试计划（Phase 6 创建）
+├── 61_TEST_REPORT.md          # 测试报告（Phase 6 创建）
+└── 70_RELEASE_NOTE.md         # 发布说明（Phase 7 创建）
 ```
 
-### Step 3: 生成 00_CONTEXT.md
+### Step 3: 生成 10_CONTEXT.md
 
 使用 `CONTEXT_TEMPLATE.md` 模板，填写以下内容：
 
 ```markdown
-# 00_CONTEXT.md
+# 10_CONTEXT.md
 # {功能名称} - 功能上下文
 
 > 版本：v1.0
@@ -101,14 +101,14 @@ Docs/{feature-name}/
 ## 5. 里程碑
 | 阶段 | 交付物 | 预计时间 |
 |------|--------|----------|
-| Kickoff | 00_CONTEXT.md | {日期} |
+| Kickoff | 10_CONTEXT.md | {日期} |
 | ... | ... | ... |
 ```
 
-### Step 4: 初始化 30_PROGRESS_LOG.yaml
+### Step 4: 初始化 90_PROGRESS_LOG.yaml
 
 ```yaml
-# 30_PROGRESS_LOG.yaml
+# 90_PROGRESS_LOG.yaml
 # 功能模块：{feature-name}
 
 meta:
@@ -125,7 +125,7 @@ phase_1_kickoff:
   status: wip
   tasks:
     - id: P1-001
-      task: "完成 00_CONTEXT.md"
+      task: "完成 10_CONTEXT.md"
       status: done
       completed_at: {YYYY-MM-DD}
 
@@ -141,11 +141,11 @@ phase_2_spec:
 
 cc_checkpoint:
   session_id: "cc-{YYYY-MM-DD}-001"
-  last_file_edited: "Docs/{feature-name}/00_CONTEXT.md"
+  last_file_edited: "Docs/{feature-name}/10_CONTEXT.md"
   last_action: "创建功能目录和初始文档"
   next_step: "完善 CONTEXT 文档，进入 Phase 2 Spec"
   context_files:
-    - "Docs/{feature-name}/00_CONTEXT.md"
+    - "Docs/{feature-name}/10_CONTEXT.md"
     - "Docs/_system/01_PROJECT_PROFILE.yaml"
 
 stats:
@@ -156,19 +156,19 @@ stats:
     completion_rate: "0%"
 ```
 
-### Step 5: 创建 31_DAILY_SUMMARY 目录
+### Step 5: 创建 91_DAILY_SUMMARY 目录
 
 ```bash
-mkdir -p Docs/{feature-name}/31_DAILY_SUMMARY
+mkdir -p Docs/{feature-name}/91_DAILY_SUMMARY
 ```
 
 ### Step 6: 验证完成
 
 检查以下条件：
 - [ ] 目录结构已创建
-- [ ] 00_CONTEXT.md 已填写基本信息
-- [ ] 30_PROGRESS_LOG.yaml 已初始化
-- [ ] 31_DAILY_SUMMARY/ 目录已创建
+- [ ] 10_CONTEXT.md 已填写基本信息
+- [ ] 90_PROGRESS_LOG.yaml 已初始化
+- [ ] 91_DAILY_SUMMARY/ 目录已创建
 
 ---
 
@@ -192,9 +192,9 @@ mkdir -p Docs/{feature-name}/31_DAILY_SUMMARY
 1. 解析 feature-name
 2. 检查目录是否已存在
 3. 创建目录结构
-4. 生成 00_CONTEXT.md（基础框架）
-5. 生成 30_PROGRESS_LOG.yaml
-6. 创建 31_DAILY_SUMMARY/ 目录
+4. 生成 10_CONTEXT.md（基础框架）
+5. 生成 90_PROGRESS_LOG.yaml
+6. 创建 91_DAILY_SUMMARY/ 目录
 7. 输出创建结果
 8. 提示下一步操作
 ```
@@ -214,9 +214,9 @@ mkdir -p Docs/{feature-name}/31_DAILY_SUMMARY
 
 2. 创建目录和文件
    - 创建 Docs/{feature-name}/ 目录
-   - 生成 00_CONTEXT.md
-   - 生成 30_PROGRESS_LOG.yaml
-   - 创建 31_DAILY_SUMMARY/ 目录
+   - 生成 10_CONTEXT.md
+   - 生成 90_PROGRESS_LOG.yaml
+   - 创建 91_DAILY_SUMMARY/ 目录
 
 3. 输出结果
    - 显示创建的文件列表
@@ -233,12 +233,12 @@ mkdir -p Docs/{feature-name}/31_DAILY_SUMMARY
 ✅ 功能模块 "user-subscription" 已创建
 
 📁 创建的文件：
-  - Docs/user-subscription/00_CONTEXT.md
-  - Docs/user-subscription/30_PROGRESS_LOG.yaml
-  - Docs/user-subscription/31_DAILY_SUMMARY/
+  - Docs/user-subscription/10_CONTEXT.md
+  - Docs/user-subscription/90_PROGRESS_LOG.yaml
+  - Docs/user-subscription/91_DAILY_SUMMARY/
 
 📋 下一步：
-  1. 完善 00_CONTEXT.md 中的功能背景和目标
+  1. 完善 10_CONTEXT.md 中的功能背景和目标
   2. 确认功能范围和依赖
   3. 准备进入 Phase 2 Spec，编写 UI/API 规格
 
@@ -290,13 +290,13 @@ mkdir -p Docs/{feature-name}/31_DAILY_SUMMARY
 ### 新功能启动完成标准
 
 - [ ] 目录 `Docs/{feature-name}/` 已创建
-- [ ] `00_CONTEXT.md` 包含：
+- [ ] `10_CONTEXT.md` 包含：
   - [ ] 功能背景
   - [ ] 功能目标
   - [ ] 功能范围（In/Out of Scope）
   - [ ] 负责人信息
-- [ ] `30_PROGRESS_LOG.yaml` 已初始化
-- [ ] `31_DAILY_SUMMARY/` 目录已创建
+- [ ] `90_PROGRESS_LOG.yaml` 已初始化
+- [ ] `91_DAILY_SUMMARY/` 目录已创建
 - [ ] PROGRESS_LOG 中 Phase 1 标记为 wip
 
 ---
@@ -307,16 +307,16 @@ mkdir -p Docs/{feature-name}/31_DAILY_SUMMARY
 
 ```
 Docs/{feature-name}/
-├── 00_CONTEXT.md           # Phase 1 创建
-├── 10_DESIGN_FINAL.md      # Phase 4 创建
-├── 11_UI_FLOW_SPEC.md      # Phase 2 创建（有 UI）
-├── 11_API_SPEC.md          # Phase 2 创建（有 API）
-├── 20_DEV_PLAN.md          # Phase 5 创建
-├── 30_PROGRESS_LOG.yaml    # Phase 1 创建
-├── 31_DAILY_SUMMARY/       # Phase 1 创建
-├── 40_TEST_PLAN.md         # Phase 6 创建
-├── 41_TEST_REPORT.md       # Phase 6 创建
-└── 50_RELEASE_NOTE.md      # Phase 7 创建
+├── 10_CONTEXT.md           # Phase 1 创建
+├── 40_DESIGN_FINAL.md      # Phase 4 创建
+├── 21_UI_FLOW_SPEC.md      # Phase 2 创建（有 UI）
+├── 20_API_SPEC.md          # Phase 2 创建（有 API）
+├── 50_DEV_PLAN.md          # Phase 5 创建
+├── 90_PROGRESS_LOG.yaml    # Phase 1 创建
+├── 91_DAILY_SUMMARY/       # Phase 1 创建
+├── 60_TEST_PLAN.md         # Phase 6 创建
+├── 61_TEST_REPORT.md       # Phase 6 创建
+└── 70_RELEASE_NOTE.md      # Phase 7 创建
 ```
 
 ### B. 文档编号说明

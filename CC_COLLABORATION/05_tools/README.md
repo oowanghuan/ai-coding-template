@@ -51,9 +51,9 @@
 2. 检查目录是否已存在
 3. 创建目录结构：
    Docs/{feature-name}/
-   ├── 00_CONTEXT.md
-   ├── 30_PROGRESS_LOG.yaml
-   └── 31_DAILY_SUMMARY/
+   ├── 10_CONTEXT.md
+   ├── 90_PROGRESS_LOG.yaml
+   └── 91_DAILY_SUMMARY/
 4. 生成初始文档内容
 5. 输出创建结果
 6. 提示下一步操作
@@ -69,12 +69,12 @@
 ✅ 功能模块 "{feature-name}" 已创建
 
 📁 创建的文件：
-  - Docs/{feature-name}/00_CONTEXT.md
-  - Docs/{feature-name}/30_PROGRESS_LOG.yaml
-  - Docs/{feature-name}/31_DAILY_SUMMARY/
+  - Docs/{feature-name}/10_CONTEXT.md
+  - Docs/{feature-name}/90_PROGRESS_LOG.yaml
+  - Docs/{feature-name}/91_DAILY_SUMMARY/
 
 📋 下一步：
-  1. 完善 00_CONTEXT.md
+  1. 完善 10_CONTEXT.md
   2. 进入 Phase 2 Spec
 ```
 
@@ -99,7 +99,7 @@
 
 **执行逻辑**：
 ```
-1. 读取 Docs/{feature-name}/30_PROGRESS_LOG.yaml
+1. 读取 Docs/{feature-name}/90_PROGRESS_LOG.yaml
 2. 解析 cc_checkpoint 信息
 3. 读取 context_files 列表中的文件
 4. 输出当前状态和 next_step
@@ -119,9 +119,9 @@
   {next_step}
 
 📄 已加载上下文文件：
-  - 00_CONTEXT.md
-  - 10_DESIGN_FINAL.md
-  - 20_DEV_PLAN.md
+  - 10_CONTEXT.md
+  - 40_DESIGN_FINAL.md
+  - 50_DEV_PLAN.md
 ```
 
 ---
@@ -148,7 +148,7 @@
 2. 筛选今日完成的任务
 3. 计算进度统计
 4. 生成 DAILY_SUMMARY 文件
-5. 保存到 31_DAILY_SUMMARY/{date}.md
+5. 保存到 91_DAILY_SUMMARY/{date}.md
 ```
 
 **输出文件格式**：
@@ -228,7 +228,7 @@ Phase 进度：
 
 **执行逻辑**：
 ```
-1. 读取 11_UI_FLOW_SPEC.md
+1. 读取 21_UI_FLOW_SPEC.md
 2. 读取 _ui_system 规范
 3. 生成 Vue 组件到 playgrounds/{feature-name}/
 4. 生成 Mock API 数据
@@ -254,10 +254,10 @@ Phase 进度：
 
 **执行逻辑**：
 ```
-1. 读取 40_TEST_PLAN.md
+1. 读取 60_TEST_PLAN.md
 2. 执行测试用例（使用 Chrome MCP 或 API 测试）
 3. 收集测试结果
-4. 生成 41_TEST_REPORT.md
+4. 生成 61_TEST_REPORT.md
 ```
 
 ---
@@ -282,7 +282,7 @@ Phase 进度：
 **执行逻辑**：
 ```
 1. 读取 PROGRESS_LOG 和 TEST_REPORT
-2. 生成 50_RELEASE_NOTE.md
+2. 生成 70_RELEASE_NOTE.md
 3. 创建 Git Tag
 4. 输出发布摘要
 ```
@@ -337,7 +337,7 @@ Phase 进度：
 **执行逻辑**：
 ```
 1. 扫描 Docs/ 目录下所有功能模块
-2. 读取每个模块的 30_PROGRESS_LOG.yaml
+2. 读取每个模块的 90_PROGRESS_LOG.yaml
 3. 解析 meta、phase_X、cc_checkpoint、stats 数据
 4. 转换为 GanttFeatureEntry 格式
 5. 更新 vue-app/src/data/projectRegistry.ts 中的 ganttFeatures[]
@@ -399,7 +399,7 @@ stats.summary                    →  progressSummary
 **执行逻辑**：
 ```
 1. 扫描 Docs/ 目录下所有功能模块
-2. 读取每个模块的 30_PROGRESS_LOG.yaml
+2. 读取每个模块的 90_PROGRESS_LOG.yaml
 3. 筛选今日（或指定日期）completed_at 的任务
 4. 识别 blocked 状态的任务
 5. 提取明日待办（wip 状态任务）
@@ -489,7 +489,7 @@ export const currentDailyStandup: DailyStandup = {
 - 执行 /gen-demo 命令
 
 **输入**：
-- `11_UI_FLOW_SPEC.md`
+- `21_UI_FLOW_SPEC.md`
 - `_ui_system/` 规范文件
 
 **输出**：
@@ -663,11 +663,11 @@ export const currentDailyStandup: DailyStandup = {
 **用途**：根据 CONTEXT 自动生成 UI_FLOW_SPEC 或 API_SPEC
 
 **输入**：
-- `00_CONTEXT.md`
+- `10_CONTEXT.md`
 - `_ui_system/` 规范
 
 **输出**：
-- `11_UI_FLOW_SPEC.md` 和/或 `11_API_SPEC.md`
+- `21_UI_FLOW_SPEC.md` 和/或 `20_API_SPEC.md`
 
 **工作流程**：
 ```
@@ -691,10 +691,10 @@ export const currentDailyStandup: DailyStandup = {
 **用途**：解析 PROGRESS_LOG，生成 DAILY_SUMMARY
 
 **输入**：
-- `30_PROGRESS_LOG.yaml`
+- `90_PROGRESS_LOG.yaml`
 
 **输出**：
-- `31_DAILY_SUMMARY/{date}.md`
+- `91_DAILY_SUMMARY/{date}.md`
 
 ---
 
@@ -709,11 +709,11 @@ export const currentDailyStandup: DailyStandup = {
 **用途**：根据 SPEC 生成测试计划
 
 **输入**：
-- `11_UI_FLOW_SPEC.md`
-- `11_API_SPEC.md`
+- `21_UI_FLOW_SPEC.md`
+- `20_API_SPEC.md`
 
 **输出**：
-- `40_TEST_PLAN.md`
+- `60_TEST_PLAN.md`
 
 ---
 
@@ -728,11 +728,11 @@ export const currentDailyStandup: DailyStandup = {
 **用途**：汇总进度和测试报告，生成发布说明
 
 **输入**：
-- `30_PROGRESS_LOG.yaml`
-- `41_TEST_REPORT.md`
+- `90_PROGRESS_LOG.yaml`
+- `61_TEST_REPORT.md`
 
 **输出**：
-- `50_RELEASE_NOTE.md`
+- `70_RELEASE_NOTE.md`
 
 ---
 

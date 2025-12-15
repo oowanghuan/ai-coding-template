@@ -2,7 +2,7 @@
 
 ## 能力描述
 
-解析 `30_PROGRESS_LOG.yaml`，生成结构化的每日工作总结 `31_DAILY_SUMMARY/{date}.md`。支持单功能和全局汇总两种模式。
+解析 `90_PROGRESS_LOG.yaml`，生成结构化的每日工作总结 `91_DAILY_SUMMARY/{date}.md`。支持单功能和全局汇总两种模式。
 
 ## 输入
 
@@ -14,7 +14,7 @@
 
 ## 输出
 
-- `docs/{feature}/31_DAILY_SUMMARY/{date}.md` - 单功能总结
+- `docs/{feature}/91_DAILY_SUMMARY/{date}.md` - 单功能总结
 - `docs/_daily_summary/{date}.md` - 全局总结（mode=global）
 
 ## 工作流程
@@ -30,8 +30,8 @@
 │     └── auto: 根据参数自动判断                       │
 │     ↓                                                │
 │  2. 读取 PROGRESS_LOG                                │
-│     ├── 单功能: docs/{feature}/30_PROGRESS_LOG.yaml │
-│     └── 全局: 扫描 docs/*/30_PROGRESS_LOG.yaml      │
+│     ├── 单功能: docs/{feature}/90_PROGRESS_LOG.yaml │
+│     └── 全局: 扫描 docs/*/90_PROGRESS_LOG.yaml      │
 │     ↓                                                │
 │  3. 筛选当日任务                                     │
 │     ├── 今日完成（completed_at = date）             │
@@ -163,9 +163,9 @@ stats:
 
 ## 相关链接
 
-- [进度日志](./30_PROGRESS_LOG.yaml)
-- [设计文档](./10_DESIGN_FINAL.md)
-- [UI 规格](./11_UI_FLOW_SPEC.md)
+- [进度日志](./90_PROGRESS_LOG.yaml)
+- [设计文档](./40_DESIGN_FINAL.md)
+- [UI 规格](./21_UI_FLOW_SPEC.md)
 
 ---
 
@@ -249,7 +249,7 @@ cc_checkpoint:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📄 生成的文档
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• docs/user-auth/31_DAILY_SUMMARY/2024-12-11.md
+• docs/user-auth/91_DAILY_SUMMARY/2024-12-11.md
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 今日统计

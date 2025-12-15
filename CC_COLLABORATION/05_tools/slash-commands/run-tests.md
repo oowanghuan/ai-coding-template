@@ -184,7 +184,7 @@ _由 /run-tests 自动生成_
 
 ### 7. 更新进度日志
 
-如果测试全部通过，更新 `30_PROGRESS_LOG.yaml`：
+如果测试全部通过，更新 `90_PROGRESS_LOG.yaml`：
 - 将 Phase 6 Test 阶段标记为 done
 - 更新 `stats.completion_rate`
 

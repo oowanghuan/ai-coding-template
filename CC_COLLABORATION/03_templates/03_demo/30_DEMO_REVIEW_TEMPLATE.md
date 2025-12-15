@@ -4,21 +4,21 @@
 ---
 
 > **使用说明**
-> 1. 复制此模板到功能目录，重命名为 `12_DEMO_REVIEW.md`
+> 1. 复制此模板到功能目录，重命名为 `30_DEMO_REVIEW.md`
 > 2. 在 Demo 演示/评审会议后填写
 > 3. 记录所有反馈和修改决定
 > 4. 删除本使用说明块
 
 ---
 
-# 12_DEMO_REVIEW.md
+# 30_DEMO_REVIEW.md
 # {功能名称} - Demo 评审记录
 
 > 版本：v1.0
 > 评审日期：{YYYY-MM-DD}
 > 状态：{Pending Review | Reviewed | Approved | Revision Required}
 > 主持人：{@username}
-> 关联文档：`11_UI_FLOW_SPEC.md`
+> 关联文档：`21_UI_FLOW_SPEC.md`
 
 ---
 
@@ -122,8 +122,8 @@
 
 | 文档 | 更新内容 | 原因 |
 |------|----------|------|
-| 11_UI_FLOW_SPEC.md | {更新描述} | {评审反馈} |
-| 11_API_SPEC.md | {更新描述} | {评审反馈} |
+| 21_UI_FLOW_SPEC.md | {更新描述} | {评审反馈} |
+| 20_API_SPEC.md | {更新描述} | {评审反馈} |
 
 ### 5.2 SPEC 变更对照
 

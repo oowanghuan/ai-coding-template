@@ -98,8 +98,8 @@
               </div>
               <ul class="qs-list">
                 <li>运行初始化脚本创建功能文档结构</li>
-                <li>填写 00_CONTEXT.md（业务背景）</li>
-                <li>编写 11_UI_FLOW_SPEC.md（UI规格）</li>
+                <li>填写 10_CONTEXT.md（业务背景）</li>
+                <li>编写 21_UI_FLOW_SPEC.md（UI规格）</li>
                 <li>用 Claude Code 生成第一个 Demo</li>
               </ul>
             </div>
@@ -401,7 +401,7 @@ chmod +x tools/init_feature.sh`
 // 功能文件列表
 const featureFiles = ref([
   {
-    name: '00_CONTEXT.md',
+    name: '10_CONTEXT.md',
     phase: 'Phase 1',
     color: '#1e3c72',
     description: '功能的业务背景、目标、约束条件',
@@ -409,7 +409,7 @@ const featureFiles = ref([
     expanded: false
   },
   {
-    name: '11_UI_FLOW_SPEC.md',
+    name: '21_UI_FLOW_SPEC.md',
     phase: 'Phase 1',
     color: '#667eea',
     description: 'UI/UX 的结构化说明，供 AI 生成 Demo 使用',
@@ -417,7 +417,7 @@ const featureFiles = ref([
     expanded: false
   },
   {
-    name: '10_DESIGN_FINAL.md',
+    name: '40_DESIGN_FINAL.md',
     phase: 'Phase 3',
     color: '#11998e',
     description: '技术和架构设计方案',
@@ -425,7 +425,7 @@ const featureFiles = ref([
     expanded: false
   },
   {
-    name: '20_DEV_PLAN_FINAL.md',
+    name: '50_DEV_PLAN_FINAL.md',
     phase: 'Phase 3',
     color: '#11998e',
     description: '开发计划和任务清单',
@@ -433,7 +433,7 @@ const featureFiles = ref([
     expanded: false
   },
   {
-    name: '30_PROGRESS_LOG.md',
+    name: '90_PROGRESS_LOG.md',
     phase: 'Phase 4',
     color: '#ff9800',
     description: '开发进度日志（抗 compact 锚点）',
@@ -441,7 +441,7 @@ const featureFiles = ref([
     expanded: false
   },
   {
-    name: '40_TEST_PLAN.md',
+    name: '60_TEST_PLAN.md',
     phase: 'Phase 5',
     color: '#f093fb',
     description: '测试计划和用例列表',
@@ -449,7 +449,7 @@ const featureFiles = ref([
     expanded: false
   },
   {
-    name: '41_TEST_REPORT.md',
+    name: '61_TEST_REPORT.md',
     phase: 'Phase 5',
     color: '#f093fb',
     description: '测试执行结果报告',
@@ -457,7 +457,7 @@ const featureFiles = ref([
     expanded: false
   },
   {
-    name: '50_RELEASE_NOTE.md',
+    name: '70_RELEASE_NOTE.md',
     phase: 'Phase 6',
     color: '#06beb6',
     description: '发布说明和复盘总结',
@@ -510,7 +510,7 @@ const phases = ref([
     steps: [
       {
         title: '填写业务背景',
-        description: '在 00_CONTEXT.md 中记录功能的业务背景、目标用户、约束条件',
+        description: '在 10_CONTEXT.md 中记录功能的业务背景、目标用户、约束条件',
         actions: [
           '描述要解决的问题',
           '明确目标用户',
@@ -520,7 +520,7 @@ const phases = ref([
       },
       {
         title: '编写 UI Flow Spec',
-        description: '按结构化模板填写 11_UI_FLOW_SPEC.md',
+        description: '按结构化模板填写 21_UI_FLOW_SPEC.md',
         actions: [
           '定义用户角色和流程',
           '描述交互逻辑（主流程 + 边界）',
@@ -534,7 +534,7 @@ const phases = ref([
         title: 'Chat/Gemini 评审',
         description: '让 AI 检查并补充 UI Flow Spec',
         actions: [
-          '上传 00_CONTEXT 和 11_UI_FLOW_SPEC',
+          '上传 10_CONTEXT 和 21_UI_FLOW_SPEC',
           '要求 AI 检查完整性和合理性',
           '补充遗漏的边界条件和错误态',
           '确认符合 /_templates/_foundation_templates/_ui_system_template/ 规则'
@@ -542,7 +542,7 @@ const phases = ref([
       }
     ],
     template: {
-      name: '11_UI_FLOW_SPEC.md',
+      name: '21_UI_FLOW_SPEC.md',
       content: `# [功能名称] - UI Flow Spec
 
 ## 1. 背景 / 目标
@@ -612,7 +612,7 @@ TODO: 填写本功能解决的问题和目标
         description: '在 Claude Code 中配置 UI Demo 生成模式',
         actions: [
           '创建 ui_demo skill 配置',
-          '指定读取 _ui_system_template 和 11_UI_FLOW_SPEC',
+          '指定读取 _ui_system_template 和 21_UI_FLOW_SPEC',
           '要求输出可运行的页面'
         ]
       },
@@ -669,7 +669,7 @@ TODO: 填写本功能解决的问题和目标
     steps: [
       {
         title: '编写技术设计',
-        description: 'Claude Code 生成 10_DESIGN_FINAL.md',
+        description: 'Claude Code 生成 40_DESIGN_FINAL.md',
         actions: [
           '定义数据模型（DB 表结构/Types）',
           '设计 API（路径、方法、参数、返回）',
@@ -682,7 +682,7 @@ TODO: 填写本功能解决的问题和目标
         title: 'Chat/Gemini 架构评审',
         description: '让 AI 评审技术方案',
         actions: [
-          '上传 10_DESIGN_FINAL',
+          '上传 40_DESIGN_FINAL',
           '检查架构合理性',
           '识别潜在风险',
           '建议优化方案'
@@ -700,7 +700,7 @@ TODO: 填写本功能解决的问题和目标
       }
     ],
     template: {
-      name: '20_DEV_PLAN_FINAL.md',
+      name: '50_DEV_PLAN_FINAL.md',
       content: `# [功能名称] - Dev Plan Final
 
 ## 开发任务清单
@@ -738,7 +738,7 @@ TODO: 填写本功能解决的问题和目标
     steps: [
       {
         title: '初始化 Progress Log',
-        description: '创建 30_PROGRESS_LOG.md',
+        description: '创建 90_PROGRESS_LOG.md',
         actions: [
           '从 DEV_PLAN 复制 Checklist',
           '标记所有任务为 [ ]',
@@ -769,7 +769,7 @@ TODO: 填写本功能解决的问题和目标
       }
     ],
     template: {
-      name: '30_PROGRESS_LOG.md',
+      name: '90_PROGRESS_LOG.md',
       content: `# Progress Log – [feature-slug]
 
 ## Checklist
@@ -815,10 +815,10 @@ TODO: 填写本功能解决的问题和目标
         title: '执行测试',
         description: '用 test_runner skill 自动跑测试',
         actions: [
-          '读取 40_TEST_PLAN',
+          '读取 60_TEST_PLAN',
           '逐条用 MCP 执行',
           '记录通过/失败',
-          '写入 41_TEST_REPORT'
+          '写入 61_TEST_REPORT'
         ]
       },
       {
@@ -833,7 +833,7 @@ TODO: 填写本功能解决的问题和目标
       }
     ],
     template: {
-      name: '40_TEST_PLAN.md',
+      name: '60_TEST_PLAN.md',
       content: `# [功能名称] - Test Plan
 
 ## 后端测试用例
@@ -899,7 +899,7 @@ TODO: 填写本功能解决的问题和目标
       }
     ],
     template: {
-      name: '50_RELEASE_NOTE.md',
+      name: '70_RELEASE_NOTE.md',
       content: `# [功能名称] - Release Note
 
 ## 概要
@@ -947,10 +947,10 @@ const skills = ref([
     config: `{
   "name": "ui_demo",
   "description": "Generate UI Demo from Spec",
-  "prompt": "你是 UI System Architect。\\n生成的 UI 必须：\\n- 严格遵守 /_templates/_foundation_templates/_ui_system_template/ 规范\\n- 根据 /docs/<feature>/11_UI_FLOW_SPEC.md\\n- 只使用项目组件库，不写裸 div\\n- 输出完整可运行的页面",
+  "prompt": "你是 UI System Architect。\\n生成的 UI 必须：\\n- 严格遵守 /_templates/_foundation_templates/_ui_system_template/ 规范\\n- 根据 /docs/<feature>/21_UI_FLOW_SPEC.md\\n- 只使用项目组件库，不写裸 div\\n- 输出完整可运行的页面",
   "actions": [
     "read_file: /_templates/_foundation_templates/_ui_system_template/*",
-    "read_file: /docs/<feature>/11_UI_FLOW_SPEC.md",
+    "read_file: /docs/<feature>/21_UI_FLOW_SPEC.md",
     "write_file: /playgrounds/<feature>/DemoPage.tsx"
   ]
 }`
@@ -966,10 +966,10 @@ const skills = ref([
   "description": "Review and update Progress Log",
   "prompt": "读取 DEV_PLAN 和 PROGRESS_LOG\\n对照本轮代码变更\\n标记完成的任务\\n更新 Checklist 和 History\\n写明 NEXT STEP",
   "actions": [
-    "read_file: /docs/<feature>/20_DEV_PLAN_FINAL.md",
-    "read_file: /docs/<feature>/30_PROGRESS_LOG.md",
+    "read_file: /docs/<feature>/50_DEV_PLAN_FINAL.md",
+    "read_file: /docs/<feature>/90_PROGRESS_LOG.md",
     "git_diff",
-    "write_file: /docs/<feature>/30_PROGRESS_LOG.md"
+    "write_file: /docs/<feature>/90_PROGRESS_LOG.md"
   ]
 }`
   },
@@ -984,10 +984,10 @@ const skills = ref([
   "description": "Run tests and generate report",
   "prompt": "读取 TEST_PLAN\\n逐条用 MCP 执行测试\\n记录通过/失败\\n写入 TEST_REPORT",
   "actions": [
-    "read_file: /docs/<feature>/40_TEST_PLAN.md",
+    "read_file: /docs/<feature>/60_TEST_PLAN.md",
     "mcp_supabase: query schema",
     "mcp_chrome: open page and test",
-    "write_file: /docs/<feature>/41_TEST_REPORT.md"
+    "write_file: /docs/<feature>/61_TEST_REPORT.md"
   ]
 }`
   },
@@ -1003,8 +1003,8 @@ const skills = ref([
   "prompt": "你是 AI Product Engineer。\\n严格按照 /docs/<feature>/ 中的文档执行\\n每个阶段完成后调用相应 skill\\n遇到 compact 时强制跳回 PROGRESS_LOG",
   "skills": ["ui_demo", "review_alignment", "test_runner"],
   "context": [
-    "/docs/<feature>/00_CONTEXT.md",
-    "/docs/<feature>/30_PROGRESS_LOG.md"
+    "/docs/<feature>/10_CONTEXT.md",
+    "/docs/<feature>/90_PROGRESS_LOG.md"
   ]
 }`
   }
@@ -1034,7 +1034,7 @@ BASE_DIR="docs/\${FEATURE_SLUG}"
 mkdir -p "\${BASE_DIR}"
 
 # 创建所有文档文件
-cat > "\${BASE_DIR}/00_CONTEXT.md" <<EOF
+cat > "\${BASE_DIR}/10_CONTEXT.md" <<EOF
 # \${FEATURE_NAME} – Context
 
 ## 背景 / 目标
@@ -1047,7 +1047,7 @@ TODO: 填写功能背景
 - TODO
 EOF
 
-cat > "\${BASE_DIR}/11_UI_FLOW_SPEC.md" <<EOF
+cat > "\${BASE_DIR}/21_UI_FLOW_SPEC.md" <<EOF
 # \${FEATURE_NAME} – UI Flow Spec
 TODO: 按模板填写
 EOF
@@ -1065,7 +1065,7 @@ echo "✅ Initialized feature docs under \${BASE_DIR}"`
 # 同步 Progress Log 到 GitHub Issues / Jira
 
 FEATURE_SLUG=$1
-PROGRESS_FILE="docs/\${FEATURE_SLUG}/30_PROGRESS_LOG.md"
+PROGRESS_FILE="docs/\${FEATURE_SLUG}/90_PROGRESS_LOG.md"
 
 if [ ! -f "$PROGRESS_FILE" ]; then
   echo "Progress Log not found"
@@ -1090,9 +1090,9 @@ FEATURE_SLUG=$1
 DOCS_DIR="docs/\${FEATURE_SLUG}"
 
 # 读取所有文档
-CONTEXT=$(cat "\${DOCS_DIR}/00_CONTEXT.md")
-DESIGN=$(cat "\${DOCS_DIR}/10_DESIGN_FINAL.md")
-TEST=$(cat "\${DOCS_DIR}/41_TEST_REPORT.md")
+CONTEXT=$(cat "\${DOCS_DIR}/10_CONTEXT.md")
+DESIGN=$(cat "\${DOCS_DIR}/40_DESIGN_FINAL.md")
+TEST=$(cat "\${DOCS_DIR}/61_TEST_REPORT.md")
 
 # 用 LLM 生成 Release Note
 # ...
@@ -1108,8 +1108,8 @@ const caseStudy = ref([
     duration: '2 天',
     description: '订阅计费系统需要展示用户的订阅状态、配额使用情况，并支持升级操作',
     deliverables: [
-      '00_CONTEXT.md - 记录业务背景：SaaS 产品需要订阅管理',
-      '11_UI_FLOW_SPEC.md - 详细的 UI 规格：订阅状态卡片、配额进度条、升级按钮等'
+      '10_CONTEXT.md - 记录业务背景：SaaS 产品需要订阅管理',
+      '21_UI_FLOW_SPEC.md - 详细的 UI 规格：订阅状态卡片、配额进度条、升级按钮等'
     ],
     highlights: [
       '用 Chat 评审 Spec，补充了"配额不足"的错误提示',
@@ -1134,8 +1134,8 @@ const caseStudy = ref([
     duration: '1 天',
     description: '技术方案：3 张表（subscriptions/orders/usage_logs）+ 5 个 API + 1 个 Edge Function',
     deliverables: [
-      '10_DESIGN_FINAL.md - 完整的技术设计',
-      '20_DEV_PLAN_FINAL.md - 拆分成 12 个开发任务'
+      '40_DESIGN_FINAL.md - 完整的技术设计',
+      '50_DEV_PLAN_FINAL.md - 拆分成 12 个开发任务'
     ],
     highlights: [
       'Gemini 评审建议增加"幂等性"处理',
@@ -1147,7 +1147,7 @@ const caseStudy = ref([
     duration: '5 天',
     description: '按 DEV_PLAN 逐个任务开发，每完成一个就更新 Progress Log',
     deliverables: [
-      '30_PROGRESS_LOG.md - 实时记录进度',
+      '90_PROGRESS_LOG.md - 实时记录进度',
       '12 个任务全部完成，包括前后端代码'
     ],
     highlights: [
@@ -1160,8 +1160,8 @@ const caseStudy = ref([
     duration: '2 天',
     description: '用 test_runner skill 自动跑测试，发现 3 个 P1 bug',
     deliverables: [
-      '40_TEST_PLAN.md - 25 个测试用例',
-      '41_TEST_REPORT.md - 通过率 88%，3 个 bug 已修复'
+      '60_TEST_PLAN.md - 25 个测试用例',
+      '61_TEST_REPORT.md - 通过率 88%，3 个 bug 已修复'
     ],
     highlights: [
       'Supabase MCP 验证数据库结构',
@@ -1173,7 +1173,7 @@ const caseStudy = ref([
     duration: '0.5 天',
     description: '生成 Release Note，部署到生产环境',
     deliverables: [
-      '50_RELEASE_NOTE.md - 发布说明',
+      '70_RELEASE_NOTE.md - 发布说明',
       '复盘会议记录 - 团队经验总结'
     ],
     highlights: [

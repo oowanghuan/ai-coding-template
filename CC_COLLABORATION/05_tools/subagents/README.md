@@ -51,7 +51,7 @@ Subagents 通常由 Slash Commands 调用，也可以直接请求使用：
 
 输入信息：
 - 功能名称：user-auth
-- CONTEXT 位置：docs/user-auth/00_CONTEXT.md
+- CONTEXT 位置：docs/user-auth/10_CONTEXT.md
 - SPEC 类型：ui（前端功能）
 ```
 

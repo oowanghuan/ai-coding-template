@@ -169,7 +169,7 @@ Phase 7 (Deploy):   {状态图标} {状态文字}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📁 必需产出物:
-  ✅ 11_UI_FLOW_SPEC.md - 存在
+  ✅ 21_UI_FLOW_SPEC.md - 存在
 
 📊 质量检查:
   ✅ spec_has_pages - SPEC 包含页面定义
@@ -184,7 +184,7 @@ Phase 7 (Deploy):   {状态图标} {状态文字}
   1. 质量检查失败: SPEC 未定义错误处理
 
 📝 建议操作:
-  1. 在 11_UI_FLOW_SPEC.md 中添加「错误处理」章节
+  1. 在 21_UI_FLOW_SPEC.md 中添加「错误处理」章节
   2. 请 Architect 审批
 ```
 
@@ -216,7 +216,7 @@ Phase 7 (Deploy):   🔒 Locked
 责任角色: Architect
 
 📝 建议操作:
-  1. 补充 11_UI_FLOW_SPEC.md 的错误处理章节
+  1. 补充 21_UI_FLOW_SPEC.md 的错误处理章节
   2. 执行 /approve-gate user-auth --phase=2 --role=Architect
 ```
 

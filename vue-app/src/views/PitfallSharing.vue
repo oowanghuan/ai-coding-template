@@ -32,9 +32,9 @@
             <div class="q-item">什么时候用 Markdown？</div>
             <div class="a-item">
               <ul>
-                <li><strong>00_CONTEXT.md：</strong>功能背景说明，给人读</li>
-                <li><strong>10_DESIGN.md：</strong>设计文档，有代码块、表格、架构图</li>
-                <li><strong>31_DAILY_SUMMARY/*.md：</strong>每日总结，给人读</li>
+                <li><strong>10_CONTEXT.md：</strong>功能背景说明，给人读</li>
+                <li><strong>40_DESIGN.md：</strong>设计文档，有代码块、表格、架构图</li>
+                <li><strong>91_DAILY_SUMMARY/*.md：</strong>每日总结，给人读</li>
               </ul>
             </div>
             <div class="a-item highlight">

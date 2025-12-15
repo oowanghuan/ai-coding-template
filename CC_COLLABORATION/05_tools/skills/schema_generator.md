@@ -2,7 +2,7 @@
 
 ## 能力描述
 
-根据 `10_DESIGN_FINAL.md` 中定义的数据模型，自动生成数据库 Schema。支持多种 ORM/数据库格式。
+根据 `40_DESIGN_FINAL.md` 中定义的数据模型，自动生成数据库 Schema。支持多种 ORM/数据库格式。
 
 ## 输入
 
@@ -22,7 +22,7 @@
 ### 1. 读取数据模型定义
 
 ```markdown
-# 从 docs/{feature}/10_DESIGN_FINAL.md 提取
+# 从 docs/{feature}/40_DESIGN_FINAL.md 提取
 
 ## 数据模型
 

@@ -74,12 +74,12 @@
 ```yaml
 # 搜索策略
 1. 检查 Docs/ 目录下所有功能模块
-2. 查找每个模块的 30_PROGRESS_LOG.yaml
+2. 查找每个模块的 90_PROGRESS_LOG.yaml
 3. 按 last_updated 排序
 4. 选择最近更新的模块
 
 # 搜索命令
-find Docs/ -name "30_PROGRESS_LOG.yaml" -type f
+find Docs/ -name "90_PROGRESS_LOG.yaml" -type f
 ```
 
 ### Step 3: 读取 Checkpoint
@@ -99,9 +99,9 @@ cc_checkpoint:
 
 ```yaml
 # 按顺序读取
-1. 30_PROGRESS_LOG.yaml    # 当前进度
-2. 20_DEV_PLAN.md          # 任务清单
-3. 10_DESIGN_FINAL.md      # 技术设计（如需要）
+1. 90_PROGRESS_LOG.yaml    # 当前进度
+2. 50_DEV_PLAN.md          # 任务清单
+3. 40_DESIGN_FINAL.md      # 技术设计（如需要）
 4. 其他 context_files 列表中的文件
 ```
 
@@ -337,8 +337,8 @@ cc_checkpoint:
 Claude: ⚠️ 检测到上下文压缩，正在执行强制恢复...
 
 读取文件:
-  ✓ Docs/user-management/30_PROGRESS_LOG.yaml
-  ✓ Docs/user-management/20_DEV_PLAN.md
+  ✓ Docs/user-management/90_PROGRESS_LOG.yaml
+  ✓ Docs/user-management/50_DEV_PLAN.md
 
 恢复完成
 

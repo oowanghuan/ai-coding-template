@@ -4,21 +4,21 @@
 ---
 
 > **使用说明**
-> 1. 复制此模板到功能目录，重命名为 `10_DESIGN_FINAL.md`
+> 1. 复制此模板到功能目录，重命名为 `40_DESIGN_FINAL.md`
 > 2. 根据功能复杂度增删章节
 > 3. Demo 评审通过后填写
 > 4. 删除本使用说明块
 
 ---
 
-# 10_DESIGN_FINAL.md
+# 40_DESIGN_FINAL.md
 # {功能名称} - 详细设计
 
 > 版本：v1.0
 > 最后更新：{YYYY-MM-DD}
 > 状态：{Draft | Review | Approved}
 > 设计者：{@username}
-> 关联文档：`11_UI_FLOW_SPEC.md`, `11_API_SPEC.md`, `12_DEMO_REVIEW.md`
+> 关联文档：`21_UI_FLOW_SPEC.md`, `20_API_SPEC.md`, `30_DEMO_REVIEW.md`
 
 ---
 
@@ -219,7 +219,7 @@ CREATE POLICY "{table}_delete_policy" ON {table_name}
 
 ### 4.2 请求/响应契约
 
-详见 `11_API_SPEC.md`，本节补充实现细节：
+详见 `20_API_SPEC.md`，本节补充实现细节：
 
 **分页规则**
 - 默认 pageSize: 20

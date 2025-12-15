@@ -21,20 +21,20 @@
 
 ```
 docs/{feature-name}/
-├── 00_CONTEXT.md          # 功能上下文（必需）
-├── 30_PROGRESS_LOG.yaml   # 进度日志（必需）
+├── 10_CONTEXT.md          # 功能上下文（必需）
+├── 90_PROGRESS_LOG.yaml   # 进度日志（必需）
 └── _demos/                # Demo 文件目录
     └── .gitkeep           # 保持目录存在
 ```
 
 创建 `_demos/` 目录用于存放该功能的 Demo 文件（由 `/gen-demo` 命令生成）。
 
-### 3. 生成 00_CONTEXT.md
+### 3. 生成 10_CONTEXT.md
 
-使用以下模板生成 `00_CONTEXT.md`：
+使用以下模板生成 `10_CONTEXT.md`：
 
 ```markdown
-# 00_CONTEXT.md
+# 10_CONTEXT.md
 # {Feature Name} - 功能上下文
 
 > 版本：v0.1
@@ -130,8 +130,8 @@ docs/{feature-name}/
 
 | 阶段 | 交付物 | 状态 |
 |------|--------|------|
-| Kickoff | 00_CONTEXT.md | Draft |
-| Spec | 10_DESIGN_FINAL.md | 待开始 |
+| Kickoff | 10_CONTEXT.md | Draft |
+| Spec | 40_DESIGN_FINAL.md | 待开始 |
 | Code | 功能实现 | 待开始 |
 | Test | 测试报告 | 待开始 |
 | Deploy | 上线 | 待开始 |
@@ -141,7 +141,7 @@ docs/{feature-name}/
 ## 7. 相关文档
 
 - 工作流总纲：`docs/_system/CC_COLLABORATION/04_AI_WORKFLOW.md`
-- 进度日志：`docs/{feature-name}/30_PROGRESS_LOG.yaml`
+- 进度日志：`docs/{feature-name}/90_PROGRESS_LOG.yaml`
 
 ---
 
@@ -152,12 +152,12 @@ docs/{feature-name}/
 | v0.1 | {current_date} | {作者} | 初始版本 |
 ```
 
-### 4. 生成 30_PROGRESS_LOG.yaml
+### 4. 生成 90_PROGRESS_LOG.yaml
 
-使用以下模板生成 `30_PROGRESS_LOG.yaml`：
+使用以下模板生成 `90_PROGRESS_LOG.yaml`：
 
 ```yaml
-# 30_PROGRESS_LOG.yaml
+# 90_PROGRESS_LOG.yaml
 # 功能模块：{Feature Name}
 # 最后更新：{current_datetime}
 
@@ -182,12 +182,12 @@ phase_1_kickoff:
       completed_at: {current_date}
 
     - id: KICK-002
-      task: "编写 00_CONTEXT.md 功能上下文"
+      task: "编写 10_CONTEXT.md 功能上下文"
       status: wip
       notes: "需要补充功能描述和目标"
 
     - id: KICK-003
-      task: "创建 30_PROGRESS_LOG.yaml"
+      task: "创建 90_PROGRESS_LOG.yaml"
       status: done
       completed_at: {current_date}
 
@@ -198,7 +198,7 @@ phase_2_spec:
   status: pending
   tasks:
     - id: SPEC-001
-      task: "编写 10_DESIGN_FINAL.md"
+      task: "编写 40_DESIGN_FINAL.md"
       status: pending
 
 # ============================================================
@@ -213,12 +213,12 @@ phase_5_code:
 # ============================================================
 cc_checkpoint:
   session_id: "cc-{current_date}-{feature-name}"
-  last_file_edited: "docs/{feature-name}/00_CONTEXT.md"
+  last_file_edited: "docs/{feature-name}/10_CONTEXT.md"
   last_action: "创建功能目录和初始文档"
-  next_step: "补充 00_CONTEXT.md 中的功能描述和目标"
+  next_step: "补充 10_CONTEXT.md 中的功能描述和目标"
   context_files:
-    - "docs/{feature-name}/00_CONTEXT.md"
-    - "docs/{feature-name}/30_PROGRESS_LOG.yaml"
+    - "docs/{feature-name}/10_CONTEXT.md"
+    - "docs/{feature-name}/90_PROGRESS_LOG.yaml"
 
 # ============================================================
 # 统计信息
@@ -241,14 +241,14 @@ stats:
 
 📁 目录结构：
 docs/{feature-name}/
-├── 00_CONTEXT.md          # 功能上下文
-├── 30_PROGRESS_LOG.yaml   # 进度日志
+├── 10_CONTEXT.md          # 功能上下文
+├── 90_PROGRESS_LOG.yaml   # 进度日志
 └── _demos/                # Demo 文件目录
 
 📝 下一步操作：
-1. 补充 00_CONTEXT.md 中的功能描述、目标和范围
+1. 补充 10_CONTEXT.md 中的功能描述、目标和范围
 2. 与团队确认功能上下文后，将状态改为 Approved
-3. 进入 Spec 阶段，编写 10_DESIGN_FINAL.md
+3. 进入 Spec 阶段，编写 40_DESIGN_FINAL.md
 
 💡 提示：
 - 使用 /check-progress {feature-name} 查看进度
@@ -259,4 +259,4 @@ docs/{feature-name}/
 
 - 功能名称使用 kebab-case（如 `user-auth`，不是 `userAuth`）
 - 自动生成的文档是框架，需要人工补充内容
-- 00_CONTEXT.md 状态默认为 Draft，确认后改为 Approved
+- 10_CONTEXT.md 状态默认为 Draft，确认后改为 Approved

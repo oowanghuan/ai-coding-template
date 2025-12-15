@@ -40,20 +40,20 @@ cc_checkpoint:
   last_action: "完成列表页基础结构"
   next_step: "实现搜索功能"
   context_files:
-    - "Docs/{feature}/30_PROGRESS_LOG.yaml"
-    - "Docs/{feature}/20_DEV_PLAN.md"
-    - "Docs/{feature}/10_DESIGN_FINAL.md"
+    - "Docs/{feature}/90_PROGRESS_LOG.yaml"
+    - "Docs/{feature}/50_DEV_PLAN.md"
+    - "Docs/{feature}/40_DESIGN_FINAL.md"
 ```
 
 ### Step 2: 加载上下文文件
 
 ```yaml
 # 按顺序读取关键文件
-1. 30_PROGRESS_LOG.yaml   # 当前进度
-2. 20_DEV_PLAN.md         # 任务清单
-3. 10_DESIGN_FINAL.md     # 技术设计
-4. 11_UI_FLOW_SPEC.md     # UI 规格（如需要）
-5. 11_API_SPEC.md         # API 规格（如需要）
+1. 90_PROGRESS_LOG.yaml   # 当前进度
+2. 50_DEV_PLAN.md         # 任务清单
+3. 40_DESIGN_FINAL.md     # 技术设计
+4. 21_UI_FLOW_SPEC.md     # UI 规格（如需要）
+5. 20_API_SPEC.md         # API 规格（如需要）
 ```
 
 ### Step 3: 分析当前状态
@@ -217,9 +217,9 @@ cc_checkpoint:
 正在恢复工作上下文...
 
 读取文件:
-  ✓ Docs/{feature}/30_PROGRESS_LOG.yaml
-  ✓ Docs/{feature}/20_DEV_PLAN.md
-  ✓ Docs/{feature}/10_DESIGN_FINAL.md
+  ✓ Docs/{feature}/90_PROGRESS_LOG.yaml
+  ✓ Docs/{feature}/50_DEV_PLAN.md
+  ✓ Docs/{feature}/40_DESIGN_FINAL.md
 
 恢复完成
 

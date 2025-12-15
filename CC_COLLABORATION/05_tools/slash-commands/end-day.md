@@ -47,7 +47,7 @@
 进行中的任务：
 • [CODE-006] 添加登录状态管理 🔄
 
-已更新: docs/{feature}/30_PROGRESS_LOG.yaml
+已更新: docs/{feature}/90_PROGRESS_LOG.yaml
 ```
 
 ### 3. 生成每日总结
@@ -62,7 +62,7 @@
 🔄 进行中: 1 项任务
 📈 整体进度: 60% (+15%)
 
-已生成: docs/{feature}/31_DAILY_SUMMARY/{date}.md
+已生成: docs/{feature}/91_DAILY_SUMMARY/{date}.md
 ```
 
 ### 4. 检查 Git 状态
@@ -80,10 +80,10 @@ git status
 修改 (Modified):
 • src/auth/login.vue
 • src/auth/api.ts
-• docs/user-auth/30_PROGRESS_LOG.yaml
+• docs/user-auth/90_PROGRESS_LOG.yaml
 
 新增 (Untracked):
-• docs/user-auth/31_DAILY_SUMMARY/2024-12-11.md
+• docs/user-auth/91_DAILY_SUMMARY/2024-12-11.md
 ```
 
 ### 5. 执行 Git Add 和 Commit
@@ -155,8 +155,8 @@ git push origin <branch>
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📝 生成的文档
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• docs/{feature}/31_DAILY_SUMMARY/{date}.md
-• docs/{feature}/30_PROGRESS_LOG.yaml (更新)
+• docs/{feature}/91_DAILY_SUMMARY/{date}.md
+• docs/{feature}/90_PROGRESS_LOG.yaml (更新)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 💾 Git 状态
@@ -193,8 +193,8 @@ git push origin <branch>
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📝 生成的文档
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• docs/user-auth/31_DAILY_SUMMARY/2024-12-11.md
-• docs/user-auth/30_PROGRESS_LOG.yaml (更新)
+• docs/user-auth/91_DAILY_SUMMARY/2024-12-11.md
+• docs/user-auth/90_PROGRESS_LOG.yaml (更新)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 💾 Git 状态

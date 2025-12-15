@@ -2,7 +2,7 @@
 
 ## 能力描述
 
-自动更新功能模块的 `30_PROGRESS_LOG.yaml` 文件，包括：
+自动更新功能模块的 `90_PROGRESS_LOG.yaml` 文件，包括：
 - 更新任务状态（pending → wip → done）
 - 更新 cc_checkpoint 断点信息
 - 更新统计信息
@@ -20,7 +20,7 @@
 
 ## 输出
 
-- 更新后的 `30_PROGRESS_LOG.yaml` 文件
+- 更新后的 `90_PROGRESS_LOG.yaml` 文件
 - 变更摘要
 
 ## 执行步骤
@@ -28,7 +28,7 @@
 ### 1. 读取 PROGRESS_LOG
 
 ```yaml
-# 读取 docs/{feature}/30_PROGRESS_LOG.yaml
+# 读取 docs/{feature}/90_PROGRESS_LOG.yaml
 ```
 
 ### 2. 根据 action 执行操作

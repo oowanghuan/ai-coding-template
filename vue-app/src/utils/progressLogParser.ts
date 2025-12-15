@@ -373,7 +373,7 @@ export function generateMockProgressData(): FeatureProgress {
       last_action: '创建 YAML 解析器',
       next_step: '更新 Vue 组件使用新数据结构',
       context_files: [
-        'Docs/project-dashboard-system/30_PROGRESS_LOG.yaml',
+        'Docs/project-dashboard-system/90_PROGRESS_LOG.yaml',
         'vue-app/src/data/projectRegistry.ts'
       ]
     },
@@ -692,7 +692,7 @@ export function generateRealProgressData(): FeatureProgress {
       last_action: '完成看板系统适配（DASH-001~004），所有 Vue 组件已更新为 8-phase 模型',
       next_step: '让 FeatureWorkbench 展示真实数据',
       context_files: [
-        'Docs/project-dashboard-system/30_PROGRESS_LOG.yaml',
+        'Docs/project-dashboard-system/90_PROGRESS_LOG.yaml',
         'vue-app/src/data/projectRegistry.ts',
         'vue-app/src/utils/progressLogParser.ts'
       ]

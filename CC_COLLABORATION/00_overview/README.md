@@ -186,9 +186,9 @@ cc_checkpoint:
   last_action: "完成登录表单验证"            # 最后完成的操作
   next_step: "实现登录 API 调用"             # 下一步任务
   context_files:                             # 需要读取的上下文文件
-    - "Docs/feature-name/00_CONTEXT.md"
-    - "Docs/feature-name/10_DESIGN_FINAL.md"
-    - "Docs/feature-name/20_DEV_PLAN.md"
+    - "Docs/feature-name/10_CONTEXT.md"
+    - "Docs/feature-name/40_DESIGN_FINAL.md"
+    - "Docs/feature-name/50_DEV_PLAN.md"
   blockers: []                               # 当前阻塞项
   notes: "注意登录失败的错误处理"             # 其他备注
 ```
@@ -390,11 +390,11 @@ Docs/_system/
 └── _ui_system/                # UI 规范
 
 Docs/{feature}/
-├── 00_CONTEXT.md              # 功能背景
-├── 10_DESIGN_FINAL.md         # 设计文档
-├── 20_DEV_PLAN.md             # 开发计划
-├── 30_PROGRESS_LOG.yaml       # 进度日志
-└── 31_DAILY_SUMMARY/          # 每日总结
+├── 10_CONTEXT.md              # 功能背景
+├── 40_DESIGN_FINAL.md         # 设计文档
+├── 50_DEV_PLAN.md             # 开发计划
+├── 90_PROGRESS_LOG.yaml       # 进度日志
+└── 91_DAILY_SUMMARY/          # 每日总结
 ```
 
 ### 10.2 状态速查

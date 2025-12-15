@@ -13,14 +13,14 @@ docs/
 │   └── _ui_system/                # UI 设计系统
 │
 ├── {feature-name}/           # 功能模块文档
-│   ├── 00_CONTEXT.md              # 功能上下文
-│   ├── 10_DESIGN.md               # 技术设计
-│   ├── 11_UI_FLOW_SPEC.md         # UI 规格
-│   ├── 11_API_SPEC.md             # API 规格
-│   ├── 30_PROGRESS_LOG.yaml       # 进度日志
-│   ├── 31_DAILY_SUMMARY/          # 每日总结
-│   ├── 40_TEST_PLAN.md            # 测试计划
-│   └── 50_RELEASE_NOTE.md         # 发布说明
+│   ├── 10_CONTEXT.md              # 功能上下文
+│   ├── 40_DESIGN.md               # 技术设计
+│   ├── 21_UI_FLOW_SPEC.md         # UI 规格
+│   ├── 20_API_SPEC.md             # API 规格
+│   ├── 90_PROGRESS_LOG.yaml       # 进度日志
+│   ├── 91_DAILY_SUMMARY/          # 每日总结
+│   ├── 60_TEST_PLAN.md            # 测试计划
+│   └── 70_RELEASE_NOTE.md         # 发布说明
 │
 └── README.md                 # 本文件
 ```

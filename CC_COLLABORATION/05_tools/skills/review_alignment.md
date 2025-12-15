@@ -2,7 +2,7 @@
 
 ## 能力描述
 
-检查已实现的代码是否与设计文档（`10_DESIGN_FINAL.md`）和 UI 规格（`11_UI_FLOW_SPEC.md`）保持一致，发现偏差并生成对齐报告。
+检查已实现的代码是否与设计文档（`40_DESIGN_FINAL.md`）和 UI 规格（`21_UI_FLOW_SPEC.md`）保持一致，发现偏差并生成对齐报告。
 
 ## 输入
 
@@ -24,9 +24,9 @@
 
 ```
 读取以下文档：
-- docs/{feature}/10_DESIGN_FINAL.md - 技术设计
-- docs/{feature}/11_UI_FLOW_SPEC.md - UI 规格（如有）
-- docs/{feature}/11_API_SPEC.md - API 规格（如有）
+- docs/{feature}/40_DESIGN_FINAL.md - 技术设计
+- docs/{feature}/21_UI_FLOW_SPEC.md - UI 规格（如有）
+- docs/{feature}/20_API_SPEC.md - API 规格（如有）
 ```
 
 ### 2. 提取设计要点

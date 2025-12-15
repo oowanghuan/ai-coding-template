@@ -33,8 +33,8 @@
 
 | 文档 | 路径 | 状态 |
 |------|------|------|
-| UI SPEC | `Docs/{feature}/11_UI_FLOW_SPEC.md` | 必须存在 |
-| API SPEC | `Docs/{feature}/11_API_SPEC.md` | 可选（如有 API） |
+| UI SPEC | `Docs/{feature}/21_UI_FLOW_SPEC.md` | 必须存在 |
+| API SPEC | `Docs/{feature}/20_API_SPEC.md` | 可选（如有 API） |
 | UI System | `Docs/_system/_ui_system/` | 必须存在 |
 
 ### 3.2 技术环境
@@ -54,11 +54,11 @@
 ```yaml
 # Claude Code 执行
 1. 读取 UI SPEC：
-   - Docs/{feature}/11_UI_FLOW_SPEC.md
+   - Docs/{feature}/21_UI_FLOW_SPEC.md
    - 提取页面清单、组件定义、交互规则
 
 2. 读取 API SPEC（如有）：
-   - Docs/{feature}/11_API_SPEC.md
+   - Docs/{feature}/20_API_SPEC.md
    - 提取接口清单、请求/响应结构
 
 3. 读取 UI System：

@@ -356,11 +356,11 @@ for role in pending_roles:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📁 必需产出物:
-  ✅ 11_UI_FLOW_SPEC.md - 存在
+  ✅ 21_UI_FLOW_SPEC.md - 存在
 
 📊 质量检查:
   ✅ spec_has_pages - SPEC 包含页面定义
-     └─ 位置: 11_UI_FLOW_SPEC.md:15
+     └─ 位置: 21_UI_FLOW_SPEC.md:15
      └─ 匹配: "## 1. 登录页面"
   ❌ spec_has_error_cases - SPEC 未定义错误处理
      └─ 搜索: ["错误处理", "Error", "异常"]
@@ -374,7 +374,7 @@ for role in pending_roles:
   1. 质量检查失败: SPEC 未定义错误处理
 
 📝 建议操作:
-  1. 在 11_UI_FLOW_SPEC.md 中添加「## 错误处理」章节
+  1. 在 21_UI_FLOW_SPEC.md 中添加「## 错误处理」章节
   2. 请 Architect 审批
 ```
 
@@ -392,8 +392,8 @@ for role in pending_roles:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📁 必需产出物:
-  ✅ 00_CONTEXT.md - 存在
-  ✅ 30_PROGRESS_LOG.yaml - 存在
+  ✅ 10_CONTEXT.md - 存在
+  ✅ 90_PROGRESS_LOG.yaml - 存在
 
 📊 质量检查:
   ✅ context_has_goals - 包含功能目标 (3 条)

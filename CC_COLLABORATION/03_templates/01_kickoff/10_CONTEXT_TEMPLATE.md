@@ -4,14 +4,14 @@
 ---
 
 > **使用说明**
-> 1. 复制此模板到功能目录，重命名为 `00_CONTEXT.md`
+> 1. 复制此模板到功能目录，重命名为 `10_CONTEXT.md`
 > 2. 替换 `{placeholder}` 为实际内容
 > 3. 删除不需要的可选章节
 > 4. 删除本使用说明块
 
 ---
 
-# 00_CONTEXT.md
+# 10_CONTEXT.md
 # {功能名称} - 功能上下文
 
 > 版本：v1.0
@@ -176,10 +176,10 @@
 
 | 阶段 | 交付物 | 预计时间 |
 |------|--------|----------|
-| Kickoff | 00_CONTEXT.md | {日期} |
-| Spec | 11_UI_FLOW_SPEC.md | {日期} |
+| Kickoff | 10_CONTEXT.md | {日期} |
+| Spec | 21_UI_FLOW_SPEC.md | {日期} |
 | Demo | UI Demo | {日期} |
-| Design | 10_DESIGN_FINAL.md | {日期} |
+| Design | 40_DESIGN_FINAL.md | {日期} |
 | Code | 功能代码 | {日期} |
 | Test | 测试报告 | {日期} |
 | Deploy | 上线 | {日期} |
@@ -188,10 +188,10 @@
 
 ## 9. 相关文档
 
-- 设计文档：`10_DESIGN_FINAL.md`
-- UI 规格：`11_UI_FLOW_SPEC.md`
-- 开发计划：`20_DEV_PLAN.md`
-- 进度日志：`30_PROGRESS_LOG.yaml`
+- 设计文档：`40_DESIGN_FINAL.md`
+- UI 规格：`21_UI_FLOW_SPEC.md`
+- 开发计划：`50_DEV_PLAN.md`
+- 进度日志：`90_PROGRESS_LOG.yaml`
 
 ---
 

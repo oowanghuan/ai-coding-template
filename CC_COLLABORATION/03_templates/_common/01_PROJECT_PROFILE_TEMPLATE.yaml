@@ -90,18 +90,18 @@ ai_collaboration:
   subagents:
     - name: "spec_writer"
       purpose: "根据 CONTEXT 生成 UI_FLOW_SPEC 或 API_SPEC"
-      input: "00_CONTEXT.md"
+      input: "10_CONTEXT.md"
       output: "11_*_SPEC.md"
 
     - name: "progress_tracker"
       purpose: "解析 PROGRESS_LOG，生成 DAILY_SUMMARY"
-      input: "30_PROGRESS_LOG.yaml"
-      output: "31_DAILY_SUMMARY/{date}.md"
+      input: "90_PROGRESS_LOG.yaml"
+      output: "91_DAILY_SUMMARY/{date}.md"
 
     - name: "release_summarizer"
       purpose: "汇总进度和测试报告，生成 RELEASE_NOTE"
-      input: ["30_PROGRESS_LOG.yaml", "41_TEST_REPORT.md"]
-      output: "50_RELEASE_NOTE.md"
+      input: ["90_PROGRESS_LOG.yaml", "61_TEST_REPORT.md"]
+      output: "70_RELEASE_NOTE.md"
 
   # Slash Commands 定义
   slash_commands:
@@ -136,18 +136,18 @@ workflow:
 
   # 必需文档
   required_docs:
-    - "00_CONTEXT.md"
-    - "10_DESIGN_FINAL.md"
-    - "20_DEV_PLAN.md"
-    - "30_PROGRESS_LOG.yaml"
-    - "40_TEST_PLAN.md"
-    - "50_RELEASE_NOTE.md"
+    - "10_CONTEXT.md"
+    - "40_DESIGN_FINAL.md"
+    - "50_DEV_PLAN.md"
+    - "90_PROGRESS_LOG.yaml"
+    - "60_TEST_PLAN.md"
+    - "70_RELEASE_NOTE.md"
 
   # 可选文档（根据功能类型选用）
   optional_docs:
-    - "11_UI_FLOW_SPEC.md"               # 有 UI 时需要
-    - "11_API_SPEC.md"                    # 有 API 时需要
-    - "31_DAILY_SUMMARY/"                 # 每日总结目录
+    - "21_UI_FLOW_SPEC.md"               # 有 UI 时需要
+    - "20_API_SPEC.md"                    # 有 API 时需要
+    - "91_DAILY_SUMMARY/"                 # 每日总结目录
 
 # ============ 特殊约定 ============
 rules:

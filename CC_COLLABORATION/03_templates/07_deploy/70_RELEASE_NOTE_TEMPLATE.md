@@ -4,21 +4,21 @@
 ---
 
 > **使用说明**
-> 1. 复制此模板到功能目录，重命名为 `50_RELEASE_NOTE.md`
+> 1. 复制此模板到功能目录，重命名为 `70_RELEASE_NOTE.md`
 > 2. 测试通过后填写
 > 3. 汇总所有变更和测试结果
 > 4. 删除本使用说明块
 
 ---
 
-# 50_RELEASE_NOTE.md
+# 70_RELEASE_NOTE.md
 # {功能名称} - 发布说明
 
 > 版本：v{x.y.z}
 > 发布日期：{YYYY-MM-DD}
 > 发布类型：{Feature / Hotfix / Patch}
 > 负责人：{@username}
-> 关联文档：`41_TEST_REPORT.md`
+> 关联文档：`61_TEST_REPORT.md`
 
 ---
 

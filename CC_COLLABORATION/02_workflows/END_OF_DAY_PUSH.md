@@ -67,8 +67,8 @@ cc_checkpoint:
   last_action: "完成搜索功能"
   next_step: "实现分页功能"
   context_files:
-    - "Docs/user-management/30_PROGRESS_LOG.yaml"
-    - "Docs/user-management/20_DEV_PLAN.md"
+    - "Docs/user-management/90_PROGRESS_LOG.yaml"
+    - "Docs/user-management/50_DEV_PLAN.md"
 
 # 更新统计
 stats:
@@ -83,7 +83,7 @@ stats:
 ### Step 3: 生成 DAILY_SUMMARY
 
 ```markdown
-# 31_DAILY_SUMMARY/{YYYY-MM-DD}.md
+# 91_DAILY_SUMMARY/{YYYY-MM-DD}.md
 
 ## {功能名称} - 每日总结
 
@@ -171,8 +171,8 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 - FE-003: 待完成分页功能
 
 📝 已更新：
-- Docs/{feature}/30_PROGRESS_LOG.yaml
-- Docs/{feature}/31_DAILY_SUMMARY/2024-12-10.md
+- Docs/{feature}/90_PROGRESS_LOG.yaml
+- Docs/{feature}/91_DAILY_SUMMARY/2024-12-10.md
 
 💾 已提交：
 - commit: abc1234

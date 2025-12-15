@@ -4,21 +4,21 @@
 ---
 
 > **使用说明**
-> 1. 复制此模板到功能目录，重命名为 `20_DEV_PLAN.md`
+> 1. 复制此模板到功能目录，重命名为 `50_DEV_PLAN.md`
 > 2. 基于 DESIGN_FINAL.md 拆解任务
 > 3. 每个任务应可在 1-4 小时内完成
 > 4. 删除本使用说明块
 
 ---
 
-# 20_DEV_PLAN.md
+# 50_DEV_PLAN.md
 # {功能名称} - 开发计划
 
 > 版本：v1.0
 > 最后更新：{YYYY-MM-DD}
 > 状态：{Draft | In Progress | Completed}
 > 负责人：{@username}
-> 关联文档：`10_DESIGN_FINAL.md`
+> 关联文档：`40_DESIGN_FINAL.md`
 
 ---
 

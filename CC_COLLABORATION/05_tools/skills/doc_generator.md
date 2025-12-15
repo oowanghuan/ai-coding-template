@@ -23,18 +23,18 @@
 
 | 模板名称 | 文件 | 输出位置 | 阶段 |
 |---------|------|---------|------|
-| `CONTEXT` | `CONTEXT_TEMPLATE.md` | `{feature}/00_CONTEXT.md` | Phase 1 |
+| `CONTEXT` | `CONTEXT_TEMPLATE.md` | `{feature}/10_CONTEXT.md` | Phase 1 |
 | `CHANGELOG` | `CHANGELOG_TEMPLATE.md` | `{feature}/*_CHANGELOG.md` | 通用 |
-| `UI_FLOW_SPEC` | `UI_FLOW_SPEC_TEMPLATE.md` | `{feature}/11_UI_FLOW_SPEC.md` | Phase 2 |
-| `API_SPEC` | `API_SPEC_TEMPLATE.md` | `{feature}/11_API_SPEC.md` | Phase 2 |
-| `DEMO_REVIEW` | `DEMO_REVIEW_TEMPLATE.md` | `{feature}/12_DEMO_REVIEW.md` | Phase 3 |
-| `DESIGN` | `DESIGN_TEMPLATE.md` | `{feature}/10_DESIGN_FINAL.md` | Phase 4 |
-| `DEV_PLAN` | `DEV_PLAN_TEMPLATE.md` | `{feature}/20_DEV_PLAN.md` | Phase 5 |
-| `PROGRESS_LOG` | `PROGRESS_LOG_TEMPLATE.yaml` | `{feature}/30_PROGRESS_LOG.yaml` | Phase 5 |
-| `DAILY_SUMMARY` | `DAILY_SUMMARY_TEMPLATE.md` | `{feature}/31_DAILY_SUMMARY/{date}.md` | Phase 5 |
-| `TEST_PLAN` | `TEST_PLAN_TEMPLATE.md` | `{feature}/40_TEST_PLAN.md` | Phase 6 |
-| `TEST_REPORT` | `TEST_REPORT_TEMPLATE.md` | `{feature}/41_TEST_REPORT.md` | Phase 6 |
-| `RELEASE_NOTE` | `RELEASE_NOTE_TEMPLATE.md` | `{feature}/50_RELEASE_NOTE.md` | Phase 7 |
+| `UI_FLOW_SPEC` | `UI_FLOW_SPEC_TEMPLATE.md` | `{feature}/21_UI_FLOW_SPEC.md` | Phase 2 |
+| `API_SPEC` | `API_SPEC_TEMPLATE.md` | `{feature}/20_API_SPEC.md` | Phase 2 |
+| `DEMO_REVIEW` | `DEMO_REVIEW_TEMPLATE.md` | `{feature}/30_DEMO_REVIEW.md` | Phase 3 |
+| `DESIGN` | `DESIGN_TEMPLATE.md` | `{feature}/40_DESIGN_FINAL.md` | Phase 4 |
+| `DEV_PLAN` | `DEV_PLAN_TEMPLATE.md` | `{feature}/50_DEV_PLAN.md` | Phase 5 |
+| `PROGRESS_LOG` | `PROGRESS_LOG_TEMPLATE.yaml` | `{feature}/90_PROGRESS_LOG.yaml` | Phase 5 |
+| `DAILY_SUMMARY` | `DAILY_SUMMARY_TEMPLATE.md` | `{feature}/91_DAILY_SUMMARY/{date}.md` | Phase 5 |
+| `TEST_PLAN` | `TEST_PLAN_TEMPLATE.md` | `{feature}/60_TEST_PLAN.md` | Phase 6 |
+| `TEST_REPORT` | `TEST_REPORT_TEMPLATE.md` | `{feature}/61_TEST_REPORT.md` | Phase 6 |
+| `RELEASE_NOTE` | `RELEASE_NOTE_TEMPLATE.md` | `{feature}/70_RELEASE_NOTE.md` | Phase 7 |
 
 ## 执行步骤
 
@@ -112,7 +112,7 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📄 生成的文档
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-文件：docs/{feature}/00_CONTEXT.md
+文件：docs/{feature}/10_CONTEXT.md
 模板：CONTEXT_TEMPLATE.md
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

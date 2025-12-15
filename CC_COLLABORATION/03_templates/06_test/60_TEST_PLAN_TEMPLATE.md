@@ -4,21 +4,21 @@
 ---
 
 > **使用说明**
-> 1. 复制此模板到功能目录，重命名为 `40_TEST_PLAN.md`
+> 1. 复制此模板到功能目录，重命名为 `60_TEST_PLAN.md`
 > 2. 基于 UI_FLOW_SPEC 和 API_SPEC 编写测试用例
 > 3. 开发完成后执行测试
 > 4. 删除本使用说明块
 
 ---
 
-# 40_TEST_PLAN.md
+# 60_TEST_PLAN.md
 # {功能名称} - 测试计划
 
 > 版本：v1.0
 > 最后更新：{YYYY-MM-DD}
 > 状态：{Draft | Ready | Executing | Completed}
 > 测试负责人：{@username}
-> 关联文档：`11_UI_FLOW_SPEC.md`, `11_API_SPEC.md`
+> 关联文档：`21_UI_FLOW_SPEC.md`, `20_API_SPEC.md`
 
 ---
 

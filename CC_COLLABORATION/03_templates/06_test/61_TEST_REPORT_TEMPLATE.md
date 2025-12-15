@@ -4,21 +4,21 @@
 ---
 
 > **使用说明**
-> 1. 复制此模板到功能目录，重命名为 `41_TEST_REPORT.md`
+> 1. 复制此模板到功能目录，重命名为 `61_TEST_REPORT.md`
 > 2. 执行测试后填写结果
 > 3. 记录所有发现的问题
 > 4. 删除本使用说明块
 
 ---
 
-# 41_TEST_REPORT.md
+# 61_TEST_REPORT.md
 # {功能名称} - 测试报告
 
 > 版本：v1.0
 > 测试日期：{YYYY-MM-DD}
 > 测试环境：{Development / Staging}
 > 测试人员：{@username}
-> 关联文档：`40_TEST_PLAN.md`
+> 关联文档：`60_TEST_PLAN.md`
 
 ---
 

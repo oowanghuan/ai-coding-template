@@ -34,7 +34,7 @@
 
 ```yaml
 # 特征：记录运行时状态，频繁变更
-# 示例：PHASE_GATE_STATUS.yaml, 30_PROGRESS_LOG.yaml
+# 示例：PHASE_GATE_STATUS.yaml, 90_PROGRESS_LOG.yaml
 
 # 命名规范
 文件名: UPPER_SNAKE_CASE_STATUS.yaml 或 NN_SNAKE_CASE.yaml

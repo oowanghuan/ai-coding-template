@@ -46,7 +46,7 @@ git pull origin <当前分支>
 状态: ✅ 已同步最新代码
 
 更新的文件：
-• docs/user-auth/30_PROGRESS_LOG.yaml (modified)
+• docs/user-auth/90_PROGRESS_LOG.yaml (modified)
 • src/auth/login.vue (modified)
 ```
 
@@ -55,7 +55,7 @@ git pull origin <当前分支>
 如果未指定功能模块，自动检测：
 
 1. 扫描 `docs/` 目录下所有功能模块
-2. 读取每个模块的 `30_PROGRESS_LOG.yaml`
+2. 读取每个模块的 `90_PROGRESS_LOG.yaml`
 3. 按 `last_updated` 排序，找出最近活跃的模块
 4. 如果有多个活跃模块，列出供用户选择
 
@@ -177,7 +177,7 @@ git pull origin <当前分支>
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 冲突文件:
 • src/auth/login.vue
-• docs/user-auth/30_PROGRESS_LOG.yaml
+• docs/user-auth/90_PROGRESS_LOG.yaml
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 请先解决冲突后再继续：

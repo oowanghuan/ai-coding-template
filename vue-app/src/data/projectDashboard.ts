@@ -254,58 +254,58 @@ export const mockFeatureData: Record<string, FeatureData> = {
         },
         artifacts: [
           {
-            path: 'docs/subscription-v3/00_CONTEXT.md',
+            path: 'docs/subscription-v3/10_CONTEXT.md',
             versions: ['v0.9 (Draft)', 'v1.0 (Signed)'],
             currentVersion: 1,
             preview: '# Feature Context v1.0\n- Scope: Recurring Billing\n- Status: Approved by PM'
           },
           {
-            path: 'docs/subscription-v3/10_DESIGN_FINAL.md',
+            path: 'docs/subscription-v3/40_DESIGN_FINAL.md',
             versions: ['v1.0 (Schema)', 'v1.1 (API Added)'],
             currentVersion: 1,
             preview: '# Design v1.1\n## Schema\n- subscriptions table\n## API\n- POST /api/subscribe'
           }
         ],
-        fsTree: '_templates/<br>├── <span class="fs-sys">_foundation_templates/_ui_system_template/</span><br>docs/<br>└── subscription-v3/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-highlight">00_CONTEXT.md [NEW]</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">10_DESIGN_FINAL.md [NEW]</span>'
+        fsTree: '_templates/<br>├── <span class="fs-sys">_foundation_templates/_ui_system_template/</span><br>docs/<br>└── subscription-v3/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-highlight">10_CONTEXT.md [NEW]</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">40_DESIGN_FINAL.md [NEW]</span>'
       },
       '2': {
         id: 'Spec',
         role: { name: 'AI Product Engineer', color: roleColors.aip, icon: 'PE' },
         objectives: ['技术设计转 UI 流程', '定义交互规则'],
         inputs: [
-          { name: 'docs/subscription-v3/10_DESIGN_FINAL.md', isSystemRef: false },
+          { name: 'docs/subscription-v3/40_DESIGN_FINAL.md', isSystemRef: false },
           { name: '_templates/_foundation_templates/_ui_system_template/04_PAGE_TEMPLATES_TEMPLATE.md', isSystemRef: true }
         ],
         processor: {
           agent: 'AIP_Agent',
           skills: ['Spec_Writer'],
           workflow: 'spec_gen',
-          command: '/gen-spec --design=10_DESIGN_FINAL.md',
+          command: '/gen-spec --design=40_DESIGN_FINAL.md',
           logs: ['> Reading Design...', '> Applying Templates...', '> Generating Spec...']
         },
         artifacts: [
           {
-            path: 'docs/subscription-v3/11_UI_FLOW_SPEC.md',
+            path: 'docs/subscription-v3/21_UI_FLOW_SPEC.md',
             versions: ['v0.1 (Raw)', 'v0.5 (Review)', 'v1.0 (Final)'],
             currentVersion: 2,
             preview: '# UI Flow v1.0\n- Page: /settings/plan\n- Action: Upgrade Plan\n- Error State: Insufficient Funds Modal'
           }
         ],
-        fsTree: 'docs/<br>└── subscription-v3/<br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">11_UI_FLOW_SPEC.md [NEW]</span>'
+        fsTree: 'docs/<br>└── subscription-v3/<br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">21_UI_FLOW_SPEC.md [NEW]</span>'
       },
       '3': {
         id: 'Demo',
         role: { name: 'AI Product Engineer', color: roleColors.aip, icon: 'PE' },
         objectives: ['生成交互原型', '验证 UI Flow'],
         inputs: [
-          { name: 'docs/subscription-v3/11_UI_FLOW_SPEC.md', isSystemRef: false },
+          { name: 'docs/subscription-v3/21_UI_FLOW_SPEC.md', isSystemRef: false },
           { name: '_templates/_foundation_templates/_ui_system_template/01_COMPONENT_LIBRARY_TEMPLATE.md', isSystemRef: true }
         ],
         processor: {
           agent: 'UI_Agent',
           skills: ['ui_demo_skill', 'Mock_Gen'],
           workflow: 'rapid_prototyping',
-          command: '/gen-demo --spec=11_UI_FLOW_SPEC.md',
+          command: '/gen-demo --spec=21_UI_FLOW_SPEC.md',
           logs: ['> Loading UI System...', '> Scaffolding Vue3...', '> Injecting Mock Data...']
         },
         artifacts: [
@@ -323,7 +323,7 @@ export const mockFeatureData: Record<string, FeatureData> = {
         role: { name: 'UI Designer', color: '#3b82f6', icon: 'DS' },
         objectives: ['设计系统对齐', '组件库适配', '完成 UI 设计稿'],
         inputs: [
-          { name: 'docs/subscription-v3/11_UI_FLOW_SPEC.md', isSystemRef: false },
+          { name: 'docs/subscription-v3/21_UI_FLOW_SPEC.md', isSystemRef: false },
           { name: 'playgrounds/Demo.vue', isSystemRef: false },
           { name: '_templates/_foundation_templates/_ui_system_template/00_UI_TOKENS_TEMPLATE.md', isSystemRef: true }
         ],
@@ -336,20 +336,20 @@ export const mockFeatureData: Record<string, FeatureData> = {
         },
         artifacts: [
           {
-            path: 'docs/subscription-v3/10_DESIGN_FINAL.md',
+            path: 'docs/subscription-v3/40_DESIGN_FINAL.md',
             versions: ['v0.9 (Draft)', 'v1.0 (Final)'],
             currentVersion: 1,
             preview: '# Design Final v1.0\n## Component Mapping\n- PricingCard → el-card\n- PlanSelector → el-radio-group\n## Color Scheme\n- Primary: #6366f1'
           }
         ],
-        fsTree: 'docs/<br>└── subscription-v3/<br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">10_DESIGN_FINAL.md [UPDATE]</span>'
+        fsTree: 'docs/<br>└── subscription-v3/<br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">40_DESIGN_FINAL.md [UPDATE]</span>'
       },
       '5': {
         id: 'Code',
         role: { name: 'Fullstack Dev', color: roleColors.dev, icon: 'DE' },
         objectives: ['实现 API & DB', '集成前端', '同步进度'],
         inputs: [
-          { name: 'docs/subscription-v3/10_DESIGN_FINAL.md', isSystemRef: false },
+          { name: 'docs/subscription-v3/40_DESIGN_FINAL.md', isSystemRef: false },
           { name: 'playgrounds/Demo.vue', isSystemRef: false }
         ],
         processor: {
@@ -367,20 +367,20 @@ export const mockFeatureData: Record<string, FeatureData> = {
             preview: "export const subscribe = async (id) => {\n  // Prod Implementation\n  return supabase.rpc('sub', { id });\n}"
           },
           {
-            path: 'docs/subscription-v3/30_PROGRESS_LOG.md',
+            path: 'docs/subscription-v3/90_PROGRESS_LOG.md',
             versions: ['v1 (Start)', 'v5 (Completed)'],
             currentVersion: 1,
             preview: '# Progress Log\n- [x] DB Schema\n- [x] API\n- [x] UI Integration'
           }
         ],
-        fsTree: 'src/<br>└── <span class="fs-highlight">modules/subscription/ [NEW]</span><br>docs/<br>└── <span class="fs-highlight">30_PROGRESS_LOG.md [UPDATE]</span>'
+        fsTree: 'src/<br>└── <span class="fs-highlight">modules/subscription/ [NEW]</span><br>docs/<br>└── <span class="fs-highlight">90_PROGRESS_LOG.md [UPDATE]</span>'
       },
       '6': {
         id: 'Test',
         role: { name: 'AI QA', color: roleColors.qa, icon: 'QA' },
         objectives: ['生成测试用例', '执行 E2E 测试', '报告 Bug'],
         inputs: [
-          { name: 'docs/subscription-v3/11_UI_FLOW_SPEC.md', isSystemRef: false },
+          { name: 'docs/subscription-v3/21_UI_FLOW_SPEC.md', isSystemRef: false },
           { name: 'src/modules/subscription/*', isSystemRef: false }
         ],
         processor: {
@@ -392,27 +392,27 @@ export const mockFeatureData: Record<string, FeatureData> = {
         },
         artifacts: [
           {
-            path: 'docs/subscription-v3/40_TEST_PLAN.md',
+            path: 'docs/subscription-v3/60_TEST_PLAN.md',
             versions: ['v1.0'],
             currentVersion: 0,
             preview: '- Case 1: Upgrade Success\n- Case 2: Payment Fail'
           },
           {
-            path: 'docs/subscription-v3/41_TEST_REPORT.md',
+            path: 'docs/subscription-v3/61_TEST_REPORT.md',
             versions: ['v1 (Fail)', 'v2 (Pass)'],
             currentVersion: 1,
             preview: '# Test Report v2\n- Total: 15\n- Passed: 15\n- Status: Ready'
           }
         ],
-        fsTree: 'docs/<br>└── subscription-v3/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-highlight">40_TEST_PLAN.md</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">41_TEST_REPORT.md</span>'
+        fsTree: 'docs/<br>└── subscription-v3/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-highlight">60_TEST_PLAN.md</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">61_TEST_REPORT.md</span>'
       },
       '7': {
         id: 'Deploy',
         role: { name: 'Project Manager', color: roleColors.pm, icon: 'PM' },
         objectives: ['汇总发布内容', '生成 Release Note', '上线'],
         inputs: [
-          { name: 'docs/subscription-v3/30_PROGRESS_LOG.md', isSystemRef: false },
-          { name: 'docs/subscription-v3/41_TEST_REPORT.md', isSystemRef: false }
+          { name: 'docs/subscription-v3/90_PROGRESS_LOG.md', isSystemRef: false },
+          { name: 'docs/subscription-v3/61_TEST_REPORT.md', isSystemRef: false }
         ],
         processor: {
           agent: 'PM_Agent',
@@ -423,13 +423,13 @@ export const mockFeatureData: Record<string, FeatureData> = {
         },
         artifacts: [
           {
-            path: 'docs/subscription-v3/50_RELEASE_NOTE.md',
+            path: 'docs/subscription-v3/70_RELEASE_NOTE.md',
             versions: ['v1.0'],
             currentVersion: 0,
             preview: '# Release v3.0.0\n## Features\n- Subscription Upgrades\n## Fixes\n- Mobile layout'
           }
         ],
-        fsTree: 'docs/<br>└── <span class="fs-highlight">50_RELEASE_NOTE.md [NEW]</span>'
+        fsTree: 'docs/<br>└── <span class="fs-highlight">70_RELEASE_NOTE.md [NEW]</span>'
       }
     }
   }
@@ -516,32 +516,32 @@ mockFeatureData['project-dashboard-system'] = {
         skills: ['context_writer', 'doc_generator'],
         workflow: 'feature_kickoff',
         command: "/new-feature --name='my-feature'",
-        logs: ['> 创建功能目录 docs/my-feature/...', '> 继承系统上下文...', '> 生成 00_CONTEXT.md 框架...', '> 功能模块初始化完成。']
+        logs: ['> 创建功能目录 docs/my-feature/...', '> 继承系统上下文...', '> 生成 10_CONTEXT.md 框架...', '> 功能模块初始化完成。']
       },
       artifacts: [
         {
-          path: 'docs/{feature}/00_CONTEXT.md',
+          path: 'docs/{feature}/10_CONTEXT.md',
           versions: ['v0.9 (草稿)', 'v1.0 (确认)'],
           currentVersion: 1,
           preview: '# 功能上下文\n## 背景\n## 目标\n## 范围边界\n## 技术约束\n## 团队分工'
         },
         {
-          path: 'docs/{feature}/30_PROGRESS_LOG.yaml',
+          path: 'docs/{feature}/90_PROGRESS_LOG.yaml',
           versions: ['v1.0 (初始化)'],
           currentVersion: 0,
           preview: '# 进度日志\nmeta:\n  feature: my-feature\n  current_phase: 1\n  status: wip'
         }
       ],
-      fsTree: 'docs/<br>├── _foundation/<br>└── {feature}/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-highlight">00_CONTEXT.md [NEW]</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">30_PROGRESS_LOG.yaml [NEW]</span>'
+      fsTree: 'docs/<br>├── _foundation/<br>└── {feature}/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-highlight">10_CONTEXT.md [NEW]</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">90_PROGRESS_LOG.yaml [NEW]</span>'
     },
     '2': {
       id: 'Spec',
       role: { name: 'AI Product Engineer', color: roleColors.aip, icon: 'PE' },
       objectives: ['技术设计转 UI 流程', '定义页面交互规则', '输出可执行规格'],
       inputs: [
-        { name: 'docs/{feature}/00_CONTEXT.md', isSystemRef: false },
-        { name: '_templates/CC_COLLABORATION/03_TEMPLATES/11_UI_FLOW_SPEC_TEMPLATE.md', isSystemRef: true },
-        { name: '_templates/CC_COLLABORATION/03_TEMPLATES/11_API_SPEC_TEMPLATE.md', isSystemRef: true }
+        { name: 'docs/{feature}/10_CONTEXT.md', isSystemRef: false },
+        { name: '_templates/CC_COLLABORATION/03_TEMPLATES/21_UI_FLOW_SPEC_TEMPLATE.md', isSystemRef: true },
+        { name: '_templates/CC_COLLABORATION/03_TEMPLATES/20_API_SPEC_TEMPLATE.md', isSystemRef: true }
       ],
       processor: {
         agent: 'spec_writer (Subagent)',
@@ -552,33 +552,33 @@ mockFeatureData['project-dashboard-system'] = {
       },
       artifacts: [
         {
-          path: 'docs/{feature}/11_UI_FLOW_SPEC.md',
+          path: 'docs/{feature}/21_UI_FLOW_SPEC.md',
           versions: ['v0.1 (初稿)', 'v0.5 (评审)', 'v1.0 (定稿)'],
           currentVersion: 2,
           preview: '# UI Flow Spec\n## 页面结构\n## 组件定义\n## 交互逻辑\n## 边界条件\n## 示例数据'
         },
         {
-          path: 'docs/{feature}/11_API_SPEC.md',
+          path: 'docs/{feature}/20_API_SPEC.md',
           versions: ['v1.0'],
           currentVersion: 0,
           preview: '# API Spec\n## Endpoints\n## 请求/响应格式\n## 错误码'
         }
       ],
-      fsTree: 'docs/<br>└── {feature}/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-highlight">11_UI_FLOW_SPEC.md [NEW]</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">11_API_SPEC.md [NEW]</span>'
+      fsTree: 'docs/<br>└── {feature}/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-highlight">21_UI_FLOW_SPEC.md [NEW]</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">20_API_SPEC.md [NEW]</span>'
     },
     '3': {
       id: 'Demo',
       role: { name: 'AI Product Engineer', color: roleColors.aip, icon: 'PE' },
       objectives: ['生成交互原型', '创建 Mock API', '验证 UI Flow'],
       inputs: [
-        { name: 'docs/{feature}/11_UI_FLOW_SPEC.md', isSystemRef: false },
+        { name: 'docs/{feature}/21_UI_FLOW_SPEC.md', isSystemRef: false },
         { name: '_templates/_foundation_templates/_ui_system_template/', isSystemRef: true }
       ],
       processor: {
         agent: 'UI_Demo_Agent',
         skills: ['ui_demo', 'mock_api_generator'],
         workflow: 'rapid_prototyping',
-        command: "/gen-demo --spec='11_UI_FLOW_SPEC.md'",
+        command: "/gen-demo --spec='21_UI_FLOW_SPEC.md'",
         logs: ['> 加载 UI 设计系统...', '> 生成 Vue3 组件...', '> 注入 Mock 数据...', '> Demo 就绪。']
       },
       artifacts: [
@@ -602,7 +602,7 @@ mockFeatureData['project-dashboard-system'] = {
       role: { name: 'UI Designer', color: '#3b82f6', icon: 'DS' },
       objectives: ['设计系统对齐', '组件库适配', '完成详细设计'],
       inputs: [
-        { name: 'docs/{feature}/11_UI_FLOW_SPEC.md', isSystemRef: false },
+        { name: 'docs/{feature}/21_UI_FLOW_SPEC.md', isSystemRef: false },
         { name: 'playgrounds/{feature}/Demo.vue', isSystemRef: false },
         { name: '_templates/_foundation_templates/_ui_system_template/', isSystemRef: true }
       ],
@@ -615,20 +615,20 @@ mockFeatureData['project-dashboard-system'] = {
       },
       artifacts: [
         {
-          path: 'docs/{feature}/10_DESIGN.md',
+          path: 'docs/{feature}/40_DESIGN.md',
           versions: ['v0.9 (草稿)', 'v1.0 (定稿)'],
           currentVersion: 1,
           preview: '# 详细设计\n## 架构图\n## API 契约\n## 数据模型\n## 组件映射'
         }
       ],
-      fsTree: 'docs/<br>└── {feature}/<br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">10_DESIGN.md [NEW]</span>'
+      fsTree: 'docs/<br>└── {feature}/<br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">40_DESIGN.md [NEW]</span>'
     },
     '5': {
       id: 'Code',
       role: { name: 'Fullstack Dev', color: roleColors.dev, icon: 'DE' },
       objectives: ['实现 API & DB', '集成前端组件', '同步进度日志'],
       inputs: [
-        { name: 'docs/{feature}/10_DESIGN.md', isSystemRef: false },
+        { name: 'docs/{feature}/40_DESIGN.md', isSystemRef: false },
         { name: 'playgrounds/{feature}/Demo.vue', isSystemRef: false }
       ],
       processor: {
@@ -646,20 +646,20 @@ mockFeatureData['project-dashboard-system'] = {
           preview: '// 生产代码实现\nexport const feature = () => {...}'
         },
         {
-          path: 'docs/{feature}/30_PROGRESS_LOG.yaml',
+          path: 'docs/{feature}/90_PROGRESS_LOG.yaml',
           versions: ['v1 (开始)', 'v5 (完成)'],
           currentVersion: 1,
           preview: '# 进度日志\nphase_5_code:\n  status: done\n  tasks:\n    - [x] API 实现\n    - [x] 前端集成'
         }
       ],
-      fsTree: 'src/<br>└── <span class="fs-highlight">modules/{feature}/ [NEW]</span><br>docs/<br>└── <span class="fs-highlight">30_PROGRESS_LOG.yaml [UPDATE]</span>'
+      fsTree: 'src/<br>└── <span class="fs-highlight">modules/{feature}/ [NEW]</span><br>docs/<br>└── <span class="fs-highlight">90_PROGRESS_LOG.yaml [UPDATE]</span>'
     },
     '6': {
       id: 'Test',
       role: { name: 'AI QA', color: roleColors.qa, icon: 'QA' },
       objectives: ['生成测试计划', '执行 E2E 测试', '输出测试报告'],
       inputs: [
-        { name: 'docs/{feature}/11_UI_FLOW_SPEC.md', isSystemRef: false },
+        { name: 'docs/{feature}/21_UI_FLOW_SPEC.md', isSystemRef: false },
         { name: 'src/modules/{feature}/*', isSystemRef: false }
       ],
       processor: {
@@ -671,27 +671,27 @@ mockFeatureData['project-dashboard-system'] = {
       },
       artifacts: [
         {
-          path: 'docs/{feature}/40_TEST_PLAN.md',
+          path: 'docs/{feature}/60_TEST_PLAN.md',
           versions: ['v1.0'],
           currentVersion: 0,
           preview: '# 测试计划\n- Case 1: 正常流程\n- Case 2: 边界条件\n- Case 3: 异常处理'
         },
         {
-          path: 'docs/{feature}/41_TEST_REPORT.md',
+          path: 'docs/{feature}/61_TEST_REPORT.md',
           versions: ['v1 (失败)', 'v2 (通过)'],
           currentVersion: 1,
           preview: '# 测试报告\n- 总计: 15\n- 通过: 15\n- 状态: 就绪'
         }
       ],
-      fsTree: 'docs/<br>└── {feature}/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-highlight">40_TEST_PLAN.md [NEW]</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">41_TEST_REPORT.md [NEW]</span>'
+      fsTree: 'docs/<br>└── {feature}/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-highlight">60_TEST_PLAN.md [NEW]</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">61_TEST_REPORT.md [NEW]</span>'
     },
     '7': {
       id: 'Deploy',
       role: { name: 'Project Manager', color: roleColors.pm, icon: 'PM' },
       objectives: ['汇总发布内容', '生成 Release Note', '完成发布'],
       inputs: [
-        { name: 'docs/{feature}/30_PROGRESS_LOG.yaml', isSystemRef: false },
-        { name: 'docs/{feature}/41_TEST_REPORT.md', isSystemRef: false }
+        { name: 'docs/{feature}/90_PROGRESS_LOG.yaml', isSystemRef: false },
+        { name: 'docs/{feature}/61_TEST_REPORT.md', isSystemRef: false }
       ],
       processor: {
         agent: 'release_summarizer (Subagent)',
@@ -702,13 +702,13 @@ mockFeatureData['project-dashboard-system'] = {
       },
       artifacts: [
         {
-          path: 'docs/{feature}/50_RELEASE_NOTE.md',
+          path: 'docs/{feature}/70_RELEASE_NOTE.md',
           versions: ['v1.0.0'],
           currentVersion: 0,
           preview: '# Release v1.0.0\n## 新功能\n- 功能描述\n## 修复\n- Bug 修复\n## 已知问题'
         }
       ],
-      fsTree: 'docs/<br>└── {feature}/<br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">50_RELEASE_NOTE.md [NEW]</span>'
+      fsTree: 'docs/<br>└── {feature}/<br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">70_RELEASE_NOTE.md [NEW]</span>'
     }
   }
 }

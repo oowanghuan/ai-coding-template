@@ -2,7 +2,7 @@
 
 ## 能力描述
 
-汇总 `30_PROGRESS_LOG.yaml` 和 `41_TEST_REPORT.md` 的信息，自动生成完整的发布说明 `50_RELEASE_NOTE.md`。
+汇总 `90_PROGRESS_LOG.yaml` 和 `61_TEST_REPORT.md` 的信息，自动生成完整的发布说明 `70_RELEASE_NOTE.md`。
 
 ## 输入
 
@@ -15,7 +15,7 @@
 
 ## 输出
 
-- `docs/{feature}/50_RELEASE_NOTE.md` - 发布说明文档
+- `docs/{feature}/70_RELEASE_NOTE.md` - 发布说明文档
 
 ## 工作流程
 
@@ -25,10 +25,10 @@
 ├─────────────────────────────────────────────────────┤
 │                                                      │
 │  1. 收集发布信息                                     │
-│     ├── 读取 30_PROGRESS_LOG.yaml                   │
-│     ├── 读取 41_TEST_REPORT.md                      │
+│     ├── 读取 90_PROGRESS_LOG.yaml                   │
+│     ├── 读取 61_TEST_REPORT.md                      │
 │     ├── 读取 *_CHANGELOG.md                         │
-│     └── 读取 00_CONTEXT.md                          │
+│     └── 读取 10_CONTEXT.md                          │
 │     ↓                                                │
 │  2. 分析变更内容                                     │
 │     ├── 新功能                                      │
@@ -220,7 +220,7 @@ changes:
 |----|------|---------|------|
 | TC-UI-008 | Safari 密码自动填充 | P3 | 已知问题 |
 
-详细报告：[41_TEST_REPORT.md](./41_TEST_REPORT.md)
+详细报告：[61_TEST_REPORT.md](./61_TEST_REPORT.md)
 
 ---
 
@@ -276,11 +276,11 @@ npx prisma db push
 
 ## 相关链接
 
-- [功能文档](./00_CONTEXT.md)
-- [设计文档](./10_DESIGN_FINAL.md)
-- [UI 规格](./11_UI_FLOW_SPEC.md)
-- [进度日志](./30_PROGRESS_LOG.yaml)
-- [测试报告](./41_TEST_REPORT.md)
+- [功能文档](./10_CONTEXT.md)
+- [设计文档](./40_DESIGN_FINAL.md)
+- [UI 规格](./21_UI_FLOW_SPEC.md)
+- [进度日志](./90_PROGRESS_LOG.yaml)
+- [测试报告](./61_TEST_REPORT.md)
 
 ---
 
@@ -308,7 +308,7 @@ meta:
 release:
   version: "{version}"
   released_at: "{datetime}"
-  release_notes: "docs/{feature}/50_RELEASE_NOTE.md"
+  release_notes: "docs/{feature}/70_RELEASE_NOTE.md"
 ```
 
 ### 5. 输出结果
@@ -319,7 +319,7 @@ release:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📄 生成的文档
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• docs/{feature}/50_RELEASE_NOTE.md
+• docs/{feature}/70_RELEASE_NOTE.md
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📋 发布信息

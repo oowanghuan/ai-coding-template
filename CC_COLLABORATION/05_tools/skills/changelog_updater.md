@@ -22,10 +22,10 @@
 
 | 文档 | CHANGELOG |
 |------|-----------|
-| `00_CONTEXT.md` | `00_CONTEXT_CHANGELOG.md` |
-| `11_UI_FLOW_SPEC.md` | `11_SPEC_CHANGELOG.md` |
-| `11_API_SPEC.md` | `11_SPEC_CHANGELOG.md` |
-| `10_DESIGN_FINAL.md` | `10_DESIGN_CHANGELOG.md` |
+| `10_CONTEXT.md` | `10_CONTEXT_CHANGELOG.md` |
+| `21_UI_FLOW_SPEC.md` | `11_SPEC_CHANGELOG.md` |
+| `20_API_SPEC.md` | `11_SPEC_CHANGELOG.md` |
+| `40_DESIGN_FINAL.md` | `40_DESIGN_CHANGELOG.md` |
 
 ## 执行步骤
 
@@ -33,9 +33,9 @@
 
 ```javascript
 const changelogMap = {
-  'context': '00_CONTEXT_CHANGELOG.md',
+  'context': '10_CONTEXT_CHANGELOG.md',
   'spec': '11_SPEC_CHANGELOG.md',
-  'design': '10_DESIGN_CHANGELOG.md'
+  'design': '40_DESIGN_CHANGELOG.md'
 }
 
 const changelogPath = `docs/${feature}/${changelogMap[doc_type]}`

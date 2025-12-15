@@ -21,10 +21,10 @@ feature_profile:
 # ============================================================
 phase_1_kickoff:
   required_outputs:
-    - path: "00_CONTEXT.md"
+    - path: "10_CONTEXT.md"
       required: true
       description: "功能上下文文档"
-    - path: "30_PROGRESS_LOG.yaml"
+    - path: "90_PROGRESS_LOG.yaml"
       required: true
       description: "进度日志"
 
@@ -32,7 +32,7 @@ phase_1_kickoff:
     - id: context_has_goals
       description: "Context 必须明确功能目标"
       type: content_check
-      target: "00_CONTEXT.md"
+      target: "10_CONTEXT.md"
       anchor: "目标|Goals|Objectives"
       min_items: 2
       severity: block
@@ -40,7 +40,7 @@ phase_1_kickoff:
     - id: context_has_non_goals
       description: "Context 必须明确 Non-Goals（不做什么）"
       type: content_check
-      target: "00_CONTEXT.md"
+      target: "10_CONTEXT.md"
       anchor: "不包含|Non-Goals|Out of Scope"
       min_items: 1
       severity: block
@@ -48,7 +48,7 @@ phase_1_kickoff:
     - id: context_has_acceptance
       description: "Context 必须有验收标准"
       type: content_check
-      target: "00_CONTEXT.md"
+      target: "10_CONTEXT.md"
       anchor: "验收标准|Acceptance"
       min_chars: 50
       severity: warn
@@ -62,11 +62,11 @@ phase_1_kickoff:
 # ============================================================
 phase_2_spec:
   required_outputs:
-    - path: "11_UI_FLOW_SPEC.md"
+    - path: "21_UI_FLOW_SPEC.md"
       required: true
       condition: "feature_profile.has_ui == true"
       description: "UI 流程规格"
-    - path: "11_API_SPEC.md"
+    - path: "20_API_SPEC.md"
       required: true
       condition: "feature_profile.has_ui == false"
       description: "API 规格"
@@ -134,7 +134,7 @@ phase_3_demo:
 # ============================================================
 phase_4_design:
   required_outputs:
-    - path: "10_DESIGN_FINAL.md"
+    - path: "40_DESIGN_FINAL.md"
       required: true
       description: "详细设计文档"
 
@@ -142,7 +142,7 @@ phase_4_design:
     - id: design_has_api
       description: "Design 必须定义 API 契约"
       type: content_check
-      target: "10_DESIGN_FINAL.md"
+      target: "40_DESIGN_FINAL.md"
       anchor: "API|接口|端点"
       min_items: 1
       severity: block
@@ -150,7 +150,7 @@ phase_4_design:
     - id: design_has_data_model
       description: "Design 必须定义数据模型"
       type: content_check
-      target: "10_DESIGN_FINAL.md"
+      target: "40_DESIGN_FINAL.md"
       anchor: "数据模型|Schema|表结构"
       severity: warn
 
@@ -172,10 +172,10 @@ phase_4_design:
 # ============================================================
 phase_5_code:
   required_outputs:
-    - path: "20_DEV_PLAN.md"
+    - path: "50_DEV_PLAN.md"
       required: true
       description: "开发计划"
-    - path: "30_PROGRESS_LOG.yaml"
+    - path: "90_PROGRESS_LOG.yaml"
       required: true
       description: "进度日志"
 
@@ -183,7 +183,7 @@ phase_5_code:
     - id: all_tasks_done
       description: "所有开发任务必须完成"
       type: yaml_check
-      target: "30_PROGRESS_LOG.yaml"
+      target: "90_PROGRESS_LOG.yaml"
       field: "phase_5_code.status"
       expected: "done"
       severity: block
@@ -209,10 +209,10 @@ phase_5_code:
 # ============================================================
 phase_6_test:
   required_outputs:
-    - path: "40_TEST_PLAN.md"
+    - path: "60_TEST_PLAN.md"
       required: true
       description: "测试计划"
-    - path: "41_TEST_REPORT.md"
+    - path: "61_TEST_REPORT.md"
       required: true
       description: "测试报告"
 
@@ -229,7 +229,7 @@ phase_6_test:
     - id: no_p0_bugs
       description: "不能有 P0 级 Bug"
       type: content_check
-      target: "41_TEST_REPORT.md"
+      target: "61_TEST_REPORT.md"
       anchor: "P0"
       expected_count: 0
       severity: block
@@ -248,7 +248,7 @@ phase_6_test:
 # ============================================================
 phase_7_deploy:
   required_outputs:
-    - path: "50_RELEASE_NOTE.md"
+    - path: "70_RELEASE_NOTE.md"
       required: true
       description: "发布说明"
 
@@ -256,7 +256,7 @@ phase_7_deploy:
     - id: release_has_version
       description: "Release Note 必须有版本号"
       type: content_check
-      target: "50_RELEASE_NOTE.md"
+      target: "70_RELEASE_NOTE.md"
       anchor: "v\\d+\\.\\d+"
       min_count: 1
       severity: block
@@ -264,7 +264,7 @@ phase_7_deploy:
     - id: release_has_changes
       description: "Release Note 必须列出变更"
       type: content_check
-      target: "50_RELEASE_NOTE.md"
+      target: "70_RELEASE_NOTE.md"
       anchor: "变更|Changes|新增|修复"
       min_items: 1
       severity: block

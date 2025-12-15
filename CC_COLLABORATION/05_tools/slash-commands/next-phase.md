@@ -26,7 +26,7 @@
 ```
 检查目录是否存在：docs/{feature}/
 检查文件是否存在：
-  - docs/{feature}/30_PROGRESS_LOG.yaml
+  - docs/{feature}/90_PROGRESS_LOG.yaml
 
 如果不存在，提示错误并退出。
 ```
@@ -34,7 +34,7 @@
 ### 3. 读取当前 Phase
 
 ```yaml
-progress_log = 读取 docs/{feature}/30_PROGRESS_LOG.yaml
+progress_log = 读取 docs/{feature}/90_PROGRESS_LOG.yaml
 current_phase = progress_log.meta.current_phase
 ```
 
@@ -97,7 +97,7 @@ next_phase = current_phase + 1
       🎉 功能模块 "{feature}" 已完成所有阶段！
 
       恭喜！功能开发流程已全部完成。
-      请查看 docs/{feature}/50_RELEASE_NOTE.md
+      请查看 docs/{feature}/70_RELEASE_NOTE.md
 ```
 
 ### 6. 检查下一 Phase 是否需要跳过
@@ -131,13 +131,13 @@ progress_log["phase_{next_phase}_*"].status = "wip"
 # 更新断点信息
 progress_log.cc_checkpoint = {
     session_id: "cc-{date}-{feature}",
-    last_file_edited: "30_PROGRESS_LOG.yaml",
+    last_file_edited: "90_PROGRESS_LOG.yaml",
     last_action: "进入 Phase {next_phase}",
     next_step: "{next_phase_description}",
     context_files: [...]
 }
 
-保存 docs/{feature}/30_PROGRESS_LOG.yaml
+保存 docs/{feature}/90_PROGRESS_LOG.yaml
 ```
 
 ### 8. 初始化下一 Phase 的 Gate 状态
@@ -153,21 +153,21 @@ progress_log.cc_checkpoint = {
 ```
 Phase 2 Spec:
   如果 feature_profile.has_ui == true:
-    创建 11_UI_FLOW_SPEC.md（从模板）
+    创建 21_UI_FLOW_SPEC.md（从模板）
   否则:
-    创建 11_API_SPEC.md（从模板）
+    创建 20_API_SPEC.md（从模板）
 
 Phase 4 Design:
-  创建 10_DESIGN_FINAL.md（从模板）
+  创建 40_DESIGN_FINAL.md（从模板）
 
 Phase 5 Code:
-  创建 20_DEV_PLAN.md（从模板）
+  创建 50_DEV_PLAN.md（从模板）
 
 Phase 6 Test:
-  创建 40_TEST_PLAN.md（从模板）
+  创建 60_TEST_PLAN.md（从模板）
 
 Phase 7 Deploy:
-  创建 50_RELEASE_NOTE.md（从模板）
+  创建 70_RELEASE_NOTE.md（从模板）
 ```
 
 ### 10. 输出结果
@@ -217,7 +217,7 @@ Phase 7 Deploy:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📁 已创建文件：
-  ✅ docs/user-auth/11_UI_FLOW_SPEC.md
+  ✅ docs/user-auth/21_UI_FLOW_SPEC.md
 
 📋 Phase 2 任务清单：
   - [ ] 定义所有页面和用户流程
@@ -226,7 +226,7 @@ Phase 7 Deploy:
   - [ ] 获取 Architect 和 PM 审批
 
 📝 下一步操作：
-1. 编辑 11_UI_FLOW_SPEC.md 补充 SPEC 内容
+1. 编辑 21_UI_FLOW_SPEC.md 补充 SPEC 内容
 2. 完成后执行 /check-gate user-auth --phase=2
 3. 请 Architect 和 PM 审批后继续
 
@@ -256,7 +256,7 @@ Phase 1 的 Gate 被阻断。
 请先修复以下问题：
 
 1. ❌ context_has_non_goals: Context 未定义 Non-Goals
-   └─ 位置: docs/user-auth/00_CONTEXT.md
+   └─ 位置: docs/user-auth/10_CONTEXT.md
    └─ 建议: 添加「不包含内容」或「Out of Scope」章节
 
 修复后执行：
@@ -310,7 +310,7 @@ Gate 审批通过后才能进入下一阶段。
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📁 已创建文件：
-  ✅ docs/api-service/10_DESIGN_FINAL.md
+  ✅ docs/api-service/40_DESIGN_FINAL.md
 
 ...
 ```
@@ -320,7 +320,7 @@ Gate 审批通过后才能进入下一阶段。
 1. **Gate 硬阻断**：这是核心功能，未通过 Gate 绝对不能进入下一阶段
 2. **自动跳过**：如果阶段的 `enabled_condition` 不满足，自动跳过并检查下一阶段
 3. **模板创建**：只创建必要的模板文件，不覆盖已存在的文件
-4. **进度同步**：自动更新 `30_PROGRESS_LOG.yaml` 的所有相关字段
+4. **进度同步**：自动更新 `90_PROGRESS_LOG.yaml` 的所有相关字段
 
 ## 关联工具
 

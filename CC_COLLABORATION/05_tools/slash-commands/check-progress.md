@@ -11,15 +11,15 @@
 ### 1. 确定范围
 
 **如果指定了功能名称：**
-- 读取 `docs/{feature-name}/30_PROGRESS_LOG.yaml`，显示详细进度
+- 读取 `docs/{feature-name}/90_PROGRESS_LOG.yaml`，显示详细进度
 
 **如果未指定功能名称：**
-- 扫描 `docs/` 目录，找到所有包含 `30_PROGRESS_LOG.yaml` 的功能模块
+- 扫描 `docs/` 目录，找到所有包含 `90_PROGRESS_LOG.yaml` 的功能模块
 - 显示所有功能的概览
 
 ### 2. 读取进度日志
 
-从 `30_PROGRESS_LOG.yaml` 中提取：
+从 `90_PROGRESS_LOG.yaml` 中提取：
 - `meta` - 基本信息（功能名、阶段、状态、负责人）
 - `stats` - 统计信息（总任务数、已完成、进行中、待开始）
 - 各阶段的任务列表
@@ -195,7 +195,7 @@ Phase 7 Deploy:     ⏳ pending
 
 ## 注意事项
 
-- 如果 `30_PROGRESS_LOG.yaml` 不存在，提示用户先运行 `/new-feature`
+- 如果 `90_PROGRESS_LOG.yaml` 不存在，提示用户先运行 `/new-feature`
 - 阶段名称映射：
   - Phase 0: Foundation（基础设施）
   - Phase 1: Kickoff（功能启动）

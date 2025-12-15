@@ -22,13 +22,13 @@ export const DOC_TYPE_MAP: Record<string, 'markdown' | 'yaml'> = {
 // 文档路径模板
 export const DOC_PATHS = {
   // 功能级文档
-  context: (featureId: string) => `docs/${featureId}/00_CONTEXT.md`,
-  design: (featureId: string) => `docs/${featureId}/10_DESIGN.md`,
-  uiSpec: (featureId: string) => `docs/${featureId}/11_UI_FLOW_SPEC.md`,
-  progressLog: (featureId: string) => `docs/${featureId}/30_PROGRESS_LOG.yaml`,
-  dailySummaryDir: (featureId: string) => `docs/${featureId}/31_DAILY_SUMMARY`,
+  context: (featureId: string) => `docs/${featureId}/10_CONTEXT.md`,
+  design: (featureId: string) => `docs/${featureId}/40_DESIGN.md`,
+  uiSpec: (featureId: string) => `docs/${featureId}/21_UI_FLOW_SPEC.md`,
+  progressLog: (featureId: string) => `docs/${featureId}/90_PROGRESS_LOG.yaml`,
+  dailySummaryDir: (featureId: string) => `docs/${featureId}/91_DAILY_SUMMARY`,
   dailySummary: (featureId: string, date: string) =>
-    `docs/${featureId}/31_DAILY_SUMMARY/${date}.md`,
+    `docs/${featureId}/91_DAILY_SUMMARY/${date}.md`,
 
   // 系统级文档
   projectStandup: () => `docs/_foundation/PROJECT_DAILY_STANDUP.yaml`,

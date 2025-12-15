@@ -397,7 +397,7 @@ const phaseConfigs = computed(() => {
         }
       ],
       referenceDocs: [
-        { name: 'CONTEXT_TEMPLATE.md', description: '项目上下文模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/00_CONTEXT_TEMPLATE.md' },
+        { name: 'CONTEXT_TEMPLATE.md', description: '项目上下文模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/10_CONTEXT_TEMPLATE.md' },
         { name: 'PROJECT_PROFILE_TEMPLATE.yaml', description: '项目画像模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/01_PROJECT_PROFILE_TEMPLATE.yaml' },
         { name: '02_API_CONVENTIONS.md', description: 'API 命名、错误码规范（示例）', path: 'docs/_foundation/02_API_CONVENTIONS.md' },
         { name: '03_DB_CONVENTIONS.md', description: '数据库命名、索引策略（示例）', path: 'docs/_foundation/03_DB_CONVENTIONS.md' },
@@ -464,7 +464,7 @@ const phaseConfigs = computed(() => {
       owner: 'Architect / PM',
       objectives: [
         '创建 {feature}/ 目录',
-        '编写 00_CONTEXT.md',
+        '编写 10_CONTEXT.md',
         '明确功能边界，无歧义'
       ],
       inputs: [
@@ -480,21 +480,21 @@ const phaseConfigs = computed(() => {
           priority: 'P0' as ToolPriority,
           args: "<name>",
           prerequisites: ['Phase 0 系统规范已就绪'],
-          output: '生成功能目录和 00_CONTEXT.md'
+          output: '生成功能目录和 10_CONTEXT.md'
         },
         {
           command: 'context_writer',
           type: 'skill',
-          description: '根据需求描述生成 00_CONTEXT.md',
+          description: '根据需求描述生成 10_CONTEXT.md',
           status: 'implemented' as ToolStatus,
           priority: 'P2' as ToolPriority,
           prerequisites: ['明确功能边界和目标'],
-          output: '生成 00_CONTEXT.md'
+          output: '生成 10_CONTEXT.md'
         }
       ],
       referenceDocs: [
-        { name: 'CONTEXT_TEMPLATE.md', description: '功能上下文模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/00_CONTEXT_TEMPLATE.md' },
-        { name: 'CHANGELOG_TEMPLATE.md', description: '变更记录模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/51_CHANGELOG_TEMPLATE.md' }
+        { name: 'CONTEXT_TEMPLATE.md', description: '功能上下文模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/10_CONTEXT_TEMPLATE.md' },
+        { name: 'CHANGELOG_TEMPLATE.md', description: '变更记录模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/71_CHANGELOG_TEMPLATE.md' }
       ],
       deliverables: getPhaseDeliverables(progress, 1),
       workflow: [
@@ -520,7 +520,7 @@ const phaseConfigs = computed(() => {
           actions: [
             { actor: 'human', text: "输入 /new-feature <name>" },
             { actor: 'cc', text: '创建功能目录，继承系统规范，生成上下文文档' },
-            { actor: 'human', text: '审核 00_CONTEXT.md，确认边界和目标' }
+            { actor: 'human', text: '审核 10_CONTEXT.md，确认边界和目标' }
           ]
         },
         {
@@ -547,12 +547,12 @@ const phaseConfigs = computed(() => {
       description: '将功能需求转化为可执行的规格说明（UI 流程或 API 规范）',
       owner: 'AI Product Engineer',
       objectives: [
-        '编写 11_UI_FLOW_SPEC.md（has_ui=true）',
-        '或编写 11_API_SPEC.md（has_ui=false）',
+        '编写 21_UI_FLOW_SPEC.md（has_ui=true）',
+        '或编写 20_API_SPEC.md（has_ui=false）',
         '定义交互规则和错误处理'
       ],
       inputs: [
-        { name: '00_CONTEXT.md', description: '功能上下文', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/00_CONTEXT_TEMPLATE.md', pathLabel: '查看模板' },
+        { name: '10_CONTEXT.md', description: '功能上下文', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/10_CONTEXT_TEMPLATE.md', pathLabel: '查看模板' },
         { name: '_system 规范', description: '系统级规范', ready: true, isSystem: true, path: 'docs/_foundation/00_PROJECT_CONTEXT.md' }
       ],
       tools: [
@@ -563,7 +563,7 @@ const phaseConfigs = computed(() => {
           status: 'implemented' as ToolStatus,
           priority: 'P1' as ToolPriority,
           prerequisites: ['功能上下文已就绪'],
-          output: '生成 11_UI_FLOW_SPEC.md 或 11_API_SPEC.md'
+          output: '生成 21_UI_FLOW_SPEC.md 或 20_API_SPEC.md'
         },
         {
           command: 'spec_validator',
@@ -576,9 +576,9 @@ const phaseConfigs = computed(() => {
         }
       ],
       referenceDocs: [
-        { name: 'UI_FLOW_SPEC_TEMPLATE.md', description: 'UI 流程规格模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/11_UI_FLOW_SPEC_TEMPLATE.md' },
-        { name: 'API_SPEC_TEMPLATE.md', description: 'API 规格模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/11_API_SPEC_TEMPLATE.md' },
-        { name: 'CHANGELOG_TEMPLATE.md', description: '变更记录模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/51_CHANGELOG_TEMPLATE.md' }
+        { name: 'UI_FLOW_SPEC_TEMPLATE.md', description: 'UI 流程规格模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/21_UI_FLOW_SPEC_TEMPLATE.md' },
+        { name: 'API_SPEC_TEMPLATE.md', description: 'API 规格模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/20_API_SPEC_TEMPLATE.md' },
+        { name: 'CHANGELOG_TEMPLATE.md', description: '变更记录模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/71_CHANGELOG_TEMPLATE.md' }
       ],
       deliverables: getPhaseDeliverables(progress, 2),
       workflow: [
@@ -595,7 +595,7 @@ const phaseConfigs = computed(() => {
         {
           title: '读取上下文',
           actions: [
-            { actor: 'human', text: '确认 00_CONTEXT.md 已就绪' },
+            { actor: 'human', text: '确认 10_CONTEXT.md 已就绪' },
             { actor: 'cc', text: '读取上下文，理解功能边界' }
           ]
         },
@@ -638,7 +638,7 @@ const phaseConfigs = computed(() => {
         '完成 Demo 评审，记录反馈'
       ],
       inputs: [
-        { name: '11_UI_FLOW_SPEC.md', description: 'UI 流程规格', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/11_UI_FLOW_SPEC_TEMPLATE.md', pathLabel: '查看模板' },
+        { name: '21_UI_FLOW_SPEC.md', description: 'UI 流程规格', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/21_UI_FLOW_SPEC_TEMPLATE.md', pathLabel: '查看模板' },
         { name: '_ui_system_template/*', description: 'UI 设计系统模板', ready: true, isSystem: true, path: '_templates/_foundation_templates/_ui_system_template/00_UI_TOKENS_TEMPLATE.md' }
       ],
       tools: [
@@ -670,7 +670,7 @@ const phaseConfigs = computed(() => {
         }
       ],
       referenceDocs: [
-        { name: 'DEMO_REVIEW_TEMPLATE.md', description: 'Demo 评审模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/12_DEMO_REVIEW_TEMPLATE.md' },
+        { name: 'DEMO_REVIEW_TEMPLATE.md', description: 'Demo 评审模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/30_DEMO_REVIEW_TEMPLATE.md' },
         { name: 'UI_DEMO_WITH_MOCK_API.md', description: 'Mock API Demo 工作流', path: '_templates/CC_COLLABORATION/02_WORKFLOWS/UI_DEMO_WITH_MOCK_API.md' }
       ],
       deliverables: getPhaseDeliverables(progress, 3),
@@ -704,7 +704,7 @@ const phaseConfigs = computed(() => {
         {
           title: '确认交付',
           actions: [
-            { actor: 'human', text: '填写 12_DEMO_REVIEW.md，确认通过' }
+            { actor: 'human', text: '填写 30_DEMO_REVIEW.md，确认通过' }
           ]
         },
         {
@@ -731,7 +731,7 @@ const phaseConfigs = computed(() => {
       ],
       inputs: [
         { name: 'Demo.vue', description: '可交互原型（运行时生成）', ready: true, info: '由 /gen-demo 生成的 Vue 组件原型，位于 playgrounds/{feature}/Demo.vue' },
-        { name: '11_UI_FLOW_SPEC.md', description: 'UI 流程规格', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/11_UI_FLOW_SPEC_TEMPLATE.md', pathLabel: '查看模板' },
+        { name: '21_UI_FLOW_SPEC.md', description: 'UI 流程规格', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/21_UI_FLOW_SPEC_TEMPLATE.md', pathLabel: '查看模板' },
         { name: '_ui_system_template/*', description: 'UI 设计系统模板', ready: true, isSystem: true, path: '_templates/_foundation_templates/_ui_system_template/00_UI_TOKENS_TEMPLATE.md' }
       ],
       tools: [
@@ -742,7 +742,7 @@ const phaseConfigs = computed(() => {
           status: 'implemented' as ToolStatus,
           priority: 'P2' as ToolPriority,
           prerequisites: ['Demo 已通过评审'],
-          output: '生成 10_DESIGN_FINAL.md'
+          output: '生成 40_DESIGN_FINAL.md'
         },
         {
           command: 'schema_generator',
@@ -754,8 +754,8 @@ const phaseConfigs = computed(() => {
         }
       ],
       referenceDocs: [
-        { name: 'DESIGN_TEMPLATE.md', description: '设计定稿模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/10_DESIGN_TEMPLATE.md' },
-        { name: 'CHANGELOG_TEMPLATE.md', description: '变更记录模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/51_CHANGELOG_TEMPLATE.md' }
+        { name: 'DESIGN_TEMPLATE.md', description: '设计定稿模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/40_DESIGN_TEMPLATE.md' },
+        { name: 'CHANGELOG_TEMPLATE.md', description: '变更记录模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/71_CHANGELOG_TEMPLATE.md' }
       ],
       deliverables: getPhaseDeliverables(progress, 4),
       workflow: [
@@ -780,7 +780,7 @@ const phaseConfigs = computed(() => {
         {
           title: '确认定稿',
           actions: [
-            { actor: 'human', text: '确认 10_DESIGN_FINAL.md 完成' }
+            { actor: 'human', text: '确认 40_DESIGN_FINAL.md 完成' }
           ]
         },
         {
@@ -806,7 +806,7 @@ const phaseConfigs = computed(() => {
         '代码已提交并通过 CI'
       ],
       inputs: [
-        { name: '10_DESIGN_FINAL.md', description: '设计定稿', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/10_DESIGN_TEMPLATE.md', pathLabel: '查看模板' },
+        { name: '40_DESIGN_FINAL.md', description: '设计定稿', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/40_DESIGN_TEMPLATE.md', pathLabel: '查看模板' },
         { name: 'Demo.vue', description: '可交互原型（运行时生成）', ready: true, info: '由 /gen-demo 生成的 Vue 组件原型，位于 playgrounds/{feature}/Demo.vue' }
       ],
       tools: [
@@ -835,7 +835,7 @@ const phaseConfigs = computed(() => {
           description: '从 PROGRESS_LOG 生成今日总结',
           status: 'implemented' as ToolStatus,
           priority: 'P0' as ToolPriority,
-          output: '生成 31_DAILY_SUMMARY/{date}.md'
+          output: '生成 91_DAILY_SUMMARY/{date}.md'
         },
         {
           command: 'review_alignment',
@@ -863,9 +863,9 @@ const phaseConfigs = computed(() => {
         }
       ],
       referenceDocs: [
-        { name: 'DEV_PLAN_TEMPLATE.md', description: '开发计划模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/20_DEV_PLAN_TEMPLATE.md' },
-        { name: 'PROGRESS_LOG_TEMPLATE.yaml', description: '进度日志模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/30_PROGRESS_LOG_TEMPLATE.yaml' },
-        { name: 'DAILY_SUMMARY_TEMPLATE.md', description: '每日总结模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/31_DAILY_SUMMARY_TEMPLATE.md' },
+        { name: 'DEV_PLAN_TEMPLATE.md', description: '开发计划模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/50_DEV_PLAN_TEMPLATE.md' },
+        { name: 'PROGRESS_LOG_TEMPLATE.yaml', description: '进度日志模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/90_PROGRESS_LOG_TEMPLATE.yaml' },
+        { name: 'DAILY_SUMMARY_TEMPLATE.md', description: '每日总结模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/91_DAILY_SUMMARY_TEMPLATE.md' },
         { name: 'RESUME_FROM_CHECKPOINT.md', description: '断点恢复工作流', path: '_templates/CC_COLLABORATION/02_WORKFLOWS/RESUME_FROM_CHECKPOINT.md' },
         { name: 'END_OF_DAY_PUSH.md', description: '每日提交工作流', path: '_templates/CC_COLLABORATION/02_WORKFLOWS/END_OF_DAY_PUSH.md' },
         { name: 'COMPACT_RECOVERY.md', description: '上下文压缩恢复', path: '_templates/CC_COLLABORATION/02_WORKFLOWS/COMPACT_RECOVERY.md' }
@@ -893,7 +893,7 @@ const phaseConfigs = computed(() => {
           title: '拆解任务',
           actions: [
             { actor: 'human', text: '让 CC 生成开发计划' },
-            { actor: 'cc', text: '读取设计文档，按模板生成 20_DEV_PLAN.md' },
+            { actor: 'cc', text: '读取设计文档，按模板生成 50_DEV_PLAN.md' },
             { actor: 'human', text: '审核任务拆解是否合理' }
           ]
         },
@@ -935,9 +935,9 @@ const phaseConfigs = computed(() => {
         '无 P0/P1 级 Bug'
       ],
       inputs: [
-        { name: '11_UI_FLOW_SPEC.md', description: 'UI 流程规格', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/11_UI_FLOW_SPEC_TEMPLATE.md', pathLabel: '查看模板' },
+        { name: '21_UI_FLOW_SPEC.md', description: 'UI 流程规格', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/21_UI_FLOW_SPEC_TEMPLATE.md', pathLabel: '查看模板' },
         { name: 'src/modules/*', description: '代码实现（运行时生成）', ready: true, info: '开发阶段产出的源代码，位于 src/modules/{feature}/' },
-        { name: '30_PROGRESS_LOG.yaml', description: '开发进度', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/30_PROGRESS_LOG_TEMPLATE.yaml', pathLabel: '查看模板' }
+        { name: '90_PROGRESS_LOG.yaml', description: '开发进度', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/90_PROGRESS_LOG_TEMPLATE.yaml', pathLabel: '查看模板' }
       ],
       tools: [
         {
@@ -948,7 +948,7 @@ const phaseConfigs = computed(() => {
           priority: 'P2' as ToolPriority,
           args: '<feature>',
           prerequisites: ['代码实现完成'],
-          output: '生成 40_TEST_PLAN.md 和 41_TEST_REPORT.md'
+          output: '生成 60_TEST_PLAN.md 和 61_TEST_REPORT.md'
         },
         {
           command: 'test_plan_writer',
@@ -976,8 +976,8 @@ const phaseConfigs = computed(() => {
         }
       ],
       referenceDocs: [
-        { name: 'TEST_PLAN_TEMPLATE.md', description: '测试计划模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/40_TEST_PLAN_TEMPLATE.md' },
-        { name: 'TEST_REPORT_TEMPLATE.md', description: '测试报告模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/41_TEST_REPORT_TEMPLATE.md' }
+        { name: 'TEST_PLAN_TEMPLATE.md', description: '测试计划模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/60_TEST_PLAN_TEMPLATE.md' },
+        { name: 'TEST_REPORT_TEMPLATE.md', description: '测试报告模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/61_TEST_REPORT_TEMPLATE.md' }
       ],
       deliverables: getPhaseDeliverables(progress, 6),
       workflow: [
@@ -1017,7 +1017,7 @@ const phaseConfigs = computed(() => {
         {
           title: '生成报告',
           actions: [
-            { actor: 'cc', text: '生成 41_TEST_REPORT.md' },
+            { actor: 'cc', text: '生成 61_TEST_REPORT.md' },
             { actor: 'human', text: '确认测试通过' }
           ]
         },
@@ -1044,8 +1044,8 @@ const phaseConfigs = computed(() => {
         '代码已合并到主分支并部署'
       ],
       inputs: [
-        { name: '30_PROGRESS_LOG.yaml', description: '开发进度', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/30_PROGRESS_LOG_TEMPLATE.yaml', pathLabel: '查看模板' },
-        { name: '41_TEST_REPORT.md', description: '测试报告', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/41_TEST_REPORT_TEMPLATE.md', pathLabel: '查看模板' }
+        { name: '90_PROGRESS_LOG.yaml', description: '开发进度', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/90_PROGRESS_LOG_TEMPLATE.yaml', pathLabel: '查看模板' },
+        { name: '61_TEST_REPORT.md', description: '测试报告', ready: true, path: '_templates/CC_COLLABORATION/03_TEMPLATES/61_TEST_REPORT_TEMPLATE.md', pathLabel: '查看模板' }
       ],
       tools: [
         {
@@ -1056,7 +1056,7 @@ const phaseConfigs = computed(() => {
           priority: 'P2' as ToolPriority,
           args: '<feature> <version>',
           prerequisites: ['测试全部通过'],
-          output: '生成 50_RELEASE_NOTE.md'
+          output: '生成 70_RELEASE_NOTE.md'
         },
         {
           command: 'release_summarizer',
@@ -1068,7 +1068,7 @@ const phaseConfigs = computed(() => {
         }
       ],
       referenceDocs: [
-        { name: 'RELEASE_NOTE_TEMPLATE.md', description: '发布说明模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/50_RELEASE_NOTE_TEMPLATE.md' }
+        { name: 'RELEASE_NOTE_TEMPLATE.md', description: '发布说明模板', path: '_templates/CC_COLLABORATION/03_TEMPLATES/70_RELEASE_NOTE_TEMPLATE.md' }
       ],
       deliverables: getPhaseDeliverables(progress, 7),
       workflow: [
@@ -1093,7 +1093,7 @@ const phaseConfigs = computed(() => {
           title: '生成 Release Note',
           actions: [
             { actor: 'human', text: '输入 /release <feature> <version>' },
-            { actor: 'cc', text: '汇总变更，生成 50_RELEASE_NOTE.md' },
+            { actor: 'cc', text: '汇总变更，生成 70_RELEASE_NOTE.md' },
             { actor: 'human', text: '审核发布内容' }
           ]
         },

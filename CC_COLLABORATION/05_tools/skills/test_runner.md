@@ -2,7 +2,7 @@
 
 ## 能力描述
 
-根据 `40_TEST_PLAN.md` 执行测试用例，支持多种测试类型：
+根据 `60_TEST_PLAN.md` 执行测试用例，支持多种测试类型：
 - UI 测试（通过 Chrome MCP）
 - API 测试
 - 单元测试（通过 Vitest/Jest）
@@ -27,7 +27,7 @@
 ### 1. 读取测试计划
 
 ```
-读取：docs/{feature}/40_TEST_PLAN.md
+读取：docs/{feature}/60_TEST_PLAN.md
 提取测试用例列表
 ```
 

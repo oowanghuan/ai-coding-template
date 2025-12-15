@@ -73,9 +73,9 @@ Phase Gate 是一个**阶段准入控制机制**：
 
 ```yaml
 required_outputs:
-  - path: "00_CONTEXT.md"      # 必须存在这个文件
+  - path: "10_CONTEXT.md"      # 必须存在这个文件
     required: true
-  - path: "11_UI_FLOW_SPEC.md"
+  - path: "21_UI_FLOW_SPEC.md"
     required: true
     condition: "feature_profile.has_ui == true"  # 条件检查
 ```
@@ -87,7 +87,7 @@ quality_checks:
   - id: context_has_goals
     description: "Context 必须明确功能目标"
     type: content_check
-    target: "00_CONTEXT.md"
+    target: "10_CONTEXT.md"
     anchor: "目标|Goals"
     min_items: 2              # 至少 2 条目标
     severity: block           # block = 必须通过；warn = 仅警告
@@ -110,8 +110,8 @@ approvals:
 docs/{feature-name}/
 ├── PHASE_GATE.yaml           # 规则配置（很少修改）
 ├── PHASE_GATE_STATUS.yaml    # 运行状态（系统自动更新）
-├── 00_CONTEXT.md
-├── 30_PROGRESS_LOG.yaml
+├── 10_CONTEXT.md
+├── 90_PROGRESS_LOG.yaml
 └── ...
 ```
 
@@ -132,8 +132,8 @@ docs/{feature-name}/
 ```
 
 系统会自动创建：
-- `docs/user-auth/00_CONTEXT.md` - 功能上下文（需要你填写）
-- `docs/user-auth/30_PROGRESS_LOG.yaml` - 进度日志
+- `docs/user-auth/10_CONTEXT.md` - 功能上下文（需要你填写）
+- `docs/user-auth/90_PROGRESS_LOG.yaml` - 进度日志
 - `docs/user-auth/PHASE_GATE.yaml` - Gate 规则配置
 - `docs/user-auth/PHASE_GATE_STATUS.yaml` - Gate 运行状态
 
@@ -145,7 +145,7 @@ docs/{feature-name}/
 ├──────────────────────────────────────────────────────────────┤
 │                                                              │
 │  1. 编写内容                                                  │
-│     └─ 填写 00_CONTEXT.md、编写代码等                         │
+│     └─ 填写 10_CONTEXT.md、编写代码等                         │
 │                         ↓                                    │
 │  2. 检查 Gate                                                │
 │     └─ /check-gate user-auth --phase=1                      │
@@ -171,7 +171,7 @@ docs/{feature-name}/
 
 #### 场景：完成 Kickoff 阶段，进入 Spec 阶段
 
-**Step 1**：编写 00_CONTEXT.md，确保包含：
+**Step 1**：编写 10_CONTEXT.md，确保包含：
 - 至少 2 条目标
 - 至少 1 条 Non-Goals（不做什么）
 - 验收标准
@@ -192,7 +192,7 @@ docs/{feature-name}/
   ❌ context_has_non_goals - 缺少 Non-Goals 章节
 
 📝 建议操作:
-  1. 在 00_CONTEXT.md 中添加更多目标
+  1. 在 10_CONTEXT.md 中添加更多目标
   2. 添加"不包含内容"或"Out of Scope"章节
 ```
 
@@ -246,8 +246,8 @@ Phase 1 Kickoff Gate 已通过
 • phase_2_spec.status: pending → wip
 
 下一步:
-• 编写 11_UI_FLOW_SPEC.md（如果是 UI 功能）
-• 或 11_API_SPEC.md（如果是纯后端功能）
+• 编写 21_UI_FLOW_SPEC.md（如果是 UI 功能）
+• 或 20_API_SPEC.md（如果是纯后端功能）
 ```
 
 ---
@@ -356,8 +356,8 @@ Gate 状态: blocked
 **生成的文件**：
 ```
 docs/{feature-name}/
-├── 00_CONTEXT.md              # 功能上下文模板
-├── 30_PROGRESS_LOG.yaml       # 进度日志
+├── 10_CONTEXT.md              # 功能上下文模板
+├── 90_PROGRESS_LOG.yaml       # 进度日志
 ├── PHASE_GATE.yaml            # Gate 规则配置
 ├── PHASE_GATE_STATUS.yaml     # Gate 运行状态
 └── _demos/                    # Demo 文件目录
@@ -400,7 +400,7 @@ feature_profile:
 | 目标数量不足 | 在"目标"章节补充更多目标（至少 2 条） |
 | 缺少 Non-Goals | 添加"不包含内容"或"Out of Scope"章节 |
 | 缺少验收标准 | 添加"验收标准"或"Acceptance Criteria"章节 |
-| 缺少必需文件 | 创建对应文件（如 11_UI_FLOW_SPEC.md） |
+| 缺少必需文件 | 创建对应文件（如 21_UI_FLOW_SPEC.md） |
 
 ---
 
@@ -467,7 +467,7 @@ last_check:
       passed: true
       message: "✅ 包含功能目标（3 条）"
       evidence:
-        location: "00_CONTEXT.md:17-21"    # 匹配位置
+        location: "10_CONTEXT.md:17-21"    # 匹配位置
         matched: "- **目标 1**：..."        # 匹配内容
         found_count: 3                     # 找到数量
         required_count: 2                  # 要求数量
@@ -507,9 +507,9 @@ last_check:
 
 | 文档 | 必须包含 |
 |------|---------|
-| 00_CONTEXT.md | 至少 2 条目标、至少 1 条 Non-Goals、验收标准 |
-| 11_UI_FLOW_SPEC.md | 页面列表（用 ## 1. 格式）、错误处理章节 |
-| 10_DESIGN_FINAL.md | API 接口定义 |
+| 10_CONTEXT.md | 至少 2 条目标、至少 1 条 Non-Goals、验收标准 |
+| 21_UI_FLOW_SPEC.md | 页面列表（用 ## 1. 格式）、错误处理章节 |
+| 40_DESIGN_FINAL.md | API 接口定义 |
 
 ### 6.4 团队协作
 
@@ -526,13 +526,13 @@ last_check:
 
 | Phase | 名称 | required_outputs | 主要 quality_checks | 审批角色 |
 |-------|------|-----------------|-------------------|---------|
-| 1 | Kickoff | 00_CONTEXT.md, 30_PROGRESS_LOG.yaml | 目标≥2、Non-Goals≥1 | PM |
-| 2 | Spec | 11_UI_FLOW_SPEC.md 或 11_API_SPEC.md | 页面/端点列表、错误处理 | Architect, PM |
+| 1 | Kickoff | 10_CONTEXT.md, 90_PROGRESS_LOG.yaml | 目标≥2、Non-Goals≥1 | PM |
+| 2 | Spec | 21_UI_FLOW_SPEC.md 或 20_API_SPEC.md | 页面/端点列表、错误处理 | Architect, PM |
 | 3 | Demo | _demos/*.vue | Demo 可运行、已评审 | PM |
-| 4 | Design | 10_DESIGN_FINAL.md | API 定义 | Architect |
-| 5 | Code | 20_DEV_PLAN.md, 30_PROGRESS_LOG.yaml | 所有任务完成 | Developer, Architect |
-| 6 | Test | 40_TEST_PLAN.md, 41_TEST_REPORT.md | 无 P0 Bug | QA |
-| 7 | Deploy | 50_RELEASE_NOTE.md | 版本号、变更列表 | PM |
+| 4 | Design | 40_DESIGN_FINAL.md | API 定义 | Architect |
+| 5 | Code | 50_DEV_PLAN.md, 90_PROGRESS_LOG.yaml | 所有任务完成 | Developer, Architect |
+| 6 | Test | 60_TEST_PLAN.md, 61_TEST_REPORT.md | 无 P0 Bug | QA |
+| 7 | Deploy | 70_RELEASE_NOTE.md | 版本号、变更列表 | PM |
 
 ### B. 常用命令速查
 

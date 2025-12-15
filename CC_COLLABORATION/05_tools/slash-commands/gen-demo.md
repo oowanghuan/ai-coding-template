@@ -35,9 +35,9 @@ Demo **不是**代码原型，前端开发时参考 Demo 重新实现。
 ### 3. 读取设计文档
 
 按顺序查找以下文件：
-1. `docs/{feature-name}/11_UI_FLOW_SPEC.md` - UI 流程规格（首选）
-2. `docs/{feature-name}/10_DESIGN_FINAL.md` - 设计文档（备选）
-3. `docs/{feature-name}/00_CONTEXT.md` - 功能上下文（最小输入）
+1. `docs/{feature-name}/21_UI_FLOW_SPEC.md` - UI 流程规格（首选）
+2. `docs/{feature-name}/40_DESIGN_FINAL.md` - 设计文档（备选）
+3. `docs/{feature-name}/10_CONTEXT.md` - 功能上下文（最小输入）
 
 如果都不存在，提示：
 ```
@@ -221,7 +221,7 @@ Demo **不是**代码原型，前端开发时参考 Demo 重新实现。
 
 ### 6. 更新进度日志
 
-更新 `docs/{feature-name}/30_PROGRESS_LOG.yaml`：
+更新 `docs/{feature-name}/90_PROGRESS_LOG.yaml`：
 - 添加 Demo 生成任务记录
 - 更新当前阶段状态
 
