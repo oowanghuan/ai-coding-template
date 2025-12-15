@@ -1,0 +1,175 @@
+# PHASE_GATE_STATUS.yaml
+# Phase Gate 运行态文件（gate_checker 更新此文件）
+# 功能模块：{feature-name}
+# 版本：v1.2
+
+meta:
+  feature: "{feature-name}"
+  last_updated: "{datetime}"
+
+# ============================================================
+# Phase 1: Kickoff Gate - 运行状态
+# ============================================================
+phase_1_kickoff:
+  gate_state: pending  # pending | passed | blocked | skipped
+
+  gate_state_meta:
+    last_updated_at: null
+    last_updated_by_command: null
+    last_updated_by_user: null
+
+  approvals:
+    - role: PM
+      user: null
+      approved_at: null
+
+  last_check:
+    checked_at: null
+    blocked_reason: null
+    check_results: []
+
+  check_history: []
+
+# ============================================================
+# Phase 2: Spec Gate - 运行状态
+# ============================================================
+phase_2_spec:
+  gate_state: pending
+
+  gate_state_meta:
+    last_updated_at: null
+    last_updated_by_command: null
+    last_updated_by_user: null
+
+  approvals:
+    - role: Architect
+      user: null
+      approved_at: null
+    - role: PM
+      user: null
+      approved_at: null
+
+  last_check:
+    checked_at: null
+    blocked_reason: null
+    check_results: []
+
+  check_history: []
+
+# ============================================================
+# Phase 3: Demo Gate - 运行状态
+# ============================================================
+phase_3_demo:
+  gate_state: pending
+
+  gate_state_meta:
+    last_updated_at: null
+    last_updated_by_command: null
+    last_updated_by_user: null
+
+  approvals:
+    - role: PM
+      user: null
+      approved_at: null
+
+  last_check:
+    checked_at: null
+    blocked_reason: null
+    check_results: []
+
+  check_history: []
+
+# ============================================================
+# Phase 4: Design Gate - 运行状态
+# ============================================================
+phase_4_design:
+  gate_state: pending
+
+  gate_state_meta:
+    last_updated_at: null
+    last_updated_by_command: null
+    last_updated_by_user: null
+
+  approvals:
+    - role: Architect
+      user: null
+      approved_at: null
+
+  last_check:
+    checked_at: null
+    blocked_reason: null
+    check_results: []
+
+  check_history: []
+
+# ============================================================
+# Phase 5: Code Gate - 运行状态
+# ============================================================
+phase_5_code:
+  gate_state: pending
+
+  gate_state_meta:
+    last_updated_at: null
+    last_updated_by_command: null
+    last_updated_by_user: null
+
+  approvals:
+    - role: Developer
+      user: null
+      approved_at: null
+    - role: Architect
+      user: null
+      approved_at: null
+
+  last_check:
+    checked_at: null
+    blocked_reason: null
+    check_results: []
+
+  check_history: []
+
+# ============================================================
+# Phase 6: Test Gate - 运行状态
+# ============================================================
+phase_6_test:
+  gate_state: pending
+
+  gate_state_meta:
+    last_updated_at: null
+    last_updated_by_command: null
+    last_updated_by_user: null
+
+  approvals:
+    - role: QA
+      user: null
+      approved_at: null
+
+  last_check:
+    checked_at: null
+    blocked_reason: null
+    check_results: []
+
+  check_history: []
+
+# ============================================================
+# Phase 7: Deploy Gate - 运行状态
+# ============================================================
+phase_7_deploy:
+  gate_state: pending
+
+  gate_state_meta:
+    last_updated_at: null
+    last_updated_by_command: null
+    last_updated_by_user: null
+
+  approvals:
+    - role: PM
+      user: null
+      approved_at: null
+
+  last_check:
+    checked_at: null
+    blocked_reason: null
+    check_results: []
+
+  check_history: []

@@ -1,0 +1,274 @@
+# PHASE_GATE.yaml
+# Phase Gate 规则配置文件（只定义规则，不存储状态）
+# 功能模块：{feature-name}
+# 版本：v1.2
+
+meta:
+  feature: "{feature-name}"
+  schema_version: "1.2"
+  created_at: "{date}"
+
+# ============================================================
+# 功能元信息（统一事实源，用于条件判断）
+# ============================================================
+feature_profile:
+  has_ui: true                    # 是否有 UI 组件
+  demo_required: true             # 是否需要 Demo 阶段
+  # 可按需扩展其他条件字段
+
+# ============================================================
+# Phase 1: Kickoff Gate - 规则定义
+# ============================================================
+phase_1_kickoff:
+  required_outputs:
+    - path: "00_CONTEXT.md"
+      required: true
+      description: "功能上下文文档"
+    - path: "30_PROGRESS_LOG.yaml"
+      required: true
+      description: "进度日志"
+
+  quality_checks:
+    - id: context_has_goals
+      description: "Context 必须明确功能目标"
+      type: content_check
+      target: "00_CONTEXT.md"
+      anchor: "目标|Goals|Objectives"
+      min_items: 2
+      severity: block
+
+    - id: context_has_non_goals
+      description: "Context 必须明确 Non-Goals（不做什么）"
+      type: content_check
+      target: "00_CONTEXT.md"
+      anchor: "不包含|Non-Goals|Out of Scope"
+      min_items: 1
+      severity: block
+
+    - id: context_has_acceptance
+      description: "Context 必须有验收标准"
+      type: content_check
+      target: "00_CONTEXT.md"
+      anchor: "验收标准|Acceptance"
+      min_chars: 50
+      severity: warn
+
+  approvals:
+    required_roles:
+      - PM
+
+# ============================================================
+# Phase 2: Spec Gate - 规则定义
+# ============================================================
+phase_2_spec:
+  required_outputs:
+    - path: "11_UI_FLOW_SPEC.md"
+      required: true
+      condition: "feature_profile.has_ui == true"
+      description: "UI 流程规格"
+    - path: "11_API_SPEC.md"
+      required: true
+      condition: "feature_profile.has_ui == false"
+      description: "API 规格"
+
+  quality_checks:
+    - id: spec_has_pages
+      description: "SPEC 必须列出所有页面/端点"
+      type: content_check
+      target: "11_*.md"
+      anchor: "## \\d+\\."
+      min_count: 1
+      severity: block
+
+    - id: spec_has_error_cases
+      description: "SPEC 必须定义错误处理"
+      type: content_check
+      target: "11_*.md"
+      anchor: "错误处理|Error|异常|边界"
+      min_items: 1
+      severity: block
+
+    - id: spec_has_edge_cases
+      description: "SPEC 应包含边界条件"
+      type: content_check
+      target: "11_*.md"
+      anchor: "边界|边缘|特殊情况|极端"
+      severity: warn
+
+  approvals:
+    required_roles:
+      - Architect
+      - PM
+
+# ============================================================
+# Phase 3: Demo Gate - 规则定义（可选阶段）
+# ============================================================
+phase_3_demo:
+  enabled_condition: "feature_profile.demo_required == true"
+
+  required_outputs:
+    - path: "_demos/*.vue"
+      required: true
+      description: "UI Demo 原型"
+    - path: "_demos/mock/*.js"
+      required: false
+      description: "Mock API"
+
+  quality_checks:
+    - id: demo_runs
+      description: "Demo 必须可正常运行"
+      type: manual
+      severity: block
+
+    - id: demo_reviewed
+      description: "Demo 必须经过评审"
+      type: manual
+      severity: block
+
+  approvals:
+    required_roles:
+      - PM
+
+# ============================================================
+# Phase 4: Design Gate - 规则定义
+# ============================================================
+phase_4_design:
+  required_outputs:
+    - path: "10_DESIGN_FINAL.md"
+      required: true
+      description: "详细设计文档"
+
+  quality_checks:
+    - id: design_has_api
+      description: "Design 必须定义 API 契约"
+      type: content_check
+      target: "10_DESIGN_FINAL.md"
+      anchor: "API|接口|端点"
+      min_items: 1
+      severity: block
+
+    - id: design_has_data_model
+      description: "Design 必须定义数据模型"
+      type: content_check
+      target: "10_DESIGN_FINAL.md"
+      anchor: "数据模型|Schema|表结构"
+      severity: warn
+
+    - id: design_matches_spec
+      description: "Design 必须与 SPEC 一致（人工对照检查）"
+      type: manual
+      checklist:
+        - "API 列表与 SPEC 一致"
+        - "数据模型字段与 SPEC 一致"
+        - "页面/组件与 SPEC 一致"
+      severity: block
+
+  approvals:
+    required_roles:
+      - Architect
+
+# ============================================================
+# Phase 5: Code Gate - 规则定义
+# ============================================================
+phase_5_code:
+  required_outputs:
+    - path: "20_DEV_PLAN.md"
+      required: true
+      description: "开发计划"
+    - path: "30_PROGRESS_LOG.yaml"
+      required: true
+      description: "进度日志"
+
+  quality_checks:
+    - id: all_tasks_done
+      description: "所有开发任务必须完成"
+      type: yaml_check
+      target: "30_PROGRESS_LOG.yaml"
+      field: "phase_5_code.status"
+      expected: "done"
+      severity: block
+
+    - id: code_matches_design
+      description: "代码必须与 Design 一致（人工确认）"
+      type: manual
+      severity: block
+
+    - id: no_critical_todos
+      description: "不能有未解决的关键 TODO"
+      type: code_scan
+      pattern: "TODO.*critical|FIXME.*urgent|HACK"
+      severity: warn
+
+  approvals:
+    required_roles:
+      - Developer
+      - Architect
+
+# ============================================================
+# Phase 6: Test Gate - 规则定义
+# ============================================================
+phase_6_test:
+  required_outputs:
+    - path: "40_TEST_PLAN.md"
+      required: true
+      description: "测试计划"
+    - path: "41_TEST_REPORT.md"
+      required: true
+      description: "测试报告"
+
+  quality_checks:
+    - id: test_coverage
+      description: "测试必须覆盖关键路径"
+      type: manual
+      checklist:
+        - "核心功能测试通过"
+        - "边界条件测试通过"
+        - "错误处理测试通过"
+      severity: block
+
+    - id: no_p0_bugs
+      description: "不能有 P0 级 Bug"
+      type: content_check
+      target: "41_TEST_REPORT.md"
+      anchor: "P0"
+      expected_count: 0
+      severity: block
+
+    - id: no_open_p1_bugs
+      description: "不能有未解决的 P1 级 Bug"
+      type: manual
+      severity: warn
+
+  approvals:
+    required_roles:
+      - QA
+
+# ============================================================
+# Phase 7: Deploy Gate - 规则定义
+# ============================================================
+phase_7_deploy:
+  required_outputs:
+    - path: "50_RELEASE_NOTE.md"
+      required: true
+      description: "发布说明"
+
+  quality_checks:
+    - id: release_has_version
+      description: "Release Note 必须有版本号"
+      type: content_check
+      target: "50_RELEASE_NOTE.md"
+      anchor: "v\\d+\\.\\d+"
+      min_count: 1
+      severity: block
+
+    - id: release_has_changes
+      description: "Release Note 必须列出变更"
+      type: content_check
+      target: "50_RELEASE_NOTE.md"
+      anchor: "变更|Changes|新增|修复"
+      min_items: 1
+      severity: block
+
+  approvals:
+    required_roles:
+      - PM

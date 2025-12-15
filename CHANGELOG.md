@@ -4,6 +4,28 @@ All notable changes to ai-coding-template will be documented in this file.
 
 ---
 
+## [v1.2.0] - 2024-12-15
+
+### 🚀 New Feature: Phase Gate System
+
+新增 **Phase Gate 质量门禁系统**，确保每个阶段的交付物质量。
+
+#### 新增模板
+- `PHASE_GATE_TEMPLATE.yaml` - Phase Gate 检查项定义
+- `PHASE_GATE_STATUS_TEMPLATE.yaml` - Gate 状态追踪
+
+#### 新增工具
+- **Skill**: `gate_checker` - 自动检查 Gate 条件
+- **Slash Commands**:
+  - `/check-gate` - 检查当前阶段 Gate 状态
+  - `/approve-gate` - 审批通过 Gate
+  - `/next-phase` - 进入下一阶段
+
+#### 新增文档
+- `07_phase_gate/README.md` - Phase Gate 完整指南
+
+---
+
 ## [v1.1.0] - 2024-12-15
 
 ### 🔧 Major Refactoring
