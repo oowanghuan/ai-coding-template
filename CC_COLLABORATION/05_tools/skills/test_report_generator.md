@@ -108,7 +108,60 @@ coverage_analysis:
 
 ## 失败用例分析
 
-### TC-API-003: POST /register 邮箱重复
+### 失败用例记录模板
+
+每个失败用例按以下格式记录：
+
+```markdown
+### {TC-ID}: {测试用例名称}
+
+| 字段 | 内容 |
+|------|------|
+| 状态 | ❌ FAIL → {✅ FIXED / ⏳ PENDING} |
+| 级别 | {P0/P1/P2/P3} |
+| 发现时间 | {datetime} |
+| 修复时间 | {datetime / -} |
+
+**问题描述**：
+{简要描述问题现象}
+
+**复现步骤**：
+1. {step 1}
+2. {step 2}
+3. ...
+
+**预期结果**：
+{expected}
+
+**实际结果**：
+{actual}
+
+**Console/日志**：
+```
+{error logs}
+```
+
+**根因分析**：
+{root cause}
+
+**修复方案**：
+{fix suggestion}
+
+**修复 Commit**：
+`{fix commit message} #{commit_hash}`
+
+**回归测试**：
+{✅ 通过 / ❌ 失败 / ⏳ 待测}
+```
+
+### 示例：TC-API-003: POST /register 邮箱重复
+
+| 字段 | 内容 |
+|------|------|
+| 状态 | ❌ FAIL → ✅ FIXED |
+| 级别 | P1 |
+| 发现时间 | 2024-12-16 10:30 |
+| 修复时间 | 2024-12-16 11:15 |
 
 **问题描述**：
 注册接口在邮箱已存在时返回 500 而非 409。
@@ -125,13 +178,22 @@ coverage_analysis:
 - 状态码：500
 - 响应：`{ "code": 500, "message": "Internal Server Error" }`
 
+**Console/日志**：
+```
+[ERROR] Unhandled exception: UniqueConstraintViolation
+```
+
 **根因分析**：
 后端未正确捕获数据库唯一约束异常。
 
-**修复建议**：
+**修复方案**：
 检查 `auth.controller.ts` 的注册逻辑，添加邮箱重复检查。
 
-**严重程度**：P1（高）
+**修复 Commit**：
+`fix(auth): 处理邮箱重复注册返回正确错误码 #a1b2c3d`
+
+**回归测试**：
+✅ 通过
 
 ---
 

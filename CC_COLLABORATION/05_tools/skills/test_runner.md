@@ -110,7 +110,84 @@ async function testLoginAPI() {
 npx vitest run --reporter=json --outputFile=test-results.json
 ```
 
-### 4. 收集结果
+### 4. 失败处理策略
+
+**核心原则**：先完成全部测试，记录所有问题，再统一修复（P0/P1 例外）。
+
+#### 问题分级标准
+
+| 级别 | 定义 | 处理方式 | 示例 |
+|------|------|----------|------|
+| P0 | 功能完全不可用 | **立即修复** | 页面白屏、登录崩溃 |
+| P1 | 核心流程受阻 | **立即修复** | 无法提交表单、跳转错误 |
+| P2 | 功能异常但可绕过 | 记录，后续修复 | 错误提示不准确、样式错位 |
+| P3 | 体验问题 | 记录，后续修复 | 按钮位置不理想、文案不清晰 |
+
+#### 失败处理流程
+
+```
+测试用例执行
+    ↓
+┌─────────┐
+│ 通过？  │
+└────┬────┘
+     │
+ Yes │    No
+     ↓     ↓
+ 记录 ✅   判断严重程度
+           │
+   ┌───────┴───────┐
+   │               │
+ P0/P1          P2/P3
+(阻塞性)       (非阻塞)
+   │               │
+   ↓               ↓
+暂停测试       记录问题 ❌
+立即修复       继续下一个用例
+重跑当前用例
+   │               │
+   └───────┬───────┘
+           ↓
+     全部用例执行完毕
+           ↓
+     生成测试报告
+           ↓
+     统一修复 P2/P3 问题
+           ↓
+     回归测试
+```
+
+#### 分级判定逻辑
+
+```javascript
+function classifyFailure(error, testCase) {
+  // P0: 页面/服务完全不可用
+  if (error.type === 'PAGE_CRASH' ||
+      error.type === 'SERVICE_UNAVAILABLE' ||
+      error.message.includes('白屏') ||
+      error.message.includes('Cannot read property')) {
+    return 'P0';
+  }
+
+  // P1: 核心流程阻塞
+  if (testCase.priority === 'P0' ||
+      error.type === 'NAVIGATION_FAILED' ||
+      error.type === 'FORM_SUBMIT_FAILED') {
+    return 'P1';
+  }
+
+  // P2: 功能异常但可绕过
+  if (error.type === 'ASSERTION_FAILED' ||
+      error.type === 'ELEMENT_NOT_FOUND') {
+    return 'P2';
+  }
+
+  // P3: 体验问题
+  return 'P3';
+}
+```
+
+### 5. 收集结果
 
 ```yaml
 test_results:
@@ -130,14 +207,16 @@ test_results:
   failed:
     - id: TC-UI-005
       name: "密码错误提示"
+      severity: P2                                    # 新增：问题级别
       error: "断言失败：未找到错误提示元素"
       screenshot: "screenshots/TC-UI-005-failed.png"
       expected: "显示'密码错误'提示"
       actual: "页面无变化"
+      handled: "recorded"                             # 新增：处理方式
     # ...
 ```
 
-### 5. 输出结果
+### 6. 输出结果
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
