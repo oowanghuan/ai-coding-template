@@ -222,7 +222,7 @@ export const mockFeatureData: Record<string, FeatureData> = {
         },
         artifacts: [
           {
-            path: '_templates/_foundation_templates/_ui_system_template/00_UI_TOKENS_TEMPLATE.md',
+            path: 'CC_COLLABORATION/03_templates/_foundation/_ui_system_template/00_UI_TOKENS_TEMPLATE.md',
             versions: ['v1.0 (Init)', 'v1.1 (Dark Mode)'],
             currentVersion: 1,
             preview: '# UI Tokens v1.1\n- Primary: #6366f1\n- Bg: #0f172a\n- Font: Inter\n...'
@@ -234,7 +234,7 @@ export const mockFeatureData: Record<string, FeatureData> = {
             preview: '# Project Context\n- Name: SuperDev Platform\n- Stack: Vue3 + Supabase'
           }
         ],
-        fsTree: '_templates/<br>├── <span class="fs-sys">_foundation_templates/_ui_system_template/ [6层规范]</span><br>docs/<br>├── <span class="fs-sys">00_PROJECT_CONTEXT.md [CREATED]</span>'
+        fsTree: 'CC_COLLABORATION/<br>├── <span class="fs-sys">03_templates/_foundation/_ui_system_template/ [6层规范]</span><br>docs/<br>├── <span class="fs-sys">00_PROJECT_CONTEXT.md [CREATED]</span>'
       },
       '1': {
         id: 'Feature Kickoff',
@@ -242,7 +242,7 @@ export const mockFeatureData: Record<string, FeatureData> = {
         objectives: ['引用系统规范', '定义业务边界', '设计 API 与 Schema'],
         inputs: [
           { name: 'User Feature Request', isSystemRef: false },
-          { name: '_templates/_foundation_templates/_ui_system_template/*', path: '_templates/_foundation_templates/_ui_system_template/', isSystemRef: true },
+          { name: 'CC_COLLABORATION/03_templates/_foundation/_ui_system_template/*', path: 'CC_COLLABORATION/03_templates/_foundation/_ui_system_template/', isSystemRef: true },
           { name: 'docs/00_PROJECT_CONTEXT.md', isSystemRef: true }
         ],
         processor: {
@@ -266,7 +266,7 @@ export const mockFeatureData: Record<string, FeatureData> = {
             preview: '# Design v1.1\n## Schema\n- subscriptions table\n## API\n- POST /api/subscribe'
           }
         ],
-        fsTree: '_templates/<br>├── <span class="fs-sys">_foundation_templates/_ui_system_template/</span><br>docs/<br>└── subscription-v3/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-highlight">10_CONTEXT.md [NEW]</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">40_DESIGN_FINAL.md [NEW]</span>'
+        fsTree: 'CC_COLLABORATION/<br>├── <span class="fs-sys">03_templates/_foundation/_ui_system_template/</span><br>docs/<br>└── subscription-v3/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-highlight">10_CONTEXT.md [NEW]</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-highlight">40_DESIGN_FINAL.md [NEW]</span>'
       },
       '2': {
         id: 'Spec',
@@ -274,7 +274,7 @@ export const mockFeatureData: Record<string, FeatureData> = {
         objectives: ['技术设计转 UI 流程', '定义交互规则'],
         inputs: [
           { name: 'docs/subscription-v3/40_DESIGN_FINAL.md', isSystemRef: false },
-          { name: '_templates/_foundation_templates/_ui_system_template/04_PAGE_TEMPLATES_TEMPLATE.md', isSystemRef: true }
+          { name: 'CC_COLLABORATION/03_templates/_foundation/_ui_system_template/04_PAGE_TEMPLATES_TEMPLATE.md', isSystemRef: true }
         ],
         processor: {
           agent: 'AIP_Agent',
@@ -299,7 +299,7 @@ export const mockFeatureData: Record<string, FeatureData> = {
         objectives: ['生成交互原型', '验证 UI Flow'],
         inputs: [
           { name: 'docs/subscription-v3/21_UI_FLOW_SPEC.md', isSystemRef: false },
-          { name: '_templates/_foundation_templates/_ui_system_template/01_COMPONENT_LIBRARY_TEMPLATE.md', isSystemRef: true }
+          { name: 'CC_COLLABORATION/03_templates/_foundation/_ui_system_template/01_COMPONENT_LIBRARY_TEMPLATE.md', isSystemRef: true }
         ],
         processor: {
           agent: 'UI_Agent',
@@ -325,7 +325,7 @@ export const mockFeatureData: Record<string, FeatureData> = {
         inputs: [
           { name: 'docs/subscription-v3/21_UI_FLOW_SPEC.md', isSystemRef: false },
           { name: 'playgrounds/Demo.vue', isSystemRef: false },
-          { name: '_templates/_foundation_templates/_ui_system_template/00_UI_TOKENS_TEMPLATE.md', isSystemRef: true }
+          { name: 'CC_COLLABORATION/03_templates/_foundation/_ui_system_template/00_UI_TOKENS_TEMPLATE.md', isSystemRef: true }
         ],
         processor: {
           agent: 'Design_Agent',
@@ -488,7 +488,7 @@ mockFeatureData['project-dashboard-system'] = {
           preview: '# 项目上下文\n- 项目名: AI 协作开发框架\n- 技术栈: Vue3 + Supabase + Claude Code'
         },
         {
-          path: '_templates/_foundation_templates/_ui_system_template/00_UI_TOKENS_TEMPLATE.md',
+          path: 'CC_COLLABORATION/03_templates/_foundation/_ui_system_template/00_UI_TOKENS_TEMPLATE.md',
           versions: ['v1.0 (6层规范)'],
           currentVersion: 0,
           preview: '# UI 设计系统\n- 00_UI_TOKENS.md\n- 01_COMPONENT_LIBRARY.md\n- 02_LAYOUT_RULES.md\n- 03_INTERACTION_RULES.md\n- 04_PAGE_TEMPLATES.md\n- 05_WORKFLOW_TEMPLATES.md'
@@ -500,7 +500,7 @@ mockFeatureData['project-dashboard-system'] = {
           preview: '# API 约定\n- RESTful 命名规范\n- 错误码定义\n- 响应格式标准'
         }
       ],
-      fsTree: '_templates/<br>└── _foundation_templates/<br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-sys">_ui_system_template/ [6层规范]</span><br>docs/<br>└── _foundation/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-sys">00_PROJECT_CONTEXT.md</span><br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-sys">02_API_CONVENTIONS.md</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-sys">03_DB_CONVENTIONS.md</span>'
+      fsTree: 'CC_COLLABORATION/<br>└── 03_templates/_foundation/<br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-sys">_ui_system_template/ [6层规范]</span><br>docs/<br>└── _foundation/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-sys">00_PROJECT_CONTEXT.md</span><br>&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fs-sys">02_API_CONVENTIONS.md</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fs-sys">03_DB_CONVENTIONS.md</span>'
     },
     '1': {
       id: 'Feature Kickoff',
@@ -509,7 +509,7 @@ mockFeatureData['project-dashboard-system'] = {
       inputs: [
         { name: '用户功能需求', isSystemRef: false },
         { name: 'docs/_foundation/*', path: 'docs/_foundation/', isSystemRef: true },
-        { name: '_templates/CC_COLLABORATION/03_TEMPLATES/', isSystemRef: true }
+        { name: 'CC_COLLABORATION/03_templates/', isSystemRef: true }
       ],
       processor: {
         agent: 'Feature_Architect_Agent',
@@ -540,8 +540,8 @@ mockFeatureData['project-dashboard-system'] = {
       objectives: ['技术设计转 UI 流程', '定义页面交互规则', '输出可执行规格'],
       inputs: [
         { name: 'docs/{feature}/10_CONTEXT.md', isSystemRef: false },
-        { name: '_templates/CC_COLLABORATION/03_TEMPLATES/21_UI_FLOW_SPEC_TEMPLATE.md', isSystemRef: true },
-        { name: '_templates/CC_COLLABORATION/03_TEMPLATES/20_API_SPEC_TEMPLATE.md', isSystemRef: true }
+        { name: 'CC_COLLABORATION/03_templates/21_UI_FLOW_SPEC_TEMPLATE.md', isSystemRef: true },
+        { name: 'CC_COLLABORATION/03_templates/20_API_SPEC_TEMPLATE.md', isSystemRef: true }
       ],
       processor: {
         agent: 'spec_writer (Subagent)',
@@ -572,7 +572,7 @@ mockFeatureData['project-dashboard-system'] = {
       objectives: ['生成交互原型', '创建 Mock API', '验证 UI Flow'],
       inputs: [
         { name: 'docs/{feature}/21_UI_FLOW_SPEC.md', isSystemRef: false },
-        { name: '_templates/_foundation_templates/_ui_system_template/', isSystemRef: true }
+        { name: 'CC_COLLABORATION/03_templates/_foundation/_ui_system_template/', isSystemRef: true }
       ],
       processor: {
         agent: 'UI_Demo_Agent',
@@ -604,7 +604,7 @@ mockFeatureData['project-dashboard-system'] = {
       inputs: [
         { name: 'docs/{feature}/21_UI_FLOW_SPEC.md', isSystemRef: false },
         { name: 'playgrounds/{feature}/Demo.vue', isSystemRef: false },
-        { name: '_templates/_foundation_templates/_ui_system_template/', isSystemRef: true }
+        { name: 'CC_COLLABORATION/03_templates/_foundation/_ui_system_template/', isSystemRef: true }
       ],
       processor: {
         agent: 'Design_Agent',

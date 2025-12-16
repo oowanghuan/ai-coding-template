@@ -141,7 +141,7 @@
           </div>
 
           <div class="file-structure-section">
-            <h3 class="subsection-title">🎨 全局 UI 系统模板：/_templates/_foundation_templates/_ui_system_template/</h3>
+            <h3 class="subsection-title">🎨 全局 UI 系统模板：/CC_COLLABORATION/03_templates/_foundation/_ui_system_template/</h3>
             <el-alert type="info" :closable="false" show-icon>
               <p><strong>重要：</strong>这个目录只需要维护一次，被所有功能复用，确保 UI 一致性。</p>
             </el-alert>
@@ -383,16 +383,16 @@ const handleTabChange = (value) => {
 
 // 初始化项目代码
 const initProjectCode = `# 创建文档目录结构
-mkdir -p _templates/_foundation_templates/_ui_system_template
+mkdir -p CC_COLLABORATION/03_templates/_foundation/_ui_system_template
 mkdir -p tools
 
 # 初始化 UI 系统模板文档（只需一次）
-touch _templates/_foundation_templates/_ui_system_template/00_UI_TOKENS_TEMPLATE.md
-touch _templates/_foundation_templates/_ui_system_template/01_COMPONENT_LIBRARY_TEMPLATE.md
-touch _templates/_foundation_templates/_ui_system_template/02_LAYOUT_RULES_TEMPLATE.md
-touch _templates/_foundation_templates/_ui_system_template/03_INTERACTION_RULES_TEMPLATE.md
-touch _templates/_foundation_templates/_ui_system_template/04_PAGE_TEMPLATES_TEMPLATE.md
-touch _templates/_foundation_templates/_ui_system_template/05_WORKFLOW_TEMPLATES_TEMPLATE.md
+touch CC_COLLABORATION/03_templates/_foundation/_ui_system_template/00_UI_TOKENS_TEMPLATE.md
+touch CC_COLLABORATION/03_templates/_foundation/_ui_system_template/01_COMPONENT_LIBRARY_TEMPLATE.md
+touch CC_COLLABORATION/03_templates/_foundation/_ui_system_template/02_LAYOUT_RULES_TEMPLATE.md
+touch CC_COLLABORATION/03_templates/_foundation/_ui_system_template/03_INTERACTION_RULES_TEMPLATE.md
+touch CC_COLLABORATION/03_templates/_foundation/_ui_system_template/04_PAGE_TEMPLATES_TEMPLATE.md
+touch CC_COLLABORATION/03_templates/_foundation/_ui_system_template/05_WORKFLOW_TEMPLATES_TEMPLATE.md
 
 # 创建初始化脚本
 touch tools/init_feature.sh
@@ -537,7 +537,7 @@ const phases = ref([
           '上传 10_CONTEXT 和 21_UI_FLOW_SPEC',
           '要求 AI 检查完整性和合理性',
           '补充遗漏的边界条件和错误态',
-          '确认符合 /_templates/_foundation_templates/_ui_system_template/ 规则'
+          '确认符合 /CC_COLLABORATION/03_templates/_foundation/_ui_system_template/ 规则'
         ]
       }
     ],
@@ -589,7 +589,7 @@ TODO: 填写本功能解决的问题和目标
 
 ## 10. 输出要求
 - 使用 React/Vue + Tailwind
-- 严格遵守 /_templates/_foundation_templates/_ui_system_template/ 规范
+- 严格遵守 /CC_COLLABORATION/03_templates/_foundation/_ui_system_template/ 规范
 - 只使用项目中的组件库`
     },
     tools: [
@@ -947,9 +947,9 @@ const skills = ref([
     config: `{
   "name": "ui_demo",
   "description": "Generate UI Demo from Spec",
-  "prompt": "你是 UI System Architect。\\n生成的 UI 必须：\\n- 严格遵守 /_templates/_foundation_templates/_ui_system_template/ 规范\\n- 根据 /docs/<feature>/21_UI_FLOW_SPEC.md\\n- 只使用项目组件库，不写裸 div\\n- 输出完整可运行的页面",
+  "prompt": "你是 UI System Architect。\\n生成的 UI 必须：\\n- 严格遵守 /CC_COLLABORATION/03_templates/_foundation/_ui_system_template/ 规范\\n- 根据 /docs/<feature>/21_UI_FLOW_SPEC.md\\n- 只使用项目组件库，不写裸 div\\n- 输出完整可运行的页面",
   "actions": [
-    "read_file: /_templates/_foundation_templates/_ui_system_template/*",
+    "read_file: /CC_COLLABORATION/03_templates/_foundation/_ui_system_template/*",
     "read_file: /docs/<feature>/21_UI_FLOW_SPEC.md",
     "write_file: /playgrounds/<feature>/DemoPage.tsx"
   ]

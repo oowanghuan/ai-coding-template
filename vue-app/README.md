@@ -154,7 +154,7 @@ npm run build
 
 ## 与 AI 协作框架配合使用
 
-本看板与 `_templates/` 中的 AI 协作框架配合使用：
+本看板与 `CC_COLLABORATION/` 中的 AI 协作框架配合使用：
 
 1. 在 Claude Code 中执行 `/new-feature my-feature` 创建功能
 2. 功能文档自动生成在 `docs/my-feature/` 目录

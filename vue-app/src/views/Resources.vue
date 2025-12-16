@@ -340,7 +340,7 @@ const aipePrompts = ref([
 
 请按照以下步骤：
 1. 读取 UI Flow Spec
-2. 读取 _templates/_foundation_templates/_ui_system_template/ 下的全局 Design System 模板
+2. 读取 CC_COLLABORATION/03_templates/_foundation/_ui_system_template/ 下的全局 Design System 模板
 3. 生成符合 Design System 的可运行 Demo
 4. 确保 Demo 包含所有关键交互流程
 5. 添加必要的 mock 数据
@@ -420,7 +420,7 @@ const aipePrompts = ref([
 参考文档：
 - docs/<feature-slug>/21_UI_FLOW_SPEC.md
 - docs/<feature-slug>/50_DEV_PLAN_FINAL.md
-- _templates/_foundation_templates/_ui_system_template/ (Design System 模板)
+- CC_COLLABORATION/03_templates/_foundation/_ui_system_template/ (Design System 模板)
 
 请按照以下步骤执行：
 
@@ -1399,7 +1399,7 @@ cat "$RELEASE_FILE"`
     {
       "name": "ui_demo",
       "description": "Generate UI Demo from Spec",
-      "prompt": "你是 UI System Architect，负责根据 UI Flow Spec 生成可运行的 Demo。\\n\\n请按照以下步骤：\\n1. 读取 docs/<feature-slug>/21_UI_FLOW_SPEC.md\\n2. 读取 _templates/_foundation_templates/_ui_system_template/ 下的全局 Design System 模板\\n3. 生成符合 Design System 的可运行 HTML/JS/CSS Demo\\n4. 确保 Demo 包含所有关键交互流程\\n5. 添加必要的 mock 数据\\n\\nDemo 要求：\\n- 使用真实的组件（不是占位符）\\n- 完整实现用户流程\\n- 包含所有状态（loading、error、success）\\n- 响应式设计\\n- 可以在浏览器中运行\\n\\n生成完成后，将 Demo 保存到 demos/<feature-slug>/ 目录"
+      "prompt": "你是 UI System Architect，负责根据 UI Flow Spec 生成可运行的 Demo。\\n\\n请按照以下步骤：\\n1. 读取 docs/<feature-slug>/21_UI_FLOW_SPEC.md\\n2. 读取 CC_COLLABORATION/03_templates/_foundation/_ui_system_template/ 下的全局 Design System 模板\\n3. 生成符合 Design System 的可运行 HTML/JS/CSS Demo\\n4. 确保 Demo 包含所有关键交互流程\\n5. 添加必要的 mock 数据\\n\\nDemo 要求：\\n- 使用真实的组件（不是占位符）\\n- 完整实现用户流程\\n- 包含所有状态（loading、error、success）\\n- 响应式设计\\n- 可以在浏览器中运行\\n\\n生成完成后，将 Demo 保存到 demos/<feature-slug>/ 目录"
     },
     {
       "name": "review_alignment",

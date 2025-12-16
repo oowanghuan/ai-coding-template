@@ -51,7 +51,7 @@ docs/
 
 ## 文档模板位置
 
-所有模板定义在 `_templates/CC_COLLABORATION/03_TEMPLATES/` 目录中。
+所有模板定义在 `CC_COLLABORATION/03_templates/` 目录中。
 
 ---
 

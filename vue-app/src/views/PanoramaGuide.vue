@@ -281,7 +281,7 @@
           <div class="directory-tree">
             <h4>目录结构</h4>
             <pre>├── .claude/commands/   ← Slash Commands
-├── _templates/         ← 模板库（核心）
+├── CC_COLLABORATION/   ← 协作框架（核心）
 ├── docs/               ← 功能文档
 ├── vue-app/            ← 看板应用
 └── scripts/            ← 工具脚本</pre>
