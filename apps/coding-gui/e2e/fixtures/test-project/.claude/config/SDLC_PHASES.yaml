@@ -1,0 +1,126 @@
+# Test Project SDLC Phases Configuration
+# For E2E Testing
+
+feature: test-feature
+feature_name: "Test Feature"
+
+phases:
+  - id: kickoff
+    name: "Kickoff"
+    status: completed
+    steps:
+      - id: kick-001
+        name: "Create Feature Context"
+        status: approved
+        command: "echo 'Creating context...'"
+        artifacts:
+          - path: "docs/10_CONTEXT.md"
+            exists: true
+        interactions:
+          - actor: user
+            description: "Define feature scope"
+          - actor: ai
+            description: "Generate context document"
+
+  - id: spec
+    name: "Spec"
+    status: active
+    steps:
+      - id: spec-001
+        name: "Write UI Flow Spec"
+        status: completed
+        command: "echo 'Writing spec...'"
+        artifacts:
+          - path: "docs/21_UI_FLOW_SPEC.md"
+            exists: true
+        interactions:
+          - actor: ai
+            description: "Generate UI flow specification"
+
+      - id: spec-002
+        name: "Expert Review"
+        status: pending
+        command: "/expert-review docs/21_UI_FLOW_SPEC.md"
+        artifacts:
+          - path: "docs/22_SPEC_REVIEW.md"
+            exists: false
+        interactions:
+          - actor: ai
+            description: "Execute expert review"
+          - actor: user
+            description: "Review and approve"
+
+  - id: demo
+    name: "Demo"
+    status: pending
+    steps:
+      - id: demo-001
+        name: "Create Demo Project"
+        status: pending
+        command: "npm run create:demo"
+        artifacts:
+          - path: "demos/test-feature/package.json"
+            exists: false
+        interactions:
+          - actor: ai
+            description: "Generate demo code"
+
+  - id: design
+    name: "Design"
+    status: pending
+    steps:
+      - id: design-001
+        name: "Write Design Document"
+        status: pending
+        command: "echo 'Writing design...'"
+        artifacts:
+          - path: "docs/40_DESIGN.md"
+            exists: false
+        interactions:
+          - actor: ai
+            description: "Generate design document"
+
+  - id: code
+    name: "Code"
+    status: pending
+    steps:
+      - id: code-001
+        name: "Implement Feature"
+        status: pending
+        command: "npm run build"
+        artifacts:
+          - path: "src/index.ts"
+            exists: false
+        interactions:
+          - actor: ai
+            description: "Write implementation code"
+
+  - id: test
+    name: "Test"
+    status: pending
+    steps:
+      - id: test-001
+        name: "Run Tests"
+        status: pending
+        command: "npm test"
+        artifacts:
+          - path: "coverage/lcov.info"
+            exists: false
+        interactions:
+          - actor: ai
+            description: "Execute test suite"
+
+  - id: deploy
+    name: "Deploy"
+    status: pending
+    steps:
+      - id: deploy-001
+        name: "Deploy to Production"
+        status: pending
+        command: "npm run deploy"
+        artifacts:
+          - path: "dist/index.js"
+            exists: false
+        interactions:
+          - actor: ai
+            description: "Deploy application"

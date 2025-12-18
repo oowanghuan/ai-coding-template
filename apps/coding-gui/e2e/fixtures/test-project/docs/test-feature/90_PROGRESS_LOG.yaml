@@ -1,0 +1,81 @@
+# 90_PROGRESS_LOG.yaml
+# Test Feature Progress Log
+
+meta:
+  feature: test-feature
+  feature_name: "Test Feature"
+  current_phase: 2
+  status: wip
+  owner: "@test"
+  started_at: "2024-12-17"
+  last_updated: "2024-12-17T12:00:00"
+  note: "E2E Testing Feature"
+
+phase_1_kickoff:
+  status: done
+  completed_at: "2024-12-17T10:00:00"
+  gate_passed: true
+  tasks:
+    - id: KICK-001
+      task: "Create Feature Context"
+      status: done
+      completed_at: "2024-12-17T10:00:00"
+      command: "echo 'Creating context...'"
+      notes: "Context document created"
+
+phase_2_spec:
+  status: wip
+  started_at: "2024-12-17T10:30:00"
+  tasks:
+    - id: SPEC-001
+      task: "Write UI Flow Spec"
+      status: done
+      completed_at: "2024-12-17T11:00:00"
+      command: "echo 'Writing spec...'"
+      notes: "UI flow specification completed"
+
+    - id: SPEC-002
+      task: "Expert Review"
+      status: pending
+      command: "/expert-review docs/21_UI_FLOW_SPEC.md"
+      notes: "Waiting for review"
+
+phase_3_demo:
+  status: pending
+  tasks:
+    - id: DEMO-001
+      task: "Create Demo Project"
+      status: pending
+      command: "npm run create:demo"
+
+phase_4_design:
+  status: pending
+  tasks:
+    - id: DESIGN-001
+      task: "Write Design Document"
+      status: pending
+      command: "echo 'Writing design...'"
+
+phase_5_code:
+  status: pending
+  tasks:
+    - id: CODE-001
+      task: "Implement Feature"
+      status: pending
+      command: "npm run build"
+
+phase_6_test:
+  status: pending
+  tasks:
+    - id: TEST-001
+      task: "Run Tests"
+      status: pending
+      command: "npm test"
+
+phase_7_deploy:
+  status: pending
+  tasks:
+    - id: DEPLOY-001
+      task: "Deploy to Production"
+      status: pending
+      command: "npm run deploy"

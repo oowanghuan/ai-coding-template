@@ -269,6 +269,18 @@ npm run dev
 
 Coding GUI 是一个 Electron 桌面应用，提供可视化的工作流管理界面，可以向已运行的 Claude Code CLI 发送命令。
 
+### 快速启动
+
+```bash
+# 1. 启动 GUI
+cd apps/coding-gui
+npm install
+npm run dev
+
+# 2. 在 Claude Code 中连接
+/gui-connect
+```
+
 ### 核心特性
 
 - **可视化工作流**：Phase 导航、Step 执行、进度追踪
@@ -285,15 +297,17 @@ GUI 点击执行 → 写入 .cmd 文件 → 用户在 CLI 输入"执行" → Hoo
 
 ### 使用方式
 
-1. **CLI 端**：启动 Claude Code 并执行 `/gui-connect`
-2. **GUI 端**：打开项目，等待 Session 连接
-3. **GUI 端**：点击任意执行按钮
-4. **CLI 端**：输入"执行"并回车，命令自动注入
+1. **启动 GUI**：`cd apps/coding-gui && npm install && npm run dev`
+2. **CLI 端**：启动 Claude Code 并执行 `/gui-connect`
+3. **GUI 端**：打开项目，等待 Session 连接
+4. **GUI 端**：点击任意执行按钮
+5. **CLI 端**：输入"执行"并回车，命令自动注入
 
 ### 技术实现
 
 | 文件 | 作用 |
 |------|------|
+| `apps/coding-gui/` | Electron GUI 应用源码 |
 | `.claude/hooks/check-gui-cmd.py` | 检测 GUI 命令并注入对话 |
 | `.claude/settings.json` | Hook 配置 |
 | `.claude/commands/gui-*.md` | GUI 连接管理命令 |
@@ -310,7 +324,7 @@ GUI-CLI 通过文件系统通信，Session 文件存储在 `.claude/gui-sessions
 └── session-{id}.result  # 执行结果（可选）
 ```
 
-> 详细说明见 Coding GUI 项目文档
+> 详细说明见 `apps/coding-gui/README.md`
 
 ## 自定义模板
 

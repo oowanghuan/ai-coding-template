@@ -1,0 +1,53 @@
+/**
+ * Coding GUI - 全局样式
+ */
+
+:root {
+  --sidebar-width: 200px;
+  --header-height: 50px;
+  --preflight-height: 40px;
+  --phase-nav-height: 60px;
+  /* macOS 窗口控制按钮安全区域 */
+  --titlebar-area-left: 80px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  height: 100%;
+}
+
+/* Element Plus 覆盖 */
+.el-menu {
+  border-right: none !important;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

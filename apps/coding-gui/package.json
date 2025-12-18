@@ -1,0 +1,47 @@
+{
+  "name": "coding-gui",
+  "version": "1.0.0",
+  "description": "Coding GUI - Claude Code Desktop Application",
+  "main": "./out/main/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx,.vue",
+    "test": "vitest run",
+    "test:unit": "vitest run --testPathPattern=__tests__",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "npm run build && npx playwright test",
+    "test:e2e:headed": "npm run build && npx playwright test --headed"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "@vueuse/core": "^14.1.0",
+    "chokidar": "^4.0.3",
+    "element-plus": "^2.12.0",
+    "joi": "^17.13.3",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.24",
+    "vue-router": "^4.6.4",
+    "yaml": "^2.7.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@rollup/plugin-alias": "^6.0.0",
+    "@types/node": "^22.10.2",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vitest/coverage-v8": "^2.1.8",
+    "@vue/test-utils": "^2.4.6",
+    "@vue/tsconfig": "^0.8.1",
+    "electron": "^34.5.8",
+    "electron-vite": "^3.0.0",
+    "playwright": "^1.57.0",
+    "typescript": "~5.7.2",
+    "vite": "^6.0.6",
+    "vite-tsconfig-paths": "^6.0.1",
+    "vitest": "^2.1.8"
+  }
+}
