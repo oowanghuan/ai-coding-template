@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/check-gui-cmd.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

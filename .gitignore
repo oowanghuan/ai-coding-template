@@ -32,5 +32,6 @@ Thumbs.db
 .env.local
 .env.*.local
 
-# Claude Code
-.claude/
+# Claude Code - 忽略本地配置和会话，保留共享配置
+.claude/settings.local.json
+.claude/gui-sessions/
