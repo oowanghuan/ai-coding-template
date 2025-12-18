@@ -60,7 +60,17 @@ docs/user-login/
 └── ...
 ```
 
-### 4. 开始开发
+### 4. 启动 Coding GUI（可选）
+
+```bash
+cd apps/coding-gui
+npm install
+npm run dev
+```
+
+GUI 启动后，在 Claude Code 中执行 `/gui-connect` 连接。
+
+### 5. 开始开发
 
 ```
 # 每天开始时
@@ -77,7 +87,16 @@ docs/user-login/
 
 ```
 my-project/
+├── .claude/                  # Claude Code 配置
+│   ├── commands/             # Slash 命令（含 GUI 连接命令）
+│   ├── hooks/                # Hook 脚本（GUI-CLI 通信）
+│   └── settings.json         # Hook 配置
+│
 ├── .env.example              # 环境变量示例（含 OpenAI API Key）
+│
+├── apps/                     # 应用程序
+│   └── coding-gui/           # Coding GUI（Electron 桌面应用）
+│
 ├── CC_COLLABORATION/         # 协作框架（核心，勿删）
 │   ├── 00_overview/          # 框架概述
 │   ├── 01_commit_rules/      # 提交规范
