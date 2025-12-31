@@ -4,6 +4,55 @@ All notable changes to ai-coding-template will be documented in this file.
 
 ---
 
+## [v2.0.0] - 2025-12-31
+
+### 🎉 Major Release: 可视化工作台独立
+
+重大架构调整：将可视化工作台独立为 [HA Loop Desk](https://github.com/oowanghuan/ha-loop-desk) 项目。
+
+### Added
+
+- **HA Loop Desk** - 独立的可视化工作台应用
+  - 甘特图进度视图
+  - Daily Standup 面板
+  - Phase Gate 状态显示
+  - 实时文件监控
+
+### Changed
+
+- **7 阶段工作流** - 从 8 阶段精简为 7 阶段（移除 Phase 0）
+- **项目定位明确** - 本仓库专注于框架模板，可视化由 HA Loop Desk 提供
+
+### 项目关系
+
+```
+ai-coding-template          HA Loop Desk
+═══════════════════         ═══════════════
+方法论 + 模板               可视化工作台
+
+- SDLC 阶段定义      ──→    - 甘特图进度视图
+- 文档模板                  - Daily Standup 面板
+- Phase Gate 机制           - Phase Gate 状态显示
+- 进度日志 (YAML)           - 实时文件监控
+```
+
+---
+
+## [v1.4.0] - 2025-12-19
+
+### Added
+
+- **Expert Review** - 外部专家评审集成（支持 OpenAI API）
+- **Dashboard View** - 多功能模块甘特图视图
+- **Daily Standup** - `/end-day` 生成每日站会数据
+
+### Changed
+
+- **Phase Gate 增强** - 支持 External Gate 和 Override 机制
+- **Schema Discovery** - 自动识别项目配置和功能模块
+
+---
+
 ## [v1.3.0] - 2024-12-15
 
 ### 🔧 Breaking Change: 文件编号规范化
@@ -167,7 +216,7 @@ cd my-project
 
 ## 相关链接
 
-- [AI 协作开发框架文档](https://ai-coding-org.vercel.app)
+- [HA Loop Desk](https://github.com/oowanghuan/ha-loop-desk) - 可视化工作台
 - [Claude Code 官方文档](https://docs.anthropic.com/claude-code)
 
 ---
