@@ -23,6 +23,9 @@ Human-AI Loop = 人类决策 + AI 执行 + 质量把控
 
 ## 3. 快速开始
 
+> **给 AI 看的版本**：如果你正在使用 Claude Code，可以让 AI 直接读取 [CLAUDE_INIT.md](./CLAUDE_INIT.md) 并执行初始化，省去手动操作。
+> 只需说：「读取 CLAUDE_INIT.md 并帮我初始化项目」
+
 ### 1. 克隆仓库
 
 ```bash
