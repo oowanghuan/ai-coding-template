@@ -1,30 +1,25 @@
 # AI Coding Template
 
-> **比 BMAD 更轻量，比 Mini-Spec 更注重工程落地**
->
-> 一键启动，三条命令开始你的第一个 AI 协作功能
-
----
+> AI 协作开发框架模板 - 让 AI 成为你的开发伙伴
 
 ## 这是什么？
 
 一套经过实战验证的 **AI 协作开发框架**，包含：
 
-- **8 阶段工作流** - 可裁剪，按需选用，保持 Context 文档是基础
+- **7 阶段工作流** - 可裁剪，按需选用
 - **标准化模板** - Context、Spec、Design、Test 等文档模板
 - **Claude Code 工具库** - Slash Commands + Skills + Subagents
-- **项目看板**（可选）- 可视化进度追踪
+- **Phase Gate 机制** - 质量门禁，确保每个阶段的交付质量
 
-## 解决什么问题？
+## 核心理念
 
-使用 AI 写代码时常见的痛点：
+```
+Human-AI Loop = 人类决策 + AI 执行 + 质量把控
+```
 
-| 痛点 | 解决方案 |
-|------|----------|
-| 上下文丢失 | 标准化文档结构，AI 可快速恢复上下文 |
-| 进度不可见 | 自动更新的进度日志 + 可视化看板 |
-| 协作混乱 | 明确的人机分工 + 交接清单 |
-| 质量失控 | 内置评审和测试流程 |
+- **人类负责**：目标定义、架构决策、质量审批
+- **AI 负责**：代码生成、文档编写、任务执行
+- **流程保障**：Phase Gate 机制确保每个阶段的质量
 
 ## 快速开始
 
@@ -33,6 +28,7 @@
 ```bash
 git clone https://github.com/oowanghuan/ai-coding-template.git my-project
 cd my-project
+rm -rf .git && git init  # 初始化为自己的仓库
 ```
 
 ### 2. 安装 Claude Code 工具
@@ -40,8 +36,6 @@ cd my-project
 ```bash
 ./scripts/init-claude-tools.sh --target=.
 ```
-
-这会将 Slash Commands 和 Skills 安装到 `.claude/commands/` 目录。
 
 ### 3. 创建第一个功能
 
@@ -55,29 +49,23 @@ cd my-project
 
 ```
 docs/user-login/
-├── 10_CONTEXT.md        # 待填写：功能背景和目标
-├── 90_PROGRESS_LOG.yaml # 自动更新：进度日志
-└── ...
+├── 10_CONTEXT.md           # 待填写：功能背景和目标
+├── 90_PROGRESS_LOG.yaml    # 自动更新：进度日志
+├── PHASE_GATE.yaml         # 质量关卡配置
+└── PHASE_GATE_STATUS.yaml  # 关卡状态
 ```
 
-### 4. 启动 Coding GUI（可选）
+### 4. 开始开发
 
 ```bash
-cd apps/coding-gui
-npm install
-npm run dev
-```
-
-GUI 启动后，在 Claude Code 中执行 `/gui-connect` 连接。
-
-### 5. 开始开发
-
-```
 # 每天开始时
 /start-day
 
 # 恢复之前的工作
 /iresume
+
+# 检查 Phase Gate 状态
+/check-gate user-login
 
 # 每天结束时
 /end-day
@@ -88,139 +76,40 @@ GUI 启动后，在 Claude Code 中执行 `/gui-connect` 连接。
 ```
 my-project/
 ├── .claude/                  # Claude Code 配置
-│   ├── commands/             # Slash 命令（含 GUI 连接命令）
-│   ├── hooks/                # Hook 脚本（GUI-CLI 通信）
-│   └── settings.json         # Hook 配置
+│   ├── commands/             # Slash 命令
+│   ├── hooks/                # Hook 脚本
+│   └── settings.json         # 项目设置
 │
-├── .env.example              # 环境变量示例（含 OpenAI API Key）
-│
-├── apps/                     # 应用程序
-│   └── coding-gui/           # Coding GUI（Electron 桌面应用）
-│
-├── CC_COLLABORATION/         # 协作框架（核心，勿删）
+├── CC_COLLABORATION/         # 协作框架（核心）
 │   ├── 00_overview/          # 框架概述
 │   ├── 01_commit_rules/      # 提交规范
 │   ├── 02_workflows/         # 工作流定义
 │   ├── 03_templates/         # 文档模板
 │   │   ├── 01_kickoff/       # Phase 1 模板
 │   │   ├── 02_spec/          # Phase 2 模板
-│   │   ├── ...               # Phase 3-7 模板
-│   │   ├── _common/          # 通用模板（评审报告等）
-│   │   └── _foundation/      # 基础配置模板
-│   ├── 04_ai_workflow/       # 8 阶段工作流说明
+│   │   └── ...               # Phase 3-7 模板
+│   ├── 04_ai_workflow/       # 7 阶段工作流说明
 │   ├── 05_tools/             # 工具定义
-│   │   ├── slash-commands/   # Slash 命令
-│   │   ├── skills/           # Skills（执行器）
-│   │   └── subagents/        # Subagents（智能体）
 │   ├── 06_roles_guide/       # 角色指南
 │   └── 07_phase_gate/        # Phase Gate 定义
 │
 ├── docs/                     # 功能文档（按功能组织）
-│   ├── _foundation/          # 项目级配置
 │   └── {feature}/            # 功能模块文档
 │
-├── _backup/                  # 临时备份（定期清理）
-├── scripts/                  # 工具脚本
-└── vue-app/                  # 项目看板（可选）
+└── scripts/                  # 工具脚本
 ```
 
-## 8 阶段工作流
+## 7 阶段工作流
 
-### Phase 0: Kickoff（功能初始化）
-
-**目标**：一条命令创建功能目录，自动生成标准文档结构。
-
-| 做什么 | 为什么 | 价值 |
-|--------|--------|------|
-| 执行 `/new-feature user-login` | 消除"从零开始"的混乱 | 开发启动成本接近 0 |
-| 自动创建目录和文档模板 | 确保所有功能遵循统一规范 | 所有功能天然标准化 |
-| 自动登记任务 ID、负责人 | 避免遗漏文档、命名混乱 | AI 处理文档更准确 |
-
----
-
-### Phase 1: Context（背景/目标/范围）
-
-**目标**：写清楚「为什么做」「做什么」「不做什么」—— AI 理解需求的基础。
-
-| 做什么 | 为什么 | 价值 |
-|--------|--------|------|
-| 描述业务背景、用户场景 | AI 和团队都必须知道问题的来龙去脉 | 减少 50–70% 沟通损耗 |
-| 明确目标与成功标准 | 上下文不清是返工的最大来源 | 所有角色从同一认知出发 |
-| 写清楚 Out of Scope | 边界是控制范围和预算的关键 | 为后续阶段奠定基础 |
-
----
-
-### Phase 2: Spec（UI/流程/接口定义）
-
-**目标**：把模糊需求变成精确可执行的规格。
-
-| 做什么 | 为什么 | 价值 |
-|--------|--------|------|
-| 产出 UI 流程图、交互细节 | 模糊需求导致的返工成本极高 | 开发不再靠猜 |
-| 定义 API 接口（request/response/error） | AI coding 依赖精确定义 | AI 稳定性提高 |
-| 定义边界情况、异常处理 | Spec 是唯一真实的对齐标准 | 最终效果更一致 |
-
----
-
-### Phase 3: Demo（快速原型验证）
-
-**目标**：用最小成本做出可点击的原型，让用户「看到」而不是「想象」。
-
-| 做什么 | 为什么 | 价值 |
-|--------|--------|------|
-| 自动生成 Demo（Vue/React/HTML） | 人的想象 ≠ 实际效果 | 缩短决策周期 |
-| 允许用户点击、体验流程 | 越早看到界面，越早发现问题 | 大幅减少后期返工 |
-| 收集反馈并迭代 | 避免开发完才大改 UI | 需求方、研发视觉对齐 |
-
----
-
-### Phase 4: Design（技术方案设计）
-
-**目标**：从已验证的 Demo 反推技术方案，而不是凭空想象架构。
-
-| 做什么 | 为什么 | 价值 |
-|--------|--------|------|
-| 数据库模型（ERD） | 技术设计必须基于最终用户体验 | 系统可维护性提升 |
-| 组件树设计、状态管理方案 | 避免架构过度复杂或功能无法支撑 | 防止技术债 |
-| API 结构、鉴权策略 | 为 AI coding 提供明确技术轨道 | 多人协作不踩逻辑 |
-
----
-
-### Phase 5: Code（功能实现）
-
-**目标**：AI 按设计文档逐步实现，人类审核关键决策，进度自动更新。
-
-| 做什么 | 为什么 | 价值 |
-|--------|--------|------|
-| 按 Spec/Design 有序生成代码 | AI 质量依赖输入的结构化信息 | 效率远高于传统写法 |
-| 自动拆分任务（前端/后端/DB） | 多人协作需要清晰可追踪的进度 | 交付一致性和完整性 |
-| 每次提交自动更新 Daily Summary | 避免清空上下文后 AI 重写错误代码 | 项目追踪更透明 |
-
----
-
-### Phase 6: Test（测试与质量验证）
-
-**目标**：自动生成测试计划，覆盖核心场景和边界条件，质量可量化。
-
-| 做什么 | 为什么 | 价值 |
-|--------|--------|------|
-| 自动生成测试用例（正常/异常/边界） | 缺乏测试是 AI 时代最大隐患 | 系统质量可被持续衡量 |
-| 手动 + 自动化执行测试 | 回归测试避免"改 A 崩 B" | 回归测试自动化 |
-| 输出结构化测试报告 | AI 在边缘场景容易漏逻辑 | Bug 变成可控成本 |
-
----
-
-### Phase 7: Deploy（发布上线）
-
-**目标**：自动生成发布说明，记录所有变更，版本历史清晰可查。
-
-| 做什么 | 为什么 | 价值 |
-|--------|--------|------|
-| 生成版本说明（Breaking/Added/Fixed） | 文档化发布流程避免遗漏 | 减少发布风险 |
-| 自动生成 Changelog | 版本历史是排查问题的重要依据 | 增强团队透明度 |
-| 检查迁移脚本和环境变量 | 用户和团队需要官方记录 | 上线过程可复盘 |
-
----
+| Phase | 名称 | 核心产出 | 价值 |
+|-------|------|----------|------|
+| 1 | **Kickoff** | 10_CONTEXT.md | 明确目标和范围 |
+| 2 | **Spec** | 21_UI_FLOW_SPEC.md | 精确可执行的规格 |
+| 3 | **Demo** | 交互原型 | 用户体验验证 |
+| 4 | **Design** | 40_DESIGN_FINAL.md | 技术方案设计 |
+| 5 | **Code** | 功能代码 | AI 按设计实现 |
+| 6 | **Test** | 测试报告 | 质量验证 |
+| 7 | **Deploy** | 发布说明 | 上线交付 |
 
 > 详细说明见 `CC_COLLABORATION/04_ai_workflow/`
 
@@ -235,180 +124,74 @@ my-project/
 | `/end-day` | 每日结束，生成总结 |
 | `/iresume` | 恢复上次工作 |
 | `/check-progress` | 检查进度状态 |
-| `/run-tests` | 执行测试 |
-| `/release` | 发布流程 |
-| `/init-project` | 初始化项目配置 |
-| `/expert-review` | 调用 OpenAI 独立专家评审 |
 | `/check-gate` | 检查 Phase Gate 状态 |
 | `/approve-gate` | 审批 Phase Gate |
 | `/next-phase` | 进入下一阶段 |
-| `/gui-connect` | 连接 Coding GUI |
-| `/gui-disconnect` | 断开 GUI 连接 |
-| `/gui-cleanup` | 清理 GUI 会话文件 |
-
-### Skills
-
-| 技能 | 用途 |
-|------|------|
-| `context_loader` | 加载功能上下文 |
-| `spec_writer` | 生成规格文档 |
-| `progress_tracker` | 更新进度日志 |
-| `code_reviewer` | 代码评审 |
-| `test_generator` | 生成测试用例 |
-| `openai_expert_review` | 调用 OpenAI API 执行独立评审 |
-| `gate_checker` | 检查 Phase Gate 通过条件 |
-
-### Subagents
-
-| Agent | 用途 |
-|-------|------|
-| `expert_reviewer` | 构建评审 Prompt，管理评审规则 |
+| `/expert-review` | 调用 OpenAI 独立专家评审 |
+| `/run-tests` | 执行测试 |
+| `/release` | 发布流程 |
 
 完整列表见 `CC_COLLABORATION/05_tools/`
 
-## 项目看板（可选）
+## 可视化工作台
 
-如需使用可视化看板：
+如果你需要**可视化的项目管理界面**，推荐使用 [HA Loop Desk](https://github.com/oowanghuan/ha-loop-desk)：
 
-```bash
-cd vue-app
-npm install
-npm run dev
-```
+- 📊 **甘特图视图** - 追踪多功能模块进度
+- 🔄 **Daily Standup** - 每日站会面板
+- 🚦 **Phase Gate 状态** - 可视化质量关卡
 
-看板功能：
-- 甘特图式进度展示
-- GitHub Issue/PR 同步
-- 文档在线查看
-- 每日进度摘要
-
-> 看板需要配置 Supabase，详见 `vue-app/README.md`
-
-## Coding GUI 集成
-
-Coding GUI 是一个 Electron 桌面应用，提供可视化的工作流管理界面，可以向已运行的 Claude Code CLI 发送命令。
-
-### 快速启动
+HA Loop Desk 是本框架的**可视化伴侣工具**，读取 `docs/` 目录下的 YAML 文件，提供图形化的项目状态视图。
 
 ```bash
-# 1. 启动 GUI
-cd apps/coding-gui
-npm install
-npm run dev
+# 下载 HA Loop Desk
+# https://github.com/oowanghuan/ha-loop-desk/releases
 
-# 2. 在 Claude Code 中连接
-/gui-connect
+# 打开后选择你的项目目录即可
 ```
 
-### 核心特性
+## Phase Gate 机制
 
-- **可视化工作流**：Phase 导航、Step 执行、进度追踪
-- **GUI-CLI 通信**：GUI 发送命令，CLI 保留完整对话上下文执行
-- **实时状态同步**：Session 连接状态监控
+每个阶段都有质量关卡，确保交付质量：
 
-### 工作原理
+```bash
+# 检查当前阶段的 Gate 状态
+/check-gate user-login --phase=2
 
-```
-GUI 点击执行 → 写入 .cmd 文件 → 用户在 CLI 输入"执行" → Hook 注入命令 → Claude 执行
-```
+# 审批通过 Gate
+/approve-gate user-login --phase=2 --role=PM
 
-**关键约束**：保留完整对话上下文（非协商）。采用 UserPromptSubmit Hook 方案实现。
-
-### 使用方式
-
-1. **启动 GUI**：`cd apps/coding-gui && npm install && npm run dev`
-2. **CLI 端**：启动 Claude Code 并执行 `/gui-connect`
-3. **GUI 端**：打开项目，等待 Session 连接
-4. **GUI 端**：点击任意执行按钮
-5. **CLI 端**：输入"执行"并回车，命令自动注入
-
-### 技术实现
-
-| 文件 | 作用 |
-|------|------|
-| `apps/coding-gui/` | Electron GUI 应用源码 |
-| `.claude/hooks/check-gui-cmd.py` | 检测 GUI 命令并注入对话 |
-| `.claude/settings.json` | Hook 配置 |
-| `.claude/commands/gui-*.md` | GUI 连接管理命令 |
-
-### Session 文件
-
-GUI-CLI 通过文件系统通信，Session 文件存储在 `.claude/gui-sessions/`：
-
-```
-.claude/gui-sessions/
-├── session-{id}.json    # Session 信息
-├── session-{id}.cmd     # 待执行命令
-├── session-{id}.ack     # 命令确认
-└── session-{id}.result  # 执行结果（可选）
+# 进入下一阶段
+/next-phase user-login
 ```
 
-> 详细说明见 `apps/coding-gui/README.md`
-
-## 自定义模板
-
-所有模板都可以根据项目需求修改：
-
-1. 编辑 `CC_COLLABORATION/03_templates/` 下的模板文件
-2. 模板会在下次创建功能时生效
-3. 保持文件名和结构不变，只修改内容
-
-## 最佳实践
-
-1. **每天开始执行 `/start-day`** - 让 AI 快速恢复上下文
-2. **每天结束执行 `/end-day`** - 自动生成进度总结
-3. **保持文档更新** - Context 和 Spec 是 AI 理解需求的关键
-4. **定期清理 `_backup/`** - 避免历史文件堆积
-5. **先 Spec 后 Code** - 先定义清楚再动手
-6. **关键阶段使用 Expert Review** - 让独立 AI 评审你的设计
+Gate 检查包括：
+- **必需产出物**：文档是否齐全
+- **质量检查**：内容是否符合要求
+- **审批状态**：相关角色是否已审批
 
 ## Expert Review（独立专家评审）
 
 解决 AI 协作开发中的核心问题：**AI 自己审自己，没有真正的质量门禁**。
 
-### 工作原理
-
-```
-Claude Code 生成设计文档 → /expert-review → OpenAI GPT-4 独立评审 → 发现问题阻断流程
-```
-
-### 核心价值
-
-| 特性 | 说明 |
-|------|------|
-| **独立性** | 使用 OpenAI (GPT-4) 作为独立评审方，避免 Claude 自己审自己 |
-| **硬约束** | 评审结果 verdict=BLOCK 可真正阻断 `/next-phase` |
-| **可执行** | 每个问题都有明确的修复建议和负责角色 |
-
-### 使用方式
-
 ```bash
-# 1. 完成设计文档后执行评审
+# 使用 OpenAI GPT-4 作为独立评审方
 /expert-review docs/my-feature --phase=4
 
-# 2. 查看评审结果
-# - REVIEW_ACTIONS.yaml (结构化结果)
-# - REVIEW_REPORT.md (人类可读报告)
-
-# 3. 评审判定
+# 评审结果：
 # - GO: 无问题，可继续
 # - REVISE: 有建议，可选修复
-# - BLOCK: 有严重问题，必须修复后重新评审
+# - BLOCK: 有严重问题，必须修复
 ```
 
-### 配置要求
-
+需要配置 OpenAI API Key：
 ```bash
-# 在 ~/.zshrc 中添加 OpenAI API Key
 export OPENAI_API_KEY="sk-your-api-key"
-source ~/.zshrc
 ```
-
-> 详细说明见 `.env.example` 和 `CC_COLLABORATION/05_tools/skills/openai_expert_review.md`
 
 ## 核心机制：上下文恢复
 
-**问题**：Claude Code 的 context window 有限，长对话会被 compact（压缩），之前讨论的细节会丢失。
+**问题**：Claude Code 的 context window 有限，长对话会被压缩，之前讨论的细节会丢失。
 
 **解决方案**：将关键信息持久化到文件系统，需要时重新加载。
 
@@ -416,108 +199,29 @@ source ~/.zshrc
 对话中产生的信息 → 写入标准化文档 → compact 后从文档恢复
 ```
 
-### 工作原理
-
-1. **开发过程中**：进度、决策、问题自动记录到 `90_PROGRESS_LOG.yaml`
-2. **每天结束时**：`/end-day` 生成当日总结到 `91_DAILY_SUMMARY/`
-3. **恢复上下文时**：`/iresume` 或 `/start-day` 读取这些文件，重建上下文
-
-### 恢复的内容
-
 | 文档 | 恢复的信息 |
 |------|------------|
 | `10_CONTEXT.md` | 功能背景、目标、范围 |
-| `40_DESIGN.md` | 技术方案、架构决策 |
-| `90_PROGRESS_LOG.yaml` | 已完成任务、当前进度、阻塞问题 |
-| `91_DAILY_SUMMARY/` | 历史工作记录 |
+| `40_DESIGN_FINAL.md` | 技术方案、架构决策 |
+| `90_PROGRESS_LOG.yaml` | 已完成任务、当前进度 |
 
-### 为什么有效
+## 最佳实践
 
-- **结构化**：不是随意的笔记，而是 AI 可解析的标准格式
-- **增量更新**：每次操作自动更新，不需要手动维护
-- **按需加载**：只加载当前功能相关的文档，不浪费 context
+1. **每天开始执行 `/start-day`** - 让 AI 快速恢复上下文
+2. **每天结束执行 `/end-day`** - 自动生成进度总结
+3. **保持文档更新** - Context 和 Spec 是 AI 理解需求的关键
+4. **先 Spec 后 Code** - 先定义清楚再动手
+5. **关键阶段使用 Expert Review** - 让独立 AI 评审你的设计
 
-## 相关资源
+## 相关项目
 
-- [AI 协作开发框架文档](https://ai-coding-org.vercel.app)
-- [Claude Code 官方文档](https://docs.anthropic.com/claude-code)
+| 项目 | 说明 |
+|------|------|
+| [HA Loop Desk](https://github.com/oowanghuan/ha-loop-desk) | 可视化工作台（桌面应用） |
 
 ## License
 
 MIT
-
----
-
-## 🎬 真实工作流：从定义到现场交付
-
-这个流程的核心不再是"写完代码"，而是**"达成共识"**。
-
-### 1️⃣ 定义阶段：AI 起草，人来拍板
-
-**场景**：你有一个新想法，或者接到了新需求。
-
-**命令**：`/new-feature <name>`
-
-**AI 动作**：不仅仅是建目录，而是自动生成 Context Spec（需求规格说明书）。
-
-👨🏻‍💻 **人的工作（The "Blabla" Phase）**：
-
-- 你看文档，AI 就像你的产品经理助理。
-- **协作反馈**：你直接在 CLI 里说："这里逻辑不对，应该是A先于B"，或者"这个字段不需要"。
-- **循环**：AI 修改 Spec -> 你再看 -> 直到你说"OK，就这样"。
-
-> 只有 Spec 确定了，才进入下一步。
-
----
-
-### 2️⃣ 原型阶段：带着 Demo 见用户
-
-**场景**：Spec 确认后，你需要一个能动的东西去跟最终用户（或老板）对齐。
-
-**命令**：`/gen-demo <name>`
-
-**AI 动作**：基于刚才确认的 Spec，生成 Demo.vue + Mock API。
-
-👨🏻‍💻 **人的工作（现场对战）**：
-
-- 你拿着这个可交互的 Demo，直接面对面跟用户讨论。
-- **边讨论边改**：用户说"这个按钮太小"或"流程太长"，你直接指挥 AI 修改。
-- 这是最高效的 Design & Dev 过程，代码在此时是用来**验证想法**的。
-
----
-
-### 3️⃣ 迭代深水区：智慧存档 (The Strategic Checkpoint)
-
-**场景**：这是你强调的关键判断点。
-
-**情况 A：顺风局**
-
-改动很简单，AI 一次做对。那就直接继续，不需要额外操作。
-
-**情况 B：逆风局（复杂迭代）**
-
-讨论了很多轮，修改了数据库结构，又改了 UI，Context 变得很长很乱。
-
-👨🏻‍💻 **人的判断**："差不多了，现在的状态是好的，但下面要攻坚一个难点，别把前面的搞乱了。" 或者 "AI 开始有点胡言乱语了，需要清洗一下。"
-
-**命令组合**：
-
-- `/check-progress <name>`：确认当前进度，把刚才乱七八糟的修改沉淀为"已完成的状态"。
-- `/iresume <feature>`：这是核心。清理掉刚才几十轮的对话废话，只保留最新的 Spec 和代码状态，清爽地开始下一轮攻坚。
-
----
-
-### 4️⃣ 每日收尾：沉淀价值
-
-**场景**：一天结束，无论功能是否全部做完，都需要把当天的脑力劳动存盘。
-
-**命令**：`/daily-summary`
-
-**AI 动作**：从混乱的开发日志中提炼出：今天到底解决了什么问题？（用于日报）。
-
-**命令**：`/end-day [feature]`
-
-**AI 动作**：Git Commit & Push。关键在于，它保存了你的工作上下文。明天早上 `/start-day` 时，你不需要回忆昨天改到哪了，AI 会告诉你。
 
 ---
 
