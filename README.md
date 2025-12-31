@@ -2,7 +2,7 @@
 
 > AI 协作开发框架模板 - 让 AI 成为你的开发伙伴
 
-## 这是什么？
+## 1. 这是什么？
 
 一套经过实战验证的 **AI 协作开发框架**，包含：
 
@@ -11,7 +11,7 @@
 - **Claude Code 工具库** - Slash Commands + Skills + Subagents
 - **Phase Gate 机制** - 质量门禁，确保每个阶段的交付质量
 
-## 核心理念
+## 2. 核心理念
 
 ```
 Human-AI Loop = 人类决策 + AI 执行 + 质量把控
@@ -21,7 +21,7 @@ Human-AI Loop = 人类决策 + AI 执行 + 质量把控
 - **AI 负责**：代码生成、文档编写、任务执行
 - **流程保障**：Phase Gate 机制确保每个阶段的质量
 
-## 快速开始
+## 3. 快速开始
 
 ### 1. 克隆仓库
 
@@ -71,7 +71,7 @@ docs/user-login/
 /end-day
 ```
 
-## 目录结构
+## 4. 目录结构
 
 ```
 my-project/
@@ -99,7 +99,7 @@ my-project/
 └── scripts/                  # 工具脚本
 ```
 
-## 7 阶段工作流
+## 5. 7 阶段工作流
 
 | Phase | 名称 | 核心产出 | 价值 |
 |-------|------|----------|------|
@@ -113,7 +113,7 @@ my-project/
 
 > 详细说明见 `CC_COLLABORATION/04_ai_workflow/`
 
-## 工具列表
+## 6. 工具列表
 
 ### Slash Commands
 
@@ -133,7 +133,7 @@ my-project/
 
 完整列表见 `CC_COLLABORATION/05_tools/`
 
-## 可视化工作台
+## 7. 可视化工作台
 
 如果你需要**可视化的项目管理界面**，推荐使用 [HA Loop Desk](https://github.com/oowanghuan/ha-loop-desk)：
 
@@ -150,7 +150,7 @@ HA Loop Desk 是本框架的**可视化伴侣工具**，读取 `docs/` 目录下
 # 打开后选择你的项目目录即可
 ```
 
-## Phase Gate 机制
+## 8. Phase Gate 机制
 
 每个阶段都有质量关卡，确保交付质量：
 
@@ -170,7 +170,7 @@ Gate 检查包括：
 - **质量检查**：内容是否符合要求
 - **审批状态**：相关角色是否已审批
 
-## Expert Review（独立专家评审）
+## 9. Expert Review（独立专家评审）
 
 解决 AI 协作开发中的核心问题：**AI 自己审自己，没有真正的质量门禁**。
 
@@ -189,7 +189,7 @@ Gate 检查包括：
 export OPENAI_API_KEY="sk-your-api-key"
 ```
 
-## 核心机制：上下文恢复
+## 10. 核心机制：上下文恢复
 
 **问题**：Claude Code 的 context window 有限，长对话会被压缩，之前讨论的细节会丢失。
 
@@ -205,7 +205,7 @@ export OPENAI_API_KEY="sk-your-api-key"
 | `40_DESIGN_FINAL.md` | 技术方案、架构决策 |
 | `90_PROGRESS_LOG.yaml` | 已完成任务、当前进度 |
 
-## 最佳实践
+## 11. 最佳实践
 
 1. **每天开始执行 `/start-day`** - 让 AI 快速恢复上下文
 2. **每天结束执行 `/end-day`** - 自动生成进度总结
@@ -213,13 +213,13 @@ export OPENAI_API_KEY="sk-your-api-key"
 4. **先 Spec 后 Code** - 先定义清楚再动手
 5. **关键阶段使用 Expert Review** - 让独立 AI 评审你的设计
 
-## 相关项目
+## 12. 相关项目
 
 | 项目 | 说明 |
 |------|------|
 | [HA Loop Desk](https://github.com/oowanghuan/ha-loop-desk) | 可视化工作台（桌面应用） |
 
-## License
+## 13. License
 
 MIT
 
