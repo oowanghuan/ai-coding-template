@@ -6,7 +6,7 @@
 
 一套经过实战验证的 **AI 协作开发框架**，包含：
 
-- **7 阶段工作流** - 可裁剪，按需选用
+- **8 阶段工作流** - 可裁剪，按需选用（Phase 0-7）
 - **标准化模板** - Context、Spec、Design、Test 等文档模板
 - **Claude Code 工具库** - Slash Commands + Skills + Subagents
 - **Phase Gate 机制** - 质量门禁，确保每个阶段的交付质量
@@ -88,7 +88,7 @@ my-project/
 │   │   ├── 01_kickoff/       # Phase 1 模板
 │   │   ├── 02_spec/          # Phase 2 模板
 │   │   └── ...               # Phase 3-7 模板
-│   ├── 04_ai_workflow/       # 7 阶段工作流说明
+│   ├── 04_ai_workflow/       # 8 阶段工作流说明
 │   ├── 05_tools/             # 工具定义
 │   ├── 06_roles_guide/       # 角色指南
 │   └── 07_phase_gate/        # Phase Gate 定义
@@ -99,10 +99,11 @@ my-project/
 └── scripts/                  # 工具脚本
 ```
 
-## 5. 7 阶段工作流
+## 5. 8 阶段工作流
 
 | Phase | 名称 | 核心产出 | 价值 |
 |-------|------|----------|------|
+| 0 | **Foundation** | 系统基础设施 | 项目级配置和规范 |
 | 1 | **Kickoff** | 10_CONTEXT.md | 明确目标和范围 |
 | 2 | **Spec** | 21_UI_FLOW_SPEC.md | 精确可执行的规格 |
 | 3 | **Demo** | 交互原型 | 用户体验验证 |

@@ -20,7 +20,6 @@ All notable changes to ai-coding-template will be documented in this file.
 
 ### Changed
 
-- **7 阶段工作流** - 从 8 阶段精简为 7 阶段（移除 Phase 0）
 - **项目定位明确** - 本仓库专注于框架模板，可视化由 HA Loop Desk 提供
 
 ### 项目关系
