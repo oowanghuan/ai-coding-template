@@ -1,11 +1,14 @@
 # DAILY_WORKFLOW_GUIDE.md
-# AI 协作开发日常工作流指南
+# AI 协作开发实战操作指南
 
-> 版本：v1.3
+> 版本：v1.4
 > 最后更新：2026-01-02
 > 适用于：Claude Code + AI 协作开发框架
+> 文档类型：**实战操作指南**（User Guide）
 
 ---
+
+> 📘 **框架参考手册**：阶段定义、模板清单、工具索引请参见 [README.md](./README.md)
 
 ## 目录
 
@@ -16,9 +19,8 @@
    - **3.8 Phase 5 实战：人机协作详解** ⭐
    - **3.9 Phase 6 实战：测试工具详解** ⭐
 4. [命令速查表](#4-命令速查表)
-5. [Skills 和 Subagents](#5-skills-和-subagents)
-6. [常见场景处理](#6-常见场景处理)
-7. [最佳实践](#7-最佳实践)
+5. [常见场景处理](#5-常见场景处理)
+6. [最佳实践](#6-最佳实践)
 
 ---
 
@@ -1603,40 +1605,9 @@ login.vue 中缺少 API 错误响应的 UI 处理逻辑
 
 ---
 
-## 5. Skills 和 Subagents
+## 5. 常见场景处理
 
-### 5.1 Skills（技能）
-
-Skills 是可复用的能力模块，由 Claude 在需要时自动调用。
-
-| Skill | 说明 | 触发场景 |
-|-------|------|----------|
-| `gate_checker` | Phase Gate 检查 | `/check-gate`、`/next-phase` |
-| `progress_updater` | 更新进度日志 | 任务状态变更时 |
-| `openai_expert_review` | 调用 OpenAI 执行评审 | `/expert-review` |
-| `context_writer` | 编写上下文文档 | 创建功能时 |
-| `spec_validator` | 验证规格文档 | Gate 检查时 |
-| `test_runner` | 运行测试 | `/run-tests` |
-| `doc_generator` | 生成文档 | 各阶段文档生成 |
-| `ui_demo` | 生成 Demo | `/gen-demo` |
-
-### 5.2 Subagents（子代理）
-
-Subagents 是专门处理复杂任务的独立代理。
-
-| Subagent | 说明 | 触发场景 |
-|----------|------|----------|
-| `expert_reviewer` | 独立第三方专家评审 | `/expert-review` |
-| `progress_tracker` | 进度追踪 | `/check-progress` |
-| `spec_writer` | 规格编写 | Phase 2 |
-| `test_plan_writer` | 测试计划编写 | Phase 6 |
-| `release_summarizer` | 发布总结 | Phase 7 |
-
----
-
-## 6. 常见场景处理
-
-### 6.1 对话超长时恢复上下文
+### 5.1 对话超长时恢复上下文
 
 当对话变得很长，Claude 可能会丢失上下文。使用以下方法恢复：
 
@@ -1654,7 +1625,7 @@ Subagents 是专门处理复杂任务的独立代理。
 - 上次操作和下一步
 - 相关文件列表
 
-### 6.2 多日开发同一功能
+### 5.2 多日开发同一功能
 
 ```bash
 # Day 1 结束
@@ -1669,7 +1640,7 @@ Subagents 是专门处理复杂任务的独立代理。
 /end-day user-auth
 ```
 
-### 6.3 Gate 被阻断
+### 5.3 Gate 被阻断
 
 ```bash
 # 检查阻断原因
@@ -1684,7 +1655,7 @@ Subagents 是专门处理复杂任务的独立代理。
 /approve-gate user-auth --phase=2 --role=PM
 ```
 
-### 6.4 专家评审 BLOCK
+### 5.4 专家评审 BLOCK
 
 ```bash
 # 查看评审详情
@@ -1700,7 +1671,7 @@ cat docs/user-auth/REVIEW_REPORT.md
 /next-phase user-auth
 ```
 
-### 6.5 跳过 Demo 阶段
+### 5.5 跳过 Demo 阶段
 
 如果功能没有 UI，编辑 `PHASE_GATE.yaml`：
 
@@ -1712,7 +1683,7 @@ feature_profile:
 
 Phase 3 将自动跳过。
 
-### 6.6 并行开发多个功能
+### 5.6 并行开发多个功能
 
 ```bash
 # 功能 A
@@ -1729,34 +1700,34 @@ Phase 3 将自动跳过。
 
 ---
 
-## 7. 最佳实践
+## 6. 最佳实践
 
-### 7.1 文档优先
+### 6.1 文档优先
 
 1. **先写 Context**：明确功能目标和边界
 2. **再写 Spec**：定义详细需求
 3. **然后 Design**：设计技术方案
 4. **最后 Code**：实现功能
 
-### 7.2 及时更新进度
+### 6.2 及时更新进度
 
 - 完成任务后立即更新状态
 - 使用 `/end-day` 保存当日进度
 - 保持 `cc_checkpoint` 最新
 
-### 7.3 善用专家评审
+### 6.3 善用专家评审
 
 - Phase 4 Design 阶段**强烈建议**执行专家评审
 - 评审可以发现设计问题，避免后期返工
 - `BLOCK` 级问题必须修复
 
-### 7.4 Gate 审批要认真
+### 6.4 Gate 审批要认真
 
 - 不要跳过 Gate 检查
 - 审批代表对质量的承诺
 - 问题要在当前阶段解决
 
-### 7.5 保持代码同步
+### 6.5 保持代码同步
 
 - 每天开始前 `/start-day` 同步代码
 - 每天结束时 `/end-day` 提交代码
@@ -1791,6 +1762,7 @@ docs/{feature-name}/
 
 | 版本 | 日期 | 变更内容 |
 |------|------|----------|
+| v1.4 | 2026-01-02 | 文档定位明确为「实战操作指南」，移除 Skills/Subagents 章节（指向 README），章节重新编号 |
 | v1.3 | 2026-01-02 | 新增 Phase 0.5 Foundation Gate 机制：User Journey 需求起源层、设计验证、4 个新命令 |
 | v1.2 | 2024-12-16 | 添加 Phase 5/6 实战详解 |
 | v1.0 | 2024-12-16 | 初始版本 |
