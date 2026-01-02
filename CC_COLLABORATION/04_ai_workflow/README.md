@@ -1,8 +1,8 @@
 # 04_AI_WORKFLOW.md
 # AI 协作工作流总纲
 
-> 版本：v1.3
-> 最后更新：2024-12-15
+> 版本：v1.4
+> 最后更新：2025-01-02
 > 状态：框架定稿，工具已实现
 
 ---
@@ -34,6 +34,7 @@
 
 | 文档 | 用途 | 模板/参考 | 状态 |
 |------|------|----------|------|
+| `_foundation/01_USER_JOURNEY.md` | **需求起源层** - 用户流程、系统责任、模块映射 | `01_USER_JOURNEY_TEMPLATE.md` | ✅ 有模板 |
 | `_foundation/00_PROJECT_CONTEXT.md` | 项目背景、团队、领域知识 | `03_templates/01_kickoff/10_CONTEXT_TEMPLATE.md` | ✅ 有模板 |
 | `_foundation/01_PROJECT_PROFILE.yaml` | 技术栈配置、工作流开关 | `03_templates/_common/01_PROJECT_PROFILE_TEMPLATE.yaml` | ✅ 有模板 |
 | `_foundation/_api_system/*` | API 规则体系（4 层） | `03_templates/_foundation/_api_system_template/` | 📄 有模板 |
@@ -56,6 +57,58 @@
 
 ### 负责角色
 System Architect
+
+---
+
+## Phase 0.5: Foundation Gate（需求验证）
+
+> **v1.4 新增**：在 Phase 0 与 Phase 1 之间引入 Foundation Gate 机制，确保需求起源层完整。
+
+### 环节目标
+验证 Foundation 文档的完整性，确保所有 P0 模块都可追溯到用户步骤，通过设计验证后才能进入功能开发。
+
+### 核心理念
+
+```
+User Journey → System Responsibility → Module Mapping → Design Validation → Foundation Gate
+     ↑                                                                              │
+     └────────────────────────── 可追溯 ◀───────────────────────────────────────────┘
+```
+
+### 标准文档
+
+| 文档 | 用途 | 模板/参考 | 状态 |
+|------|------|----------|------|
+| `_foundation/01_USER_JOURNEY.md` | 用户流程（U1→U2→...）、失败路径（F1, F2...）、系统责任、模块映射 | `01_USER_JOURNEY_TEMPLATE.md` | ✅ 有模板 |
+| `_foundation/00_FOUNDATION_GATE.md` | Gate 规则定义、MVS 标准、检查项 | `00_FOUNDATION_GATE.md` | ✅ 有模板 |
+| `_foundation/DESIGN_VALIDATION_RESULT.yaml` | 设计验证结果 | 自动生成 | 📝 运行时产物 |
+
+### 环节工具
+
+| 类型 | 名称 | 用途 | 状态 |
+|------|------|------|------|
+| Slash Command | `/doc-design-validation` | 执行设计验证，输出 PASS/FAIL | ✅ 已实现 |
+| Slash Command | `/check-foundation-gate` | 检查 Foundation Gate 状态 | ✅ 已实现 |
+| Slash Command | `/plan-features` | 生成功能开发清单（需先通过 Gate） | ✅ 已实现 |
+
+### User Journey MVS（最小可通过要求）
+
+| 必填区块 | 最小要求 |
+|----------|----------|
+| 用户画像 | ≥ 1 个主要用户 |
+| 主成功路径 | ≥ 3 个用户步骤（U1, U2, U3...） |
+| 失败路径 | ≥ 2 个失败场景（F1, F2...） |
+| 系统责任声明 | 每个用户步骤都有「系统必须做」 |
+| 模块映射表 | 所有 P0 模块都有对应的用户步骤 |
+
+### 完成标准
+- [ ] `01_USER_JOURNEY.md` 满足 MVS 要求
+- [ ] `/doc-design-validation` 结果为 PASS
+- [ ] Foundation Gate 检查通过
+- [ ] PM / Architect 审批完成
+
+### 负责角色
+PM / Product + Architect
 
 ---
 
@@ -329,11 +382,14 @@ PM
 
 ## 工具汇总表
 
-### Slash Commands (8 个)
+### Slash Commands (11 个)
 
 | 命令 | 阶段 | 用途 | 优先级 |
 |------|------|------|--------|
-| `/init-project` | Phase 0 | 初始化 _system 目录 | P3 |
+| `/init-project` | Phase 0 | 初始化 _foundation 目录 | P3 |
+| `/doc-design-validation` | Phase 0.5 | 执行设计验证 PASS/FAIL（v1.4 新增） | P0 |
+| `/check-foundation-gate` | Phase 0.5 | 检查 Foundation Gate 状态（v1.4 新增） | P0 |
+| `/plan-features` | Phase 0.5 | 生成功能开发清单（v1.4 新增） | P1 |
 | `/new-feature <name>` | Phase 1 | 创建功能模块 | P0 |
 | `/gen-demo <feature>` | Phase 3 | 生成 Demo + Mock API | P2 |
 | `/check-progress <feature>` | Phase 5 | 查看进度状态 | P1 |
@@ -375,8 +431,12 @@ PM
 
 ```
 Phase 0: Foundation
-├── 文档: 00_PROJECT_CONTEXT ✅, 01_PROJECT_PROFILE ✅, 02_API_CONVENTIONS 📄, 03_DB_CONVENTIONS 📄, _ui_system/* 📄
+├── 文档: 01_USER_JOURNEY ✅, 00_PROJECT_CONTEXT ✅, 01_PROJECT_PROFILE ✅, 02_API_CONVENTIONS 📄, 03_DB_CONVENTIONS 📄, _ui_system/* 📄
 └── 工具: /init-project, system_scaffolder
+
+Phase 0.5: Foundation Gate (v1.4 新增)
+├── 文档: 01_USER_JOURNEY ✅, 00_FOUNDATION_GATE ✅, DESIGN_VALIDATION_RESULT 📝
+└── 工具: /doc-design-validation, /check-foundation-gate, /plan-features
 
 Phase 1: Kickoff
 ├── 文档: 10_CONTEXT ✅, 10_CONTEXT_CHANGELOG ✅
@@ -425,13 +485,15 @@ Phase 7: Deploy
 │   ├── 90_PROGRESS_LOG_TEMPLATE.yaml
 │   └── 91_DAILY_SUMMARY_TEMPLATE.md
 ├── _foundation/                          # Foundation 级模板
+│   ├── 00_FOUNDATION_GATE.md             # Gate 规则（v1.4 新增）
+│   ├── 01_USER_JOURNEY_TEMPLATE.md       # 需求起源层（v1.4 新增）
+│   ├── 03_DB_CONVENTIONS_TEMPLATE.md
 │   ├── _api_system_template/
 │   │   ├── 00_REST_CONVENTIONS_TEMPLATE.md
 │   │   ├── 01_COMMAND_CONVENTIONS_TEMPLATE.md
 │   │   ├── 02_YAML_SCHEMA_CONVENTIONS_TEMPLATE.md
 │   │   └── 03_EXTERNAL_API_CONVENTIONS_TEMPLATE.md
-│   ├── _ui_system_template/
-│   └── 03_DB_CONVENTIONS_TEMPLATE.md
+│   └── _ui_system_template/
 ├── 01_kickoff/
 │   └── 10_CONTEXT_TEMPLATE.md
 ├── 02_spec/
@@ -473,6 +535,8 @@ Foundation 级别的规范模板位于 `03_templates/_foundation/`：
 
 | 模板目录/文件 | 说明 |
 |--------------|------|
+| `01_USER_JOURNEY_TEMPLATE.md` | **需求起源层** - 用户流程、系统责任、模块映射（v1.4 新增） |
+| `00_FOUNDATION_GATE.md` | Foundation Gate 规则、MVS 标准（v1.4 新增） |
 | `_api_system_template/` | API 规则体系（REST、Command、YAML、External API） |
 | `_ui_system_template/` | UI 设计系统（6 层） |
 | `03_DB_CONVENTIONS_TEMPLATE.md` | 数据库设计规范 |
