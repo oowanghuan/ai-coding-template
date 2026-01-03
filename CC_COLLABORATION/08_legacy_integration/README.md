@@ -314,12 +314,14 @@ docs/my-project/
 /reverse-schema ./path/to/project
 ```
 
-**支持的框架**：
+**支持的技术栈**：
 
-| 命令 | 支持 | 说明 |
+| 命令 | 语言 | 说明 |
 |------|------|------|
-| `/reverse-api` | Express, Koa, NestJS, Fastify, Hono | 从路由定义生成 API 文档 |
-| `/reverse-schema` | Prisma, TypeORM, Sequelize, Mongoose | 从 ORM 定义生成数据模型 |
+| `/reverse-api` | 任意（Python, JS/TS, Go, Java...） | 从路由定义生成 API 文档 |
+| `/reverse-schema` | 任意（SQLAlchemy, Prisma, TypeORM...） | 从 ORM 定义生成数据模型 |
+
+> 💡 采用契约式设计，Claude 自动识别框架语法，无需预定义规则
 
 **输出带有置信度标记**：
 ```markdown
