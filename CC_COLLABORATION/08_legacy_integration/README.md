@@ -1,27 +1,294 @@
-# 现有项目整合指南
+# 现有项目整合 & 接口契约解析
 
-> 版本：v1.0
+> 版本：v2.0
 > 最后更新：2026-01-03
 
 ---
 
-## 为什么需要这个？
+## 背景：AI 编程的两个痛点
 
-当你有一个**已经存在的项目**，想要用 AI 协作框架来管理时，会遇到一个问题：
+### 痛点 1：项目接入 - AI 不知道「我们在什么地基上工作」
 
-> AI 不知道这个项目「已经做了什么」，每次都要重新解释背景
+当你有一个**已经存在的项目**，想要用 AI 协作开发时：
 
-这套工具解决的核心问题是：
+```
+用户：帮我在这个项目上加一个用户导出功能
+AI：好的，我来创建 UserExportService...
 
-> **让 AI 知道「我们在什么地基上工作」**
+问题：
+- AI 不知道项目用的是 Express 还是 NestJS
+- AI 不知道已有的 User 模型长什么样
+- AI 不知道项目的目录结构规范
+- 每次都要重新解释背景
+```
+
+### 痛点 2：字段名猜测 - Mock 切 Real 时页面空白
+
+```typescript
+// AI 写的前端代码
+const user = await api.getUser(id);
+console.log(user.userName);      // undefined!
+console.log(user.createdAt);     // undefined!
+
+// 实际后端返回
+{
+  "username": "zhangsan",        // 是 username 不是 userName
+  "created_at": "2026-01-03"     // 是 snake_case 不是 camelCase
+}
+```
+
+**这个问题在以下场景尤其严重**：
+- Mock API 切换到 Real API
+- 前后端分离开发
+- AI 生成类型定义时
 
 ---
 
-## 核心概念
+## 解决方案：契约式 Skills
 
-### 1. 单一信息来源（SSoT）
+### 设计理念
 
-SSoT = Single Source of Truth
+**传统做法（命令式）**：为每种框架写检测规则
+```yaml
+# 不好的设计 - 每种框架都要写规则
+express_patterns:
+  - "app.get("
+  - "router.post("
+fastapi_patterns:
+  - "@app.get("
+  - "@router.post("
+nestjs_patterns:
+  - "@Get("
+  - "@Controller("
+# ... 无限扩展
+```
+
+**我们的做法（契约式）**：只定义输出格式，让 Claude 自动识别
+```yaml
+# 好的设计 - 只定义输出契约
+output:
+  endpoints:
+    - method: string      # GET | POST | ...
+      path: string        # /api/users
+      handler: string     # 处理函数名
+      confidence: number  # 置信度
+```
+
+**优势**：
+| 对比项 | 命令式 | 契约式 |
+|--------|--------|--------|
+| 支持新框架 | 需要添加规则 | 自动支持 |
+| 代码量 | 1200+ 行 | 500 行 |
+| 维护成本 | 高 | 低 |
+| 适用范围 | 预定义的框架 | 任意语言/框架 |
+
+---
+
+## Skills 清单
+
+### 项目扫描类
+
+| Skill | 用途 | 输入 | 输出 |
+|-------|------|------|------|
+| `tech_stack_detector` | 检测技术栈 | 项目路径 | 语言、框架、数据库、版本 |
+| `api_scanner` | 扫描 API 端点 | 项目路径 | 端点列表、参数、响应类型 |
+| `schema_scanner` | 扫描数据模型 | 项目路径 | 模型、字段、关系、ER 图 |
+| `module_scanner` | 扫描模块结构 | 项目路径 | 目录树、模块分类、统计 |
+
+### 接口解析类
+
+| Skill | 用途 | 输入 | 输出 |
+|-------|------|------|------|
+| `contract_resolver` | 查询字段定义 | 实体名/端点 | 真实字段名、类型、约束 |
+
+---
+
+## contract_resolver 详解
+
+### 问题场景
+
+```
+场景 1: 写前端组件
+─────────────────
+❌ 之前: AI 猜测 { userName: string }
+✅ 之后: 先查 contract → { username: string }
+
+场景 2: 写 Mock 数据
+─────────────────
+❌ 之前: 手写 mock，字段名与后端不一致
+✅ 之后: 从 contract 生成，保证一致
+
+场景 3: Mock → Real 切换
+─────────────────
+❌ 之前: 切换后字段对不上，页面空白
+✅ 之后: 验证 mock 与 real 的 contract 一致性
+```
+
+### SSoT 查找优先级
+
+按以下顺序查找，找到即返回：
+
+```
+1. 项目 Contract 文件（如果有）
+   └─ shared/contracts/{entity}.yaml
+   └─ contracts/{entity}.json
+
+2. OpenAPI / Swagger
+   └─ openapi.yaml / swagger.json
+
+3. API Spec 文档
+   └─ docs/{feature}/20_API_SPEC.md
+   └─ docs/{feature}/21_UI_FLOW_SPEC.md
+
+4. 后端 Schema 定义（推荐 SSoT）
+   └─ Python: app/schemas/{entity}.py (Pydantic)
+   └─ TypeScript: src/schemas/{entity}.ts (Zod/io-ts)
+   └─ Prisma: prisma/schema.prisma
+
+5. 后端 Model 定义
+   └─ Python: app/models/{entity}.py (SQLAlchemy)
+   └─ TypeScript: src/models/{entity}.ts (TypeORM)
+
+6. 前端类型定义（最低优先级）
+   └─ src/types/{entity}.ts
+```
+
+### 使用示例
+
+#### 示例 1: 按实体查询
+
+```yaml
+# 输入
+input:
+  entity: "Agent"
+  project_path: "./backend"
+
+# 输出
+output:
+  success: true
+  data:
+    source:
+      type: "backend_schema"
+      file: "app/schemas/agent.py"
+      line: 46
+
+    fields:
+      - name: "id"
+        type: "string"
+        format: "uuid"
+        required: true
+
+      - name: "agent_type"           # 真实字段名是 snake_case
+        type: "string"
+        enum: ["assistant", "user_proxy", "group_chat_manager"]
+        default: "assistant"
+
+      - name: "system_message"       # 不是 systemMessage
+        type: "string"
+        nullable: true
+
+      - name: "created_at"           # 不是 createdAt
+        type: "datetime"
+
+    formatted:
+      typescript: |
+        interface Agent {
+          id: string;
+          agent_type: 'assistant' | 'user_proxy' | 'group_chat_manager';
+          system_message?: string | null;
+          created_at: string;
+        }
+
+    confidence: 0.95
+    confidence_reason: "Pydantic schema 类型定义完整"
+```
+
+#### 示例 2: 按端点查询
+
+```yaml
+# 输入
+input:
+  endpoint: "GET /api/v1/agents"
+  project_path: "./backend"
+
+# 输出
+output:
+  success: true
+  data:
+    source:
+      type: "api_route"
+      file: "app/api/v1/agents.py"
+
+    endpoint:
+      method: "GET"
+      path: "/api/v1/agents"
+      response_body:
+        type: "AgentListResponse"
+        properties:
+          total: { type: "number" }
+          page: { type: "number" }
+          page_size: { type: "number" }
+          items: { type: "array", items: "Agent" }
+```
+
+#### 示例 3: Mock 验证
+
+```yaml
+# 输入
+input:
+  mode: "validate_mock"
+  mock_file: "src/mocks/agents.json"
+  entity: "Agent"
+  project_path: "./backend"
+
+# 输出
+output:
+  success: true
+  data:
+    validation:
+      status: "mismatch"
+      issues:
+        - field: "agentType"
+          expected: "agent_type"
+          issue: "命名不一致 (camelCase vs snake_case)"
+
+        - field: "createdAt"
+          expected: "created_at"
+          issue: "命名不一致"
+
+      suggestion: |
+        建议修改 Mock 数据:
+        - agentType → agent_type
+        - createdAt → created_at
+```
+
+### AI 协作规则建议
+
+在 `CLAUDE.md` 中添加以下规则，确保 AI 在编码前查询契约：
+
+```markdown
+## 接口编码规则
+
+在编写以下代码时，必须先调用 contract_resolver skill：
+- 前端接口调用代码（fetch, axios）
+- 前端类型定义（interface, type）
+- Mock 数据
+- API 响应处理逻辑
+
+示例流程：
+1. 用户说「写一个 Agent 列表组件」
+2. 先查 contract: entity="Agent"
+3. 得到真实字段名: agent_type, created_at, ...
+4. 按真实字段名写代码
+```
+
+---
+
+## 项目整合指南
+
+### 核心概念
+
+#### 1. 单一信息来源（SSoT）
 
 **目标**：把散落在各处的信息，整理成 AI 能理解的标准格式
 
@@ -32,7 +299,7 @@ SSoT = Single Source of Truth
 | 前端有哪些页面？ | → `21_UI_FLOW_SPEC.md` |
 | 项目用了什么技术栈？ | → `10_CONTEXT.md` |
 
-### 2. 对历史功能的态度
+#### 2. 对历史功能的态度
 
 **核心原则**：
 
@@ -52,156 +319,20 @@ SSoT = Single Source of Truth
 - ✅ 自动识别技术栈和模块
 - ✅ 逆向生成 API/Schema 文档（可选）
 
-### 3. 整合级别（Level 0-3）
+---
 
-不同项目需要不同程度的整合，用级别来区分：
+### 整合级别（Level 0-3）
+
+不同项目需要不同程度的整合：
 
 ```
 Level 0: 最小登记 ──→ 只是让 AI 知道「有这个项目」
-Level 1: AI 可协作 ──→ AI 可以帮你维护和开发
+Level 1: AI 可协作 ──→ AI 可以帮你维护和开发（推荐）
 Level 2: 深度协作 ──→ AI 完全理解项目结构
 Level 3: 完全规范 ──→ 和新项目一样的完整文档
 ```
 
----
-
-## 整合级别详解
-
-### Level 0：最小登记
-
-**适用场景**：
-- 老项目，只是偶尔改一下
-- 不打算大改，只需要纳入管理
-- 试水阶段，先登记再说
-
-**产出物**：
-```
-docs/{project}/
-└── 10_CONTEXT.md    # 极简版，只有基本信息
-```
-
-**10_CONTEXT.md 内容示例**：
-```markdown
-# my-legacy-app - 项目上下文
-
-> 状态：Legacy
-> 整合级别：Level 0
-
-## 项目概述
-
-**名称**：my-legacy-app
-**路径**：/path/to/project
-**技术栈**：Express + JavaScript
-**状态**：[legacy] 已存在项目
-
-## 简要描述
-
-一个遗留的后台管理系统，用于...
-
----
-_整合时间：2026-01-03_
-```
-
-**耗时**：5-10 分钟
-
----
-
-### Level 1：AI 可协作（推荐）
-
-**适用场景**：
-- 需要 AI 帮忙维护的项目
-- 要在旧项目上开发新功能
-- 团队日常使用的项目
-
-**产出物**：
-```
-docs/{project}/
-├── 10_CONTEXT.md              # 包含技术栈和模块划分
-├── 90_PROGRESS_LOG.yaml       # 进度日志
-├── PHASE_GATE.yaml            # Gate 规则
-├── PHASE_GATE_STATUS.yaml     # Gate 状态（Phase 1 追溯通过）
-└── _foundation/
-    └── 05_TECH_DECISIONS.md   # 技术栈详情 [逆向]
-```
-
-**与 Level 0 的区别**：
-| 项目 | Level 0 | Level 1 |
-|------|---------|---------|
-| 模块划分 | ❌ | ✅ 自动识别 |
-| 技术栈详情 | 简单列举 | 完整版本信息 |
-| 进度追踪 | ❌ | ✅ 可用 /check-progress |
-| Phase Gate | ❌ | ✅ Phase 1 已追溯通过 |
-| 新功能开发 | 手动创建 | ✅ 可用 /new-feature |
-
-**耗时**：30 分钟 - 1 小时
-
----
-
-### Level 2：深度协作
-
-**适用场景**：
-- 核心业务项目
-- 需要持续开发的项目
-- 团队多人协作的项目
-
-**产出物**：
-```
-docs/{project}/
-├── 10_CONTEXT.md
-├── 20_API_SPEC.md             # API 文档 [逆向]
-├── 90_PROGRESS_LOG.yaml
-├── PHASE_GATE.yaml
-├── PHASE_GATE_STATUS.yaml
-└── _foundation/
-    ├── 03_DATA_MODEL.md       # 数据模型 [逆向]
-    └── 05_TECH_DECISIONS.md
-```
-
-**与 Level 1 的区别**：
-| 项目 | Level 1 | Level 2 |
-|------|---------|---------|
-| API 文档 | ❌ | ✅ 自动逆向生成 |
-| 数据模型 | ❌ | ✅ 自动逆向生成 |
-| AI 理解深度 | 知道结构 | 理解业务逻辑 |
-
-**耗时**：1-3 天（需人工验证逆向结果）
-
----
-
-### Level 3：完全规范
-
-**适用场景**：
-- 最核心的项目
-- 需要完整文档的项目
-- 准备重构或重写的项目
-
-**产出物**：
-```
-docs/{project}/
-├── 10_CONTEXT.md
-├── 20_API_SPEC.md             # [已验证]
-├── 21_UI_FLOW_SPEC.md         # [已验证]
-├── 90_PROGRESS_LOG.yaml
-├── PHASE_GATE.yaml
-├── PHASE_GATE_STATUS.yaml
-└── _foundation/
-    ├── 01_USER_JOURNEY.md     # 用户旅程
-    ├── 02_ARCHITECTURE.md     # 架构文档
-    ├── 03_DATA_MODEL.md       # [已验证]
-    ├── 04_ROADMAP.md          # 路线图
-    └── 05_TECH_DECISIONS.md   # [已验证]
-```
-
-**与 Level 2 的区别**：
-- 所有 `[逆向]` 标记改为 `[已验证]`
-- 补充完整的 Foundation 文档
-- 和新项目享有同等待遇
-
-**耗时**：按需（可能需要几周）
-
----
-
-## 如何选择级别？
+#### 快速判断
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -218,31 +349,57 @@ docs/{project}/
        最小登记        AI可协作        深度协作
 ```
 
-**快速判断**：
+#### Level 0：最小登记
 
-| 问题 | 是 | 否 |
-|------|----|----|
-| 这个项目还在活跃开发吗？ | Level 1+ | Level 0 |
-| 需要 AI 帮写代码吗？ | Level 1+ | Level 0 |
-| 有后端 API 需要维护吗？ | Level 2 | Level 1 |
-| 有数据库需要改动吗？ | Level 2 | Level 1 |
-| 是公司最核心的项目吗？ | Level 3 | Level 1-2 |
+**产出物**：
+```
+docs/{project}/
+└── 10_CONTEXT.md    # 极简版，只有基本信息
+```
+
+**耗时**：5-10 分钟
+
+#### Level 1：AI 可协作（推荐）
+
+**产出物**：
+```
+docs/{project}/
+├── 10_CONTEXT.md              # 包含技术栈和模块划分
+├── 90_PROGRESS_LOG.yaml       # 进度日志
+├── PHASE_GATE.yaml            # Gate 规则
+├── PHASE_GATE_STATUS.yaml     # Gate 状态（Phase 1 追溯通过）
+└── _foundation/
+    └── 05_TECH_DECISIONS.md   # 技术栈详情 [逆向]
+```
+
+**耗时**：30 分钟 - 1 小时
+
+#### Level 2：深度协作
+
+**产出物**：
+```
+docs/{project}/
+├── 10_CONTEXT.md
+├── 20_API_SPEC.md             # API 文档 [逆向]
+├── 90_PROGRESS_LOG.yaml
+├── PHASE_GATE.yaml
+├── PHASE_GATE_STATUS.yaml
+└── _foundation/
+    ├── 03_DATA_MODEL.md       # 数据模型 [逆向]
+    └── 05_TECH_DECISIONS.md
+```
+
+**耗时**：1-3 天（需人工验证逆向结果）
 
 ---
 
-## 命令使用指南
+### 命令使用指南
 
-### 第一步：扫描项目
+#### 第一步：扫描项目
 
 ```bash
 /scan-project ./path/to/project
 ```
-
-**这个命令会**：
-1. 检测技术栈（Vue/React/Express/NestJS...）
-2. 识别模块结构
-3. 评估文档完整度
-4. 推荐整合级别
 
 **输出示例**：
 ```
@@ -257,9 +414,7 @@ docs/{project}/
 /integrate-project ./my-project --level=1
 ```
 
----
-
-### 第二步：执行整合
+#### 第二步：执行整合
 
 ```bash
 # Level 0 整合
@@ -272,39 +427,7 @@ docs/{project}/
 /integrate-project ./path/to/project --level=2
 ```
 
-**可选参数**：
-| 参数 | 说明 | 示例 |
-|------|------|------|
-| `--level=N` | 整合级别 0-3 | `--level=1` |
-| `--name=NAME` | 指定功能名称 | `--name=legacy-admin` |
-| `--manual` | 手动模式，只生成骨架 | `--manual` |
-
-**输出示例**：
-```
-✅ 项目整合完成！
-
-项目：my-project
-级别：Level 1
-
-📁 生成的文件：
-docs/my-project/
-├── 10_CONTEXT.md              ✅
-├── 90_PROGRESS_LOG.yaml       ✅
-├── PHASE_GATE.yaml            ✅
-├── PHASE_GATE_STATUS.yaml     ✅ (Phase 1 追溯通过)
-└── _foundation/
-    └── 05_TECH_DECISIONS.md   ✅ [逆向]
-
-📝 下一步：
-• 开发新功能：/new-feature my-project/new-xxx
-• 补充文档：编辑 10_CONTEXT.md
-```
-
----
-
-### 第三步（可选）：逆向生成文档
-
-如果选择 Level 2，还需要执行：
+#### 第三步（可选）：逆向生成文档
 
 ```bash
 # 逆向生成 API 文档
@@ -314,102 +437,11 @@ docs/my-project/
 /reverse-schema ./path/to/project
 ```
 
-**支持的技术栈**：
-
-| 命令 | 语言 | 说明 |
-|------|------|------|
-| `/reverse-api` | 任意（Python, JS/TS, Go, Java...） | 从路由定义生成 API 文档 |
-| `/reverse-schema` | 任意（SQLAlchemy, Prisma, TypeORM...） | 从 ORM 定义生成数据模型 |
-
-> 💡 采用契约式设计，Claude 自动识别框架语法，无需预定义规则
-
-**输出带有置信度标记**：
-```markdown
-### GET /api/users
-
-获取用户列表
-
-**请求参数**：
-| 参数 | 类型 | 说明 |
-|------|------|------|
-| page | number | 页码 [推断] |
-
-_置信度：0.8（有 TypeScript 类型定义）_
-```
+**支持的技术栈**：任意语言/框架（契约式设计，Claude 自动识别）
 
 ---
 
-### 第四步（可选）：检查一致性
-
-```bash
-/sync-docs docs/my-project
-```
-
-**这个命令会**：
-- 对比文档和代码的差异
-- 发现新增/删除/修改的 API
-- 发现数据模型变更
-- 生成同步报告
-
-**输出示例**：
-```
-📊 文档同步检查报告
-
-📈 总体状态：⚠️ 有差异
-
-| 类型 | 文档项 | 代码项 | 匹配 | 差异 |
-|------|--------|--------|------|------|
-| API 端点 | 15 | 18 | 12 | 6 |
-
-🆕 新增端点（代码有，文档没有）：
-• POST /api/users/batch
-• DELETE /api/users/:id
-
-📝 建议：
-1. 更新 20_API_SPEC.md
-2. 或执行 /reverse-api --fix
-```
-
----
-
-## 整合后的工作流
-
-### 场景 1：在旧项目上开发新功能
-
-```bash
-# 1. 确保项目已整合（Level 1+）
-/check-progress my-project
-
-# 2. 创建新功能
-/new-feature my-project/user-export
-
-# 3. 按 Phase 1-7 正常开发
-# ... 正常的开发流程 ...
-```
-
-### 场景 2：维护旧功能
-
-```bash
-# 不需要补文档，直接修改代码
-# 如果有时间，可以渐进式补充
-
-# 可选：把修改记录到进度日志
-# 编辑 90_PROGRESS_LOG.yaml
-```
-
-### 场景 3：文档同步
-
-```bash
-# 定期检查文档与代码的一致性
-/sync-docs docs/my-project
-
-# 有差异时更新
-/sync-docs docs/my-project --fix
-```
-
----
-
-## 标记系统
+### 标记系统
 
 整合产生的文档会有特殊标记，帮助区分内容来源：
 
@@ -418,7 +450,6 @@ _置信度：0.8（有 TypeScript 类型定义）_
 | `[legacy]` | 历史功能，已存在 | `## 用户管理 [legacy]` |
 | `[逆向]` | 从代码自动生成 | `### GET /api/users [逆向]` |
 | `[推断]` | AI 根据代码推断 | `page: number [推断]` |
-| `[补充]` | 人工后续补充 | `说明：... [补充]` |
 | `[已验证]` | 人工确认正确 | `### 数据模型 [已验证]` |
 
 **验证流程**：
@@ -429,61 +460,66 @@ _置信度：0.8（有 TypeScript 类型定义）_
 
 ---
 
-## 追溯标记（Retroactive）
+## 置信度说明
 
-对于已存在的项目，Phase 1（Kickoff）会自动标记为「追溯通过」：
+所有 skill 输出都包含置信度评分：
 
 ```yaml
-# PHASE_GATE_STATUS.yaml
-phase_1_kickoff:
-  gate_state: passed
-  gate_state_meta:
-    retroactive: true
-    retroactive_at: "2026-01-03T10:00:00"
-    retroactive_reason: "现有项目整合，Phase 1 视为已完成"
+high (>= 0.8):
+  - 有完整的类型注解
+  - 有 OpenAPI/Swagger 文档
+  - Schema 语法明确（Pydantic, Prisma）
+
+medium (0.5 - 0.8):
+  - 能识别基本结构
+  - 部分类型信息缺失
+  - 无完整类型定义
+
+low (< 0.5):
+  - 只能识别基本信息
+  - 动态类型或复杂模式
+  - 需要人工验证
 ```
 
-**这意味着**：
-- ✅ 不需要补 Phase 1 的文档
-- ✅ 可以直接在项目上开发新功能
-- ✅ 新功能从 Phase 1 开始正常走流程
+**使用建议**：
+- 置信度 >= 0.8：可直接使用
+- 置信度 0.5-0.8：建议人工确认
+- 置信度 < 0.5：必须人工验证
 
 ---
 
 ## FAQ
 
-### Q: 我的项目结构不标准，能整合吗？
+### Q: 我的项目用的框架很小众，能支持吗？
 
-可以。使用 `--manual` 模式：
-```bash
-/integrate-project ./my-project --level=0 --manual
+可以。采用契约式设计，Claude 会自动识别框架语法。只要代码结构清晰，就能提取信息。
+
+### Q: contract_resolver 找不到定义怎么办？
+
+会返回错误信息和搜索路径：
+```yaml
+output:
+  success: false
+  error: "Cannot find contract for entity 'User'"
+  warnings:
+    - "Searched: shared/contracts/, app/schemas/, prisma/schema.prisma"
+    - "Consider creating a contract file or API spec"
 ```
-然后手动编辑生成的 `10_CONTEXT.md`。
+
+建议：在 `docs/{feature}/20_API_SPEC.md` 中手动定义契约。
+
+### Q: 如何让 AI 在编码前自动查询契约？
+
+在 `CLAUDE.md` 中添加规则：
+```markdown
+## 接口编码规则
+
+在编写前端接口调用代码时，必须先调用 contract_resolver skill 查询真实字段定义。
+```
 
 ### Q: 逆向生成的文档不准确怎么办？
 
 这是正常的。逆向生成的内容都有 `[逆向]` 或 `[推断]` 标记，需要人工验证后改为 `[已验证]`。
-
-### Q: Level 2 太麻烦，但我需要 API 文档怎么办？
-
-可以：
-1. 先执行 Level 1 整合
-2. 之后单独执行 `/reverse-api`
-3. 只验证你需要的部分
-
-### Q: 整合后可以升级级别吗？
-
-可以。级别只是初始整合的深度，之后可以随时：
-- 补充更多文档
-- 执行逆向命令
-- 手动添加 Foundation 文档
-
-### Q: 旧项目的测试怎么办？
-
-不强制。原则是「能用就用」：
-- 有测试：继续用
-- 没测试：不强制补
-- 新功能：建议写测试
 
 ---
 
@@ -494,8 +530,21 @@ phase_1_kickoff:
 | `/scan-project` | 扫描项目 | `./path` |
 | `/integrate-project` | 执行整合 | `--level=N`, `--name=NAME` |
 | `/reverse-api` | 逆向 API 文档 | `--format=openapi` |
-| `/reverse-schema` | 逆向数据模型 | `--orm=prisma` |
+| `/reverse-schema` | 逆向数据模型 | 无需指定 ORM |
 | `/sync-docs` | 检查一致性 | `--fix`, `--strict` |
+
+---
+
+## Skills 文件位置
+
+```
+.claude/skills/
+├── tech_stack_detector.md    # 技术栈检测
+├── api_scanner.md            # API 端点扫描
+├── schema_scanner.md         # 数据模型扫描
+├── module_scanner.md         # 模块结构扫描
+└── contract_resolver.md      # 接口契约解析
+```
 
 ---
 
@@ -504,6 +553,15 @@ phase_1_kickoff:
 - [AI 工作流总纲](../04_ai_workflow/README.md)
 - [Phase Gate 机制](../07_phase_gate/README.md)
 - [文档模板](../03_templates/)
+
+---
+
+## CHANGELOG
+
+| 版本 | 日期 | 变更内容 |
+|------|------|----------|
+| v2.0 | 2026-01-03 | 添加 contract_resolver，契约式设计说明 |
+| v1.0 | 2026-01-02 | 初始版本 |
 
 ---
 
