@@ -246,6 +246,79 @@ export OPENAI_API_KEY="sk-your-api-key"
 /end-day
 ```
 
+### 8.4 接口契约解析 - 对抗字段名猜测
+
+**问题**：AI 在编写前端代码时会「猜测」后端接口字段名，导致 Mock 切换到 Real API 时页面空白。
+
+```typescript
+// AI 写的前端代码
+const user = await api.getUser(id);
+console.log(user.userName);      // undefined!
+console.log(user.createdAt);     // undefined!
+
+// 实际后端返回
+{
+  "username": "zhangsan",        // 是 username 不是 userName
+  "created_at": "2026-01-03"     // 是 snake_case 不是 camelCase
+}
+```
+
+**解决方案**：使用 `contract_resolver` skill，在编码前查询真实的字段定义（SSoT）。
+
+```
+场景 1: 写前端组件
+─────────────────
+❌ 之前: AI 猜测 { userName: string }
+✅ 之后: 先查 contract → { username: string }
+
+场景 2: Mock → Real 切换
+─────────────────
+❌ 之前: 切换后字段对不上，页面空白
+✅ 之后: 验证 mock 与 real 的 contract 一致性
+```
+
+**SSoT 查找优先级**：
+
+```
+1. 项目 Contract 文件 → shared/contracts/{entity}.yaml
+2. OpenAPI / Swagger → openapi.yaml
+3. API Spec 文档 → docs/{feature}/20_API_SPEC.md
+4. 后端 Schema 定义 → app/schemas/{entity}.py (Pydantic)
+5. 后端 Model 定义 → app/models/{entity}.py (SQLAlchemy)
+6. 前端类型定义 → src/types/{entity}.ts (最低优先级)
+```
+
+**使用示例**：
+
+```yaml
+# 输入：查询 Agent 实体
+input:
+  entity: "Agent"
+  project_path: "./backend"
+
+# 输出：真实字段名
+output:
+  fields:
+    - name: "agent_type"           # 不是 agentType
+    - name: "system_message"       # 不是 systemMessage
+    - name: "created_at"           # 不是 createdAt
+  confidence: 0.95
+```
+
+**在 CLAUDE.md 中配置规则**（推荐）：
+
+```markdown
+## 接口编码规则
+
+在编写前端接口调用代码时，必须先调用 contract_resolver skill 查询真实字段定义：
+1. 用户说「写一个 Agent 列表组件」
+2. 先查 contract: entity="Agent"
+3. 得到真实字段名: agent_type, created_at, ...
+4. 按真实字段名写代码
+```
+
+> 详细说明见 `CC_COLLABORATION/08_legacy_integration/README.md` 和 `.claude/skills/contract_resolver.md`
+
 ## 9. 最佳实践
 
 1. **每天开始执行 `/start-day`** - 让 AI 快速恢复上下文
