@@ -88,13 +88,16 @@ my-project/
 │   ├── 01_commit_rules/      # 提交规范
 │   ├── 02_workflows/         # 工作流定义
 │   ├── 03_templates/         # 文档模板
+│   │   ├── 00_foundation/    # Phase 0: 项目基础设施模板
 │   │   ├── 01_kickoff/       # Phase 1 模板
 │   │   ├── 02_spec/          # Phase 2 模板
-│   │   └── ...               # Phase 3-7 模板
+│   │   ├── ...               # Phase 3-7 模板
+│   │   └── _shared/          # 跨阶段共享模板
 │   ├── 04_ai_workflow/       # 8 阶段工作流说明
 │   ├── 05_tools/             # 工具定义
 │   ├── 06_roles_guide/       # 角色指南
-│   └── 07_phase_gate/        # Phase Gate 定义
+│   ├── 07_phase_gate/        # Phase Gate 定义
+│   └── 08_legacy_integration/ # 现有项目整合指南
 │
 ├── docs/                     # 功能文档（按功能组织）
 │   └── {feature}/            # 功能模块文档
