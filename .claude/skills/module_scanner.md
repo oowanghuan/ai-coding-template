@@ -4,401 +4,255 @@
 
 ## 用途
 
-扫描项目目录结构，识别模块划分，返回结构化数据供项目分析使用。
+扫描项目目录结构，识别模块划分和代码组织方式，返回结构化数据。
 
-## 输入
+## 输入契约
 
 ```yaml
 input:
-  project_path: string      # 项目根目录路径
-  framework: string         # 框架类型（可选，影响识别策略）
-  max_depth: number         # 最大扫描深度（默认 4）
-  exclude_patterns: [string] # 排除的目录（默认 node_modules, dist, .git）
+  project_path: string        # 项目根目录路径
+  max_depth: number           # 最大扫描深度（默认 4）
+  exclude_patterns: [string]  # 排除的目录（默认 node_modules, dist, .git, __pycache__, .venv）
 ```
 
-## 输出
+## 输出契约
 
 ```yaml
 output:
   success: boolean
   data:
-    project_type: string    # frontend | backend | fullstack | library | monorepo
+    # 项目类型
+    project_type: string      # frontend | backend | fullstack | library | cli | monorepo
 
     # 目录结构树
     tree:
       - path: string
-        type: directory | file
+        type: string          # directory | file
         name: string
-        children: [tree_node]
-        file_count: number  # 目录下文件数
-        has_index: boolean  # 是否有 index 文件
+        children: [tree_node] # 子节点
+        file_count: number    # 目录下文件数
+        has_index: boolean    # 是否有入口文件
 
     # 识别的模块
     modules:
-      - name: string        # 模块名称
-        path: string        # 模块路径
-        type: string        # component | view | service | util | store | ...
-        entry_file: string  # 入口文件
-        file_count: number  # 文件数量
-        exports: [string]   # 导出的内容（如果能识别）
-        description: string # 模块描述（从注释或 README 提取）
+      - name: string          # 模块名称
+        path: string          # 模块路径
+        type: string          # 模块类型（见下方）
+        entry_file: string | null  # 入口文件
+        file_count: number    # 文件数量
+        exports: [string] | null   # 导出内容（如果能识别）
+        description: string | null # 模块描述
 
-    # 前端特有结构
-    frontend:
-      components:
-        path: string
-        count: number
-        items: [{name: string, path: string}]
-      views:
-        path: string
-        count: number
-        items: [{name: string, path: string}]
-      stores:
-        path: string
-        count: number
-        items: [{name: string, path: string}]
-      composables:
-        path: string
-        count: number
-        items: [{name: string, path: string}]
-      hooks:
-        path: string
-        count: number
-        items: [{name: string, path: string}]
+    # 按类型分组的模块
+    categorized:
+      # 通用模块类型
+      components: [module_ref]    # UI 组件
+      views: [module_ref]         # 页面/视图
+      services: [module_ref]      # 服务层
+      controllers: [module_ref]   # 控制器
+      models: [module_ref]        # 数据模型
+      routes: [module_ref]        # 路由定义
+      middleware: [module_ref]    # 中间件
+      utils: [module_ref]         # 工具函数
+      hooks: [module_ref]         # Hooks (React/Vue)
+      stores: [module_ref]        # 状态管理
+      types: [module_ref]         # 类型定义
+      tests: [module_ref]         # 测试文件
+      config: [module_ref]        # 配置文件
+      assets: [module_ref]        # 静态资源
 
-    # 后端特有结构
-    backend:
-      controllers:
+    # Monorepo 结构（如果是 monorepo）
+    packages:
+      - name: string
         path: string
-        count: number
-        items: [{name: string, path: string}]
-      services:
-        path: string
-        count: number
-        items: [{name: string, path: string}]
-      models:
-        path: string
-        count: number
-        items: [{name: string, path: string}]
-      routes:
-        path: string
-        count: number
-        items: [{name: string, path: string}]
-      middlewares:
-        path: string
-        count: number
-        items: [{name: string, path: string}]
+        type: string          # app | lib | shared | config
+        dependencies: [string]
 
-    # 通用结构
-    common:
-      utils:
-        path: string
-        count: number
-      types:
-        path: string
-        count: number
-      constants:
-        path: string
-        count: number
-      config:
-        path: string
-        count: number
-      tests:
-        path: string
-        count: number
-
-    # 统计
+    # 统计信息
     stats:
       total_files: number
       total_directories: number
       by_extension:
         - ext: string
           count: number
-      largest_modules: [{name: string, file_count: number}]
+      largest_modules:
+        - name: string
+          file_count: number
+      source_lines: number | null  # 代码行数（如果计算）
+
+    # 置信度
+    confidence: number
+    confidence_reason: string
 
   error: string | null
 ```
 
-## 目录识别规则
-
-### 前端项目
+## 模块类型定义
 
 ```yaml
-components:
-  patterns:
-    - src/components/**
-    - components/**
-  indicators:
-    - 包含 .vue / .tsx / .jsx 文件
-    - 文件名 PascalCase
-
-views:
-  patterns:
-    - src/views/**
-    - src/pages/**
-    - pages/**
-    - views/**
-  indicators:
-    - 通常对应路由
-
-stores:
-  patterns:
-    - src/stores/**
-    - src/store/**
-    - store/**
-  indicators:
-    - 包含 pinia/vuex/redux 相关代码
-
-composables:  # Vue 3
-  patterns:
-    - src/composables/**
-    - src/hooks/**
-  indicators:
-    - 文件名以 use 开头
-
-hooks:  # React
-  patterns:
-    - src/hooks/**
-  indicators:
-    - 文件名以 use 开头
-
-assets:
-  patterns:
-    - src/assets/**
-    - assets/**
-    - public/**
+module_ref:
+  name: string
+  path: string
+  count: number
 ```
 
-### 后端项目
+## 能力边界
 
-```yaml
-controllers:
-  patterns:
-    - src/controllers/**
-    - src/**/*.controller.ts  # NestJS
-    - controllers/**
-  indicators:
-    - 包含路由处理逻辑
+### 能做
+- 遍历目录结构
+- 根据目录名和文件模式识别模块类型
+- 识别入口文件（index.*, main.*, __init__.py）
+- 检测 monorepo 结构
+- 统计文件数量和类型
 
-services:
-  patterns:
-    - src/services/**
-    - src/**/*.service.ts  # NestJS
-    - services/**
-  indicators:
-    - 业务逻辑层
+### 不能做
+- 解析代码依赖关系图
+- 计算循环依赖
+- 分析运行时模块加载
+- 读取所有文件内容
 
-models:
-  patterns:
-    - src/models/**
-    - src/entities/**  # TypeORM
-    - models/**
-  indicators:
-    - 数据模型定义
-
-routes:
-  patterns:
-    - src/routes/**
-    - src/router/**
-    - routes/**
-  indicators:
-    - 路由定义
-
-middlewares:
-  patterns:
-    - src/middlewares/**
-    - src/middleware/**
-    - middlewares/**
-  indicators:
-    - 中间件定义
-```
-
-### 通用结构
-
-```yaml
-utils:
-  patterns:
-    - src/utils/**
-    - src/lib/**
-    - utils/**
-    - lib/**
-
-types:
-  patterns:
-    - src/types/**
-    - src/@types/**
-    - types/**
-
-constants:
-  patterns:
-    - src/constants/**
-    - src/config/**
-    - constants/**
-
-tests:
-  patterns:
-    - src/**/*.test.ts
-    - src/**/*.spec.ts
-    - tests/**
-    - __tests__/**
-```
-
-## Monorepo 识别
-
-```yaml
-检测条件：
-  - 存在 pnpm-workspace.yaml
-  - 或 package.json 有 workspaces
-  - 或存在 lerna.json
-  - 或存在 nx.json
-
-Monorepo 结构：
-  packages:
-    - name: string      # 包名
-      path: string      # 包路径
-      type: string      # app | lib | shared
-      dependencies: [string]
-```
-
-## 扫描流程
+## 执行流程
 
 ```
 1. 确定项目类型
-   ├─ 检查 package.json
-   └─ 检测框架
+   └─ 检查配置文件和目录结构
 
 2. 扫描目录结构
-   ├─ 递归遍历目录
-   ├─ 应用 exclude patterns
+   └─ 递归遍历目录
+   └─ 应用 exclude patterns
    └─ 记录文件和目录
 
 3. 识别模块
-   ├─ 匹配目录模式
-   ├─ 检查指示器
-   └─ 提取模块信息
+   └─ 根据目录名推断模块类型
+   └─ 查找入口文件
+   └─ 统计文件数量
 
-4. 分析入口文件
-   ├─ 查找 index.ts/js
-   └─ 提取导出内容
+4. 分类模块
+   └─ 按类型分组
 
-5. 统计信息
-   ├─ 按扩展名统计
+5. 检测 Monorepo
+   └─ 查找 workspace 配置
+   └─ 识别各个 package
+
+6. 统计信息
+   └─ 按扩展名统计
    └─ 识别大型模块
 ```
 
 ## 使用示例
 
-### 示例 1：Vue 3 前端项目
-
 ```yaml
-input:
-  project_path: "./demos/coding-gui"
-
+# Vue 3 前端项目
 output:
   success: true
   data:
     project_type: "frontend"
 
     modules:
-      - name: "components"
-        path: "src/components"
-        type: "component"
-        file_count: 7
-      - name: "views"
-        path: "src/views"
-        type: "view"
-        file_count: 3
-      - name: "stores"
-        path: "src/stores"
-        type: "store"
-        file_count: 1
-      - name: "router"
-        path: "src/router"
-        type: "router"
-        file_count: 1
+      - { name: "components", path: "src/components", type: "components", file_count: 12 }
+      - { name: "views", path: "src/views", type: "views", file_count: 5 }
+      - { name: "stores", path: "src/stores", type: "stores", file_count: 3 }
+      - { name: "composables", path: "src/composables", type: "hooks", file_count: 4 }
+      - { name: "router", path: "src/router", type: "routes", file_count: 1 }
 
-    frontend:
+    categorized:
       components:
-        path: "src/components"
-        count: 7
-        items:
-          - { name: "ArtifactPreview", path: "src/components/ArtifactPreview.vue" }
-          - { name: "LeftPanel", path: "src/components/LeftPanel.vue" }
-          - { name: "PhaseNav", path: "src/components/PhaseNav.vue" }
+        - { name: "components", path: "src/components", count: 12 }
       views:
-        path: "src/views"
-        count: 3
-        items:
-          - { name: "WorkspaceView", path: "src/views/WorkspaceView.vue" }
-          - { name: "ProjectsView", path: "src/views/ProjectsView.vue" }
-          - { name: "SettingsView", path: "src/views/SettingsView.vue" }
+        - { name: "views", path: "src/views", count: 5 }
       stores:
-        path: "src/stores"
-        count: 1
-        items:
-          - { name: "project", path: "src/stores/project.ts" }
-
-    common:
-      types:
-        path: "src/types"
-        count: 1
-      assets:
-        path: "src/assets"
-        count: 1
+        - { name: "stores", path: "src/stores", count: 3 }
+      hooks:
+        - { name: "composables", path: "src/composables", count: 4 }
 
     stats:
-      total_files: 15
-      total_directories: 8
+      total_files: 35
+      total_directories: 12
       by_extension:
-        - { ext: ".vue", count: 10 }
-        - { ext: ".ts", count: 4 }
-        - { ext: ".css", count: 1 }
-```
+        - { ext: ".vue", count: 17 }
+        - { ext: ".ts", count: 15 }
+        - { ext: ".css", count: 3 }
+      largest_modules:
+        - { name: "components", file_count: 12 }
 
-### 示例 2：NestJS 后端项目
+    confidence: 0.90
 
-```yaml
-input:
-  project_path: "./backend"
-
+# Python FastAPI 后端
 output:
   success: true
   data:
     project_type: "backend"
 
     modules:
-      - name: "users"
-        path: "src/users"
-        type: "nestjs-module"
-        file_count: 5
-      - name: "posts"
-        path: "src/posts"
-        type: "nestjs-module"
-        file_count: 5
+      - { name: "api", path: "app/api", type: "routes", file_count: 8 }
+      - { name: "models", path: "app/models", type: "models", file_count: 6 }
+      - { name: "services", path: "app/services", type: "services", file_count: 5 }
+      - { name: "schemas", path: "app/schemas", type: "types", file_count: 6 }
+      - { name: "core", path: "app/core", type: "config", file_count: 4 }
 
-    backend:
-      controllers:
-        path: "src/**/*.controller.ts"
-        count: 4
-        items:
-          - { name: "UsersController", path: "src/users/users.controller.ts" }
-          - { name: "PostsController", path: "src/posts/posts.controller.ts" }
-      services:
-        path: "src/**/*.service.ts"
-        count: 4
-        items:
-          - { name: "UsersService", path: "src/users/users.service.ts" }
-          - { name: "PostsService", path: "src/posts/posts.service.ts" }
+    categorized:
+      routes:
+        - { name: "api", path: "app/api", count: 8 }
       models:
-        path: "prisma/schema.prisma"
-        count: 1
+        - { name: "models", path: "app/models", count: 6 }
+      services:
+        - { name: "services", path: "app/services", count: 5 }
 
     stats:
-      total_files: 25
-      total_directories: 10
+      total_files: 45
       by_extension:
-        - { ext: ".ts", count: 22 }
-        - { ext: ".prisma", count: 1 }
+        - { ext: ".py", count: 42 }
+        - { ext: ".yaml", count: 3 }
+
+# Monorepo 项目
+output:
+  success: true
+  data:
+    project_type: "monorepo"
+
+    packages:
+      - name: "web"
+        path: "packages/web"
+        type: "app"
+        dependencies: ["@repo/ui", "@repo/utils"]
+      - name: "api"
+        path: "packages/api"
+        type: "app"
+        dependencies: ["@repo/db", "@repo/utils"]
+      - name: "ui"
+        path: "packages/ui"
+        type: "lib"
+        dependencies: []
+      - name: "utils"
+        path: "packages/utils"
+        type: "shared"
+        dependencies: []
+
+    stats:
+      total_files: 150
+      by_extension:
+        - { ext: ".ts", count: 80 }
+        - { ext: ".tsx", count: 45 }
+        - { ext: ".css", count: 25 }
+```
+
+## 置信度规则
+
+```yaml
+high (>= 0.8):
+  - 标准项目结构（src/, app/, packages/）
+  - 清晰的目录命名
+  - 有入口文件
+
+medium (0.5 - 0.8):
+  - 非标准但可识别的结构
+  - 部分目录命名模糊
+  - 混合的代码组织
+
+low (< 0.5):
+  - 扁平结构无明确模块
+  - 命名无规律
+  - 无法推断项目类型
 ```
 
 ## 错误处理
@@ -417,9 +271,3 @@ output:
     modules: []
   warning: "No source files found"
 ```
-
-## 关联 Skills
-
-- `tech_stack_detector` - 检测项目类型
-- `api_scanner` - 深入扫描 routes/controllers
-- `schema_scanner` - 深入扫描 models/entities
