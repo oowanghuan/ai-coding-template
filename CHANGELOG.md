@@ -4,6 +4,53 @@ All notable changes to ai-coding-template will be documented in this file.
 
 ---
 
+## [v1.6.0] - 2026-01-03
+
+### 🚀 New Feature: 现有项目整合工具
+
+新增 **现有项目整合（Legacy Integration）** 工具集，支持将已存在的项目纳入 AI 协作框架管理。
+
+#### 核心理念
+
+> **让 AI 知道「我们在什么地基上工作」，建立单一信息来源（SSoT）**
+
+#### 新增命令
+
+| 命令 | 用途 |
+|------|------|
+| `/scan-project` | 扫描项目结构和技术栈，评估整合级别 |
+| `/integrate-project` | 执行 Level 0-3 整合，生成标准文档 |
+| `/reverse-api` | 从代码逆向生成 API 文档 |
+| `/reverse-schema` | 从 ORM 逆向生成数据模型文档 |
+| `/sync-docs` | 检查文档与代码的一致性 |
+
+#### 整合级别
+
+| 级别 | 名称 | 产出物 | 适用场景 |
+|------|------|--------|----------|
+| Level 0 | 最小登记 | 10_CONTEXT.md（极简） | 只需纳入管理 |
+| Level 1 | AI 可协作 | + 模块划分 + 技术栈 | 日常维护 |
+| Level 2 | 深度协作 | + API 文档 + 数据模型 | 持续开发 |
+| Level 3 | 完全规范 | 全套 Foundation | 核心项目 |
+
+#### 设计原则
+
+- **对历史功能的态度**：能用就用，能改就改，新的按新规范
+- **追溯标记**：`retroactive: true` 标记已完成阶段，无需补历史文档
+- **内容标记**：`[legacy]`、`[逆向]`、`[推断]`、`[补充]` 区分内容来源
+
+#### 工作流命令完善
+
+同步了完整的工作流命令集（24 个命令），包括：
+- Phase Gate 系列：`/check-gate`、`/approve-gate`、`/next-phase`
+- 日常工作系列：`/start-day`、`/end-day`、`/daily-summary`
+- 进度管理系列：`/check-progress`、`/iresume`
+- 功能开发系列：`/new-feature`、`/gen-demo`、`/run-tests`
+- 发布系列：`/release`
+- 专家评审：`/expert-review`
+
+---
+
 ## [v1.5.0] - 2026-01-02
 
 ### 🚀 New Feature: Phase 0.5 Foundation Gate
