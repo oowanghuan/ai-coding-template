@@ -84,18 +84,23 @@ my-project/
 │   └── settings.json         # 项目设置
 │
 ├── CC_COLLABORATION/         # 协作框架（核心）
-│   ├── 00_overview/          # 框架概述
-│   ├── 01_commit_rules/      # 提交规范
-│   ├── 02_workflows/         # 工作流定义
+│   ├── _gui_config/          # GUI 依赖配置（HA Loop Desk）
+│   ├── _project_context/     # 项目背景与协作理念
+│   │   ├── FRAMEWORK_PRINCIPLES.md   # 框架核心原则
+│   │   ├── COLLABORATION_GUIDE.md    # 人机协作指南
+│   │   └── ROLES_GUIDE.md            # 角色定义
+│   ├── 01_workflow/          # 工作流文档（统一入口）
+│   │   ├── 01_QUICKSTART.md          # 5 分钟快速入门
+│   │   ├── 02_FRAMEWORK_OVERVIEW.md  # 框架整体说明
+│   │   ├── 03_DAILY_OPERATIONS.md    # 每日操作指南
+│   │   ├── 04_REFERENCE.md           # 完整参考手册
+│   │   └── recipes/                  # 工作流 Recipes
 │   ├── 03_templates/         # 文档模板
-│   │   ├── 00_foundation/    # Phase 0: 项目基础设施模板
+│   │   ├── _foundation/      # Phase 0: 项目基础设施模板
 │   │   ├── 01_kickoff/       # Phase 1 模板
 │   │   ├── 02_spec/          # Phase 2 模板
-│   │   ├── ...               # Phase 3-7 模板
-│   │   └── _shared/          # 跨阶段共享模板
-│   ├── 04_ai_workflow/       # 8 阶段工作流说明
+│   │   └── ...               # Phase 3-7 模板
 │   ├── 05_tools/             # 工具定义
-│   ├── 06_roles_guide/       # 角色指南
 │   ├── 07_phase_gate/        # Phase Gate 定义
 │   └── 08_legacy_integration/ # 现有项目整合指南
 │
@@ -118,7 +123,7 @@ my-project/
 | 6 | **Test** | 测试报告 | 质量验证 |
 | 7 | **Deploy** | 发布说明 | 上线交付 |
 
-> 详细说明见 `CC_COLLABORATION/04_ai_workflow/`
+> 详细说明见 `CC_COLLABORATION/01_workflow/`
 
 ## 6. 工具列表
 
