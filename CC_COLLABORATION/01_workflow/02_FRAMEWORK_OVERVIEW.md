@@ -48,7 +48,7 @@
 ### 1.2 各阶段概览
 
 | 阶段 | 名称 | 目的 | 关键产出 | 负责角色 |
-|------|------|------|----------|---------|
+|------|------|------|----------|---------
 | 0 | Foundation | 建立项目基础 | _foundation/ 目录 | Architect |
 | 0.5 | User Journey | 需求起源验证 | 01_USER_JOURNEY.md | **PM** |
 | 1 | Kickoff | 功能启动 | 10_CONTEXT.md | PM/Architect |
@@ -122,7 +122,7 @@ User Journey → System Responsibility → Module Mapping → Feature Developmen
 ## 4. 模块映射表 ← 关键！
 
 | 用户步骤 | 模块 ID | 模块名称 | 责任说明 |
-|---------|---------|---------|---------|
+|---------|---------|---------|---------
 | U1 | M001 | user-auth | 渲染登录页 |
 | U2 | M001 | user-auth | 验证凭证 |
 | U3 | M002 | dashboard | 展示数据 |
@@ -248,7 +248,7 @@ Phase N 完成
                    │
          ┌────────┴────────┐
          │                 │
-      通过 ✅           未通过 ❌
+      通过 ✓           未通过 ✗
          │                 │
          ▼                 ▼
   进入 Phase N+1       修复后重新检查
@@ -257,7 +257,7 @@ Phase N 完成
 ### 4.2 各阶段 Gate 要求
 
 | 阶段 | Gate 检查项 | 审批角色 |
-|------|------------|---------|
+|------|------------|---------
 | Phase 0.5 | User Journey MVS、设计验证 PASS | PM + Architect |
 | Phase 1 | 10_CONTEXT 完整，目标≥2条 | PM |
 | Phase 2 | SPEC 完整，页面/API 已列出 | Architect |
@@ -287,7 +287,7 @@ Phase N 完成
 ### 5.1 职责清单
 
 | 阶段 | PM 职责 | 交付物 |
-|------|---------|--------|
+|------|---------|--------
 | Phase 0 | 编写路线图 | 04_ROADMAP.md |
 | **Phase 0.5** | **编写 User Journey** | **01_USER_JOURNEY.md** |
 | Phase 0.5 | 审批 Foundation Gate | `/approve-foundation --role=PM` |
@@ -321,7 +321,7 @@ Phase N 完成
 ### 6.1 三大核心机制
 
 | 机制 | 解决问题 | 实现方式 |
-|------|---------|---------|
+|------|---------|---------
 | **Phase Gate** | AI 质量不稳定 | 每阶段设质量关卡 |
 | **Expert Review** | AI 既当运动员又当裁判 | 引入第三方 AI 评审 |
 | **上下文恢复** | Context window 丢失 | 标准化文档 + `/iresume` |
@@ -357,4 +357,4 @@ compact/新对话
 
 ---
 
-_框架版本：v1.5 | 最后更新：2026-01-09_
+_框架版本：v2.0 | 最后更新：2026-01-09_

@@ -1,0 +1,258 @@
+# PHASE_GATE.yaml
+# Phase Gate 配置 - 定义每个阶段的 UI 配置和检查规则
+# 版本: 1.0
+# 最后更新: 2024-12-17
+
+version: "1.0"
+
+# ============================================================
+# 阶段配置
+# ============================================================
+phases:
+  # ----------------------------------------------------------
+  # Phase 0: Foundation (基础设施)
+  # ----------------------------------------------------------
+  - id: 0
+    name: "Foundation"
+    ui_config:
+      objectives:
+        - "建立系统级规范"
+        - "配置项目基础设施"
+        - "定义协作流程"
+      inputs: []
+      references:
+        - name: "项目规范模板"
+          path: "_templates/PROJECT_PROFILE.yaml"
+          description: "项目配置模板"
+      tools:
+        - command: "/init-project"
+          description: "初始化项目结构"
+
+  # ----------------------------------------------------------
+  # Phase 1: Kickoff (需求启动)
+  # ----------------------------------------------------------
+  - id: 1
+    name: "Kickoff"
+    ui_config:
+      objectives:
+        - "创建功能目录结构"
+        - "明确需求边界"
+        - "识别利益相关者"
+      inputs: []
+      references:
+        - name: "Context 模板"
+          path: "_templates/10_CONTEXT.md"
+          description: "功能上下文模板"
+      tools:
+        - command: "/kickoff"
+          description: "启动新功能开发"
+
+  # ----------------------------------------------------------
+  # Phase 2: Spec (需求规格)
+  # ----------------------------------------------------------
+  - id: 2
+    name: "Spec"
+    ui_config:
+      objectives:
+        - "编写详细需求规格"
+        - "定义验收标准"
+        - "创建 UI 流程图"
+      inputs:
+        - name: "功能上下文"
+          description: "Phase 1 产出的上下文文档"
+          source_phase: 1
+          paths:
+            - "docs/{feature}/10_CONTEXT.md"
+      references:
+        - name: "需求规格模板"
+          path: "_templates/20_SPEC.md"
+          description: "需求规格文档模板"
+        - name: "UI Flow 模板"
+          path: "_templates/21_UI_FLOW_SPEC.md"
+          description: "UI 流程规格模板"
+      tools:
+        - command: "/write-spec"
+          description: "编写需求规格"
+
+  # ----------------------------------------------------------
+  # Phase 3: Demo (原型演示)
+  # ----------------------------------------------------------
+  - id: 3
+    name: "Demo"
+    ui_config:
+      objectives:
+        - "创建可交互原型"
+        - "验证用户体验"
+        - "收集反馈意见"
+      inputs:
+        - name: "需求规格"
+          description: "Phase 2 产出的规格文档"
+          source_phase: 2
+          paths:
+            - "docs/{feature}/21_UI_FLOW_SPEC.md"
+            - "docs/{feature}/20_SPEC.md"
+      references:
+        - name: "原型指南"
+          path: "CC_COLLABORATION/01_workflow/03_DAILY_OPERATIONS.md"
+          description: "原型开发指南"
+      tools:
+        - command: "/create-demo"
+          description: "创建演示原型"
+
+  # ----------------------------------------------------------
+  # Phase 4: Design (技术设计)
+  # ----------------------------------------------------------
+  - id: 4
+    name: "Design"
+    ui_config:
+      objectives:
+        - "编写详细技术设计"
+        - "定义接口契约"
+        - "评估技术风险"
+      inputs:
+        - name: "需求规格"
+          description: "Phase 2 产出的规格文档"
+          source_phase: 2
+          paths:
+            - "docs/{feature}/20_SPEC.md"
+        - name: "原型反馈"
+          description: "Phase 3 收集的用户反馈"
+          source_phase: 3
+          paths:
+            - "docs/{feature}/30_DEMO_FEEDBACK.md"
+      references:
+        - name: "设计文档模板"
+          path: "_templates/40_DESIGN.md"
+          description: "技术设计文档模板"
+      tools:
+        - command: "/write-design"
+          description: "编写技术设计"
+        - command: "/expert-review"
+          description: "发起专家评审"
+
+  # ----------------------------------------------------------
+  # Phase 5: Code (编码实现)
+  # ----------------------------------------------------------
+  - id: 5
+    name: "Code"
+    ui_config:
+      objectives:
+        - "按设计实现代码"
+        - "编写单元测试"
+        - "确保代码质量"
+      inputs:
+        - name: "设计文档"
+          description: "Phase 4 产出的技术设计"
+          source_phase: 4
+          paths:
+            - "docs/{feature}/40_DESIGN.md"
+      references:
+        - name: "编码规范"
+          path: "CC_COLLABORATION/01_workflow/04_REFERENCE.md"
+          description: "项目编码规范"
+        - name: "测试指南"
+          path: "CC_COLLABORATION/05_tools/skills/test_runner.md"
+          description: "测试运行指南"
+      tools:
+        - command: "/implement"
+          description: "实现功能代码"
+        - command: "/run-tests"
+          description: "运行测试"
+        - command: "/expert-review"
+          description: "发起代码评审"
+
+  # ----------------------------------------------------------
+  # Phase 6: Test (测试验证)
+  # ----------------------------------------------------------
+  - id: 6
+    name: "Test"
+    ui_config:
+      objectives:
+        - "编写测试用例"
+        - "执行集成测试"
+        - "验证功能正确性"
+      inputs:
+        - name: "实现代码"
+          description: "Phase 5 产出的功能代码"
+          source_phase: 5
+          paths:
+            - "docs/{feature}/50_IMPLEMENTATION.md"
+        - name: "验收标准"
+          description: "Phase 2 定义的验收标准"
+          source_phase: 2
+          paths:
+            - "docs/{feature}/20_SPEC.md"
+      references:
+        - name: "测试计划模板"
+          path: "_templates/60_TEST_PLAN.md"
+          description: "测试计划文档模板"
+        - name: "测试报告模板"
+          path: "_templates/61_TEST_REPORT.md"
+          description: "测试报告文档模板"
+      tools:
+        - command: "/write-test-plan"
+          description: "编写测试计划"
+        - command: "/run-tests"
+          description: "运行测试"
+        - command: "/expert-review"
+          description: "发起测试评审"
+
+  # ----------------------------------------------------------
+  # Phase 7: Deploy (部署发布)
+  # ----------------------------------------------------------
+  - id: 7
+    name: "Deploy"
+    ui_config:
+      objectives:
+        - "部署到生产环境"
+        - "发布版本"
+        - "编写发布说明"
+      inputs:
+        - name: "测试报告"
+          description: "Phase 6 产出的测试报告"
+          source_phase: 6
+          paths:
+            - "docs/{feature}/61_TEST_REPORT.md"
+      references:
+        - name: "部署指南"
+          path: "CC_COLLABORATION/01_workflow/04_REFERENCE.md"
+          description: "部署操作指南"
+        - name: "发布说明模板"
+          path: "_templates/70_RELEASE_NOTES.md"
+          description: "发布说明模板"
+      tools:
+        - command: "/deploy"
+          description: "执行部署"
+        - command: "/release"
+          description: "发布版本"
+
+# ============================================================
+# Gate 检查规则（每个阶段的退出条件）
+# ============================================================
+gate_rules:
+  default:
+    required_outputs: true
+    quality_checks: true
+    approvals:
+      required_roles:
+        - "developer"
+      optional_roles:
+        - "architect"
+        - "tech_lead"
+
+  phase_overrides:
+    4:  # Design 阶段需要架构师审批
+      approvals:
+        required_roles:
+          - "developer"
+          - "architect"
+    5:  # Code 阶段需要代码评审
+      approvals:
+        required_roles:
+          - "developer"
+          - "code_reviewer"
+    6:  # Test 阶段需要 QA 审批
+      approvals:
+        required_roles:
+          - "developer"
+          - "qa"

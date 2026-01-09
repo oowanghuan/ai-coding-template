@@ -4,6 +4,43 @@ All notable changes to ai-coding-template will be documented in this file.
 
 ---
 
+## [v1.7.0] - 2026-01-09
+
+### 🔄 同步目录结构规范化 (sync from ai-coding-org)
+
+同步 ai-coding-org v3.1.0 的目录结构重组，提升可维护性。
+
+#### Added
+
+- **`_gui_config/`** - GUI 依赖配置隔离
+  - `WORKFLOW_TEMPLATE.yaml` - 工作流框架配置
+  - `PHASE_GATE.yaml` - Phase Gate UI 配置
+  - `README.md` - 依赖说明文档
+
+- **`_project_context/`** - 项目背景与协作理念
+  - `FRAMEWORK_PRINCIPLES.md` - 框架核心原则
+  - `COLLABORATION_GUIDE.md` - 人机协作指南
+  - `ROLES_GUIDE.md` - 角色定义指南
+
+- **`01_workflow/`** - 统一工作流文档
+  - `README.md` - 导航索引
+  - `01_QUICKSTART.md` - 5 分钟快速入门
+  - `02_FRAMEWORK_OVERVIEW.md` - 框架整体说明
+  - `03_DAILY_OPERATIONS.md` - 每日操作指南
+  - `04_REFERENCE.md` - 完整参考手册（含 Git Commit 规范）
+  - `recipes/` - 工作流 Recipes（合并优化）
+
+#### Removed
+
+- `00_overview/` - 整合至 `_project_context/` 和 `01_workflow/`
+- `00_system/` - 迁移至 `_gui_config/`
+- `01_commit_rules/` - 整合至 `01_workflow/04_REFERENCE.md`
+- `02_workflows/` - 整合至 `01_workflow/recipes/`
+- `04_ai_workflow/` - 整合至 `01_workflow/`
+- `06_roles_guide/` - 迁移至 `_project_context/ROLES_GUIDE.md`
+
+---
+
 ## [v1.6.1] - 2026-01-09
 
 ### 🔄 双向同步 (sync with ai-coding-org)
