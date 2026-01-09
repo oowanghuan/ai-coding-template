@@ -1,0 +1,269 @@
+# WORKFLOW_TEMPLATE.yaml
+# 全局工作流框架配置
+# 版本: 1.1
+# 最后更新: 2024-12-17
+
+version: "1.1"
+
+# ============================================================
+# 框架步骤定义
+# 这些步骤是每个阶段必须执行的标准化流程，不随 Feature 变化
+# ============================================================
+framework_steps:
+
+  # ----------------------------------------------------------
+  # 每日开始
+  # ----------------------------------------------------------
+  - id: start-day
+    name: "每日开始"
+    icon: "calendar-check"
+    command: "/start-day"
+    position: "before_tasks"
+    applicable_phases: [0, 1, 2, 3, 4, 5, 6, 7]
+    description: "同步最新代码和状态，检查依赖项，规划当日工作"
+
+    execution_mode: "non_interactive"
+    owner: "cc"
+
+    rerun_policy:
+      strategy: "allow"
+      on_rerun: []
+
+    expected_artifacts: []
+    verify:
+      type: "command_exit_code"
+
+  # ----------------------------------------------------------
+  # 专家评审
+  # ----------------------------------------------------------
+  - id: expert-review
+    name: "专家评审"
+    icon: "search"
+    command: "/expert-review"
+    position: "after_tasks"
+    applicable_phases: [4, 5, 6]
+    description: "发起技术方案评审，获取专家改进建议"
+    prerequisite: "all_tasks_completed"
+
+    execution_mode: "interactive"
+    owner: "cc"
+
+    rerun_policy:
+      strategy: "confirm"
+      confirm_message: "已存在评审报告，是否重新发起评审？"
+      on_rerun:
+        - "backup_existing"
+        - "overwrite_artifacts"
+
+    expected_artifacts:
+      - path: "docs/{feature}/REVIEW_REPORT.md"
+        required: true
+      - path: "docs/{feature}/REVIEW_ACTIONS.yaml"
+        required: true
+    verify:
+      type: "file_exists"
+
+    failure_recovery:
+      suggestion: "检查网络连接，或在终端中手动运行 /expert-review"
+      fallback_command: "/expert-review"
+
+  # ----------------------------------------------------------
+  # Gate 检查
+  # ----------------------------------------------------------
+  - id: check-gate
+    name: "Gate 检查"
+    icon: "clipboard-check"
+    command: "/check-gate"
+    position: "after_tasks"
+    applicable_phases: [0, 1, 2, 3, 4, 5, 6, 7]
+    description: "自动检查阶段通过条件，验证所有 Exit Criteria"
+    prerequisite: "expert_review_passed_if_required"
+
+    execution_mode: "non_interactive"
+    owner: "cc"
+
+    rerun_policy:
+      strategy: "allow"
+      on_rerun:
+        - "show_diff"
+
+    expected_artifacts:
+      - path: "docs/{feature}/PHASE_GATE_STATUS.yaml"
+        required: true
+    verify:
+      type: "yaml_valid"
+      rules:
+        - field: "phases.{current}.check_status"
+          expected: "passed"
+
+    failure_recovery:
+      suggestion: "检查 Exit Criteria 是否全部满足"
+      fallback_command: "/check-gate --verbose"
+
+  # ----------------------------------------------------------
+  # Gate 审批
+  # ----------------------------------------------------------
+  - id: approve-gate
+    name: "Gate 审批"
+    icon: "check-circle"
+    command: "/approve-gate"
+    position: "after_tasks"
+    applicable_phases: [0, 1, 2, 3, 4, 5, 6, 7]
+    description: "人工审批阶段通过，确认可以进入下一阶段"
+    prerequisite: "check_gate_passed"
+
+    execution_mode: "hybrid"
+    owner: "human"
+
+    rerun_policy:
+      strategy: "block"
+      block_message: "当前阶段已审批通过，无需重复操作"
+
+    expected_artifacts:
+      - path: "docs/{feature}/PHASE_GATE_STATUS.yaml"
+        required: true
+    verify:
+      type: "yaml_valid"
+      rules:
+        - field: "phases.{current}.approval_status"
+          expected: "approved"
+
+  # ----------------------------------------------------------
+  # 进入下一阶段
+  # ----------------------------------------------------------
+  - id: next-phase
+    name: "进入下一阶段"
+    icon: "arrow-right"
+    command: "/next-phase"
+    position: "after_tasks"
+    applicable_phases: [0, 1, 2, 3, 4, 5, 6]
+    description: "将功能状态迁移到下一个开发阶段"
+    prerequisite: "gate_approved"
+
+    execution_mode: "non_interactive"
+    owner: "cc"
+
+    rerun_policy:
+      strategy: "block"
+      block_message: "已进入下一阶段，无法重复迁移"
+
+    expected_artifacts: []
+    verify:
+      type: "yaml_valid"
+      path: "docs/{feature}/90_PROGRESS_LOG.yaml"
+      rules:
+        - field: "meta.current_phase"
+          expected: "{next_phase_id}"
+
+    failure_recovery:
+      suggestion: "检查 Gate 是否已审批通过"
+      fallback_command: "/next-phase --force"
+
+  # ----------------------------------------------------------
+  # 每日结束
+  # ----------------------------------------------------------
+  - id: end-day
+    name: "每日结束"
+    icon: "calendar-x"
+    command: "/end-day"
+    position: "end"
+    applicable_phases: [0, 1, 2, 3, 4, 5, 6, 7]
+    description: "保存工作进度，生成每日总结报告"
+
+    execution_mode: "non_interactive"
+    owner: "cc"
+
+    rerun_policy:
+      strategy: "allow"
+      on_rerun:
+        - "append_summary"
+
+    expected_artifacts:
+      - path: "docs/{feature}/DAILY_SUMMARY.md"
+        required: false
+    verify:
+      type: "command_exit_code"
+
+# ============================================================
+# 阶段定义（元数据）
+# ============================================================
+phases:
+  - id: 0
+    name: "Foundation"
+    display_name: "基础设施"
+    description: "建立系统级规范，配置项目基础设施"
+    has_expert_review: false
+    color: "#6b7280"
+
+  - id: 1
+    name: "Kickoff"
+    display_name: "需求启动"
+    description: "创建功能目录，明确需求边界"
+    has_expert_review: false
+    color: "#8b5cf6"
+
+  - id: 2
+    name: "Spec"
+    display_name: "需求规格"
+    description: "编写详细需求规格，定义验收标准"
+    has_expert_review: false
+    color: "#3b82f6"
+
+  - id: 3
+    name: "Demo"
+    display_name: "原型演示"
+    description: "创建可交互原型，验证用户体验"
+    has_expert_review: false
+    color: "#06b6d4"
+
+  - id: 4
+    name: "Design"
+    display_name: "技术设计"
+    description: "编写详细技术设计，定义接口契约"
+    has_expert_review: true
+    color: "#10b981"
+
+  - id: 5
+    name: "Code"
+    display_name: "编码实现"
+    description: "按设计文档实现功能代码"
+    has_expert_review: true
+    color: "#f59e0b"
+
+  - id: 6
+    name: "Test"
+    display_name: "测试验证"
+    description: "编写测试用例，验证功能正确性"
+    has_expert_review: true
+    color: "#ef4444"
+
+  - id: 7
+    name: "Deploy"
+    display_name: "部署发布"
+    description: "部署到生产环境，发布版本"
+    has_expert_review: false
+    color: "#ec4899"
+
+# ============================================================
+# 执行模式说明
+# ============================================================
+# execution_mode:
+#   - non_interactive: 可直接执行完成，无需用户干预
+#   - interactive: 需要多轮对话或持续交互，跳转到 CLI
+#   - hybrid: GUI 触发启动，但可能需要 CLI 补充
+
+# ============================================================
+# 重试策略说明
+# ============================================================
+# rerun_policy.strategy:
+#   - allow: 允许重复执行
+#   - block: 禁止重复执行
+#   - confirm: 重复执行需要用户确认
+
+# ============================================================
+# 验证类型说明
+# ============================================================
+# verify.type:
+#   - command_exit_code: 命令返回 0 即视为成功
+#   - file_exists: 检查文件是否存在
+#   - yaml_valid: 检查 YAML 格式并验证字段值

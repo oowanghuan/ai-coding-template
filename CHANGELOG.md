@@ -4,6 +4,28 @@ All notable changes to ai-coding-template will be documented in this file.
 
 ---
 
+## [v1.6.1] - 2026-01-09
+
+### 🔄 双向同步 (sync with ai-coding-org)
+
+从开发仓库同步缺失的高级功能，确保模板拥有完整的 AI 协作能力。
+
+#### Added
+
+- **Subagents 子智能体系统** (`.claude/subagents/`)：
+  - `expert_reviewer.md` - 专家评审智能体
+  - `progress_tracker.md` - 进度跟踪智能体
+  - `release_summarizer.md` - 发布总结智能体
+  - `spec_writer.md` - 规格编写智能体
+  - `test_plan_writer.md` - 测试计划编写智能体
+
+- **工作流框架配置** (`CC_COLLABORATION/00_system/`)：
+  - `WORKFLOW_TEMPLATE.yaml` - 全局工作流框架定义 (v1.1)
+  - 定义 7 个开发阶段的详细元数据
+  - 配置执行模式：non_interactive, interactive, hybrid
+
+---
+
 ## [v1.6.0] - 2026-01-03
 
 ### 🚀 New Feature: 现有项目整合工具
