@@ -26,15 +26,61 @@
 
 ### 2. 更新 PROGRESS_LOG
 
-调用 `progress_updater` skill，更新进度日志：
+读取并更新 `docs/{feature}/90_PROGRESS_LOG.yaml`：
 
-1. 检查当前进行中的任务状态
-2. 询问用户今天完成了哪些任务
-3. 更新任务状态（done/wip/pending）
-4. 更新 `cc_checkpoint` 断点信息：
-   - `last_file_edited`: 今天最后编辑的文件
-   - `last_action`: 今天最后完成的操作
-   - `next_step`: 明天第一个要做的事
+#### 2.1 检查当前任务状态
+
+读取 YAML 文件，找出当前阶段所有任务的状态。
+
+#### 2.2 询问用户完成情况
+
+```
+今天的任务进展如何？
+
+当前进行中的任务：
+• [CODE-004] 实现登录 API 调用
+• [CODE-005] 实现 Token 存储
+
+请告诉我哪些已完成，或者直接说"都完成了"/"没完成"
+```
+
+#### 2.3 更新任务状态
+
+根据用户回答，更新 YAML 中的任务状态：
+- `status: wip` → `status: done`
+- 添加 `completed_at: {current_date}`
+- 确保同一时间只有一个任务是 `wip`
+
+#### 2.4 更新断点信息（cc_checkpoint）
+
+```yaml
+cc_checkpoint:
+  session_id: "cc-{current_date}-{feature}"
+  last_file_edited: "{今天最后编辑的文件}"
+  last_action: "{今天完成的最后操作}"
+  next_step: "{明天第一个要做的事}"
+  context_files:
+    - "{相关文件1}"
+    - "{相关文件2}"
+```
+
+#### 2.5 重新计算统计信息
+
+```yaml
+stats:
+  total_tasks: {count_all_tasks}
+  done: {count_done}
+  wip: {count_wip}
+  pending: {count_pending}
+  completion_rate: "{(done/total)*100}%"
+```
+
+#### 2.6 更新时间戳
+
+```yaml
+meta:
+  last_updated: "{current_datetime}"
+```
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -236,4 +282,4 @@ git push origin <branch>
 - `/start-day` - 每日开始工作
 - `/daily-summary` - 生成每日总结
 - `/iresume` - 断点恢复
-- `progress_updater` - 更新进度日志 skill
+- `/check-progress` - 查看进度状态

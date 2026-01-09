@@ -40,9 +40,81 @@ docs/_system/
 是否要重新初始化？这将覆盖现有配置。[y/N]
 ```
 
-### 3. 创建目录结构
+### 3. 询问项目类型和技术栈
 
-创建以下目录结构：
+```
+请选择项目类型：
+1. frontend - 前端项目
+2. backend - 后端项目
+3. fullstack - 全栈项目
+
+请选择前端框架（如适用）：
+1. vue3 - Vue 3
+2. react - React
+3. none - 无前端
+
+请选择后端框架（如适用）：
+1. express - Express.js
+2. fastapi - FastAPI (Python)
+3. none - 无后端
+```
+
+### 4. 根据技术栈生成目录结构
+
+#### 4.1 前端项目 (frontend)
+
+```
+{project}/
+├── src/
+│   ├── components/
+│   │   ├── common/
+│   │   └── layout/
+│   ├── views/
+│   ├── stores/
+│   ├── api/
+│   ├── utils/
+│   └── router/
+├── tests/
+│   ├── unit/
+│   └── e2e/
+└── docs/
+    └── _system/
+```
+
+#### 4.2 后端项目 (backend)
+
+```
+{project}/
+├── src/
+│   ├── controllers/
+│   ├── services/
+│   ├── models/
+│   ├── middlewares/
+│   └── routes/
+├── tests/
+│   ├── unit/
+│   └── integration/
+└── docs/
+    └── _system/
+```
+
+#### 4.3 全栈项目 (fullstack)
+
+```
+{project}/
+├── frontend/
+│   └── (frontend structure)
+├── backend/
+│   └── (backend structure)
+├── shared/
+│   └── types/
+└── docs/
+    └── _system/
+```
+
+### 5. 创建 CC_COLLABORATION 目录结构
+
+无论项目类型，都创建以下 AI 协作框架目录：
 
 ```
 docs/
@@ -70,9 +142,39 @@ docs/
 └── .gitkeep
 ```
 
-### 4. 生成核心文档
+### 6. 生成项目配置文件
 
-#### 4.1 01_OVERVIEW.md
+根据技术栈生成对应的配置文件：
+
+```yaml
+# 根据项目类型生成
+files_to_generate:
+  # 通用
+  - path: ".gitignore"
+    template: "gitignore/{project_type}"
+
+  - path: "README.md"
+    template: "readme/basic"
+
+  # Vue 3 项目
+  vue3:
+    - path: "vite.config.ts"
+    - path: "tsconfig.json"
+
+  # React 项目
+  react:
+    - path: "vite.config.ts"
+    - path: "tsconfig.json"
+
+  # Express 项目
+  express:
+    - path: "tsconfig.json"
+    - path: ".env.example"
+```
+
+### 7. 生成核心文档
+
+#### 7.1 01_OVERVIEW.md
 
 ```markdown
 # AI 协作开发框架
@@ -130,7 +232,7 @@ docs/
 - 工具使用：`05_TOOLS/README.md`
 ```
 
-#### 4.2 02_ROLES.md
+#### 7.2 02_ROLES.md
 
 ```markdown
 # 角色定义
@@ -209,7 +311,7 @@ docs/
 详见 `04_AI_WORKFLOW.md`。
 ```
 
-### 5. 安装 Slash Commands
+### 8. 安装 Slash Commands
 
 复制 `05_TOOLS/slash-commands/` 下的所有文件到 `.claude/commands/`：
 
@@ -218,7 +320,7 @@ mkdir -p .claude/commands
 cp docs/_system/CC_COLLABORATION/05_TOOLS/slash-commands/*.md .claude/commands/
 ```
 
-### 6. 输出结果
+### 9. 输出结果
 
 ```
 ✅ 项目初始化成功！
