@@ -1,6 +1,6 @@
 # 05_tools - 工具定义
 
-> 版本：v2.0
+> 版本：v3.0
 > 最后更新：2026-01-09
 > 状态：已实现
 
@@ -22,10 +22,18 @@
 
 | 类型 | 数量 | 说明 |
 |------|------|------|
-| **Slash Commands** | 24 | 用户直接调用的命令（`/xxx`） |
-| **Skills** | 15 | Claude Code 自动触发的能力 |
+| **Slash Commands** | 24 | 用户显式调用的命令（`/xxx`） |
+| **Skills** | 5 | Claude 自动判断何时应用的能力 |
 | **Subagents** | 5 | 独立执行复杂任务的子代理 |
-| **总计** | **44** | |
+| **总计** | **34** | |
+
+**三者的核心区别**：
+
+| 类型 | 触发方式 | 特点 |
+|------|----------|------|
+| **Slash Commands** | 用户显式输入 `/xxx` | 入口统一，功能丰富 |
+| **Skills** | Claude 自动匹配触发 | 无需用户调用，根据对话内容自动应用 |
+| **Subagents** | 通过 Task tool 调用 | 独立上下文，适合研究型任务 |
 
 ---
 
@@ -35,7 +43,7 @@
 05_tools/
 ├── README.md              # 本文件
 ├── slash-commands/        # 24 个 Slash Commands
-├── skills/                # 15 个 Skills
+├── skills/                # 5 个 Skills
 └── subagents/             # 5 个 Subagents
 ```
 
@@ -101,27 +109,29 @@
 
 ---
 
-## Skills（15 个）
+## Skills（5 个）
 
-Skills 是 Claude Code 在特定条件下自动触发的能力，无需用户显式调用。
+> **Skills 是 Claude 自动判断何时应用的能力**，不需要用户显式调用。
+>
+> 与 Slash Commands 不同，Skills 通过自然语言描述匹配来触发。当用户的需求符合某个 Skill 的触发条件时，Claude 会自动应用该 Skill。
 
 | Skill | 触发条件 | 用途 |
 |-------|----------|------|
-| `progress_updater` | 任务状态变更 | 自动更新 PROGRESS_LOG |
-| `gate_checker` | Phase 切换前 | 检查 Gate 条件 |
-| `context_writer` | 创建新功能时 | 生成 CONTEXT 文档 |
-| `doc_generator` | 需要生成文档时 | 根据模板生成文档 |
-| `spec_validator` | Spec 完成时 | 验证规格完整性 |
-| `ui_demo` | Phase 3 Demo | 生成可交互 Demo |
-| `mock_api_generator` | Demo 阶段 | 生成 Mock API |
-| `design_from_demo` | Demo 评审后 | 从 Demo 提炼设计 |
-| `review_alignment` | 任务完成后 | 检查代码与设计一致性 |
-| `openai_expert_review` | 专家评审时 | 调用 OpenAI 评审 |
-| `test_runner` | Phase 6 Test | 执行测试用例 |
-| `test_report_generator` | 测试完成后 | 生成测试报告 |
-| `schema_generator` | 需要数据模型时 | 生成 Schema 定义 |
-| `system_scaffolder` | 初始化项目时 | 生成项目脚手架 |
-| `changelog_updater` | 文档变更时 | 更新 CHANGELOG |
+| `doc_generator` | 用户说「生成文档」「创建 SPEC」等 | 根据模板生成标准化文档 |
+| `review_alignment` | 用户说「检查一致性」或任务完成后 | 检查代码与设计文档是否一致 |
+| `ui_demo` | 用户说「做个 demo」「生成原型」 | 生成可运行的 UI Demo |
+| `mock_api_generator` | 用户说「mock 接口」「前端先用假数据」 | 生成 Mock API 代码 |
+| `design_from_demo` | Demo 评审后，用户说「整理成正式设计」 | 从 Mock API 反推正式设计文档 |
+
+**为什么精简到 5 个？**
+
+之前的 15 个 Skills 中，大部分实际是「被 Command 调用的内部逻辑」，而非「Claude 自动触发的能力」。根据 Claude Code 官方定义，这些内部逻辑已合并到对应的 Slash Commands 中：
+
+- `gate_checker` → 合并到 `/check-gate`
+- `progress_updater` → 合并到 `/check-progress`, `/end-day`
+- `test_runner` → 合并到 `/run-tests`
+- `context_writer` → 合并到 `/new-feature`
+- 其他类似处理...
 
 ---
 
@@ -143,16 +153,19 @@ Subagents 是独立执行复杂任务的子代理，有自己的执行上下文�
 
 ```
 Phase 0 Foundation    → /init-project, /doc-design-validation, /plan-features
-Phase 1 Kickoff       → /new-feature, context_writer
-Phase 2 Spec          → spec_writer, spec_validator
-Phase 3 Demo          → /gen-demo, ui_demo, mock_api_generator
-Phase 4 Design        → design_from_demo, expert_reviewer
-Phase 5 Code          → /iresume, progress_updater, review_alignment
-Phase 6 Test          → /run-tests, test_runner, test_plan_writer
-Phase 7 Deploy        → /release, release_summarizer
+Phase 1 Kickoff       → /new-feature
+Phase 2 Spec          → spec_writer (subagent)
+Phase 3 Demo          → /gen-demo, ui_demo*, mock_api_generator*
+Phase 4 Design        → design_from_demo*, expert_reviewer (subagent)
+Phase 5 Code          → /iresume, review_alignment*
+Phase 6 Test          → /run-tests, test_plan_writer (subagent)
+Phase 7 Deploy        → /release, release_summarizer (subagent)
 
 跨阶段通用            → /start-day, /end-day, /check-progress, /daily-summary
                       → /check-gate, /approve-gate, /next-phase, /expert-review
+                      → doc_generator*
+
+* = Skills（自动触发）
 ```
 
 ---
@@ -165,7 +178,7 @@ Phase 7 Deploy        → /release, release_summarizer
 | 实现中 | 🚧 | 正在开发 |
 | 计划中 | 📝 | 规格已定义，待实现 |
 
-**当前状态**：所有 44 个工具均已实现 ✔️
+**当前状态**：所有 34 个工具均已实现 ✔️
 
 ---
 

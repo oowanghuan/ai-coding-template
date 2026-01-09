@@ -1,288 +1,163 @@
-# ui_demo - 生成 UI Demo
+# ui_demo - UI Demo 生成器
 
-## 能力描述
+> 类型：Skill（自动触发）
+> 版本：v2.0
+> 最后更新：2026-01-09
 
-根据 `21_UI_FLOW_SPEC.md` 和项目的 UI System 规范，自动生成可运行的 Vue 3 Demo 组件，用于快速验证 UI 设计。
+---
 
-## 输入
+## 何时自动使用
 
-| 参数 | 类型 | 必需 | 说明 |
-|------|------|------|------|
-| feature | string | 是 | 功能模块名称 |
-| page | string | 否 | 指定页面/组件名，不指定则生成所有 |
-| style | string | 否 | 样式方案：`element-plus`（默认）, `naive-ui`, `custom` |
+Claude 应该在以下情况**自动应用**这个 skill：
 
-## 输出
+- 用户说「做个 demo」「生成原型」「搞个可交互的页面看看」
+- 在 Phase 3 Demo 阶段，需要快速验证 UI 设计时
+- 用户提供了 UI SPEC，要求生成可运行的 Demo
+- 用户说「让我看看这个页面长什么样」
 
-- `playgrounds/{feature}/Demo.vue` - 主 Demo 组件
-- `playgrounds/{feature}/components/*.vue` - 子组件（如需）
-- `playgrounds/{feature}/mock/api.js` - Mock API（调用 `mock_api_generator`）
+**不适用场景**：
+- 用户只是讨论设计，没有要求生成代码
+- 用户要求的是最终生产代码（应该在 Phase 5）
 
-## 执行步骤
+---
 
-### 1. 读取规格文档
+## 执行方式
+
+### 1. 确定 Demo 类型
+
+| 类型 | 适用场景 | 技术栈 |
+|------|----------|--------|
+| 单页 HTML | 快速验证单个页面 | HTML + CSS + JS |
+| React Demo | 需要组件化 | React + Tailwind |
+| Vue Demo | Vue 项目 | Vue 3 + Tailwind |
+
+### 2. 读取 UI SPEC（如果存在）
 
 ```
-读取：
-- docs/{feature}/21_UI_FLOW_SPEC.md - UI 流程规格
-- docs/_system/_ui_system/* - 项目 UI System 规范（如有）
+UI SPEC 位置: docs/{feature}/21_UI_FLOW_SPEC.md
 ```
 
-### 2. 解析 UI 规格
+从 SPEC 中提取：
+- 页面布局
+- 交互元素
+- 状态变化
+- 数据展示
 
-从 `21_UI_FLOW_SPEC.md` 提取：
+### 3. 读取 UI System（如果存在）
 
-```yaml
-pages:
-  - name: LoginPage
-    components:
-      - type: form
-        fields:
-          - name: email
-            type: input
-            validation: required|email
-          - name: password
-            type: password
-            validation: required|min:8
-    actions:
-      - trigger: submit
-        handler: login()
-    states:
-      - loading
-      - error
-      - success
+```
+UI System 位置: docs/_foundation/_ui_system/
 ```
 
-### 3. 应用 UI System 规范
-
-读取项目级 UI 规范：
-- 颜色变量
-- 间距系统
-- 组件规范
-- 响应式断点
+应用项目的：
+- 颜色规范
+- 字体规范
+- 组件样式
 
 ### 4. 生成 Demo 代码
 
-#### 4.1 主组件 Demo.vue
-
-```vue
-<template>
-  <div class="demo-container">
-    <h1>{{ feature }} Demo</h1>
-
-    <!-- 页面切换 -->
-    <el-tabs v-model="activeTab">
-      <el-tab-pane
-        v-for="page in pages"
-        :key="page.name"
-        :label="page.label"
-        :name="page.name"
-      >
-        <component :is="page.component" />
-      </el-tab-pane>
-    </el-tabs>
-  </div>
-</template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-// 导入各页面组件
-import LoginPage from './components/LoginPage.vue'
-// ...
-
-const activeTab = ref('LoginPage')
-const pages = [
-  { name: 'LoginPage', label: '登录', component: LoginPage },
-  // ...
-]
-</script>
-
-<style scoped>
-.demo-container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-</style>
-```
-
-#### 4.2 页面组件
-
-```vue
-<!-- playgrounds/{feature}/components/LoginPage.vue -->
-<template>
-  <div class="login-page">
-    <el-card class="login-card">
-      <template #header>
-        <h2>用户登录</h2>
-      </template>
-
-      <el-form
-        ref="formRef"
-        :model="form"
-        :rules="rules"
-        label-position="top"
-        @submit.prevent="handleLogin"
-      >
-        <el-form-item label="邮箱" prop="email">
-          <el-input
-            v-model="form.email"
-            type="email"
-            placeholder="请输入邮箱"
-          />
-        </el-form-item>
-
-        <el-form-item label="密码" prop="password">
-          <el-input
-            v-model="form.password"
-            type="password"
-            placeholder="请输入密码"
-            show-password
-          />
-        </el-form-item>
-
-        <el-form-item>
-          <el-button
-            type="primary"
-            native-type="submit"
-            :loading="loading"
-            class="login-btn"
-          >
-            登录
-          </el-button>
-        </el-form-item>
-      </el-form>
-
-      <!-- 状态提示 -->
-      <el-alert
-        v-if="error"
-        :title="error"
-        type="error"
-        show-icon
-        closable
-      />
-    </el-card>
-  </div>
-</template>
-
-<script setup lang="ts">
-import { ref, reactive } from 'vue'
-import { mockLogin } from '../mock/api'
-
-const formRef = ref()
-const loading = ref(false)
-const error = ref('')
-
-const form = reactive({
-  email: '',
-  password: ''
-})
-
-const rules = {
-  email: [
-    { required: true, message: '请输入邮箱', trigger: 'blur' },
-    { type: 'email', message: '请输入有效的邮箱', trigger: 'blur' }
-  ],
-  password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 8, message: '密码至少 8 个字符', trigger: 'blur' }
-  ]
-}
-
-const handleLogin = async () => {
-  try {
-    await formRef.value?.validate()
-    loading.value = true
-    error.value = ''
-
-    const result = await mockLogin(form)
-    console.log('登录成功', result)
-    // 处理成功状态
-  } catch (e: any) {
-    error.value = e.message || '登录失败'
-  } finally {
-    loading.value = false
-  }
-}
-</script>
-
-<style scoped>
-.login-page {
-  display: flex;
-  justify-content: center;
-  padding: 40px 20px;
-}
-
-.login-card {
-  width: 100%;
-  max-width: 400px;
-}
-
-.login-btn {
-  width: 100%;
-}
-</style>
-```
-
-### 5. 输出结果
+生成一个自包含的、可直接运行的 Demo 文件：
 
 ```
-✅ UI Demo 生成成功
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 生成的文件
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-playgrounds/{feature}/
-├── Demo.vue                 # 主入口
-├── components/
-│   ├── LoginPage.vue        # 登录页
-│   ├── RegisterPage.vue     # 注册页
-│   └── ForgotPassword.vue   # 忘记密码
-└── mock/
-    └── api.js               # Mock API
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎨 应用的 UI System
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• 组件库: Element Plus
-• 主色调: #409EFF
-• 表单布局: 顶部标签
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-💡 运行方式:
-1. 在 vue-app 中引入 Demo.vue
-2. 或使用 Vite 单独运行 playground
+输出位置: docs/{feature}/demo/
 ```
 
-## 示例
+### 5. 提供运行说明
 
-### 示例输入
+告诉用户如何运行 Demo：
+- 直接用浏览器打开（HTML）
+- 或者启动开发服务器
+
+---
+
+## 示例对话
+
+### 示例 1：快速生成登录页 Demo
+
+**User**: 帮我做个登录页面的 demo
+
+**Claude**: [自动应用 ui_demo skill]
+
+好的，我来生成一个登录页面的 Demo。
+
+请确认几个设计细节：
+1. 需要哪些登录方式？（邮箱/手机/第三方）
+2. 是否需要「记住我」选项？
+3. 有没有特定的设计风格偏好？
+
+**User**: 邮箱登录就行，要记住我，简洁现代风格
+
+**Claude**: 明白，生成中...
+
+我创建了一个单页 HTML Demo：
 
 ```
-请使用 ui_demo skill：
-- feature: user-auth
-- style: element-plus
+docs/user-auth/demo/login-demo.html
 ```
 
-### 示例输出
+你可以直接用浏览器打开这个文件查看效果。
 
-生成完整的登录/注册 Demo，包含：
-- 登录表单（带验证）
-- 注册表单（带验证）
-- 忘记密码流程
-- 所有交互状态（loading, error, success）
+Demo 包含：
+- 邮箱输入框
+- 密码输入框
+- 「记住我」复选框
+- 登录按钮
+- 忘记密码链接
+
+需要我调整什么吗？
+
+### 示例 2：基于 SPEC 生成 Demo
+
+**User**: 按照 UI SPEC 生成 demo
+
+**Claude**: [自动应用 ui_demo skill]
+
+好的，我先读取 UI SPEC...
+
+找到 `docs/user-auth/21_UI_FLOW_SPEC.md`，包含以下页面：
+1. 登录页
+2. 注册页
+3. 忘记密码页
+
+你想先生成哪个页面的 Demo？还是全部生成？
+
+---
+
+## Demo 输出规范
+
+### 文件结构
+
+```
+docs/{feature}/demo/
+├── index.html          # 入口页面
+├── styles.css          # 样式（如果需要分离）
+├── script.js           # 交互逻辑（如果需要分离）
+└── README.md           # 运行说明
+```
+
+### Demo 要求
+
+1. **自包含**：尽量单文件，方便查看
+2. **可运行**：直接打开或简单命令即可运行
+3. **Mock 数据**：使用假数据，不依赖后端
+4. **交互完整**：关键交互可以演示
+
+---
 
 ## 注意事项
 
-1. **依赖 UI_FLOW_SPEC**：必须先有完整的 UI 规格文档
-2. **组件库选择**：默认使用 Element Plus，可切换
-3. **Mock API**：自动调用 `mock_api_generator` 生成配套 Mock
-4. **响应式**：生成的 Demo 默认支持移动端适配
-5. **状态完整**：确保覆盖所有定义的状态（loading, error, empty 等）
+1. **Demo 不是生产代码**：Demo 目的是验证设计，不追求代码质量
+2. **优先速度**：快速生成，快速验证
+3. **标注 Mock**：明确标注哪些是 Mock 数据
+4. **保持简单**：不引入复杂依赖
+
+---
 
 ## 关联工具
 
-- `/gen-demo` - Slash Command 封装，调用此 skill
-- `mock_api_generator` - 配套生成 Mock API
-- `spec_validator` - 生成前验证 SPEC 完整性
+- `/gen-demo` - 调用此 skill 生成 Demo
+- `mock_api_generator` - 生成 Demo 所需的 Mock API
+
+---
+
+_CC_COLLABORATION Framework v3.1_
