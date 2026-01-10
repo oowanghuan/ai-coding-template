@@ -1,14 +1,112 @@
 # Changelog
 
-All notable changes to ai-coding-template will be documented in this file.
+All notable changes to the AI Coding Collaboration Framework will be documented in this file.
 
 ---
 
-## [v1.7.0] - 2026-01-09
+## [v3.3.0] - 2026-01-11
 
-### 🔄 同步目录结构规范化 (sync from ai-coding-org)
+### 🚀 AI PM Driver 与 Foundation 体系重构
 
-同步 ai-coding-org v3.1.0 的目录结构重组，提升可维护性。
+本版本引入 AI PM Driver 编排系统，并重构 Foundation 文档体系，统一 Phase 0 (Foundation) 与 Phase 1-7 (Feature) 的 Gate 检查机制。
+
+#### Added
+
+- **AI PM Driver 编排系统**：
+  - `/ai-pm` 命令 - Driver 编排命令，支持 `start/status/pause/resume/stop/confirm/reject/skip/compare/logs/restart` 子命令
+  - `ai_pm_state_manager` skill - Driver 状态管理器，管理 `AI_PM_ORCHESTRATION_STATE.yaml`
+  - 支持 `full_auto` 和 `human_confirm` 两种运行模式
+  - 熔断机制（max_retry/no_progress/timeout）
+
+- **Foundation Gate (Phase 0)**：
+  - `/check-gate --phase=0` - 检查项目级 Foundation Gate
+  - Phase 0 检查 `docs/_foundation/` 下的规划文档
+  - Phase 1-7 检查 `docs/{feature}/` 下的功能文档
+
+#### Changed
+
+- **Foundation 模板目录重构**：
+  - 模板位置：`CC_COLLABORATION/03_templates/00_foundation/`
+  - 子目录结构：`_planning/`, `_db_system/`, `_api_system/`, `_ui_system/`
+  - 生成目标：`docs/_foundation/` (项目级) 而非 `docs/_system/`
+
+- **`/init-project` 命令更新**：
+  - 支持 `frontend/backend/fullstack` 三种项目类型
+  - 根据项目类型选择性复制模板
+  - 生成 `FOUNDATION_GATE_STATUS.yaml` 状态文件
+  - 引用 `/check-gate --phase=0` 替代原 `/check-foundation-gate`
+
+- **`/check-gate` 命令扩展**：
+  - 新增 `--phase=0` 参数支持 Foundation Gate
+  - 检查规划文档存在性和占位符填写状态
+  - 统一 Phase 0-7 的 Gate 检查输出格式
+
+#### Architecture
+
+```
+Phase 0 (Foundation) - 项目级别
+├── docs/_foundation/_planning/      # 规划文档
+├── docs/_foundation/_db_system/     # 数据库规范
+├── docs/_foundation/_api_system/    # API 规范
+└── docs/_foundation/_ui_system/     # UI 设计系统
+
+Phase 1-7 (Feature) - 功能级别
+└── docs/{feature}/                  # 功能模块文档
+```
+
+#### 模块版本更新
+
+| 模块 | 版本 | 说明 |
+|------|------|------|
+| ai-pm-driver | v1.0 | 新增 |
+| phase-gate-system | v1.3 | Phase 0 支持 |
+| foundation-templates | v2.0 | 目录重构 |
+
+---
+
+## [v3.2.0] - 2026-01-11
+
+### 🚀 Gate Check 可执行验证 (Executable Verification for Phase Gate)
+
+为 Phase Gate 检查机制增加可执行验证能力，确保工作交付结果和质量的真实验证。
+
+#### Added
+
+- **4 种新检查类型**：
+  - `exec_check` - 执行命令并验证结果（如 `npm run build`）
+  - `test_check` - 执行测试并解析结果（如 `npm test`）
+  - `serve_check` - 启动服务并健康检查（如 HTTP Server + curl）
+  - `e2e_check` - 端到端浏览器测试（使用 MCP 浏览器工具）
+
+- **安全边界机制**：
+  - 命令白名单（npm/python/pytest/jest 等）
+  - 命令黑名单（rm -rf/sudo/eval 等）
+  - 工作目录限制（禁止跳出功能目录）
+
+#### Changed
+
+- **PHASE_GATE_TEMPLATE.yaml** - 升级至 v1.3，添加可执行检查示例
+- **gate_checker.md** - 添加新检查类型的实现逻辑
+
+#### 问题背景
+
+在 `user-auth-auto-test` full_auto 测试中发现：
+- Phase 3 Demo: `manual` 类型被跳过，Demo 从未被验证
+- Phase 6 Test: 测试报告 "12/12 通过" 是伪造的，未执行任何测试
+
+核心问题：**文件存在 ≠ 功能正确**
+
+#### 详细文档
+
+- 完整更新说明：`CC_COLLABORATION/07_phase_gate/GATE_CHECK_UPDATE_v1.3.md`
+
+---
+
+## [v3.1.0] - 2026-01-09
+
+### 🔄 目录结构重组 (CC_COLLABORATION Restructure)
+
+重新组织 CC_COLLABORATION 目录结构，提升可维护性并隔离 GUI 依赖。
 
 #### Added
 
@@ -28,352 +126,199 @@ All notable changes to ai-coding-template will be documented in this file.
   - `02_FRAMEWORK_OVERVIEW.md` - 框架整体说明
   - `03_DAILY_OPERATIONS.md` - 每日操作指南
   - `04_REFERENCE.md` - 完整参考手册（含 Git Commit 规范）
-  - `recipes/` - 工作流 Recipes（合并优化）
+  - `recipes/` - 工作流 Recipes
+    - `CONTEXT_RECOVERY.md` - 上下文恢复（合并原 COMPACT_RECOVERY + RESUME_FROM_CHECKPOINT）
+    - `START_NEW_FEATURE.md` - 启动新功能
+    - `END_OF_DAY.md` - 每日结束
+    - `UI_DEMO.md` - Demo 生成
 
 #### Removed
 
-- `00_overview/` - 整合至 `_project_context/` 和 `01_workflow/`
-- `00_system/` - 迁移至 `_gui_config/`
-- `01_commit_rules/` - 整合至 `01_workflow/04_REFERENCE.md`
-- `02_workflows/` - 整合至 `01_workflow/recipes/`
+- `00_overview/` - 内容整合至 `_project_context/` 和 `01_workflow/`
+- `00_system/` - 内容迁移至 `_gui_config/`
+- `01_commit_rules/` - 整合至 `01_workflow/04_REFERENCE.md` 附录 A
+- `02_workflows/` - 整合至 `01_workflow/`
 - `04_ai_workflow/` - 整合至 `01_workflow/`
 - `06_roles_guide/` - 迁移至 `_project_context/ROLES_GUIDE.md`
 
+#### Changed
+
+- GUI 依赖路径变更（需同步更新 ha-loop-desk）：
+  - `CC_COLLABORATION/00_system/WORKFLOW_TEMPLATE.yaml` → `CC_COLLABORATION/_gui_config/WORKFLOW_TEMPLATE.yaml`
+  - `CC_COLLABORATION/07_phase_gate/PHASE_GATE.yaml` → `CC_COLLABORATION/_gui_config/PHASE_GATE.yaml`
+
+#### 保持不变
+
+- `03_templates/` - 文档模板（GUI 依赖）
+- `05_tools/` - 工具定义（GUI 依赖）
+- `07_phase_gate/` - Phase Gate 配置（GUI 依赖，保留原文件）
+- `08_legacy_integration/` - 现有项目整合指南
+
 ---
 
-## [v1.6.1] - 2026-01-09
+## [v3.0.1] - 2026-01-09
 
-### 🔄 双向同步 (sync with ai-coding-org)
+### 🔄 双向同步 (sync with ai-coding-template)
 
-从开发仓库同步缺失的高级功能，确保模板拥有完整的 AI 协作能力。
+从模板仓库同步缺失的工具命令，确保两个仓库的工具集一致。
 
 #### Added
 
-- **Subagents 子智能体系统** (`.claude/subagents/`)：
-  - `expert_reviewer.md` - 专家评审智能体
-  - `progress_tracker.md` - 进度跟踪智能体
-  - `release_summarizer.md` - 发布总结智能体
-  - `spec_writer.md` - 规格编写智能体
-  - `test_plan_writer.md` - 测试计划编写智能体
+- **10 个 slash-commands** 从模板同步回来：
+  - `/gui-connect`, `/gui-cleanup`, `/gui-disconnect` - GUI 连接管理
+  - `/integrate-project`, `/scan-project` - 现有项目整合
+  - `/reverse-api`, `/reverse-schema` - 逆向工程文档生成
+  - `/sync-docs`, `/plan-features`, `/doc-design-validation` - 文档维护工具
 
-- **工作流框架配置** (`CC_COLLABORATION/00_system/`)：
-  - `WORKFLOW_TEMPLATE.yaml` - 全局工作流框架定义 (v1.1)
-  - 定义 7 个开发阶段的详细元数据
-  - 配置执行模式：non_interactive, interactive, hybrid
+#### 同步说明
+
+这些命令原本在 GUI 迁移后于模板仓库开发，此次反向同步确保开发环境拥有完整工具集。
 
 ---
 
-## [v1.6.0] - 2026-01-03
+## [v3.0.0] - 2025-12-31
 
-### 🚀 New Feature: 现有项目整合工具
-
-新增 **现有项目整合（Legacy Integration）** 工具集，支持将已存在的项目纳入 AI 协作框架管理。
-
-#### 核心理念
-
-> **让 AI 知道「我们在什么地基上工作」，建立单一信息来源（SSoT）**
-
-#### 新增命令
-
-| 命令 | 用途 |
-|------|------|
-| `/scan-project` | 扫描项目结构和技术栈，评估整合级别 |
-| `/integrate-project` | 执行 Level 0-3 整合，生成标准文档 |
-| `/reverse-api` | 从代码逆向生成 API 文档 |
-| `/reverse-schema` | 从 ORM 逆向生成数据模型文档 |
-| `/sync-docs` | 检查文档与代码的一致性 |
-
-#### 整合级别
-
-| 级别 | 名称 | 产出物 | 适用场景 |
-|------|------|--------|----------|
-| Level 0 | 最小登记 | 10_CONTEXT.md（极简） | 只需纳入管理 |
-| Level 1 | AI 可协作 | + 模块划分 + 技术栈 | 日常维护 |
-| Level 2 | 深度协作 | + API 文档 + 数据模型 | 持续开发 |
-| Level 3 | 完全规范 | 全套 Foundation | 核心项目 |
-
-#### 设计原则
-
-- **对历史功能的态度**：能用就用，能改就改，新的按新规范
-- **追溯标记**：`retroactive: true` 标记已完成阶段，无需补历史文档
-- **内容标记**：`[legacy]`、`[逆向]`、`[推断]`、`[补充]` 区分内容来源
-
-#### 工作流命令完善
-
-同步了完整的工作流命令集（24 个命令），包括：
-- Phase Gate 系列：`/check-gate`、`/approve-gate`、`/next-phase`
-- 日常工作系列：`/start-day`、`/end-day`、`/daily-summary`
-- 进度管理系列：`/check-progress`、`/iresume`
-- 功能开发系列：`/new-feature`、`/gen-demo`、`/run-tests`
-- 发布系列：`/release`
-- 专家评审：`/expert-review`
-
----
-
-## [v1.5.0] - 2026-01-02
-
-### 🚀 New Feature: Phase 0.5 Foundation Gate
-
-新增 **Phase 0.5: Foundation Gate** 机制，在 Phase 0 和 Phase 1 之间建立需求验证关卡。
-
-#### 核心理念
-
-```
-User Journey → System Responsibility → Module Mapping → Design Validation → Foundation Gate
-     ↑                                                                              │
-     └────────────────────────── 可追溯 ◀───────────────────────────────────────────┘
-```
-
-#### 新增模板
-
-| 模板 | 用途 |
-|------|------|
-| `01_USER_JOURNEY_TEMPLATE.md` | **需求起源层** - 用户流程、系统责任、模块映射 |
-| `00_FOUNDATION_GATE.md` | Gate 规则定义、MVS 标准、检查项 |
-
-#### 新增命令
-
-| 命令 | 用途 |
-|------|------|
-| `/doc-design-validation` | 执行设计验证，输出 PASS/FAIL |
-| `/check-foundation-gate` | 检查 Foundation Gate 状态 |
-| `/plan-features` | 生成功能开发清单（需先通过 Gate） |
-
-#### User Journey MVS（最小可通过要求）
-
-| 必填区块 | 最小要求 |
-|----------|----------|
-| 用户画像 | ≥ 1 个主要用户 |
-| 主成功路径 | ≥ 3 个用户步骤（U1, U2, U3...） |
-| 失败路径 | ≥ 2 个失败场景（F1, F2...） |
-| 系统责任声明 | 每个用户步骤都有「系统必须做」 |
-| 模块映射表 | 所有 P0 模块都有对应的用户步骤 |
-
-#### 工作流变化
-
-```
-Phase 0 (Foundation) → Phase 0.5 (Foundation Gate) → Phase 1 (Kickoff) → ...
-```
-
-### Changed
-
-- **工作流文档更新** - `04_ai_workflow/README.md` 升级至 v1.4，新增 Phase 0.5 章节
-- **Slash Commands** - 从 8 个增加到 11 个
-
----
-
-## [v2.0.0] - 2025-12-31
-
-### 🎉 Major Release: 可视化工作台独立
+### 🎉 Highlights
 
 重大架构调整：将可视化工作台独立为 [HA Loop Desk](https://github.com/oowanghuan/ha-loop-desk) 项目。
 
 ### Added
 
-- **HA Loop Desk** - 独立的可视化工作台应用
-  - 甘特图进度视图
-  - Daily Standup 面板
-  - Phase Gate 状态显示
-  - 实时文件监控
+- **项目 README** - 添加框架说明、目录结构、快速开始指南
+- **HA Loop Desk 引用** - 作为可视化伴侣工具
 
 ### Changed
 
-- **项目定位明确** - 本仓库专注于框架模板，可视化由 HA Loop Desk 提供
+- **仓库拆分** - 可视化工作台代码迁移至独立仓库 [ha-loop-desk](https://github.com/oowanghuan/ha-loop-desk)
+- **精简结构** - 移除 `apps/coding-gui/` 和 `vue-app/` 目录
+- **文档归档** - GUI 设计文档移至 `_backup/coding-GUI-docs-20251231/`
 
-### 项目关系
+### 项目定位调整
 
-```
-ai-coding-template          HA Loop Desk
-═══════════════════         ═══════════════
-方法论 + 模板               可视化工作台
+本仓库专注于 **AI 协作开发框架模板**：
+- 方法论和工作流定义
+- 文档模板和 Slash Commands
+- Phase Gate 质量控制机制
 
-- SDLC 阶段定义      ──→    - 甘特图进度视图
-- 文档模板                  - Daily Standup 面板
-- Phase Gate 机制           - Phase Gate 状态显示
-- 进度日志 (YAML)           - 实时文件监控
-```
+可视化功能由 HA Loop Desk 提供：
+- 甘特图进度视图
+- Daily Standup 面板
+- Phase Gate 状态显示
 
 ---
 
-## [v1.4.0] - 2025-12-19
+## [v2.4.0] - 2025-12-19
 
 ### Added
 
-- **Expert Review** - 外部专家评审集成（支持 OpenAI API）
+- **Phase Gate 系统** - 完整的质量关卡机制
+- **Expert Review** - 外部专家评审集成
 - **Dashboard View** - 多功能模块甘特图视图
-- **Daily Standup** - `/end-day` 生成每日站会数据
+- **Daily Standup** - 每日站会数据生成
 
 ### Changed
 
-- **Phase Gate 增强** - 支持 External Gate 和 Override 机制
-- **Schema Discovery** - 自动识别项目配置和功能模块
+- **SDLC 7 阶段** - 从 8 阶段精简为 7 阶段（移除 Phase 0）
+- **文档模板更新** - 适配新的阶段定义
 
 ---
 
-## [v1.3.0] - 2024-12-15
+## [v2.3.0] - 2024-12-12
 
-### 🔧 Breaking Change: 文件编号规范化
+### 🎉 Highlights
 
-**修复文件编号约定**：将所有模板文件编号调整为按 Phase 顺序排列。
+这是一个重要的里程碑版本，标志着框架的第一阶段开发完成。
 
-#### 编号变更
+### Added
 
-| Phase | 旧编号 | 新编号 | 文件 |
-|-------|--------|--------|------|
-| 1 Kickoff | 00_ | 10_ | 10_CONTEXT |
-| 2 Spec | 11_ | 20_/21_ | 20_API_SPEC, 21_UI_FLOW_SPEC |
-| 3 Demo | 12_ | 30_ | 30_DEMO_REVIEW |
-| 4 Design | 10_ | 40_ | 40_DESIGN_FINAL |
-| 5 Code | 20_ | 50_ | 50_DEV_PLAN |
-| 6 Test | 40_/41_ | 60_/61_ | 60_TEST_PLAN, 61_TEST_REPORT |
-| 7 Deploy | 50_/51_ | 70_/71_ | 70_RELEASE_NOTE, 71_CHANGELOG |
-| 通用 | 30_/31_ | 90_/91_ | 90_PROGRESS_LOG, 91_DAILY_SUMMARY |
+- **开源模板仓库** - 创建 [ai-coding-template](https://github.com/oowanghuan/ai-coding-template) 独立仓库
+- **「如果你只有1分钟」页面** - 5 阶段真实工作流快速入门指南
+- **侧边栏新菜单** - 添加「如果你只有1分钟」导航入口
+- **`/start-day` 阶段** - 在快速入门中补充每日开始步骤
+- **完整日循环流程图** - 展示 `/end-day` → 第二天 → `/start-day` 的完整循环
 
-#### 迁移指南
+### Changed
 
-如果项目中已有旧编号的文件，需要重命名：
-```bash
-mv 00_CONTEXT.md 10_CONTEXT.md
-mv 11_API_SPEC.md 20_API_SPEC.md
-mv 10_DESIGN_FINAL.md 40_DESIGN_FINAL.md
-mv 30_PROGRESS_LOG.yaml 90_PROGRESS_LOG.yaml
-```
+- **命令重命名** - `/resume` → `/iresume`，避免与 Claude Code 内置命令冲突
+- **README 简化** - 移除开头重复的命令行示例
+- **README 增强** - 添加「真实工作流：从定义到现场交付」章节
+
+### Fixed
+
+- 修复进度摘要弹窗样式对比度问题
+- 修复 FeatureWorkbench 集成 GitHub 文档查看器
 
 ---
 
-## [v1.2.0] - 2024-12-15
+## [v2.2.0] - 2024-12-12
 
-### 🚀 New Feature: Phase Gate System
+### Added
 
-新增 **Phase Gate 质量门禁系统**，确保每个阶段的交付物质量。
+- **每日工作流命令** - `/start-day` 和 `/end-day`
+- **Dashboard 每日步骤** - 所有 Phase 添加每日开始/结束步骤
+- **完整测试覆盖** - 4 项核心测试全部通过
 
-#### 新增模板
-- `PHASE_GATE_TEMPLATE.yaml` - Phase Gate 检查项定义
-- `PHASE_GATE_STATUS_TEMPLATE.yaml` - Gate 状态追踪
+### Changed
 
-#### 新增工具
-- **Skill**: `gate_checker` - 自动检查 Gate 条件
-- **Slash Commands**:
-  - `/check-gate` - 检查当前阶段 Gate 状态
-  - `/approve-gate` - 审批通过 Gate
-  - `/next-phase` - 进入下一阶段
-
-#### 新增文档
-- `07_phase_gate/README.md` - Phase Gate 完整指南
+- 优化命令输出格式
+- 改进进度日志解析器
 
 ---
 
-## [v1.1.0] - 2024-12-15
+## [v2.1.0] - 2024-12-11
 
-### 🔧 Major Refactoring
+### Added
 
-**目录结构大重组**：简化并优化了模板库的目录结构，使其更加清晰和易于使用。
+- **8 阶段工作流** - Phase 0-7 完整定义
+- **项目看板** - Vue 3 + Element Plus 实现
+- **进度追踪** - PROGRESS_LOG.yaml 自动解析
+- **GitHub 文档查看器** - 在线查看功能文档
 
-### Breaking Changes
+### Changed
 
-- **CC_COLLABORATION 提升为一级目录**：原 `_templates/CC_COLLABORATION/` 现直接位于根目录
-- **Foundation 模板整合**：原 `_templates/_foundation_templates/` 移入 `CC_COLLABORATION/03_templates/_foundation/`
-- **删除 _templates 目录**：不再使用中间层目录
-
-### 新的目录结构
-
-```
-CC_COLLABORATION/
-├── 00_overview/README.md
-├── 01_commit_rules/README.md
-├── 02_workflows/
-├── 03_templates/
-│   ├── _common/              # 通用模板
-│   ├── _foundation/          # Foundation 级模板
-│   │   ├── _api_system_template/
-│   │   ├── _ui_system_template/
-│   │   └── 03_DB_CONVENTIONS_TEMPLATE.md
-│   ├── 01_kickoff/
-│   ├── 02_spec/
-│   ├── 03_demo/
-│   ├── 04_design/
-│   ├── 05_code/
-│   ├── 06_test/
-│   └── 07_deploy/
-├── 04_ai_workflow/README.md
-├── 05_tools/
-└── 06_roles_guide/README.md
-```
-
-### New Features
-
-- **API System 模板扩展**：新增 4 个 API 规范模板
-  - `00_REST_CONVENTIONS_TEMPLATE.md` - HTTP REST API 设计标准
-  - `01_COMMAND_CONVENTIONS_TEMPLATE.md` - Slash Command 设计标准
-  - `02_YAML_SCHEMA_CONVENTIONS_TEMPLATE.md` - YAML 文件结构标准
-  - `03_EXTERNAL_API_CONVENTIONS_TEMPLATE.md` - 外部 API 调用标准
-
-### Documentation Updates
-
-- 更新 `04_ai_workflow/README.md` 版本至 v1.3
-- 更新所有模板路径引用
-- 更新工具文档中的路径引用（doc_generator, system_scaffolder, init-project）
-
-### Migration Guide
-
-如果你正在使用旧版本，请按以下步骤迁移：
-
-1. 删除旧的 `_templates/` 目录
-2. 复制新的 `CC_COLLABORATION/` 目录到项目中
-3. 更新项目中的模板路径引用
+- 重构文档目录结构
+- 优化模板文件组织
 
 ---
 
-## [v1.0.0] - 2024-12-12
+## [v2.0.0] - 2024-12-10
 
-### 🎉 Initial Release
+### Added
 
-这是 ai-coding-template 的首个正式发布版本。
+- **Claude Code 工具库** - 10 个 Slash Commands
+- **安装脚本** - `init-claude-tools.sh`
+- **功能模板** - Context、Spec、Design、Test 等标准模板
 
-### Features
+### Changed
 
-- **8 阶段工作流** - 可裁剪的完整开发流程（Phase 0-7）
-- **10 个 Slash Commands** - 完整的 Claude Code 命令库
-- **标准化模板** - Context、Spec、Design、Test 等文档模板
-- **安装脚本** - 一键安装工具到项目
-- **项目看板**（可选）- Vue 3 + Element Plus 可视化看板
+- 从单仓库迁移到多功能模块架构
 
-### Slash Commands
+---
 
-| 命令 | 用途 |
-|------|------|
-| `/new-feature` | 创建新功能目录 |
-| `/start-day` | 每日开始，恢复上下文 |
-| `/end-day` | 每日结束，生成总结 |
-| `/iresume` | 断点恢复 |
-| `/check-progress` | 检查进度状态 |
-| `/daily-summary` | 生成每日总结 |
-| `/gen-demo` | 生成 Demo |
-| `/run-tests` | 执行测试 |
-| `/release` | 发布流程 |
-| `/init-project` | 初始化项目配置 |
+## [v1.0.0] - 2024-12-09
 
-### Documentation
+### Added
 
-- 完整的 README 使用指南
-- 8 阶段工作流详细说明
-- 「真实工作流：从定义到现场交付」章节
-- 核心机制：上下文恢复原理说明
+- 初始版本
+- 基础文档框架
+- 核心概念定义
 
-### Quick Start
+---
 
-```bash
-git clone https://github.com/oowanghuan/ai-coding-template.git my-project
-cd my-project
-./scripts/init-claude-tools.sh --target=.
-# 在 Claude Code 中执行：/new-feature my-first-feature
-```
+## 功能模块版本
+
+| 模块 | 当前版本 | 最后更新 |
+|------|----------|----------|
+| cc-tools-library | v2.4 | 2025-12-19 |
+| phase-gate-system | v1.2 | 2025-12-19 |
+| schema-discovery | v1.0 | 2025-12-17 |
 
 ---
 
 ## 相关链接
 
 - [HA Loop Desk](https://github.com/oowanghuan/ha-loop-desk) - 可视化工作台
+- [开源模板仓库](https://github.com/oowanghuan/ai-coding-template)
 - [Claude Code 官方文档](https://docs.anthropic.com/claude-code)
 
 ---
