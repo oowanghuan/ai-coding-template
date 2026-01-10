@@ -21,19 +21,74 @@
 
 ```
 docs/{feature-name}/
-├── 10_CONTEXT.md              # 功能上下文（必需）
-├── 90_PROGRESS_LOG.yaml       # 进度日志（必需）
-├── PHASE_GATE.yaml            # Gate 规则配置（必需，v1.2 新增）
-├── PHASE_GATE_STATUS.yaml     # Gate 运行状态（必需，v1.2 新增）
-└── _demos/                    # Demo 文件目录
-    └── .gitkeep               # 保持目录存在
+├── 10_CONTEXT.md          # 功能上下文（必需）
+├── 90_PROGRESS_LOG.yaml   # 进度日志（必需）
+└── _demos/                # Demo 文件目录
+    └── .gitkeep           # 保持目录存在
 ```
 
 创建 `_demos/` 目录用于存放该功能的 Demo 文件（由 `/gen-demo` 命令生成）。
 
-### 3. 生成 10_CONTEXT.md
+### 3. 生成 10_CONTEXT.md（智能模式 vs 模板模式）
 
-使用以下模板生成 `10_CONTEXT.md`：
+根据用户是否提供功能描述，选择不同的生成模式：
+
+#### 3.1 智能生成模式（用户提供了功能描述）
+
+如果用户提供了功能描述（如 `/new-feature user-auth "用户登录注册模块，支持邮箱验证"`），则：
+
+**步骤 A：解析需求描述**
+
+从用户描述中自动提取：
+- **核心功能点**：登录、注册、邮箱验证...
+- **目标用户**：普通用户、管理员...
+- **业务价值**：提高安全性、改善用户体验...
+- **关键约束**：密码加密、Token 有效期...
+
+**步骤 B：自动生成用户故事**
+
+根据提取的信息，生成 User Story 格式：
+
+```markdown
+### US-001: 用户登录
+**作为** 注册用户
+**我想要** 使用邮箱和密码登录系统
+**以便于** 访问我的个人数据和功能
+
+**验收标准**：
+- [ ] 支持邮箱+密码登录
+- [ ] 登录失败显示错误提示
+- [ ] 登录成功跳转到首页
+```
+
+**步骤 C：自动定义功能边界**
+
+```markdown
+### 包含（In Scope）
+- 邮箱密码登录
+- 用户注册
+- 邮箱验证
+
+### 不包含（Out of Scope）
+- 第三方登录（OAuth）
+- 多因素认证（MFA）
+```
+
+**步骤 D：自动识别约束条件**
+
+```markdown
+### 技术约束
+- 密码必须加密存储（bcrypt）
+- Token 有效期 24 小时
+
+### 业务约束
+- 邮箱必须唯一
+- 密码至少 8 位
+```
+
+#### 3.2 模板模式（用户未提供描述）
+
+如果用户只提供了功能名称，则使用以下模板生成 `10_CONTEXT.md`：
 
 ```markdown
 # 10_CONTEXT.md
@@ -234,47 +289,7 @@ stats:
   next_milestone: "完成 Kickoff 阶段，进入 Spec"
 ```
 
-### 5. 生成 PHASE_GATE.yaml（v1.2 新增）
-
-从模板 `_templates/CC_COLLABORATION/03_TEMPLATES/PHASE_GATE_TEMPLATE.yaml` 生成，替换变量：
-
-```yaml
-# PHASE_GATE.yaml
-# Phase Gate 规则配置文件
-# 功能模块：{feature-name}
-
-meta:
-  feature: "{feature-name}"
-  schema_version: "1.2"
-  created_at: "{current_date}"
-
-feature_profile:
-  has_ui: true                    # 根据功能类型调整
-  demo_required: true             # 根据功能类型调整
-
-# Phase 1-7 的 Gate 规则（从模板复制完整内容）
-# ...
-```
-
-### 6. 生成 PHASE_GATE_STATUS.yaml（v1.2 新增）
-
-从模板 `_templates/CC_COLLABORATION/03_TEMPLATES/PHASE_GATE_STATUS_TEMPLATE.yaml` 生成，替换变量：
-
-```yaml
-# PHASE_GATE_STATUS.yaml
-# Phase Gate 运行态文件
-# 功能模块：{feature-name}
-
-meta:
-  feature: "{feature-name}"
-  last_updated: "{current_datetime}"
-
-# Phase 1-7 的 Gate 状态（从模板复制完整内容）
-# 所有 gate_state 初始为 pending
-# ...
-```
-
-### 7. 输出结果
+### 5. 输出结果
 
 创建完成后，输出以下信息：
 
@@ -283,29 +298,18 @@ meta:
 
 📁 目录结构：
 docs/{feature-name}/
-├── 10_CONTEXT.md              # 功能上下文
-├── 90_PROGRESS_LOG.yaml       # 进度日志
-├── PHASE_GATE.yaml            # Gate 规则配置
-├── PHASE_GATE_STATUS.yaml     # Gate 运行状态
-└── _demos/                    # Demo 文件目录
-
-🚦 Phase Gate 已启用！
-  - 每个阶段必须通过 Gate 检查才能进入下一阶段
-  - 使用 /check-gate {feature-name} 查看 Gate 状态
-  - 使用 /approve-gate {feature-name} --phase=N --role=ROLE 审批
+├── 10_CONTEXT.md          # 功能上下文
+├── 90_PROGRESS_LOG.yaml   # 进度日志
+└── _demos/                # Demo 文件目录
 
 📝 下一步操作：
 1. 补充 10_CONTEXT.md 中的功能描述、目标和范围
-   - 至少 2 条目标
-   - 至少 1 条 Non-Goals
-   - 验收标准（至少 50 字符）
-2. 执行 /check-gate {feature-name} --phase=1 检查 Gate
-3. 请 PM 审批后进入 Spec 阶段
+2. 与团队确认功能上下文后，将状态改为 Approved
+3. 进入 Spec 阶段，编写 40_DESIGN_FINAL.md
 
 💡 提示：
 - 使用 /check-progress {feature-name} 查看进度
 - 使用 /iresume {feature-name} 恢复工作上下文
-- 使用 /next-phase {feature-name} 进入下一阶段（需先通过 Gate）
 ```
 
 ## 注意事项
@@ -313,16 +317,3 @@ docs/{feature-name}/
 - 功能名称使用 kebab-case（如 `user-auth`，不是 `userAuth`）
 - 自动生成的文档是框架，需要人工补充内容
 - 10_CONTEXT.md 状态默认为 Draft，确认后改为 Approved
-- **Phase Gate 机制**（v1.2 新增）：
-  - `PHASE_GATE.yaml` 定义各阶段的 Gate 规则，一般不需要修改
-  - `PHASE_GATE_STATUS.yaml` 记录运行时状态，由系统自动更新
-  - 每个阶段必须通过 Gate 检查和审批才能进入下一阶段
-  - 可以修改 `feature_profile` 来调整功能类型（如 `has_ui: false`）
-
-## 关联工具
-
-- `/check-gate` - 检查 Gate 状态
-- `/approve-gate` - 审批 Gate
-- `/next-phase` - 进入下一阶段
-- `/check-progress` - 查看进度
-- `/iresume` - 恢复工作上下文

@@ -1,187 +1,125 @@
-# doc_generator - 根据模板生成文档
+# doc_generator - 文档生成器
 
-## 能力描述
+> 类型：Skill（自动触发）
+> 版本：v2.0
+> 最后更新：2026-01-09
 
-根据 `03_TEMPLATES/` 目录下的标准模板，生成任意阶段的文档。这是一个通用的文档生成工具，被多个 Slash Commands 和 Subagents 调用。
+---
 
-## 输入
+## 何时自动使用
 
-| 参数 | 类型 | 必需 | 说明 |
-|------|------|------|------|
-| template | string | 是 | 模板名称，如 `CONTEXT`, `DESIGN`, `TEST_PLAN` |
-| feature | string | 是 | 功能模块名称 |
-| output_path | string | 否 | 输出路径，默认按模板类型自动确定 |
-| variables | object | 否 | 模板变量，用于填充模板中的占位符 |
+Claude 应该在以下情况**自动应用**这个 skill：
 
-## 输出
+- 用户说「生成 XX 文档」「创建 XX 文档」「写个 XX 文档」
+- 用户提到需要「CONTEXT」「SPEC」「DESIGN」「TEST_PLAN」等标准文档
+- 用户说「按模板生成」「用模板创建」
+- 在执行 `/new-feature` 后，需要生成初始文档时
 
-- 生成的文档文件
-- 填充的变量列表
-- 待补充的内容提示
+**不适用场景**：
+- 用户只是询问文档内容，没有要求生成
+- 用户要求修改已有文档（应该用 Edit 工具）
 
-## 支持的模板
+---
 
-| 模板名称 | 文件 | 输出位置 | 阶段 |
-|---------|------|---------|------|
-| `CONTEXT` | `CONTEXT_TEMPLATE.md` | `{feature}/10_CONTEXT.md` | Phase 1 |
-| `CHANGELOG` | `CHANGELOG_TEMPLATE.md` | `{feature}/*_CHANGELOG.md` | 通用 |
-| `UI_FLOW_SPEC` | `UI_FLOW_SPEC_TEMPLATE.md` | `{feature}/21_UI_FLOW_SPEC.md` | Phase 2 |
-| `API_SPEC` | `API_SPEC_TEMPLATE.md` | `{feature}/20_API_SPEC.md` | Phase 2 |
-| `DEMO_REVIEW` | `DEMO_REVIEW_TEMPLATE.md` | `{feature}/30_DEMO_REVIEW.md` | Phase 3 |
-| `DESIGN` | `DESIGN_TEMPLATE.md` | `{feature}/40_DESIGN_FINAL.md` | Phase 4 |
-| `DEV_PLAN` | `DEV_PLAN_TEMPLATE.md` | `{feature}/50_DEV_PLAN.md` | Phase 5 |
-| `PROGRESS_LOG` | `PROGRESS_LOG_TEMPLATE.yaml` | `{feature}/90_PROGRESS_LOG.yaml` | Phase 5 |
-| `DAILY_SUMMARY` | `DAILY_SUMMARY_TEMPLATE.md` | `{feature}/91_DAILY_SUMMARY/{date}.md` | Phase 5 |
-| `TEST_PLAN` | `TEST_PLAN_TEMPLATE.md` | `{feature}/60_TEST_PLAN.md` | Phase 6 |
-| `TEST_REPORT` | `TEST_REPORT_TEMPLATE.md` | `{feature}/61_TEST_REPORT.md` | Phase 6 |
-| `RELEASE_NOTE` | `RELEASE_NOTE_TEMPLATE.md` | `{feature}/70_RELEASE_NOTE.md` | Phase 7 |
+## 执行方式
 
-## 执行步骤
+### 1. 识别文档类型
 
-### 1. 加载模板
+根据用户描述判断目标文档：
+
+| 关键词 | 文档类型 | 模板位置 |
+|--------|----------|----------|
+| CONTEXT、背景、功能概述 | 10_CONTEXT.md | `03_templates/01_kickoff/` |
+| API SPEC、接口规格 | 20_API_SPEC.md | `03_templates/02_spec/` |
+| UI SPEC、页面流程 | 21_UI_FLOW_SPEC.md | `03_templates/02_spec/` |
+| DESIGN、设计文档 | 40_DESIGN_FINAL.md | `03_templates/04_design/` |
+| TEST PLAN、测试计划 | 60_TEST_PLAN.md | `03_templates/06_test/` |
+| RELEASE NOTE、发布说明 | 70_RELEASE_NOTE.md | `03_templates/07_deploy/` |
+
+### 2. 读取模板
 
 ```
-读取：docs/_system/CC_COLLABORATION/03_TEMPLATES/{template}_TEMPLATE.md
+模板路径: CC_COLLABORATION/03_templates/{phase}/{TEMPLATE_NAME}_TEMPLATE.md
 ```
 
-### 2. 解析变量
+### 3. 收集必要信息
 
-模板中的变量使用 `{variable_name}` 格式：
+向用户询问模板中的必填项（如果用户没有提供）：
+- 功能名称
+- 功能描述
+- 目标用户
+- 关键约束
 
-```markdown
-# {feature_name} - 功能上下文
+### 4. 填充模板生成文档
 
-> 版本：{version}
-> 创建日期：{created_at}
-> 负责人：{owner}
+- 替换模板中的占位符
+- 保持模板的章节结构
+- 添加时间戳和版本信息
 
-## 功能概述
-
-{description}
-```
-
-### 3. 填充变量
-
-从 `variables` 参数和系统信息填充：
-
-**自动填充的变量**：
-- `{feature}` - 功能模块名称
-- `{feature_name}` - 功能名称（中文）
-- `{created_at}` - 当前日期
-- `{current_datetime}` - 当前时间戳
-- `{version}` - 默认 v1.0
-
-**需要手动提供的变量**：
-- `{owner}` - 负责人
-- `{description}` - 功能描述
-- 其他业务相关变量
-
-### 4. 生成文档
-
-```markdown
-# user-auth - 功能上下文
-
-> 版本：v1.0
-> 创建日期：2024-12-11
-> 负责人：@Huan
-
-## 功能概述
-
-<!-- TODO: 请填写功能概述 -->
-
-## 用户故事
-
-<!-- TODO: 请填写用户故事 -->
-
-...
-```
-
-### 5. 标记待填充内容
-
-未提供变量的位置标记为 TODO：
-
-```markdown
-<!-- TODO: 请填写 {variable_name} -->
-```
-
-### 6. 输出结果
+### 5. 保存到正确位置
 
 ```
-✅ 文档生成成功
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📄 生成的文档
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-文件：docs/{feature}/10_CONTEXT.md
-模板：CONTEXT_TEMPLATE.md
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✓ 已填充的变量
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• feature: user-auth
-• feature_name: 用户认证
-• created_at: 2024-12-11
-• version: v1.0
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️ 待填充的内容
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• owner - 负责人
-• description - 功能概述
-• user_stories - 用户故事
-
-💡 请打开文档补充标记为 TODO 的内容
+输出路径: docs/{feature}/{NUMBER}_{DOC_NAME}.md
 ```
 
-## 示例
+---
 
-### 示例 1：生成 CONTEXT 文档
+## 示例对话
 
-```
-请使用 doc_generator skill：
-- template: CONTEXT
-- feature: user-auth
-- variables:
-    feature_name: 用户认证
-    owner: "@Huan"
-```
+### 示例 1：生成 CONTEXT
 
-### 示例 2：生成 DAILY_SUMMARY
+**User**: 帮我生成 user-auth 功能的 CONTEXT 文档，这是一个用户登录注册模块
 
-```
-请使用 doc_generator skill：
-- template: DAILY_SUMMARY
-- feature: user-auth
-- variables:
-    date: 2024-12-11
-    completed_tasks:
-      - CODE-001: 完成登录表单
-      - CODE-002: 完成注册表单
-    wip_tasks:
-      - CODE-003: 实现 API 调用
-```
+**Claude**: [自动应用 doc_generator skill]
 
-### 示例 3：生成 PROGRESS_LOG
+好的，我来为 user-auth 生成 CONTEXT 文档。
 
-```
-请使用 doc_generator skill：
-- template: PROGRESS_LOG
-- feature: user-auth
-- variables:
-    owner: "@Huan"
-    started_at: 2024-12-11
-```
+根据你的描述，我先整理一下关键信息：
+- 功能名称：user-auth（用户认证模块）
+- 核心能力：用户登录、注册
+
+还需要确认几点：
+1. 支持哪些登录方式？（邮箱/手机/第三方）
+2. 是否需要邮箱验证？
+3. 有什么特殊的安全要求？
+
+[等待用户回复后，读取模板并生成文档]
+
+### 示例 2：生成 UI SPEC
+
+**User**: 写个 UI 规格文档，描述登录页面的交互流程
+
+**Claude**: [自动应用 doc_generator skill]
+
+我来生成 UI_FLOW_SPEC 文档。
+
+首先读取模板...
+
+请确认以下页面信息：
+1. 页面名称：登录页
+2. 入口：从哪里进入这个页面？
+3. 主要交互元素有哪些？
+
+---
+
+## 关联模板
+
+- `03_templates/01_kickoff/10_CONTEXT_TEMPLATE.md`
+- `03_templates/02_spec/20_API_SPEC_TEMPLATE.md`
+- `03_templates/02_spec/21_UI_FLOW_SPEC_TEMPLATE.md`
+- `03_templates/04_design/40_DESIGN_TEMPLATE.md`
+- `03_templates/06_test/60_TEST_PLAN_TEMPLATE.md`
+- `03_templates/07_deploy/70_RELEASE_NOTE_TEMPLATE.md`
+
+---
 
 ## 注意事项
 
-1. **模板位置**：所有模板位于 `03_TEMPLATES/` 目录
-2. **变量格式**：使用 `{variable}` 格式，不要使用 `${variable}` 或 `{{variable}}`
-3. **YAML 文件**：PROGRESS_LOG 等 YAML 文件需特别注意格式
-4. **TODO 标记**：未填充的变量会标记为 TODO，方便后续补充
-5. **覆盖保护**：如果目标文件已存在，会提示确认是否覆盖
+1. **模板优先**：始终基于模板生成，保持文档格式统一
+2. **信息完整**：确保必填章节都有内容
+3. **路径正确**：输出到 `docs/{feature}/` 目录
+4. **版本标注**：在文档头部添加版本和日期信息
 
-## 关联工具
+---
 
-- `/new-feature` - 创建功能时调用此 skill 生成初始文档
-- `context_writer` - 智能填充 CONTEXT 内容
-- `changelog_updater` - 更新 CHANGELOG 文档
+_CC_COLLABORATION Framework v3.1_

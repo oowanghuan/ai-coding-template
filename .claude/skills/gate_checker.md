@@ -252,6 +252,668 @@ def run_manual_check(check, feature_dir):
     )
 ```
 
+#### 5.5 exec_check 实现（可执行命令检查）
+
+**用途**：执行命令并验证结果，用于构建验证、脚本执行等场景。
+
+**配置示例**：
+```yaml
+- id: build_success
+  description: "项目必须能成功构建"
+  type: exec_check
+  command: "npm run build"
+  working_dir: "_code"  # 相对于功能目录
+  timeout: 120  # 秒
+  success_criteria:
+    exit_code: 0
+    stdout_contains: "Build completed"  # 可选
+    stderr_not_contains: "error"  # 可选
+  severity: block
+```
+
+**实现**：
+```python
+def run_exec_check(check, feature_dir):
+    """
+    执行命令并验证结果
+
+    安全边界：
+    - working_dir 必须在 feature_dir 内
+    - 命令必须在白名单内
+    """
+    # 安全检查：验证 working_dir
+    working_dir = check.get("working_dir", ".")
+    if ".." in working_dir:
+        return CheckResult(
+            passed=False,
+            message="安全错误: working_dir 不能包含 .."
+        )
+
+    full_working_dir = os.path.join(feature_dir, working_dir)
+    if not os.path.isdir(full_working_dir):
+        return CheckResult(
+            passed=False,
+            message=f"工作目录不存在: {working_dir}"
+        )
+
+    # 安全检查：命令白名单
+    command = check.command
+    if not is_command_allowed(command):
+        return CheckResult(
+            passed=False,
+            message=f"安全错误: 命令不在白名单内: {command}"
+        )
+
+    timeout = check.get("timeout", 60)
+
+    try:
+        # 使用 Bash 工具执行命令
+        result = execute_bash(
+            command=command,
+            working_dir=full_working_dir,
+            timeout=timeout
+        )
+
+        # 验证 exit_code
+        criteria = check.get("success_criteria", {})
+        expected_exit = criteria.get("exit_code", 0)
+
+        if result.exit_code != expected_exit:
+            return CheckResult(
+                passed=False,
+                message=f"命令退出码 {result.exit_code}，期望 {expected_exit}",
+                evidence={
+                    "command": command,
+                    "exit_code": result.exit_code,
+                    "stdout": result.stdout[-500:] if result.stdout else "",
+                    "stderr": result.stderr[-500:] if result.stderr else ""
+                }
+            )
+
+        # 验证 stdout_contains
+        if "stdout_contains" in criteria:
+            if criteria["stdout_contains"] not in (result.stdout or ""):
+                return CheckResult(
+                    passed=False,
+                    message=f"输出不包含期望内容: {criteria['stdout_contains']}"
+                )
+
+        # 验证 stderr_not_contains
+        if "stderr_not_contains" in criteria:
+            if criteria["stderr_not_contains"] in (result.stderr or ""):
+                return CheckResult(
+                    passed=False,
+                    message=f"错误输出包含禁止内容: {criteria['stderr_not_contains']}"
+                )
+
+        return CheckResult(
+            passed=True,
+            message="命令执行成功",
+            evidence={
+                "command": command,
+                "exit_code": result.exit_code
+            }
+        )
+
+    except TimeoutError:
+        return CheckResult(
+            passed=False,
+            message=f"命令超时 ({timeout}s)"
+        )
+    except Exception as e:
+        return CheckResult(
+            passed=False,
+            message=f"执行失败: {str(e)}"
+        )
+
+def is_command_allowed(command):
+    """
+    检查命令是否在白名单内
+
+    白名单模式：
+    - "npm run *"
+    - "npm test"
+    - "python3 -m http.server *"
+    - "pytest *"
+    - "vitest *"
+    - "jest *"
+    - "cargo test"
+    - "go test *"
+    """
+    import fnmatch
+
+    allowed_patterns = [
+        "npm run *",
+        "npm test",
+        "npm test *",
+        "python3 -m http.server *",
+        "python -m http.server *",
+        "pytest",
+        "pytest *",
+        "vitest",
+        "vitest *",
+        "jest",
+        "jest *",
+        "cargo test",
+        "cargo test *",
+        "go test",
+        "go test *",
+        "npx *",
+        "node *",
+    ]
+
+    # 黑名单检查
+    blocked_patterns = [
+        "*rm -rf*",
+        "*sudo *",
+        "*curl * | *sh*",
+        "*> /dev/*",
+        "*chmod 777*",
+        "*eval *",
+    ]
+
+    for blocked in blocked_patterns:
+        if fnmatch.fnmatch(command, blocked):
+            return False
+
+    for pattern in allowed_patterns:
+        if fnmatch.fnmatch(command, pattern):
+            return True
+
+    return False
+```
+
+#### 5.6 test_check 实现（测试执行检查）
+
+**用途**：执行测试命令并解析测试结果，验证测试通过率。
+
+**配置示例**：
+```yaml
+- id: unit_tests_pass
+  description: "单元测试必须全部通过"
+  type: test_check
+  command: "npm test"
+  working_dir: "_code"
+  timeout: 300
+  success_criteria:
+    exit_code: 0
+    parse_format: "jest"  # jest | vitest | pytest | generic
+    min_pass_rate: 100  # 百分比
+    allow_skip: false
+  severity: block
+```
+
+**实现**：
+```python
+def run_test_check(check, feature_dir):
+    """
+    执行测试命令并解析结果
+    """
+    # 首先执行命令
+    exec_result = run_exec_check(check, feature_dir)
+
+    # 如果命令执行失败，直接返回
+    if not exec_result.passed:
+        return exec_result
+
+    # 解析测试输出
+    stdout = exec_result.evidence.get("stdout", "")
+    parse_format = check.get("success_criteria", {}).get("parse_format", "generic")
+
+    test_result = parse_test_output(stdout, parse_format)
+
+    # 验证通过率
+    criteria = check.get("success_criteria", {})
+    min_pass_rate = criteria.get("min_pass_rate", 100)
+    allow_skip = criteria.get("allow_skip", True)
+
+    if test_result["pass_rate"] < min_pass_rate:
+        return CheckResult(
+            passed=False,
+            message=f"测试通过率 {test_result['pass_rate']:.1f}% < {min_pass_rate}%",
+            evidence={
+                "passed": test_result["passed"],
+                "failed": test_result["failed"],
+                "skipped": test_result["skipped"],
+                "total": test_result["total"],
+                "pass_rate": test_result["pass_rate"]
+            }
+        )
+
+    if not allow_skip and test_result["skipped"] > 0:
+        return CheckResult(
+            passed=False,
+            message=f"存在 {test_result['skipped']} 个跳过的测试",
+            evidence=test_result
+        )
+
+    return CheckResult(
+        passed=True,
+        message=f"测试通过: {test_result['passed']}/{test_result['total']}",
+        evidence=test_result
+    )
+
+def parse_test_output(stdout, format):
+    """
+    解析测试输出
+
+    支持格式：
+    - jest: "Tests: X passed, Y failed, Z total"
+    - vitest: 类似 jest
+    - pytest: "X passed, Y failed"
+    - generic: 尝试通用解析
+    """
+    import re
+
+    result = {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "total": 0,
+        "pass_rate": 0
+    }
+
+    if format == "jest" or format == "vitest":
+        # Jest/Vitest: "Tests: 5 passed, 2 failed, 7 total"
+        match = re.search(r"Tests:\s+(\d+)\s+passed.*?(\d+)\s+failed.*?(\d+)\s+total", stdout)
+        if match:
+            result["passed"] = int(match.group(1))
+            result["failed"] = int(match.group(2))
+            result["total"] = int(match.group(3))
+
+        # 检查 skipped
+        skip_match = re.search(r"(\d+)\s+skipped", stdout)
+        if skip_match:
+            result["skipped"] = int(skip_match.group(1))
+
+    elif format == "pytest":
+        # Pytest: "5 passed, 2 failed in 1.23s"
+        match = re.search(r"(\d+)\s+passed", stdout)
+        if match:
+            result["passed"] = int(match.group(1))
+
+        match = re.search(r"(\d+)\s+failed", stdout)
+        if match:
+            result["failed"] = int(match.group(1))
+
+        match = re.search(r"(\d+)\s+skipped", stdout)
+        if match:
+            result["skipped"] = int(match.group(1))
+
+        result["total"] = result["passed"] + result["failed"] + result["skipped"]
+
+    else:  # generic
+        # 尝试通用解析
+        pass_match = re.search(r"(\d+)\s*(passed|pass|ok|success)", stdout, re.I)
+        fail_match = re.search(r"(\d+)\s*(failed|fail|error)", stdout, re.I)
+
+        if pass_match:
+            result["passed"] = int(pass_match.group(1))
+        if fail_match:
+            result["failed"] = int(fail_match.group(1))
+
+        result["total"] = result["passed"] + result["failed"]
+
+    # 计算通过率
+    if result["total"] > 0:
+        result["pass_rate"] = (result["passed"] / result["total"]) * 100
+
+    return result
+```
+
+#### 5.7 serve_check 实现（服务启动检查）
+
+**用途**：启动服务并执行健康检查，验证服务是否正常运行。
+
+**配置示例**：
+```yaml
+- id: demo_runs
+  description: "Demo 必须可正常运行"
+  type: serve_check
+  command: "python3 -m http.server 8889"
+  working_dir: "_demos"
+  startup_timeout: 5  # 等待启动的秒数
+  health_check:
+    url: "http://localhost:8889/login-demo.html"
+    method: GET
+    expected_status: 200
+    timeout: 10
+  severity: block
+```
+
+**实现**：
+```python
+def run_serve_check(check, feature_dir):
+    """
+    启动服务并验证健康检查
+
+    流程：
+    1. 后台启动服务
+    2. 等待启动
+    3. 执行健康检查
+    4. 关闭服务
+    """
+    # 安全检查
+    working_dir = check.get("working_dir", ".")
+    if ".." in working_dir:
+        return CheckResult(
+            passed=False,
+            message="安全错误: working_dir 不能包含 .."
+        )
+
+    full_working_dir = os.path.join(feature_dir, working_dir)
+    command = check.command
+
+    if not is_command_allowed(command):
+        return CheckResult(
+            passed=False,
+            message=f"安全错误: 命令不在白名单内: {command}"
+        )
+
+    startup_timeout = check.get("startup_timeout", 5)
+    health = check.get("health_check", {})
+
+    # 启动后台进程
+    process = start_background_process(
+        command=command,
+        working_dir=full_working_dir
+    )
+
+    try:
+        # 等待启动
+        import time
+        time.sleep(startup_timeout)
+
+        # 检查进程是否还在运行
+        if process.poll() is not None:
+            return CheckResult(
+                passed=False,
+                message="服务启动失败，进程已退出",
+                evidence={
+                    "exit_code": process.returncode
+                }
+            )
+
+        # 执行健康检查
+        health_url = health.get("url")
+        if not health_url:
+            return CheckResult(
+                passed=False,
+                message="未配置 health_check.url"
+            )
+
+        expected_status = health.get("expected_status", 200)
+        health_timeout = health.get("timeout", 10)
+
+        try:
+            # 使用 WebFetch 或 curl 执行健康检查
+            response = http_get(health_url, timeout=health_timeout)
+
+            if response.status_code == expected_status:
+                return CheckResult(
+                    passed=True,
+                    message=f"服务启动成功，健康检查通过 (HTTP {response.status_code})",
+                    evidence={
+                        "url": health_url,
+                        "status_code": response.status_code
+                    }
+                )
+            else:
+                return CheckResult(
+                    passed=False,
+                    message=f"健康检查失败: HTTP {response.status_code}，期望 {expected_status}",
+                    evidence={
+                        "url": health_url,
+                        "status_code": response.status_code
+                    }
+                )
+
+        except Exception as e:
+            return CheckResult(
+                passed=False,
+                message=f"健康检查请求失败: {str(e)}",
+                evidence={
+                    "url": health_url,
+                    "error": str(e)
+                }
+            )
+
+    finally:
+        # 清理：终止进程
+        terminate_process(process)
+```
+
+#### 5.8 e2e_check 实现（端到端测试检查）
+
+**用途**：执行端到端浏览器测试，验证完整用户流程。
+
+**配置示例**：
+```yaml
+- id: e2e_login_flow
+  description: "登录流程端到端测试"
+  type: e2e_check
+  serve:  # 可选：启动服务
+    command: "python3 -m http.server 8889"
+    working_dir: "_demos"
+    startup_timeout: 3
+  steps:
+    - action: navigate
+      url: "http://localhost:8889/login-demo.html"
+    - action: wait
+      seconds: 1
+    - action: assert
+      type: element_exists
+      selector: "[data-testid='email']"
+    - action: fill
+      selector: "[data-testid='email']"
+      value: "test@example.com"
+    - action: fill
+      selector: "[data-testid='password']"
+      value: "password123"
+    - action: click
+      selector: "[data-testid='submit']"
+    - action: wait
+      seconds: 2
+    - action: assert
+      type: url_contains
+      value: "dashboard"
+  severity: block
+```
+
+**实现**：
+```python
+def run_e2e_check(check, feature_dir):
+    """
+    执行端到端测试（使用 MCP 浏览器工具）
+
+    流程：
+    1. 启动服务（如果配置了）
+    2. 创建浏览器标签页
+    3. 执行测试步骤
+    4. 清理资源
+    """
+    serve_process = None
+
+    try:
+        # 1. 启动服务（如果配置了）
+        if "serve" in check:
+            serve_config = check["serve"]
+            working_dir = os.path.join(feature_dir, serve_config.get("working_dir", "."))
+
+            serve_process = start_background_process(
+                command=serve_config["command"],
+                working_dir=working_dir
+            )
+
+            import time
+            time.sleep(serve_config.get("startup_timeout", 3))
+
+        # 2. 获取浏览器标签页上下文
+        tab_context = get_browser_tab_context()
+        tab_id = create_browser_tab()
+
+        # 3. 执行测试步骤
+        steps = check.get("steps", [])
+
+        for i, step in enumerate(steps):
+            result = execute_e2e_step(step, tab_id)
+
+            if not result.success:
+                return CheckResult(
+                    passed=False,
+                    message=f"E2E 步骤 {i+1} 失败: {step['action']}",
+                    evidence={
+                        "step_index": i,
+                        "step": step,
+                        "error": result.error
+                    }
+                )
+
+        return CheckResult(
+            passed=True,
+            message=f"E2E 测试通过 ({len(steps)} 步骤)",
+            evidence={
+                "steps_executed": len(steps)
+            }
+        )
+
+    finally:
+        # 4. 清理资源
+        if serve_process:
+            terminate_process(serve_process)
+
+def execute_e2e_step(step, tab_id):
+    """
+    执行单个 E2E 测试步骤
+
+    支持的 action：
+    - navigate: 导航到 URL
+    - wait: 等待指定秒数
+    - click: 点击元素
+    - fill: 填写表单
+    - assert: 断言
+    """
+    action = step.get("action")
+
+    if action == "navigate":
+        # 使用 MCP navigate 工具
+        return mcp_navigate(tab_id, step["url"])
+
+    elif action == "wait":
+        import time
+        time.sleep(step.get("seconds", 1))
+        return StepResult(success=True)
+
+    elif action == "click":
+        # 使用 MCP find + click 工具
+        selector = step["selector"]
+        elements = mcp_find(tab_id, selector)
+        if not elements:
+            return StepResult(success=False, error=f"未找到元素: {selector}")
+        return mcp_click(tab_id, elements[0])
+
+    elif action == "fill":
+        # 使用 MCP form_input 工具
+        selector = step["selector"]
+        value = step["value"]
+        elements = mcp_find(tab_id, selector)
+        if not elements:
+            return StepResult(success=False, error=f"未找到元素: {selector}")
+        return mcp_form_input(tab_id, elements[0], value)
+
+    elif action == "assert":
+        return execute_e2e_assertion(step, tab_id)
+
+    else:
+        return StepResult(success=False, error=f"未知的 action: {action}")
+
+def execute_e2e_assertion(step, tab_id):
+    """
+    执行 E2E 断言
+
+    支持的断言类型：
+    - element_exists: 元素存在
+    - element_not_exists: 元素不存在
+    - url_contains: URL 包含
+    - text_contains: 文本包含
+    """
+    assert_type = step.get("type")
+
+    if assert_type == "element_exists":
+        selector = step["selector"]
+        elements = mcp_find(tab_id, selector)
+        if elements:
+            return StepResult(success=True)
+        return StepResult(success=False, error=f"元素不存在: {selector}")
+
+    elif assert_type == "element_not_exists":
+        selector = step["selector"]
+        elements = mcp_find(tab_id, selector)
+        if not elements:
+            return StepResult(success=True)
+        return StepResult(success=False, error=f"元素不应存在但存在: {selector}")
+
+    elif assert_type == "url_contains":
+        # 获取当前 URL
+        current_url = mcp_get_current_url(tab_id)
+        expected = step["value"]
+        if expected in current_url:
+            return StepResult(success=True)
+        return StepResult(success=False, error=f"URL 不包含 '{expected}'，当前: {current_url}")
+
+    elif assert_type == "text_contains":
+        page_text = mcp_get_page_text(tab_id)
+        expected = step["value"]
+        if expected in page_text:
+            return StepResult(success=True)
+        return StepResult(success=False, error=f"页面不包含文本: {expected}")
+
+    else:
+        return StepResult(success=False, error=f"未知的断言类型: {assert_type}")
+```
+
+### 5.9 安全边界配置
+
+**命令白名单**：
+
+```python
+ALLOWED_COMMAND_PATTERNS = [
+    "npm run *",
+    "npm test",
+    "npm test *",
+    "python3 -m http.server *",
+    "python -m http.server *",
+    "pytest",
+    "pytest *",
+    "vitest",
+    "vitest *",
+    "jest",
+    "jest *",
+    "cargo test",
+    "cargo test *",
+    "go test",
+    "go test *",
+    "npx *",
+    "node *",
+]
+
+BLOCKED_COMMAND_PATTERNS = [
+    "*rm -rf*",
+    "*sudo *",
+    "*curl * | *sh*",
+    "*wget * | *sh*",
+    "*> /dev/*",
+    "*chmod 777*",
+    "*eval *",
+    "*exec *",
+]
+```
+
+**工作目录限制**：
+- `working_dir` 必须相对于功能目录
+- 禁止使用 `..` 跳出功能目录
+- 禁止使用绝对路径
+
 ### 6. 检查审批状态
 
 ```python
