@@ -238,7 +238,7 @@ docs/_foundation/
    • 01_COMPONENT_LIBRARY.md - 规划组件库
 
 3. ✅ 执行 Foundation Gate 检查：
-   /check-foundation-gate
+   /check-gate --phase=0
 
 4. 🚀 Gate 通过后，批量生成功能模块：
    /plan-features
@@ -279,7 +279,7 @@ docs/_foundation/
 1. 📖 填写 _planning/ 下的规划文档
 2. 📊 完善 _db_system/00_DB_CONVENTIONS.md 数据库规范
 3. 🔌 定义 _api_system/ 下的 API 规范
-4. ✅ 执行 /check-foundation-gate
+4. ✅ 执行 /check-gate --phase=0
 5. 🚀 Gate 通过后执行 /plan-features
 ```
 
@@ -309,7 +309,7 @@ docs/_foundation/
 2. 📊 完善 _db_system/ 数据库规范（有数据库时）
 3. 🔌 定义 _api_system/ API 规范（有后端时）
 4. 🎨 完善 _ui_system/ UI 设计系统（有前端时）
-5. ✅ 执行 /check-foundation-gate
+5. ✅ 执行 /check-gate --phase=0
 6. 🚀 Gate 通过后执行 /plan-features
 ```
 
@@ -331,7 +331,7 @@ docs/_foundation/
 填写 _planning/ 文档
      │
      ▼
-/check-foundation-gate  ←── 检查 MVS 要求
+/check-gate --phase=0  ←── 检查 MVS 要求
      │
      ▼
 /approve-foundation     ←── PM/Architect 审批
@@ -353,7 +353,7 @@ docs/_foundation/
 
 ## 关联命令
 
-- `/check-foundation-gate` - 检查 Foundation Gate 状态
+- `/check-gate --phase=0` - 检查 Foundation Gate 状态
 - `/approve-foundation` - 审批 Foundation
 - `/plan-features` - 批量生成功能模块
 - `/new-feature` - 创建单个功能模块
