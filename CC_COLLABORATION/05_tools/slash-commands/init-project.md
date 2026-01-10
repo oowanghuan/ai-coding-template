@@ -1,10 +1,34 @@
-# /init-project - 初始化项目系统目录
+# /init-project - 初始化项目 Foundation
 
-你是一个 AI 协作开发助手。用户请求为项目初始化 AI 协作开发框架的系统目录。
+你是一个 AI 协作开发助手。用户请求为项目初始化 AI 协作开发框架的 Foundation 文档。
 
 ## 参数
 
 - `$ARGUMENTS`：无需参数，在当前项目根目录执行
+
+## 概述
+
+`/init-project` 命令从 `CC_COLLABORATION/03_templates/00_foundation/` 模板目录复制文件到项目的 `docs/_foundation/` 目录，为项目建立 Foundation 文档体系。
+
+**模板来源**：
+```
+CC_COLLABORATION/03_templates/00_foundation/
+├── 00_FOUNDATION_GATE.md
+├── _planning/
+├── _db_system/
+├── _api_system/
+└── _ui_system/
+```
+
+**生成目标**：
+```
+docs/_foundation/
+├── _planning/
+├── _db_system/
+├── _api_system/        (仅 backend/fullstack)
+├── _ui_system/         (仅 frontend/fullstack)
+└── FOUNDATION_GATE_STATUS.yaml
+```
 
 ## 执行步骤
 
@@ -25,350 +49,311 @@
 
 ### 2. 检查是否已初始化
 
-检查 `docs/_system/` 目录是否已存在。
+检查 `docs/_foundation/` 目录是否已存在。
 
 如果已存在，提示：
 ```
-⚠️ 项目已初始化 AI 协作框架
+⚠️ 项目已初始化 Foundation 文档
 
 现有目录结构：
-docs/_system/
-├── CC_COLLABORATION/
-│   ├── ...
-│   └── ...
+docs/_foundation/
+├── _planning/
+├── _db_system/
+├── _api_system/
+└── _ui_system/
 
-是否要重新初始化？这将覆盖现有配置。[y/N]
+是否要重新初始化？这将覆盖现有 Foundation 文档。[y/N]
 ```
 
-### 3. 询问项目类型和技术栈
+### 3. 询问项目类型
+
+使用 AskUserQuestion 工具询问：
 
 ```
 请选择项目类型：
-1. frontend - 前端项目
-2. backend - 后端项目
-3. fullstack - 全栈项目
 
-请选择前端框架（如适用）：
-1. vue3 - Vue 3
-2. react - React
-3. none - 无前端
-
-请选择后端框架（如适用）：
-1. express - Express.js
-2. fastapi - FastAPI (Python)
-3. none - 无后端
+1. frontend - 前端项目（仅 UI 规范）
+2. backend - 后端项目（仅 API/DB 规范）
+3. fullstack - 全栈项目（完整规范）
 ```
 
-### 4. 根据技术栈生成目录结构
-
-#### 4.1 前端项目 (frontend)
+### 4. 定位模板目录
 
 ```
-{project}/
-├── src/
-│   ├── components/
-│   │   ├── common/
-│   │   └── layout/
-│   ├── views/
-│   ├── stores/
-│   ├── api/
-│   ├── utils/
-│   └── router/
-├── tests/
-│   ├── unit/
-│   └── e2e/
-└── docs/
-    └── _system/
+模板目录位置（按优先级查找）：
+
+1. 项目根目录：CC_COLLABORATION/03_templates/00_foundation/
+2. ai-coding-template 仓库（如果是独立项目）
 ```
 
-#### 4.2 后端项目 (backend)
+### 5. 生成 Foundation 目录结构
 
-```
-{project}/
-├── src/
-│   ├── controllers/
-│   ├── services/
-│   ├── models/
-│   ├── middlewares/
-│   └── routes/
-├── tests/
-│   ├── unit/
-│   └── integration/
-└── docs/
-    └── _system/
-```
+根据项目类型，从模板复制文件到 `docs/_foundation/`：
 
-#### 4.3 全栈项目 (fullstack)
-
-```
-{project}/
-├── frontend/
-│   └── (frontend structure)
-├── backend/
-│   └── (backend structure)
-├── shared/
-│   └── types/
-└── docs/
-    └── _system/
-```
-
-### 5. 创建 CC_COLLABORATION 目录结构
-
-无论项目类型，都创建以下 AI 协作框架目录：
-
-```
-docs/
-├── _system/
-│   └── CC_COLLABORATION/
-│       ├── 01_OVERVIEW.md           # 框架概述
-│       ├── 02_ROLES.md              # 角色定义
-│       ├── 03_templates/            # 文档模板
-│       │   ├── 10_CONTEXT.md
-│       │   ├── 40_DESIGN_FINAL.md
-│       │   ├── 20_UI_FLOW_SPEC.md
-│       │   └── 90_PROGRESS_LOG.yaml
-│       ├── 04_AI_WORKFLOW.md        # 工作流定义
-│       └── 05_TOOLS/                # 工具库
-│           ├── README.md
-│           └── slash-commands/
-│               ├── new-feature.md
-│               ├── resume.md
-│               ├── daily-summary.md
-│               ├── check-progress.md
-│               ├── gen-demo.md
-│               ├── run-tests.md
-│               ├── release.md
-│               └── init-project.md
-└── .gitkeep
-```
-
-### 6. 生成项目配置文件
-
-根据技术栈生成对应的配置文件：
+#### 5.1 通用文件（所有项目类型）
 
 ```yaml
-# 根据项目类型生成
-files_to_generate:
-  # 通用
-  - path: ".gitignore"
-    template: "gitignore/{project_type}"
-
-  - path: "README.md"
-    template: "readme/basic"
-
-  # Vue 3 项目
-  vue3:
-    - path: "vite.config.ts"
-    - path: "tsconfig.json"
-
-  # React 项目
-  react:
-    - path: "vite.config.ts"
-    - path: "tsconfig.json"
-
-  # Express 项目
-  express:
-    - path: "tsconfig.json"
-    - path: ".env.example"
+always_copy:
+  - from: "_planning/"
+    to: "docs/_foundation/_planning/"
+    files:
+      - 01_USER_JOURNEY.md
+      - 02_ARCHITECTURE.md
+      - 03_MODULE_DECOMPOSITION.md
+      - 04_ROADMAP.md
+      - 05_TECH_DECISIONS.md
 ```
 
-### 7. 生成核心文档
+#### 5.2 后端项目 (backend / fullstack)
 
-#### 7.1 01_OVERVIEW.md
+```yaml
+backend_copy:
+  - from: "_db_system/"
+    to: "docs/_foundation/_db_system/"
+    files:
+      - 00_DB_CONVENTIONS.md
 
-```markdown
-# AI 协作开发框架
-
-> 版本：v1.0
-> 初始化日期：{current_date}
-
----
-
-## 简介
-
-本项目采用 AI 协作开发框架，通过标准化的流程和工具，实现人类与 AI（Claude Code）的高效协作。
-
-## 核心概念
-
-### 8 阶段工作流
-
-1. **Phase 0 - Foundation**：基础设施准备
-2. **Phase 1 - Kickoff**：功能启动
-3. **Phase 2 - Spec**：需求规格
-4. **Phase 3 - UI Flow**：界面流程
-5. **Phase 4 - Review**：方案评审
-6. **Phase 5 - Code**：开发实现
-7. **Phase 6 - Test**：测试验证
-8. **Phase 7 - Deploy**：发布部署
-
-### 角色分工
-
-- **System Architect**：系统架构，负责 Phase 0
-- **Product Manager**：产品需求，负责 Phase 1
-- **AI PE**：AI 提示工程，负责 Phase 2-4
-- **Developer / Claude Code**：开发实现，负责 Phase 5-7
-
-### 文档体系
-
-每个功能模块在 `docs/{feature-name}/` 下维护独立文档：
-- `10_CONTEXT.md` - 功能上下文
-- `40_DESIGN_FINAL.md` - 设计文档
-- `20_UI_FLOW_SPEC.md` - UI 流程规格
-- `90_PROGRESS_LOG.yaml` - 进度日志
-- `40_TEST_REPORT.md` - 测试报告
-- `70_RELEASE_NOTES/` - 发布说明
-
-## 快速开始
-
-1. 使用 `/new-feature <name>` 创建功能模块
-2. 按照工作流推进各阶段
-3. 使用 `/check-progress` 查看进度
-4. 使用 `/iresume` 恢复工作上下文
-
-## 相关文档
-
-- 角色定义：`02_ROLES.md`
-- 工作流详情：`04_AI_WORKFLOW.md`
-- 工具使用：`05_TOOLS/README.md`
+  - from: "_api_system/"
+    to: "docs/_foundation/_api_system/"
+    files:
+      - 00_REST_CONVENTIONS.md
+      - 01_COMMAND_CONVENTIONS.md
+      - 02_YAML_SCHEMA_CONVENTIONS.md
+      - 03_EXTERNAL_API_CONVENTIONS.md
 ```
 
-#### 7.2 02_ROLES.md
+#### 5.3 前端项目 (frontend / fullstack)
 
-```markdown
-# 角色定义
-
-> 版本：v1.0
-> 最后更新：{current_date}
-
----
-
-## 角色概览
-
-| 角色 | 主要职责 | 负责阶段 |
-|------|----------|----------|
-| System Architect | 技术架构 | Phase 0 |
-| Product Manager | 产品定义 | Phase 1 |
-| AI PE | 规格设计 | Phase 2-4 |
-| Developer / Claude Code | 开发测试 | Phase 5-7 |
-
-## 角色详情
-
-### System Architect
-
-**职责**：
-- 制定技术架构
-- 建立项目结构
-- 配置开发环境
-- 定义技术标准
-
-**交付物**：
-- 技术架构文档
-- 项目初始化配置
-- 开发规范
-
-### Product Manager
-
-**职责**：
-- 定义产品需求
-- 确定功能范围
-- 设定优先级
-- 协调资源
-
-**交付物**：
-- 功能上下文（10_CONTEXT.md）
-- 需求清单
-- 优先级排序
-
-### AI PE (AI Prompt Engineer)
-
-**职责**：
-- 编写详细规格
-- 设计 UI 流程
-- 准备 AI 开发上下文
-- 主持方案评审
-
-**交付物**：
-- 设计文档（40_DESIGN_FINAL.md）
-- UI 流程规格（20_UI_FLOW_SPEC.md）
-- 评审记录
-
-### Developer / Claude Code
-
-**职责**：
-- 实现功能代码
-- 编写测试
-- 修复问题
-- 发布部署
-
-**交付物**：
-- 功能代码
-- 测试报告（40_TEST_REPORT.md）
-- 发布说明（70_RELEASE_NOTES/）
-
-## 协作流程
-
-各角色按阶段接力，上一阶段的交付物是下一阶段的输入。
-详见 `04_AI_WORKFLOW.md`。
+```yaml
+frontend_copy:
+  - from: "_ui_system/"
+    to: "docs/_foundation/_ui_system/"
+    files:
+      - 00_UI_TOKENS.md
+      - 01_COMPONENT_LIBRARY.md
+      - 02_LAYOUT_RULES.md
+      - 03_INTERACTION_RULES.md
+      - 04_PAGES_TEMPLATE.md
+      - 05_WORKFLOWS_TEMPLATE.md
 ```
 
-### 8. 安装 Slash Commands
+### 6. 生成 FOUNDATION_GATE_STATUS.yaml
 
-复制 `05_TOOLS/slash-commands/` 下的所有文件到 `.claude/commands/`：
+```yaml
+# FOUNDATION_GATE_STATUS.yaml
+# Foundation Gate 运行状态
+# 生成时间：{current_datetime}
 
-```bash
-mkdir -p .claude/commands
-cp docs/_system/CC_COLLABORATION/05_TOOLS/slash-commands/*.md .claude/commands/
+meta:
+  project_type: "{project_type}"
+  initialized_at: "{current_datetime}"
+  last_checked: null
+  gate_state: pending  # pending | passed | blocked
+
+documents:
+  user_journey:
+    exists: true
+    path: "docs/_foundation/_planning/01_USER_JOURNEY.md"
+    status: draft
+    checks: {}
+
+  architecture:
+    exists: true
+    path: "docs/_foundation/_planning/02_ARCHITECTURE.md"
+    status: draft
+    checks: {}
+
+  module_decomposition:
+    exists: true
+    path: "docs/_foundation/_planning/03_MODULE_DECOMPOSITION.md"
+    status: draft
+    checks: {}
+
+  roadmap:
+    exists: true
+    path: "docs/_foundation/_planning/04_ROADMAP.md"
+    status: draft
+    checks: {}
+
+approvals:
+  pm:
+    approved: false
+    approved_by: null
+    approved_at: null
+  architect:
+    approved: false
+    approved_by: null
+    approved_at: null
+
+summary:
+  block_count: 0
+  warn_count: 0
+  gate_state: pending
+  blocked_reason: null
 ```
 
-### 9. 输出结果
+### 7. 输出结果
+
+根据项目类型显示不同的输出：
+
+#### frontend 项目
 
 ```
-✅ 项目初始化成功！
+✅ Foundation 初始化成功！
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📁 创建的目录结构
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-docs/
-├── _system/
-│   └── CC_COLLABORATION/
-│       ├── 01_OVERVIEW.md
-│       ├── 02_ROLES.md
-│       ├── 03_templates/
-│       ├── 04_AI_WORKFLOW.md
-│       └── 05_TOOLS/
 
-.claude/
-└── commands/
-    ├── new-feature.md
-    ├── resume.md
-    ├── daily-summary.md
-    └── ...
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📝 可用命令
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• /new-feature <name>   创建新功能模块
-• /iresume <feature>     恢复工作上下文
-• /daily-summary        生成每日总结
-• /check-progress       查看进度状态
-• /gen-demo <feature>   生成 Demo
-• /run-tests <feature>  执行测试
-• /release <f> <v>      生成发布说明
+docs/_foundation/
+├── _planning/                    # 项目规划文档
+│   ├── 01_USER_JOURNEY.md        # 用户旅程
+│   ├── 02_ARCHITECTURE.md        # 技术架构
+│   ├── 03_MODULE_DECOMPOSITION.md # 模块拆分
+│   ├── 04_ROADMAP.md             # 项目路线图
+│   └── 05_TECH_DECISIONS.md      # 技术决策
+│
+├── _ui_system/                   # UI 设计系统
+│   ├── 00_UI_TOKENS.md           # 设计令牌
+│   ├── 01_COMPONENT_LIBRARY.md   # 组件库
+│   ├── 02_LAYOUT_RULES.md        # 布局规则
+│   ├── 03_INTERACTION_RULES.md   # 交互规范
+│   ├── 04_PAGES_TEMPLATE.md      # 页面模板
+│   └── 05_WORKFLOWS_TEMPLATE.md  # 工作流模板
+│
+└── FOUNDATION_GATE_STATUS.yaml   # Gate 状态
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📝 下一步操作
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💡 下一步:
-1. 阅读 docs/_system/CC_COLLABORATION/01_OVERVIEW.md 了解框架
-2. 使用 /new-feature <name> 创建第一个功能模块
-3. 按照 04_AI_WORKFLOW.md 定义的流程推进开发
+1. 📖 填写 _planning/ 下的规划文档：
+   • 01_USER_JOURNEY.md - 定义用户流程
+   • 02_ARCHITECTURE.md - 确定技术架构
+   • 03_MODULE_DECOMPOSITION.md - 拆分功能模块
+   • 04_ROADMAP.md - 规划开发路线
 
-祝开发顺利！🚀
+2. 🎨 完善 _ui_system/ 下的设计规范：
+   • 00_UI_TOKENS.md - 定义设计令牌
+   • 01_COMPONENT_LIBRARY.md - 规划组件库
+
+3. ✅ 执行 Foundation Gate 检查：
+   /check-foundation-gate
+
+4. 🚀 Gate 通过后，批量生成功能模块：
+   /plan-features
+```
+
+#### backend 项目
+
+```
+✅ Foundation 初始化成功！
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 创建的目录结构
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+docs/_foundation/
+├── _planning/                    # 项目规划文档
+│   ├── 01_USER_JOURNEY.md
+│   ├── 02_ARCHITECTURE.md
+│   ├── 03_MODULE_DECOMPOSITION.md
+│   ├── 04_ROADMAP.md
+│   └── 05_TECH_DECISIONS.md
+│
+├── _db_system/                   # 数据库规范
+│   └── 00_DB_CONVENTIONS.md      # 命名/类型/索引规范
+│
+├── _api_system/                  # API 规范体系
+│   ├── 00_REST_CONVENTIONS.md    # REST API 规范
+│   ├── 01_COMMAND_CONVENTIONS.md # 命令式 API 规范
+│   ├── 02_YAML_SCHEMA_CONVENTIONS.md
+│   └── 03_EXTERNAL_API_CONVENTIONS.md
+│
+└── FOUNDATION_GATE_STATUS.yaml
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📝 下一步操作
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. 📖 填写 _planning/ 下的规划文档
+2. 📊 完善 _db_system/00_DB_CONVENTIONS.md 数据库规范
+3. 🔌 定义 _api_system/ 下的 API 规范
+4. ✅ 执行 /check-foundation-gate
+5. 🚀 Gate 通过后执行 /plan-features
+```
+
+#### fullstack 项目
+
+```
+✅ Foundation 初始化成功！
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 创建的目录结构
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+docs/_foundation/
+├── _planning/                    # 项目规划文档 (5 files)
+├── _db_system/                   # 数据库规范 (1 file)
+├── _api_system/                  # API 规范体系 (4 files)
+├── _ui_system/                   # UI 设计系统 (6 files)
+└── FOUNDATION_GATE_STATUS.yaml
+
+总计：16 个模板文件
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📝 下一步操作
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. 📖 填写 _planning/ 下的规划文档（必需）
+2. 📊 完善 _db_system/ 数据库规范（有数据库时）
+3. 🔌 定义 _api_system/ API 规范（有后端时）
+4. 🎨 完善 _ui_system/ UI 设计系统（有前端时）
+5. ✅ 执行 /check-foundation-gate
+6. 🚀 Gate 通过后执行 /plan-features
+```
+
+## 生成的文件用途
+
+| 目录 | 用途 | 何时填写 |
+|------|------|----------|
+| `_planning/` | 项目规划核心文档 | 项目启动时（必需） |
+| `_db_system/` | 数据库设计规范 | 有数据库时 |
+| `_api_system/` | API 设计规范 | 有后端 API 时 |
+| `_ui_system/` | UI 设计系统 | 有前端界面时 |
+
+## 与其他命令的关系
+
+```
+/init-project
+     │
+     ▼
+填写 _planning/ 文档
+     │
+     ▼
+/check-foundation-gate  ←── 检查 MVS 要求
+     │
+     ▼
+/approve-foundation     ←── PM/Architect 审批
+     │
+     ▼
+/plan-features          ←── 从 03_MODULE_DECOMPOSITION 批量生成 feature 目录
+     │
+     ▼
+/new-feature {name}     ←── 或单独创建功能模块
 ```
 
 ## 注意事项
 
-- 此命令只在项目根目录执行
-- 不会覆盖已存在的 `docs/` 下的功能文档
-- 会覆盖 `_system/` 目录（如果确认重新初始化）
-- Slash Commands 会复制到 `.claude/commands/`
-- 建议将生成的文件提交到版本控制
+1. **此命令只创建 Foundation 文档**，不创建 `_system/CC_COLLABORATION/` 目录
+2. 框架定义文件（工作流、模板等）应该在项目根目录的 `CC_COLLABORATION/` 或 `.claude/` 下
+3. Foundation Gate 必须通过才能运行 `/plan-features`
+4. 模板文件需要手动填写，替换 `{placeholder}` 内容
+5. 建议将生成的文件提交到版本控制
+
+## 关联命令
+
+- `/check-foundation-gate` - 检查 Foundation Gate 状态
+- `/approve-foundation` - 审批 Foundation
+- `/plan-features` - 批量生成功能模块
+- `/new-feature` - 创建单个功能模块
