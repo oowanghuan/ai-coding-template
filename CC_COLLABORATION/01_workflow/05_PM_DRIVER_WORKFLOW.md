@@ -79,6 +79,25 @@ Project（项目）
                              │
                              ▼
 ┌─────────────────────────────────────────────────────────────────┐
+│                      前置条件（Foundation）                       │
+│                                                                  │
+│  执行 /init-project 命令，生成并完善以下 Foundation 文档：       │
+│                                                                  │
+│  规划文档（docs/_foundation/_planning/）：                       │
+│  • 01_USER_JOURNEY.md      - 用户旅程地图                        │
+│  • 02_ARCHITECTURE.md      - 系统架构设计                        │
+│  • 03_MODULE_DECOMPOSITION.md - Feature 列表和依赖关系 ⭐        │
+│  • 04_ROADMAP.md           - 里程碑和时间线 ⭐                   │
+│  • 05_TECH_DECISIONS.md    - 技术决策记录                        │
+│                                                                  │
+│  Foundation Gate 审批：                                          │
+│  • /check-gate --phase=0                                        │
+│  • /approve-gate --phase=0 --role=PM                            │
+│  • /approve-gate --phase=0 --role=Architect                     │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────┐
 │              Project PM Driver（/project-pm）                    │
 │                                                                  │
 │  职责：                                                          │
