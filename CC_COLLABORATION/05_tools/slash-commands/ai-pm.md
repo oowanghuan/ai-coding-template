@@ -179,7 +179,20 @@ state = {
 
 保存 state 到 state_file
 
-# 4. 委托执行第一个检查
+# 4. 追加项目活动日志（如果存在）
+如果存在 "docs/_foundation/PROJECT_ACTIVITY_LOG.yaml"：
+  追加活动：
+    timestamp: current_datetime
+    type: "feature_started"
+    feature: "{feature}"
+    description: "开始开发 {feature}"
+    by: "/ai-pm start"
+    details:
+      command: "/ai-pm start {feature} --mode={mode} --from-phase={from_phase}"
+      mode: "{mode}"
+      start_phase: from_phase
+
+# 5. 委托执行第一个检查
 执行 /check-gate {feature} --phase={from_phase}
 ```
 
@@ -767,6 +780,20 @@ orchestration_loop:
   # 2. 检查是否已完成
   如果 current_phase > state.intent.target_phase：
     state.runtime.status = "completed"
+
+    # 追加项目活动日志（功能完成）
+    如果存在 "docs/_foundation/PROJECT_ACTIVITY_LOG.yaml"：
+      追加活动：
+        timestamp: current_datetime
+        type: "feature_completed"
+        feature: "{feature}"
+        description: "{feature} 功能开发完成"
+        by: "/ai-pm"
+        details:
+          total_phases: 7
+          mode: state.intent.mode
+          total_duration: current_datetime - state.timeline.started_at
+
     生成完成报告
     返回
 
@@ -781,6 +808,20 @@ orchestration_loop:
 
   # 5. 根据 Gate 结果决策
   如果 gate_result.passed：
+    # 追加项目活动日志（阶段完成）
+    如果存在 "docs/_foundation/PROJECT_ACTIVITY_LOG.yaml"：
+      追加活动：
+        timestamp: current_datetime
+        type: "phase_completed"
+        feature: "{feature}"
+        phase: current_phase
+        phase_name: phase_names[current_phase]
+        description: "{feature} 完成 Phase {current_phase} {phase_name}"
+        by: "/ai-pm"
+        details:
+          gate_state: "passed"
+          mode: state.intent.mode
+
     如果 state.intent.mode == "full_auto"：
       # 自动执行 next-phase
       state.runtime.last_action = "delegate_next_phase"
@@ -815,6 +856,20 @@ orchestration_loop:
         blocked_issue: gate_result.blocked_reasons[0],
         suggested_actions: [...]
       }
+
+      # 追加项目活动日志（功能阻塞）
+      如果存在 "docs/_foundation/PROJECT_ACTIVITY_LOG.yaml"：
+        追加活动：
+          timestamp: current_datetime
+          type: "feature_blocked"
+          feature: "{feature}"
+          description: "{feature} 被阻塞"
+          by: "/ai-pm"
+          details:
+            blocked_at_phase: current_phase
+            reason: gate_result.blocked_reasons[0]
+            stuck_reason: "fundamental"
+
       返回
 
 # 熔断检查

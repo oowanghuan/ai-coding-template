@@ -1,0 +1,87 @@
+# PROJECT_TRACKER.yaml
+# 项目级任务追踪
+# 模板版本：v1.0
+# 生成时间：{{datetime}}
+#
+# 本文件由 /project-pm init 命令自动生成
+# 从 MODULE_DECOMPOSITION 和 ROADMAP 解析
+
+meta:
+  project: "{{project_name}}"
+  schema_version: "1.0"
+  created_at: "{{datetime}}"
+  last_updated: "{{datetime}}"
+  source:
+    module_decomposition: "docs/_foundation/_planning/03_MODULE_DECOMPOSITION.md"
+    roadmap: "docs/_foundation/_planning/04_ROADMAP.md"
+
+# 里程碑定义（从 04_ROADMAP.md 同步）
+milestones:
+  M0:
+    name: "Foundation"
+    description: "项目基础设施"
+    target_date: null
+    status: completed  # completed | in_progress | pending
+    features: []
+    completion_rate: 100
+
+  M1:
+    name: "{{milestone_1_name}}"
+    description: "{{milestone_1_description}}"
+    target_date: "{{milestone_1_target}}"
+    status: pending
+    features:
+      - "{{feature_1}}"
+      - "{{feature_2}}"
+    completion_rate: 0
+
+# Feature 任务列表（从 03_MODULE_DECOMPOSITION.md 同步）
+features:
+  "{{feature_id}}":
+    id: "feat-001"
+    name: "{{feature_display_name}}"
+    description: "{{feature_description}}"
+    milestone: "M1"
+    priority: 1
+    status: pending  # pending | ready | in_progress | done | blocked
+
+    # 当前进度（从 90_PROGRESS_LOG 同步）
+    current_phase: 0
+    gate_state: pending
+
+    # 依赖关系
+    blocked_by: []
+    blocks: []
+
+    # 分配信息
+    assignee: null
+    assigned_at: null
+
+    # 时间线
+    started_at: null
+    completed_at: null
+    estimated_effort: "3d"
+
+# Ready Set（实时计算结果）
+ready_set:
+  computed_at: "{{datetime}}"
+  features: []
+  computation_rule: |
+    feature.status != 'done' AND
+    feature.status != 'blocked' AND
+    directory_exists(docs/{feature}/) AND
+    all(dep.status == 'done' for dep in feature.blocked_by)
+
+# 统计信息
+stats:
+  total_features: 0
+  by_status:
+    pending: 0
+    ready: 0
+    in_progress: 0
+    done: 0
+    blocked: 0
+  by_milestone:
+    M0: { total: 0, done: 0, rate: 100 }
+    M1: { total: 0, done: 0, rate: 0 }
+  parallel_capacity: 0

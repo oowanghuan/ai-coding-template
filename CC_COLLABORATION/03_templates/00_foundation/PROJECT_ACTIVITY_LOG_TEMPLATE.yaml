@@ -1,0 +1,122 @@
+# PROJECT_ACTIVITY_LOG.yaml
+# 项目活动日志 - 记录关键工作事件
+# 模板版本：v1.0
+# 生成时间：{{datetime}}
+#
+# 本文件由 /project-pm init 命令自动生成
+# 记录项目开发过程中的关键活动和变更
+
+meta:
+  project: "{{project_name}}"
+  schema_version: "1.0"
+  created_at: "{{datetime}}"
+  description: |
+    项目活动日志，记录以下类型的关键事件：
+    - feature_created: 创建新功能模块
+    - feature_started: 开始开发功能
+    - phase_completed: 完成阶段 Gate
+    - feature_completed: 功能开发完成
+    - feature_blocked: 功能被阻塞
+    - milestone_completed: 里程碑完成
+    - project_pm_action: Project PM 操作
+
+# 活动记录（按时间倒序，最新的在前面）
+activities:
+  - timestamp: "{{datetime}}"
+    type: "project_initialized"
+    description: "项目跟踪系统初始化"
+    by: "@human"
+    details:
+      command: "/project-pm init"
+      tracker_created: true
+      features_count: 0
+
+# ============================================================
+# 活动类型说明
+# ============================================================
+#
+# feature_created:
+#   - timestamp: "2026-01-11T10:00:00"
+#     type: "feature_created"
+#     feature: "user-auth"
+#     description: "创建用户认证功能模块"
+#     by: "@human"
+#     details:
+#       command: "/new-feature user-auth"
+#
+# feature_started:
+#   - timestamp: "2026-01-11T10:30:00"
+#     type: "feature_started"
+#     feature: "user-auth"
+#     description: "开始开发 user-auth"
+#     by: "@human"
+#     details:
+#       command: "/ai-pm start user-auth --mode=full_auto"
+#       mode: "full_auto"
+#       start_phase: 3
+#
+# phase_completed:
+#   - timestamp: "2026-01-11T14:00:00"
+#     type: "phase_completed"
+#     feature: "user-auth"
+#     phase: 3
+#     phase_name: "Demo"
+#     description: "user-auth 完成 Phase 3 Demo"
+#     by: "/ai-pm"
+#     details:
+#       gate_state: "passed"
+#       duration_minutes: 45
+#
+# feature_completed:
+#   - timestamp: "2026-01-11T18:00:00"
+#     type: "feature_completed"
+#     feature: "user-auth"
+#     description: "user-auth 功能开发完成"
+#     by: "/ai-pm"
+#     details:
+#       total_phases: 7
+#       total_duration_hours: 8
+#       mode: "full_auto"
+#
+# feature_blocked:
+#   - timestamp: "2026-01-11T15:00:00"
+#     type: "feature_blocked"
+#     feature: "payment"
+#     description: "payment 被阻塞"
+#     by: "/ai-pm"
+#     details:
+#       blocked_at_phase: 4
+#       reason: "Gate 检查失败"
+#       blocked_issues: ["设计文档缺少安全章节"]
+#
+# milestone_completed:
+#   - timestamp: "2026-01-15T12:00:00"
+#     type: "milestone_completed"
+#     milestone: "M1"
+#     milestone_name: "MVP Release"
+#     description: "里程碑 M1 完成"
+#     by: "/project-pm"
+#     details:
+#       features_completed: ["user-auth", "dashboard"]
+#       total_duration_days: 5
+#
+# project_pm_action:
+#   - timestamp: "2026-01-11T09:00:00"
+#     type: "project_pm_action"
+#     action: "ready_set_computed"
+#     description: "计算 Ready Set"
+#     by: "/project-pm"
+#     details:
+#       ready_features: ["user-auth", "notification"]
+#       blocked_features: ["payment"]
+
+# ============================================================
+# 统计摘要（由 /project-pm check 更新）
+# ============================================================
+summary:
+  total_activities: 1
+  features_created: 0
+  features_completed: 0
+  phases_completed: 0
+  milestones_completed: 0
+  last_activity_at: "{{datetime}}"

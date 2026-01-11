@@ -1,0 +1,57 @@
+# PROJECT_PM_STATE.yaml
+# Project PM Driver 状态文件
+# 模板版本：v1.0
+# 生成时间：{{datetime}}
+#
+# 本文件由 /project-pm init 命令自动生成
+# 记录 Project PM Driver 的编排状态
+
+meta:
+  project: "{{project_name}}"
+  schema_version: "1.0"
+  created_at: "{{datetime}}"
+  created_by: "@human"
+
+# 编排意图
+intent:
+  mode: human_confirm  # full_auto | human_confirm
+  target_milestone: "M1"
+  allow_parallel: true
+  max_parallel_features: 5
+
+# 编排策略
+policy:
+  check_interval_minutes: 30
+  auto_assign: false
+  notification:
+    on_feature_complete: true
+    on_milestone_complete: true
+    on_blocked: true
+
+# 运行时状态
+runtime:
+  status: idle  # idle | running | waiting_human | paused
+  last_action: "init"
+  last_check_at: "{{datetime}}"
+  active_assignments: []
+  # 活跃分配示例:
+  # - feature: "user-auth"
+  #   agent_session: "cli-20260111-001"
+  #   assigned_at: "2026-01-11T10:00:00"
+  #   last_progress_at: "2026-01-11T12:00:00"
+
+# 计数器
+counters:
+  total_features_completed: 0
+  total_phases_completed: 0
+  assignment_events: []
+  # 事件示例:
+  # - type: "assigned"
+  #   feature: "user-auth"
+  #   at: "2026-01-11T10:00:00"
+  #   agent_session: "cli-20260111-001"
+
+# 时间线
+timeline:
+  started_at: null
+  last_progress_at: "{{datetime}}"
