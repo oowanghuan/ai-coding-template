@@ -80,6 +80,7 @@ docs/user-login/
 my-project/
 ├── .claude/                  # Claude Code 配置
 │   ├── commands/             # Slash 命令
+│   ├── skills/               # Skills 定义
 │   ├── hooks/                # Hook 脚本
 │   └── settings.json         # 项目设置
 │
@@ -94,18 +95,38 @@ my-project/
 │   │   ├── 02_FRAMEWORK_OVERVIEW.md  # 框架整体说明
 │   │   ├── 03_DAILY_OPERATIONS.md    # 每日操作指南
 │   │   ├── 04_REFERENCE.md           # 完整参考手册
+│   │   ├── 05_PM_DRIVER_WORKFLOW.md  # PM Driver 工作流详解 ⭐
 │   │   └── recipes/                  # 工作流 Recipes
+│   │       ├── PARALLEL_DEVELOPMENT.md  # 多 Feature 并行开发 ⭐
+│   │       └── ...
 │   ├── 03_templates/         # 文档模板
-│   │   ├── _foundation/      # Phase 0: 项目基础设施模板
+│   │   ├── 00_foundation/    # Phase 0: 项目基础设施模板
+│   │   │   ├── _planning/              # 规划文档模板
+│   │   │   ├── PROJECT_TRACKER_TEMPLATE.yaml    # 项目追踪器 ⭐
+│   │   │   ├── PROJECT_PM_STATE_TEMPLATE.yaml   # Project PM 状态 ⭐
+│   │   │   └── PROJECT_ACTIVITY_LOG_TEMPLATE.yaml # 活动日志 ⭐
 │   │   ├── 01_kickoff/       # Phase 1 模板
 │   │   ├── 02_spec/          # Phase 2 模板
 │   │   └── ...               # Phase 3-7 模板
 │   ├── 05_tools/             # 工具定义
+│   │   ├── slash-commands/   # Slash 命令定义
+│   │   │   ├── project-pm.md         # 项目级 PM Driver ⭐
+│   │   │   ├── ai-pm.md              # 功能级 AI PM Driver ⭐
+│   │   │   └── ...
+│   │   ├── skills/           # Skills 定义
+│   │   └── subagents/        # Subagents 定义
 │   ├── 07_phase_gate/        # Phase Gate 定义
 │   └── 08_legacy_integration/ # 现有项目整合指南
 │
 ├── docs/                     # 功能文档（按功能组织）
+│   ├── _foundation/          # 项目级文档 ⭐
+│   │   ├── _planning/                # 规划文档
+│   │   ├── PROJECT_TRACKER.yaml      # 项目追踪器
+│   │   ├── PROJECT_PM_STATE.yaml     # Project PM 状态
+│   │   └── PROJECT_ACTIVITY_LOG.yaml # 活动日志
 │   └── {feature}/            # 功能模块文档
+│       ├── AI_PM_ORCHESTRATION_STATE.yaml  # AI PM 状态 ⭐
+│       └── ...
 │
 └── scripts/                  # 工具脚本
 ```
@@ -326,6 +347,102 @@ output:
 ```
 
 > 详细说明见 `CC_COLLABORATION/08_legacy_integration/README.md` 和 `.claude/skills/contract_resolver.md`
+
+### 8.5 PM Driver - 自动化编排
+
+**问题**：多个 Feature 并行开发时，缺乏统一协调。人工跟踪进度、管理依赖关系容易出错和遗漏。
+
+**解决方案**：引入两级 PM Driver 自动化编排系统：
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     Human（开发者/PM）                           │
+│  • 执行初始化命令、分发 Agent 命令、审批 Gate                    │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              Project PM Driver（/project-pm）                    │
+│  • 从 MODULE_DECOMPOSITION 解析 Feature 列表和依赖              │
+│  • 计算 Ready Set（可执行任务集合）                              │
+│  • 生成 dev agent 命令、汇总进度                                 │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              ▼              ▼              ▼
+┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
+│  AI PM Driver   │ │  AI PM Driver   │ │  AI PM Driver   │
+│  (feature-a)    │ │  (feature-b)    │ │  (feature-c)    │
+│  Phase 1-7 执行 │ │  Phase 1-7 执行 │ │  Phase 1-7 执行 │
+└─────────────────┘ └─────────────────┘ └─────────────────┘
+```
+
+**Project PM Driver（项目级）**：
+```bash
+# 初始化项目追踪（需要 Foundation Gate 通过）
+/project-pm init
+
+# 查看可执行任务（Ready Set）
+/project-pm ready
+
+# 生成 dev agent 命令
+/project-pm assign
+
+# 检查并更新进度
+/project-pm check
+
+# 查看项目整体状态
+/project-pm status
+```
+
+**AI PM Driver（功能级）**：
+```bash
+# 启动自动编排（在独立 CLI 会话中执行）
+/ai-pm start user-auth --mode=full_auto --from-phase=1
+
+# 查看状态
+/ai-pm status user-auth
+
+# 控制执行
+/ai-pm pause user-auth    # 暂停
+/ai-pm resume user-auth   # 恢复
+/ai-pm stop user-auth     # 停止
+```
+
+**运行模式**：
+
+| 模式 | 说明 | 适用场景 |
+|------|------|----------|
+| `full_auto` | 全自动执行，仅在 stuck 时暂停 | 常规功能、成熟流程 |
+| `human_confirm` | 每个阶段通过后等待人工确认 | 关键功能、支付/安全相关 |
+
+**典型工作流**：
+```bash
+# 1. Foundation 完成后，初始化 Project PM
+/project-pm init
+
+# 2. 查看可执行任务
+/project-pm ready
+
+# 3. 生成 dev agent 命令
+/project-pm assign
+# 输出：
+# Agent 1: /ai-pm start user-auth --mode=full_auto
+# Agent 2: /ai-pm start config-service --mode=full_auto
+
+# 4. 在多个 CLI 窗口分别执行
+# (CLI 1) /ai-pm start user-auth --mode=full_auto
+# (CLI 2) /ai-pm start config-service --mode=full_auto
+
+# 5. 定期检查进度
+/project-pm check
+/project-pm status
+
+# 6. 继续分配新解锁的任务
+/project-pm assign
+```
+
+> 详细说明见 `CC_COLLABORATION/01_workflow/05_PM_DRIVER_WORKFLOW.md`
 
 ## 9. 最佳实践
 
