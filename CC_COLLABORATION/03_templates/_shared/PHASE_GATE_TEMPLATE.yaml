@@ -1,11 +1,11 @@
 # PHASE_GATE.yaml
 # Phase Gate 规则配置文件（只定义规则，不存储状态）
 # 功能模块：{feature-name}
-# 版本：v1.2
+# 版本：v1.3 (支持可执行检查)
 
 meta:
   feature: "{feature-name}"
-  schema_version: "1.2"
+  schema_version: "1.3"
   created_at: "{date}"
 
 # ============================================================
@@ -75,7 +75,7 @@ phase_2_spec:
     - id: spec_has_pages
       description: "SPEC 必须列出所有页面/端点"
       type: content_check
-      target: "11_*.md"
+      target: "2*_*.md"
       anchor: "## \\d+\\."
       min_count: 1
       severity: block
@@ -83,7 +83,7 @@ phase_2_spec:
     - id: spec_has_error_cases
       description: "SPEC 必须定义错误处理"
       type: content_check
-      target: "11_*.md"
+      target: "2*_*.md"
       anchor: "错误处理|Error|异常|边界"
       min_items: 1
       severity: block
@@ -91,7 +91,7 @@ phase_2_spec:
     - id: spec_has_edge_cases
       description: "SPEC 应包含边界条件"
       type: content_check
-      target: "11_*.md"
+      target: "2*_*.md"
       anchor: "边界|边缘|特殊情况|极端"
       severity: warn
 
@@ -107,18 +107,41 @@ phase_3_demo:
   enabled_condition: "feature_profile.demo_required == true"
 
   required_outputs:
-    - path: "_demos/*.vue"
+    - path: "_demos/*.html"
       required: true
-      description: "UI Demo 原型"
+      description: "UI Demo 原型（HTML 或 Vue）"
     - path: "_demos/mock/*.js"
       required: false
       description: "Mock API"
 
   quality_checks:
+    # 可执行检查：启动服务并验证健康检查
     - id: demo_runs
       description: "Demo 必须可正常运行"
-      type: manual
+      type: serve_check
+      command: "python3 -m http.server 8889"
+      working_dir: "_demos"
+      startup_timeout: 3
+      health_check:
+        url: "http://localhost:8889/"
+        expected_status: 200
+        timeout: 10
       severity: block
+
+    # 可选：E2E 检查（更复杂的验证）
+    # - id: demo_e2e_basic
+    #   description: "Demo 基本交互测试"
+    #   type: e2e_check
+    #   serve:
+    #     command: "python3 -m http.server 8889"
+    #     working_dir: "_demos"
+    #   steps:
+    #     - action: navigate
+    #       url: "http://localhost:8889/index.html"
+    #     - action: assert
+    #       type: element_exists
+    #       selector: "body"
+    #   severity: block
 
     - id: demo_reviewed
       description: "Demo 必须经过评审"
@@ -188,6 +211,18 @@ phase_5_code:
       expected: "done"
       severity: block
 
+    # 可执行检查：构建验证（如果有 package.json）
+    # - id: build_success
+    #   description: "项目必须能成功构建"
+    #   type: exec_check
+    #   command: "npm run build"
+    #   working_dir: "_code"
+    #   timeout: 120
+    #   success_criteria:
+    #     exit_code: 0
+    #   severity: block
+    #   condition: "exists('_code/package.json')"
+
     - id: code_matches_design
       description: "代码必须与 Design 一致（人工确认）"
       type: manual
@@ -217,6 +252,36 @@ phase_6_test:
       description: "测试报告"
 
   quality_checks:
+    # 可执行检查：单元测试（如果有测试配置）
+    # - id: unit_tests_pass
+    #   description: "单元测试必须全部通过"
+    #   type: test_check
+    #   command: "npm test"
+    #   working_dir: "_code"
+    #   timeout: 300
+    #   success_criteria:
+    #     exit_code: 0
+    #     parse_format: "jest"
+    #     min_pass_rate: 100
+    #   severity: block
+    #   condition: "exists('_code/package.json')"
+
+    # 可执行检查：E2E 测试
+    # - id: e2e_tests_pass
+    #   description: "E2E 测试必须通过"
+    #   type: e2e_check
+    #   serve:
+    #     command: "python3 -m http.server 8889"
+    #     working_dir: "_demos"
+    #     startup_timeout: 3
+    #   steps:
+    #     - action: navigate
+    #       url: "http://localhost:8889/login-demo.html"
+    #     - action: assert
+    #       type: element_exists
+    #       selector: "form"
+    #   severity: block
+
     - id: test_coverage
       description: "测试必须覆盖关键路径"
       type: manual

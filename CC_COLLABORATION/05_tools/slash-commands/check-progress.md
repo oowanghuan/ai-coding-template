@@ -54,8 +54,8 @@
 Phase 0 Foundation: {status_emoji} {status}
 Phase 1 Kickoff:    {status_emoji} {status}
 Phase 2 Spec:       {status_emoji} {status}
-Phase 3 UI Flow:    {status_emoji} {status}
-Phase 4 Review:     {status_emoji} {status}
+Phase 3 Demo:       {status_emoji} {status}
+Phase 4 Design:     {status_emoji} {status}
 Phase 5 Code:       {status_emoji} {status}
 Phase 6 Test:       {status_emoji} {status}
 Phase 7 Deploy:     {status_emoji} {status}
@@ -161,8 +161,8 @@ Phase 7 Deploy:     {status_emoji} {status}
 Phase 0 Foundation: ⏭️ skipped
 Phase 1 Kickoff:    ✅ done
 Phase 2 Spec:       ✅ done
-Phase 3 UI Flow:    ✅ done
-Phase 4 Review:     ✅ done
+Phase 3 Demo:       ✅ done
+Phase 4 Design:     ✅ done
 Phase 5 Code:       🔄 wip
 Phase 6 Test:       ⏳ pending
 Phase 7 Deploy:     ⏳ pending
@@ -197,11 +197,11 @@ Phase 7 Deploy:     ⏳ pending
 
 - 如果 `90_PROGRESS_LOG.yaml` 不存在，提示用户先运行 `/new-feature`
 - 阶段名称映射：
-  - Phase 0: Foundation（基础设施）
+  - Phase 0: Foundation（基础建设）
   - Phase 1: Kickoff（功能启动）
   - Phase 2: Spec（需求规格）
-  - Phase 3: UI Flow（界面流程）
-  - Phase 4: Review（方案评审）
+  - Phase 3: Demo（原型验证）
+  - Phase 4: Design（详细设计）
   - Phase 5: Code（开发实现）
   - Phase 6: Test（测试验证）
   - Phase 7: Deploy（发布部署）

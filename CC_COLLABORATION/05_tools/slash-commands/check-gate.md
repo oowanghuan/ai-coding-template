@@ -126,15 +126,29 @@ feature_profile = config.feature_profile
   检查所有 phase（phase_1 到 phase_7）
 ```
 
-### 5. 调用 gate_checker skill
+### 5. 执行 Gate 检查（内置逻辑）
 
-对每个需要检查的 Phase，使用 `gate_checker` skill 执行检查：
+对每个需要检查的 Phase，执行以下检查逻辑：
 
 ```
-使用 gate_checker skill：
-- feature: {feature}
-- phase: {phase_number}
+Gate 检查流程：
+1. 读取 PHASE_GATE.yaml 中该 phase 的规则配置
+2. 检查 required_outputs 是否存在
+3. 执行 quality_checks（content_check, yaml_check, manual 等）
+4. 检查 approvals 是否满足
+5. 汇总结果，确定 gate_state (passed | blocked | pending)
+6. 更新 PHASE_GATE_STATUS.yaml 的 last_check 字段
 ```
+
+**检查类型说明**：
+
+| 类型 | 说明 | 执行方式 |
+|------|------|----------|
+| `content_check` | 检查文件内容是否包含关键字 | 读取文件，搜索 anchor 模式 |
+| `yaml_check` | 检查 YAML 字段值 | 读取 YAML，验证字段 |
+| `manual` | 人工检查项 | 标记为待人工确认 |
+| `serve_check` | 启动服务检查 | 执行命令，验证健康检查 |
+| `code_scan` | 扫描代码模式 | 搜索指定模式 |
 
 ### 6a. Foundation Gate 输出
 
@@ -411,8 +425,8 @@ Phase 7 (Deploy):   🔒 Locked
 
 ## 关联工具
 
-- `gate_checker` skill - 此命令的核心实现
 - `/approve-gate` - 在检查通过后审批 Gate
 - `/next-phase` - 在进入下一阶段前自动调用此命令
+- `/new-feature` - 创建功能模块，生成 Gate 文件
 - `/init-project` - 初始化 Foundation，生成 Phase 0 所需文件
 - `/plan-features` - Foundation Gate 通过后，批量生成功能模块

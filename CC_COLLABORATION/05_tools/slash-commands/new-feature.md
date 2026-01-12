@@ -21,13 +21,18 @@
 
 ```
 docs/{feature-name}/
-├── 10_CONTEXT.md          # 功能上下文（必需）
-├── 90_PROGRESS_LOG.yaml   # 进度日志（必需）
-└── _demos/                # Demo 文件目录
-    └── .gitkeep           # 保持目录存在
+├── 10_CONTEXT.md              # 功能上下文（必需）
+├── 90_PROGRESS_LOG.yaml       # 进度日志（必需）
+├── PHASE_GATE.yaml            # Phase Gate 规则配置（必需）
+├── PHASE_GATE_STATUS.yaml     # Phase Gate 运行状态（必需）
+├── DOC_CHANGELOG.md           # 文档变更日志（必需）
+└── _demos/                    # Demo 文件目录
+    └── .gitkeep               # 保持目录存在
 ```
 
 创建 `_demos/` 目录用于存放该功能的 Demo 文件（由 `/gen-demo` 命令生成）。
+创建 `DOC_CHANGELOG.md` 用于记录该功能模块下所有文档的修改历史。
+创建 `PHASE_GATE.yaml` 和 `PHASE_GATE_STATUS.yaml` 用于 Phase Gate 机制（由 `/check-gate` 和 `/ai-pm` 命令使用）。
 
 ### 3. 生成 10_CONTEXT.md（智能模式 vs 模板模式）
 
@@ -197,8 +202,9 @@ docs/{feature-name}/
 
 ## 7. 相关文档
 
-- 工作流总纲：`docs/_system/CC_COLLABORATION/04_AI_WORKFLOW.md`
+- 工作流文档：`CC_COLLABORATION/01_workflow/README.md`
 - 进度日志：`docs/{feature-name}/90_PROGRESS_LOG.yaml`
+- Gate 状态：`docs/{feature-name}/PHASE_GATE_STATUS.yaml`
 
 ---
 
@@ -209,7 +215,57 @@ docs/{feature-name}/
 | v0.1 | {current_date} | {作者} | 初始版本 |
 ```
 
-### 4. 生成 90_PROGRESS_LOG.yaml
+### 4. 生成 DOC_CHANGELOG.md
+
+使用模板 `CC_COLLABORATION/03_templates/_shared/DOC_CHANGELOG.md` 生成文档变更日志：
+
+```markdown
+# 文档变更日志
+
+> 功能模块：{feature-name}
+> 创建时间：{current_datetime}
+
+---
+
+本文件记录该功能模块下所有文档的修改历史。文档本身只保留最新版本，历史变更记录于此。
+
+## 变更记录
+
+### {current_datetime} - Phase 1 初始化
+
+| 文档 | 操作 | 说明 |
+|------|------|------|
+| `10_CONTEXT.md` | 创建 | 功能上下文初始化 |
+| `90_PROGRESS_LOG.yaml` | 创建 | 进度日志初始化 |
+| `PHASE_GATE.yaml` | 创建 | Phase Gate 规则配置初始化 |
+| `PHASE_GATE_STATUS.yaml` | 创建 | Phase Gate 运行状态初始化 |
+| `DOC_CHANGELOG.md` | 创建 | 文档变更日志初始化 |
+
+---
+
+<!--
+变更记录格式：
+
+### YYYY-MM-DD HH:MM - {变更标题}
+
+| 文档 | 操作 | 说明 |
+|------|------|------|
+| `{文件名}` | 创建/修改/删除 | {变更说明} |
+
+操作类型：
+- 创建：新建文档
+- 修改：更新现有文档内容
+- 重构：文档结构调整
+- 删除：移除文档
+
+变更说明应简要描述：
+- 修改了什么章节
+- 为什么修改
+- 主要变化点
+-->
+```
+
+### 5. 生成 90_PROGRESS_LOG.yaml
 
 使用以下模板生成 `90_PROGRESS_LOG.yaml`：
 
@@ -289,7 +345,43 @@ stats:
   next_milestone: "完成 Kickoff 阶段，进入 Spec"
 ```
 
-### 5. 输出结果
+### 6. 生成 Phase Gate 文件
+
+从模板生成 Phase Gate 配置和状态文件：
+
+**6.1 生成 PHASE_GATE.yaml**
+
+从 `CC_COLLABORATION/03_templates/_shared/PHASE_GATE_TEMPLATE.yaml` 复制模板，并替换占位符：
+- `{feature-name}` → 功能名称
+- `{date}` → 当前日期
+
+此文件定义该功能的 Phase 1-7 Gate 规则（必需产出物、质量检查、审批角色）。
+
+**6.2 生成 PHASE_GATE_STATUS.yaml**
+
+从 `CC_COLLABORATION/03_templates/_shared/PHASE_GATE_STATUS_TEMPLATE.yaml` 复制模板，并替换占位符：
+- `{feature-name}` → 功能名称
+- `{datetime}` → 当前时间戳
+
+此文件记录该功能的 Phase 1-7 Gate 运行状态（gate_state、approvals、check_history）。
+
+### 7. 追加项目活动日志（如果存在）
+
+如果存在 `docs/_foundation/PROJECT_ACTIVITY_LOG.yaml`，追加活动记录：
+
+```yaml
+追加活动：
+  timestamp: current_datetime
+  type: "feature_created"
+  feature: "{feature-name}"
+  description: "创建 {feature-name} 功能模块"
+  by: "@human"
+  details:
+    command: "/new-feature {feature-name}"
+    initial_phase: 1
+```
+
+### 8. 输出结果
 
 创建完成后，输出以下信息：
 
@@ -298,17 +390,22 @@ stats:
 
 📁 目录结构：
 docs/{feature-name}/
-├── 10_CONTEXT.md          # 功能上下文
-├── 90_PROGRESS_LOG.yaml   # 进度日志
-└── _demos/                # Demo 文件目录
+├── 10_CONTEXT.md              # 功能上下文
+├── 90_PROGRESS_LOG.yaml       # 进度日志
+├── PHASE_GATE.yaml            # Phase Gate 规则配置
+├── PHASE_GATE_STATUS.yaml     # Phase Gate 运行状态
+├── DOC_CHANGELOG.md           # 文档变更日志
+└── _demos/                    # Demo 文件目录
 
 📝 下一步操作：
 1. 补充 10_CONTEXT.md 中的功能描述、目标和范围
 2. 与团队确认功能上下文后，将状态改为 Approved
-3. 进入 Spec 阶段，编写 40_DESIGN_FINAL.md
+3. 执行 /check-gate {feature-name} --phase=1 检查 Kickoff Gate
+4. 进入 Spec 阶段，编写 20_API_SPEC.md 或 21_UI_FLOW_SPEC.md
 
 💡 提示：
 - 使用 /check-progress {feature-name} 查看进度
+- 使用 /check-gate {feature-name} 查看 Gate 状态
 - 使用 /iresume {feature-name} 恢复工作上下文
 ```
 

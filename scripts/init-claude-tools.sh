@@ -29,7 +29,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
 # 工具源目录
-TOOLS_BASE="$PROJECT_ROOT/CC_COLLABORATION/05_tools"
+TOOLS_BASE="$PROJECT_ROOT/_templates/CC_COLLABORATION/05_TOOLS"
 COMMANDS_SOURCE="$TOOLS_BASE/slash-commands"
 SKILLS_SOURCE="$TOOLS_BASE/skills"
 SUBAGENTS_SOURCE="$TOOLS_BASE/subagents"
@@ -92,14 +92,14 @@ ${CYAN}示例:${NC}
     $0 --list                                  # 列出所有可用工具
 
 ${CYAN}工具类型:${NC}
-    ${BOLD}Slash Commands (10 个)${NC} → .claude/commands/
-        用户直接调用的命令，如 /new-feature, /iresume 等
+    ${BOLD}Slash Commands (25+ 个)${NC} → .claude/commands/
+        用户直接调用的命令，如 /new-feature, /iresume, /ai-pm 等
 
-    ${BOLD}Skills (13 个)${NC} → .claude/skills/
-        可复用的能力模块，如 progress_updater, ui_demo 等
+    ${BOLD}Skills (6 个)${NC} → .claude/skills/
+        自动触发的能力模块，如 doc_generator, ui_demo 等
 
-    ${BOLD}Subagents (4 个)${NC} → .claude/subagents/
-        处理复杂多步骤任务的子代理，如 spec_writer, test_plan_writer 等
+    ${BOLD}Subagents (5 个)${NC} → .claude/subagents/
+        处理复杂多步骤任务的子代理，如 spec_writer, expert_reviewer 等
 
 EOF
 }

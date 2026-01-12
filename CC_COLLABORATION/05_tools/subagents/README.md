@@ -34,13 +34,13 @@ subagents/
 
 ## Subagents 列表（5 个）
 
-| Subagent | Phase | 用途 | 调用的 Skills | 状态 |
-|----------|-------|------|---------------|------|
-| `spec_writer` | Phase 2 | 根据 CONTEXT 生成 SPEC 文档 | doc_generator, spec_validator, changelog_updater | ✅ 已实现 |
-| `progress_tracker` | Phase 5 | 解析 PROGRESS_LOG 生成 DAILY_SUMMARY | progress_updater, doc_generator | ✅ 已实现 |
+| Subagent | Phase | 用途 | 依赖能力 | 状态 |
+|----------|-------|------|----------|------|
+| `spec_writer` | Phase 2 | 根据 CONTEXT 生成 SPEC 文档 | doc_generator + 内置验证逻辑 | ✅ 已实现 |
+| `progress_tracker` | Phase 5 | 解析 PROGRESS_LOG 生成 DAILY_SUMMARY | doc_generator + 内置进度解析 | ✅ 已实现 |
 | `test_plan_writer` | Phase 6 | 根据 SPEC 生成测试计划 | doc_generator | ✅ 已实现 |
-| `expert_reviewer` | Phase 4-6 | 独立评审设计和代码 | openai_expert_review | ✅ 已实现 |
-| `release_summarizer` | Phase 7 | 汇总生成发布说明 | doc_generator, changelog_updater | ✅ 已实现 |
+| `expert_reviewer` | Phase 4-6 | 独立评审设计和代码 | 内置评审逻辑 | ✅ 已实现 |
+| `release_summarizer` | Phase 7 | 汇总生成发布说明 | doc_generator + 内置汇总逻辑 | ✅ 已实现 |
 
 ## 各 Subagent 详细说明
 
@@ -55,8 +55,8 @@ subagents/
 1. 读取 10_CONTEXT.md
 2. 分析功能类型（前端/后端/全栈）
 3. 调用 doc_generator 生成 SPEC 框架
-4. 调用 spec_validator 验证完整性
-5. 调用 changelog_updater 记录变更
+4. 执行内置验证逻辑检查完整性
+5. 更新 DOC_CHANGELOG.md 记录变更
 ```
 
 ### `progress_tracker`
@@ -96,7 +96,7 @@ subagents/
 **工作流程**：
 ```
 1. 收集待评审材料（DESIGN/代码）
-2. 调用 openai_expert_review skill
+2. 执行内置评审逻辑（多维度分析）
 3. 解析评审结果（GO/REVISE/BLOCK）
 4. 生成 REVIEW_REPORT.md
 5. 记录 REVIEW_ACTIONS.yaml
@@ -114,7 +114,7 @@ subagents/
 2. 读取 61_TEST_REPORT.md
 3. 汇总功能变更
 4. 调用 doc_generator 生成 70_RELEASE_NOTE.md
-5. 调用 changelog_updater 更新项目 CHANGELOG
+5. 更新项目 CHANGELOG.md
 ```
 
 ## 使用方式

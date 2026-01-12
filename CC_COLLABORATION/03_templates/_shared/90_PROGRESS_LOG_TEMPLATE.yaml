@@ -74,14 +74,14 @@ phase_3_demo:
 
   tasks:
     - id: "{PREFIX}-DEMO-001"
-      task: "创建 UI 原型 playgrounds/{feature_id}/Demo.vue"
+      task: "创建 UI 原型 _demos/v1_initial.html"
       status: pending
       priority: P0
       verification: "原型可运行，展示核心交互"
       completed_at: null
 
     - id: "{PREFIX}-DEMO-002"
-      task: "创建 Mock API mock/{feature_id}/api.js"
+      task: "创建 Mock API _demos/mock/api.js"
       status: pending
       priority: P1
       verification: "Mock 数据支持原型运行"
