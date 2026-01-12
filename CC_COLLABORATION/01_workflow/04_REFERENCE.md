@@ -59,20 +59,21 @@
 
 ```
 docs/
-├── _foundation/                    # 项目基础文档
-│   ├── 00_PROJECT_CONTEXT.md       # 项目背景
-│   ├── 01_USER_JOURNEY.md          # 用户旅程（Phase 0.5）
-│   ├── 02_ARCHITECTURE.md          # 系统架构
-│   ├── 03_MODULE_DECOMPOSITION.md  # 模块分解
-│   ├── 04_ROADMAP.md               # 路线图
-│   ├── 05_TECH_DECISIONS.md        # 技术决策
-│   └── _ui_system/                 # UI 规范
-│       ├── 00_UI_TOKENS.md
-│       ├── 01_COMPONENT_LIBRARY.md
-│       └── ...
+├── _foundation/                     # 项目基础文档
+│   ├── _planning/                   # 规划文档
+│   │   ├── 01_USER_JOURNEY.md       # 用户旅程
+│   │   ├── 02_ARCHITECTURE.md       # 系统架构
+│   │   ├── 03_MODULE_DECOMPOSITION.md # 模块分解
+│   │   ├── 04_ROADMAP.md            # 路线图
+│   │   └── 05_TECH_DECISIONS.md     # 技术决策
+│   ├── _api_system/                 # API 规范
+│   ├── _db_system/                  # DB 规范
+│   ├── _ui_system/                  # UI 规范
+│   ├── FOUNDATION_GATE_STATUS.yaml  # Foundation Gate 状态
+│   └── PROJECT_TRACKER.yaml         # 项目跟踪（可选）
 │
-├── FEATURE_CHECKLIST.md            # 功能开发清单
-└── {feature}/                      # 功能目录
+├── FEATURE_CHECKLIST.md             # 功能开发清单
+└── {feature}/                       # 功能目录
 ```
 
 ### 2.2 功能级文件

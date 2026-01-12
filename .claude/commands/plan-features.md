@@ -266,6 +266,6 @@
 
 ## 关联工具
 
-- `/check-foundation-gate` - 检查 Foundation Gate 状态
+- `/check-gate --phase=0` - 检查 Foundation Gate 状态
 - `/new-feature` - 创建单个功能模块
 - `/check-progress` - 查看功能进度

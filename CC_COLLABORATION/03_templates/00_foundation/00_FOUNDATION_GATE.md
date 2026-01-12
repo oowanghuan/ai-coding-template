@@ -180,7 +180,7 @@ ELSE:
 ### 4.1 检查 Foundation Gate
 
 ```bash
-/check-foundation-gate
+/check-gate --phase=0
 ```
 
 输出示例：
@@ -219,14 +219,14 @@ ELSE:
 
 📝 建议操作:
   1. 请 PM 审批 04_ROADMAP.md
-  2. 执行 /approve-foundation --role=PM
+  2. 执行 /approve-gate --phase=0 --role=PM
 ```
 
 ### 4.2 审批 Foundation Gate
 
 ```bash
-/approve-foundation --role=Architect --name="@alice"
-/approve-foundation --role=PM --name="@bob"
+/approve-gate --phase=0 --role=Architect --name="@alice"
+/approve-gate --phase=0 --role=PM --name="@bob"
 ```
 
 ---
@@ -306,7 +306,7 @@ summary:
    ❌ Foundation Gate 未通过
 
    请先完成 Foundation 文档并通过审批：
-   • 执行 /check-foundation-gate 查看详情
+   • 执行 /check-gate --phase=0 查看详情
    • 修复所有 BLOCK 级问题
    • 请相关角色审批
 
@@ -333,12 +333,12 @@ Foundation Gate 通过后：
 3. Architect 完成 03_MODULE_DECOMPOSITION.md
 4. PM 完成 04_ROADMAP.md
 5. 执行设计验证：/doc-design-validation
-6. 各角色自检：/check-foundation-gate
+6. 各角色自检：/check-gate --phase=0
 7. 修复所有 BLOCK 级问题
 8. 审批：
-   - PM / Product: /approve-foundation --role=PM（User Journey）
-   - Architect: /approve-foundation --role=Architect
-   - PM: /approve-foundation --role=PM（Roadmap）
+   - PM / Product: /approve-gate --phase=0 --role=PM（User Journey）
+   - Architect: /approve-gate --phase=0 --role=Architect
+   - PM: /approve-gate --phase=0 --role=PM（Roadmap）
 9. Gate 通过后：/plan-features
 ```
 

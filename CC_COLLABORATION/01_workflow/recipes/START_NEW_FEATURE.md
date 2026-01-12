@@ -43,9 +43,13 @@
 
 ```bash
 docs/{feature-name}/
-├── 10_CONTEXT.md           # 功能上下文（Phase 1）
-├── 90_PROGRESS_LOG.yaml    # 进度日志
-└── 91_DAILY_SUMMARY/       # 每日总结目录
+├── 10_CONTEXT.md              # 功能上下文（Phase 1）
+├── 90_PROGRESS_LOG.yaml       # 进度日志
+├── PHASE_GATE.yaml            # Phase Gate 规则配置
+├── PHASE_GATE_STATUS.yaml     # Phase Gate 运行状态
+├── DOC_CHANGELOG.md           # 文档变更日志
+└── _demos/                    # Demo 文件目录
+    └── .gitkeep               # 保持目录存在
 ```
 
 ### Step 3: 初始化 10_CONTEXT.md
@@ -164,7 +168,10 @@ cc_checkpoint:
 ### 已创建文件
 - 10_CONTEXT.md (功能上下文)
 - 90_PROGRESS_LOG.yaml (进度日志)
-- 91_DAILY_SUMMARY/ (每日总结目录)
+- PHASE_GATE.yaml (Phase Gate 规则配置)
+- PHASE_GATE_STATUS.yaml (Phase Gate 运行状态)
+- DOC_CHANGELOG.md (文档变更日志)
+- _demos/ (Demo 文件目录)
 
 ### 下一步
 1. 完善 10_CONTEXT.md 的功能背景
@@ -230,6 +237,9 @@ cc_checkpoint:
 - [ ] 目录结构已创建
 - [ ] 10_CONTEXT.md 已初始化
 - [ ] 90_PROGRESS_LOG.yaml 已初始化
+- [ ] PHASE_GATE.yaml 已初始化
+- [ ] PHASE_GATE_STATUS.yaml 已初始化
+- [ ] DOC_CHANGELOG.md 已初始化
 - [ ] User Journey 上下文已注入
 - [ ] 依赖关系已确认
 - [ ] 可以开始 Phase 1 工作

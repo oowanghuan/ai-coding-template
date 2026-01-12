@@ -213,36 +213,59 @@
 
 ---
 
-### Issue #9: Recipe 与命令目录结构不一致 ⏳ 待验证
+### Issue #9: Recipe 与命令目录结构不一致 ✅ 确认
 
 **审计描述**：
 > `START_NEW_FEATURE` Recipe 与 `/new-feature` 规范对目录结构描述不一致。
 
-**验证结果**：⏳ 待验证
+**验证结果**：✅ **问题确认**
 
-**修复状态**：⬜ 待修复
+- Recipe 有 `91_DAILY_SUMMARY/`，命令没有
+- 命令有 `PHASE_GATE.yaml`, `PHASE_GATE_STATUS.yaml`, `DOC_CHANGELOG.md`, `_demos/`，Recipe 没有
+
+**修复状态**：✅ 已修复 (2026-01-12)
+
+**修复内容**：
+- 更新 `START_NEW_FEATURE.md` 目录结构匹配 `/new-feature` 输出
+- 更新输出文件列表和检查清单
 
 ---
 
-### Issue #10: PROGRESS_LOG 示例与模板不一致 ⏳ 待验证
+### Issue #10: PROGRESS_LOG 示例与模板不一致 ✅ 确认
 
 **审计描述**：
 > `/new-feature` 中的 `90_PROGRESS_LOG.yaml` 示例结构与模板字段不一致。
 
-**验证结果**：⏳ 待验证
+**验证结果**：✅ **问题确认**
 
-**修复状态**：⬜ 待修复
+- 示例缺少 `target_date` 字段
+- 示例缺少各阶段的 `start_date`, `end_date`, `completion_pct`
+- stats 结构不同
+
+**修复状态**：✅ 已修复 (2026-01-12)
+
+**修复内容**：
+- 更新 `/new-feature` 中的示例，引用模板并展示正确结构
+- 添加注释说明实际生成应使用完整模板
 
 ---
 
-### Issue #11: 死引用 `00_PROJECT_CONTEXT.md` ⏳ 待验证
+### Issue #11: 死引用 `00_PROJECT_CONTEXT.md` ✅ 确认
 
 **审计描述**：
 > 项目级文档结构描述仍包含 `docs/_foundation/00_PROJECT_CONTEXT.md`，但模板体系未提供该文件。
 
-**验证结果**：⏳ 待验证
+**验证结果**：✅ **问题确认**
 
-**修复状态**：⬜ 待修复
+- 多个文件引用已不存在的 `00_PROJECT_CONTEXT.md`
+- 当前体系使用 `_planning/`, `_api_system/`, `_db_system/` 子目录
+
+**修复状态**：✅ 已修复 (2026-01-12)
+
+**修复内容**：
+- 更新 `04_REFERENCE.md` 目录结构
+- 更新 `COLLABORATION_GUIDE.md` 目录结构
+- 更新 `system_scaffolder.md` 目录结构和输出示例
 
 ---
 
@@ -274,22 +297,39 @@
 
 ## LOW 级别问题（2 项）
 
-### Issue #13: `docs/README.md` 编号规则不一致 ⏳ 待验证
+### Issue #13: `docs/README.md` 编号规则不一致 ✅ 确认
 
-**验证结果**：⏳ 待验证
+**验证结果**：✅ **问题确认**
 
-**修复状态**：⬜ 待修复
+- 文档编号规则表完全错误
+- 目录结构已过时，未反映当前 `_planning/`, `_api_system/` 等子目录
+- 未包含 `PHASE_GATE.yaml`, `PHASE_GATE_STATUS.yaml` 等新文件
+
+**修复状态**：✅ 已修复 (2026-01-12)
+
+**修复内容**：
+- 重写 `docs/README.md` 目录结构
+- 修正文档编号规则表
+- 更新创建新功能说明
 
 ---
 
-### Issue #14: Foundation Gate 文档引用旧命令 ⏳ 待验证
+### Issue #14: Foundation Gate 文档引用旧命令 ✅ 确认
 
 **审计描述**：
 > Foundation Gate 文档仍提 `/check-foundation-gate`，主流程已迁移到 `/check-gate --phase=0`。
 
-**验证结果**：⏳ 待验证
+**验证结果**：✅ **问题确认**
 
-**修复状态**：⬜ 待修复
+- 多个文件引用已废弃的 `/check-foundation-gate` 命令
+- 同时存在 `/approve-foundation` 旧命令引用
+
+**修复状态**：✅ 已修复 (2026-01-12)
+
+**修复内容**：
+- 更新所有 `/check-foundation-gate` → `/check-gate --phase=0`
+- 更新所有 `/approve-foundation` → `/approve-gate --phase=0`
+- 涉及文件：`02_FRAMEWORK_OVERVIEW.md`, `plan-features.md`, `doc-design-validation.md`, `00_FOUNDATION_GATE.md`, `init-project.md`
 
 ---
 
@@ -328,15 +368,14 @@
 | #6 | P1 | ✅ | 2026-01-12 | 脚本工具数量更新 |
 | #7 | P1 | ✅ | 2026-01-12 | daily-summary 路径修正 |
 | #8 | P2 | ✅ | 2026-01-12 | 随 Issue #1 一并修复 |
-| #9 | P2 | ⏳ | - | 待验证 |
-| #10 | P2 | ⏳ | - | 待验证 |
-| #11 | P2 | ⏳ | - | 待验证 |
+| #9 | P2 | ✅ | 2026-01-12 | Recipe 目录结构更新 |
+| #10 | P2 | ✅ | 2026-01-12 | PROGRESS_LOG 示例更新 |
+| #11 | P2 | ✅ | 2026-01-12 | 死引用清理 |
 | #12 | P1 | ✅ | 2026-01-12 | 阶段命名统一 |
-| #13 | P2 | ⏳ | - | 待验证 |
-| #14 | P2 | ⏳ | - | 待验证 |
+| #13 | P2 | ✅ | 2026-01-12 | docs/README.md 重写 |
+| #14 | P2 | ✅ | 2026-01-12 | 旧命令引用更新 |
 
-**已修复**: 9/14 (64%)
-**待验证**: 5/14 (36%)
+**已修复**: 14/14 (100%) ✅
 
 ---
 

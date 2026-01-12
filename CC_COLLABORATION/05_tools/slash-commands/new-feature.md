@@ -267,7 +267,9 @@ docs/{feature-name}/
 
 ### 5. 生成 90_PROGRESS_LOG.yaml
 
-使用以下模板生成 `90_PROGRESS_LOG.yaml`：
+从模板 `CC_COLLABORATION/03_templates/_shared/90_PROGRESS_LOG_TEMPLATE.yaml` 生成，并替换占位符。
+
+生成后的文件结构示例：
 
 ```yaml
 # 90_PROGRESS_LOG.yaml
@@ -275,55 +277,39 @@ docs/{feature-name}/
 # 最后更新：{current_datetime}
 
 meta:
-  feature: {feature-name}
+  feature: "{feature-name}"
   feature_name: "{Feature Name}"
-  current_phase: 1  # Kickoff
+  current_phase: 1
   status: wip
-  owner: "{请补充}"
-  started_at: {current_date}
-  last_updated: {current_datetime}
+  owner: "@{请补充}"
+  started_at: "{current_date}"
+  last_updated: "{current_datetime}"
+  target_date: "{target_date}"
 
-# ============================================================
-# Phase 1: Kickoff（功能启动）- 进行中
-# ============================================================
+# Phase 1-7 各阶段任务（完整结构见模板）
 phase_1_kickoff:
   status: wip
+  start_date: "{current_date}"
+  end_date: null
+  completion_pct: 50
   tasks:
-    - id: KICK-001
+    - id: "{PREFIX}-KICK-001"
       task: "创建功能目录 docs/{feature-name}/"
       status: done
-      completed_at: {current_date}
+      priority: P0
+      completed_at: "{current_date}"
 
-    - id: KICK-002
-      task: "编写 10_CONTEXT.md 功能上下文"
+    - id: "{PREFIX}-KICK-002"
+      task: "编写 10_CONTEXT.md 功能背景文档"
       status: wip
-      notes: "需要补充功能描述和目标"
+      priority: P0
+      verification: "包含功能概述、边界定义、用户故事、约束条件"
+      completed_at: null
 
-    - id: KICK-003
-      task: "创建 90_PROGRESS_LOG.yaml"
-      status: done
-      completed_at: {current_date}
+# Phase 2-7 使用模板默认值（pending 状态）
+# ...
 
-# ============================================================
-# Phase 2: Spec（需求规格）- 待开始
-# ============================================================
-phase_2_spec:
-  status: pending
-  tasks:
-    - id: SPEC-001
-      task: "编写 40_DESIGN_FINAL.md"
-      status: pending
-
-# ============================================================
-# Phase 5: Code（开发实现）- 待开始
-# ============================================================
-phase_5_code:
-  status: pending
-  tasks: []
-
-# ============================================================
 # Claude Code 断点恢复信息
-# ============================================================
 cc_checkpoint:
   session_id: "cc-{current_date}-{feature-name}"
   last_file_edited: "docs/{feature-name}/10_CONTEXT.md"
@@ -332,18 +318,28 @@ cc_checkpoint:
   context_files:
     - "docs/{feature-name}/10_CONTEXT.md"
     - "docs/{feature-name}/90_PROGRESS_LOG.yaml"
+  implementation_summary: []
 
-# ============================================================
-# 统计信息
-# ============================================================
+# 统计信息（由工具自动更新）
 stats:
-  total_tasks: 4
-  done: 2
-  wip: 1
-  pending: 1
-  completion_rate: "50%"
-  next_milestone: "完成 Kickoff 阶段，进入 Spec"
+  by_phase:
+    phase_1_kickoff:
+      total: 2
+      done: 1
+      pending: 1
+      status: "wip"
+    # ... 其他阶段
+  summary:
+    total_tasks: 12
+    done: 1
+    wip: 1
+    pending: 10
+    blocked: 0
+    completion_rate: "8%"
+  next_milestone: "完成 Phase 1 Kickoff"
 ```
+
+**注意**：实际生成时应使用完整模板，包含 Phase 1-7 所有阶段的任务定义。
 
 ### 6. 生成 Phase Gate 文件
 

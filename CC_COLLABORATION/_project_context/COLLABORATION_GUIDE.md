@@ -184,18 +184,24 @@ CC_COLLABORATION/
 └── 08_legacy_integration/     # 现有项目整合
 
 docs/_foundation/
-├── 00_PROJECT_CONTEXT.md      # 项目背景
-├── 01_PROJECT_PROFILE.yaml    # 项目配置
-├── 02_API_CONVENTIONS.md      # API 规范
-├── 03_DB_CONVENTIONS.md       # DB 规范
-└── _ui_system/                # UI 规范
+├── _planning/                 # 规划文档
+│   ├── 01_USER_JOURNEY.md     # 用户旅程
+│   ├── 02_ARCHITECTURE.md     # 系统架构
+│   ├── 03_MODULE_DECOMPOSITION.md # 模块分解
+│   ├── 04_ROADMAP.md          # 路线图
+│   └── 05_TECH_DECISIONS.md   # 技术决策
+├── _api_system/               # API 规范
+├── _db_system/                # DB 规范
+├── _ui_system/                # UI 规范
+└── FOUNDATION_GATE_STATUS.yaml # Foundation Gate 状态
 
 docs/{feature}/
 ├── 10_CONTEXT.md              # 功能背景
 ├── 40_DESIGN_FINAL.md         # 设计文档
-├── 50_DEV_PLAN.md             # 开发计划
 ├── 90_PROGRESS_LOG.yaml       # 进度日志
-└── 91_DAILY_SUMMARY/          # 每日总结
+├── PHASE_GATE.yaml            # Phase Gate 规则
+├── PHASE_GATE_STATUS.yaml     # Phase Gate 状态
+└── _demos/                    # Demo 文件
 ```
 
 ### 6.2 状态速查

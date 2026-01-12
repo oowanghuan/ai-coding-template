@@ -134,24 +134,25 @@ files_to_generate:
     template: "package/express"
 ```
 
-### 4. 创建 _system 目录
+### 4. 创建 _foundation 目录
 
 ```
-docs/_system/
-├── 00_PROJECT_CONTEXT.md
-├── 01_PROJECT_PROFILE.yaml
-├── 02_API_CONVENTIONS.md
-├── 03_DB_CONVENTIONS.md
-├── CC_COLLABORATION/
-│   ├── 01_OVERVIEW.md
-│   ├── 02_ROLES.md
-│   ├── 03_TEMPLATES/
-│   ├── 04_AI_WORKFLOW.md
-│   └── 05_TOOLS/
-└── _ui_system/
-    ├── 01_TOKENS.md
-    ├── 02_COMPONENTS.md
-    └── ...
+docs/_foundation/
+├── _planning/                   # 规划文档
+│   ├── 01_USER_JOURNEY.md       # 用户旅程
+│   ├── 02_ARCHITECTURE.md       # 系统架构
+│   ├── 03_MODULE_DECOMPOSITION.md # 模块分解
+│   ├── 04_ROADMAP.md            # 路线图
+│   └── 05_TECH_DECISIONS.md     # 技术决策
+├── _api_system/                 # API 规范
+│   └── 00_REST_CONVENTIONS.md
+├── _db_system/                  # DB 规范
+│   └── 00_DB_CONVENTIONS.md
+├── _ui_system/                  # UI 规范
+│   ├── 01_COMPONENT_LIBRARY.md
+│   ├── 02_LAYOUT_RULES.md
+│   └── ...
+└── FOUNDATION_GATE_STATUS.yaml  # Foundation Gate 状态
 ```
 
 ### 5. 输出结果
@@ -180,11 +181,11 @@ docs/_system/
 ✓ src/router/
 ✓ tests/unit/
 ✓ tests/e2e/
-✓ docs/_system/
-✓ docs/_system/CC_COLLABORATION/
-✓ docs/_system/CC_COLLABORATION/03_TEMPLATES/
-✓ docs/_system/CC_COLLABORATION/05_TOOLS/
-✓ docs/_system/_ui_system/
+✓ docs/_foundation/
+✓ docs/_foundation/_planning/
+✓ docs/_foundation/_api_system/
+✓ docs/_foundation/_db_system/
+✓ docs/_foundation/_ui_system/
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📄 创建的文件 (8)
@@ -193,10 +194,10 @@ docs/_system/
 ✓ README.md
 ✓ vite.config.ts
 ✓ tsconfig.json
-✓ docs/_system/00_PROJECT_CONTEXT.md
-✓ docs/_system/01_PROJECT_PROFILE.yaml
-✓ docs/_system/CC_COLLABORATION/01_OVERVIEW.md
-✓ docs/_system/CC_COLLABORATION/04_AI_WORKFLOW.md
+✓ docs/_foundation/_planning/01_USER_JOURNEY.md
+✓ docs/_foundation/_planning/02_ARCHITECTURE.md
+✓ docs/_foundation/_api_system/00_REST_CONVENTIONS.md
+✓ docs/_foundation/FOUNDATION_GATE_STATUS.yaml
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⏭️ 跳过的文件 (已存在)
@@ -206,9 +207,10 @@ docs/_system/
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 💡 下一步：
-1. 编辑 docs/_system/00_PROJECT_CONTEXT.md 填写项目背景
-2. 完善 docs/_system/02_API_CONVENTIONS.md API 规范
-3. 使用 /new-feature <name> 创建第一个功能模块
+1. 填写 docs/_foundation/_planning/ 规划文档
+2. 完善 docs/_foundation/_api_system/ API 规范
+3. 执行 /check-gate --phase=0 检查 Foundation Gate
+4. 使用 /new-feature <name> 创建第一个功能模块
 ```
 
 ## 示例

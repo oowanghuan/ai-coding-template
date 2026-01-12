@@ -334,7 +334,7 @@ docs/_foundation/
 /check-gate --phase=0  ←── 检查 MVS 要求
      │
      ▼
-/approve-foundation     ←── PM/Architect 审批
+/approve-gate --phase=0     ←── PM/Architect 审批
      │
      ▼
 /plan-features          ←── 从 03_MODULE_DECOMPOSITION 批量生成 feature 目录
@@ -354,6 +354,6 @@ docs/_foundation/
 ## 关联命令
 
 - `/check-gate --phase=0` - 检查 Foundation Gate 状态
-- `/approve-foundation` - 审批 Foundation
+- `/approve-gate --phase=0` - 审批 Foundation
 - `/plan-features` - 批量生成功能模块
 - `/new-feature` - 创建单个功能模块

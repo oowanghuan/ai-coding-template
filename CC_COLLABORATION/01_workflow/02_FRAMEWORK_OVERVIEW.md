@@ -151,11 +151,11 @@ User Journey → System Responsibility → Module Mapping → Feature Developmen
 # → 检查模块映射完整性
 
 # 3. 检查 Foundation Gate 状态
-/check-foundation-gate
+/check-gate --phase=0
 
 # 4. 审批（需要 PM + Architect）
-/approve-foundation --role=PM
-/approve-foundation --role=Architect
+/approve-gate --phase=0 --role=PM
+/approve-gate --phase=0 --role=Architect
 
 # 5. 通过后，生成功能开发清单
 /plan-features
@@ -290,7 +290,7 @@ Phase N 完成
 |------|---------|--------
 | Phase 0 | 编写路线图 | 04_ROADMAP.md |
 | **Phase 0.5** | **编写 User Journey** | **01_USER_JOURNEY.md** |
-| Phase 0.5 | 审批 Foundation Gate | `/approve-foundation --role=PM` |
+| Phase 0.5 | 审批 Foundation Gate | `/approve-gate --phase=0 --role=PM` |
 | Phase 0.5 | 确认功能开发顺序 | 审核 FEATURE_CHECKLIST.md |
 | Phase 1 | 审批功能上下文 | `/approve-gate --role=PM` |
 | Phase 3 | 评审 Demo | 30_DEMO_REVIEW.md |
@@ -301,8 +301,8 @@ Phase N 完成
 ```bash
 # Phase 0.5
 /doc-design-validation         # 验证 User Journey
-/check-foundation-gate         # 检查 Foundation 状态
-/approve-foundation --role=PM  # 审批通过
+/check-gate --phase=0         # 检查 Foundation 状态
+/approve-gate --phase=0 --role=PM  # 审批通过
 
 # Phase 1
 /approve-gate {feature} --phase=1 --role=PM
