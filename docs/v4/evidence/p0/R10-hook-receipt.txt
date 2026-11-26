@@ -1,0 +1,10 @@
+
+============================================================
+GUI COMMAND RECEIVED
+============================================================
+Command: /check-progress demo
+Source: gui
+============================================================
+
+Please execute the command: /check-progress demo
+

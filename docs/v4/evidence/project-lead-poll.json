@@ -1,0 +1,101 @@
+{
+  "recorded_at": "2026-11-26T20:48:18.526046+00:00",
+  "scope": "Owner-authorized local operational integration, not V4 product acceptance",
+  "repository": "oowanghuan/ai-coding-template",
+  "issue": 3,
+  "account": "oowanghuan",
+  "scheduler": {
+    "kind": "macOS LaunchAgent",
+    "label": "com.ai-coding-template.v4.project-lead",
+    "StartInterval": 900,
+    "RunAtLoad": true,
+    "last_exit_code": 0,
+    "loaded": true,
+    "unload_reload_test": "passed: bootout/bootstrap followed by a fresh scheduled run; not a physical reboot"
+  },
+  "original_runner_sha256": "0d5a4c1f7baae64d830ebb39f056e3d6e217060054aa28ba30f220a20b92559c",
+  "public_source_snapshot": "project-lead-poll-source.py.txt",
+  "public_source_sha256": "00dfdd09969f617b9712075514da1e4e69ad683bfe2e9b2b5ac58b95f54eb41d",
+  "snapshot_transform": "Only three machine-specific ROOT/GH/CODEX constants replaced with environment variables; snapshot is reference text, not installed runtime. BASE remains the script parent. Private denylist values remain outside the public repository.",
+  "runs": [
+    {
+      "started_at": "2026-11-26T20:40:10.918185+00:00",
+      "trigger": [
+        "--probe"
+      ],
+      "status": "success",
+      "comments_read": 0,
+      "pending": 0,
+      "processed": 0,
+      "model_probe": "passed",
+      "finished_at": "2026-11-26T20:40:21.379676+00:00"
+    },
+    {
+      "started_at": "2026-11-26T20:40:22.225339+00:00",
+      "trigger": [
+        "scheduled"
+      ],
+      "status": "success",
+      "comments_read": 0,
+      "pending": 0,
+      "processed": 0,
+      "finished_at": "2026-11-26T20:40:26.614268+00:00"
+    },
+    {
+      "started_at": "2026-11-26T20:45:48.662398+00:00",
+      "trigger": [
+        "scheduled"
+      ],
+      "status": "success",
+      "comments_read": 1,
+      "pending": 0,
+      "processed": 0,
+      "finished_at": "2026-11-26T20:45:51.290509+00:00"
+    },
+    {
+      "started_at": "2026-11-26T20:47:18.395529+00:00",
+      "trigger": [
+        "--probe"
+      ],
+      "status": "success",
+      "runner_sha256": "0d5a4c1f7baae64d830ebb39f056e3d6e217060054aa28ba30f220a20b92559c",
+      "comments_read": 1,
+      "pending": 0,
+      "processed": 0,
+      "model_probe": "passed",
+      "finished_at": "2026-11-26T20:47:28.420497+00:00"
+    },
+    {
+      "started_at": "2026-11-26T20:47:47.028899+00:00",
+      "trigger": [
+        "scheduled"
+      ],
+      "status": "success",
+      "runner_sha256": "0d5a4c1f7baae64d830ebb39f056e3d6e217060054aa28ba30f220a20b92559c",
+      "comments_read": 1,
+      "pending": 0,
+      "processed": 0,
+      "finished_at": "2026-11-26T20:47:50.539709+00:00"
+    }
+  ],
+  "synthetic_and_concurrency_tests": {
+    "synthetic_pending_detection": "passed",
+    "existing_reply_dedup": "passed",
+    "unrecognized_identity": "rejected",
+    "wrong_sha": "rejected",
+    "real_concurrent_process": "single_instance_busy",
+    "restart_replay": "stateless full-comment replay gives same pending and answered results",
+    "exact_comment_id_boundary": "passed"
+  },
+  "receipt_comment_id": 7202964031,
+  "limitations": [
+    "No actual Advisor revision/push/review cycle yet",
+    "No physical reboot/sleep/network outage test",
+    "Logged-in user session required; awake and online processing only",
+    "Unknown write outcome freezes automatic retry for reconciliation",
+    "Cloud hourly Advisor scheduler not enabled or verified here",
+    "Only oowanghuan recognized; same login does not prove independent review",
+    "Public-content scan is a heuristic, not a proof of absence of private content",
+    "Initial run records predate final runner revision; final probe and reload runs include runner_sha256"
+  ]
+}

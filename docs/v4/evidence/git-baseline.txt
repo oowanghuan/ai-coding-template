@@ -1,0 +1,25 @@
+Read-only Git verification before first V4 commit; 2026-11-26T20:45:10.584616+00:00
+Absolute checkout path normalized to <repository>.
+$ git rev-parse --show-toplevel
+exit=0
+<repository>
+$ git remote -v
+exit=0
+origin	https://github.com/oowanghuan/ai-coding-template.git (fetch)
+origin	https://github.com/oowanghuan/ai-coding-template.git (push)
+$ git branch --show-current
+exit=0
+v4/design
+$ git rev-parse HEAD
+exit=0
+8ed245f5a5c7adeebd31b3f31272164ee85a1d39
+$ git status --short
+exit=0
+?? docs/v4/
+?? tests/
+$ git rev-list --left-right --count origin/main...HEAD
+exit=0
+0	0
+$ git ls-remote origin refs/heads/main refs/heads/v4/design
+exit=0
+8ed245f5a5c7adeebd31b3f31272164ee85a1d39	refs/heads/main

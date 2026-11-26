@@ -1,0 +1,358 @@
+{
+  "tested_baseline": "8ed245f5a5c7adeebd31b3f31272164ee85a1d39",
+  "recorded_at": "2026-11-26T20:25:42.808986+00:00",
+  "platform": "Darwin 24.5.0 arm64",
+  "python": "3.9.6",
+  "bash": "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin24)",
+  "harness_sha256": "ddb078796258c2f2724d627ebb476e214df1519c8f878fafaa472b86b3f32009",
+  "cases": [
+    {
+      "id": "R01-pristine-install",
+      "command": [
+        "bash",
+        "scripts/init-claude-tools.sh",
+        "--target=."
+      ],
+      "cwd": "<fixture>/original",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "observation_matches": true,
+      "log": "R01-pristine-install.txt",
+      "log_sha256": "1a723e9c4ace0bd081b668a240ee50919040aaf1a60bffa7f8a6e8f3a57a3fdd"
+    },
+    {
+      "id": "R02-list-missing-source",
+      "command": [
+        "bash",
+        "scripts/init-claude-tools.sh",
+        "--list"
+      ],
+      "cwd": "<fixture>/original",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "observation_matches": true,
+      "log": "R02-list-missing-source.txt",
+      "log_sha256": "be5edcda1aeed0114d338f66152b1c45caa1e0f1205832a0ba6de861f37d78a2"
+    },
+    {
+      "id": "R03-dry-run-unsupported",
+      "command": [
+        "bash",
+        "scripts/init-claude-tools.sh",
+        "--target=.",
+        "--dry-run"
+      ],
+      "cwd": "<fixture>/original",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "observation_matches": true,
+      "log": "R03-dry-run-unsupported.txt",
+      "log_sha256": "3bd9ac21a33d86bdec836fe60d099ce2155b29c7f229e2627a769cc89ac6bf3a"
+    },
+    {
+      "id": "R04-shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "scripts/init-claude-tools.sh"
+      ],
+      "cwd": "<fixture>/original",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "observation_matches": true,
+      "log": "R04-shell-syntax.txt",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "R05-path-only-install",
+      "command": [
+        "bash",
+        "scripts/init-claude-tools.sh",
+        "--target=."
+      ],
+      "cwd": "<fixture>/path-only",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "observation_matches": true,
+      "log": "R05-path-only-install.txt",
+      "log_sha256": "fd90ddb7351c9241b2b66c2075f7897cc7cf8bbeefbf93dea23b2d33d8282c8a",
+      "files_after": [
+        ".claude/commands/ai-pm.md",
+        ".claude/commands/approve-gate.md",
+        ".claude/commands/check-gate.md",
+        ".claude/commands/check-progress.md",
+        ".claude/commands/daily-summary.md",
+        ".claude/commands/doc-design-validation.md",
+        ".claude/commands/end-day.md",
+        ".claude/commands/expert-review.md",
+        ".claude/commands/gen-demo.md",
+        ".claude/commands/gui-cleanup.md",
+        ".claude/commands/gui-connect.md",
+        ".claude/commands/gui-disconnect.md",
+        ".claude/commands/init-project.md",
+        ".claude/commands/integrate-project.md",
+        ".claude/commands/iresume.md",
+        ".claude/commands/new-feature.md",
+        ".claude/commands/next-phase.md",
+        ".claude/commands/plan-features.md",
+        ".claude/commands/project-pm.md",
+        ".claude/commands/release.md",
+        ".claude/commands/reverse-api.md",
+        ".claude/commands/reverse-schema.md",
+        ".claude/commands/run-tests.md",
+        ".claude/commands/scan-project.md",
+        ".claude/commands/start-day.md",
+        ".claude/commands/sync-docs.md",
+        ".claude/skills/ai_pm_state_manager.md",
+        ".claude/skills/design_from_demo.md",
+        ".claude/skills/doc_generator.md",
+        ".claude/skills/mock_api_generator.md",
+        ".claude/skills/review_alignment.md",
+        ".claude/skills/ui_demo.md",
+        ".claude/subagents/expert_reviewer.md",
+        ".claude/subagents/progress_tracker.md",
+        ".claude/subagents/release_summarizer.md",
+        ".claude/subagents/spec_writer.md",
+        ".claude/subagents/test_plan_writer.md"
+      ]
+    },
+    {
+      "id": "R06-path-only-repeat",
+      "command": [
+        "bash",
+        "scripts/init-claude-tools.sh",
+        "--target=."
+      ],
+      "cwd": "<fixture>/path-only",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "observation_matches": true,
+      "log": "R06-path-only-repeat.txt",
+      "log_sha256": "80907a7e8bf35de426ce7423cb5886768def1424b4fc8f05b0e9732b2bcfb652",
+      "files_after": [
+        ".claude/commands/ai-pm.md",
+        ".claude/commands/approve-gate.md",
+        ".claude/commands/check-gate.md",
+        ".claude/commands/check-progress.md",
+        ".claude/commands/daily-summary.md",
+        ".claude/commands/doc-design-validation.md",
+        ".claude/commands/end-day.md",
+        ".claude/commands/expert-review.md",
+        ".claude/commands/gen-demo.md",
+        ".claude/commands/gui-cleanup.md",
+        ".claude/commands/gui-connect.md",
+        ".claude/commands/gui-disconnect.md",
+        ".claude/commands/init-project.md",
+        ".claude/commands/integrate-project.md",
+        ".claude/commands/iresume.md",
+        ".claude/commands/new-feature.md",
+        ".claude/commands/next-phase.md",
+        ".claude/commands/plan-features.md",
+        ".claude/commands/project-pm.md",
+        ".claude/commands/release.md",
+        ".claude/commands/reverse-api.md",
+        ".claude/commands/reverse-schema.md",
+        ".claude/commands/run-tests.md",
+        ".claude/commands/scan-project.md",
+        ".claude/commands/start-day.md",
+        ".claude/commands/sync-docs.md",
+        ".claude/skills/ai_pm_state_manager.md",
+        ".claude/skills/design_from_demo.md",
+        ".claude/skills/doc_generator.md",
+        ".claude/skills/mock_api_generator.md",
+        ".claude/skills/review_alignment.md",
+        ".claude/skills/ui_demo.md",
+        ".claude/subagents/expert_reviewer.md",
+        ".claude/subagents/progress_tracker.md",
+        ".claude/subagents/release_summarizer.md",
+        ".claude/subagents/spec_writer.md",
+        ".claude/subagents/test_plan_writer.md"
+      ]
+    },
+    {
+      "id": "R07-two-fixes-install",
+      "command": [
+        "bash",
+        "scripts/init-claude-tools.sh",
+        "--target=."
+      ],
+      "cwd": "<fixture>/path-only",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "observation_matches": true,
+      "log": "R07-two-fixes-install.txt",
+      "log_sha256": "80907a7e8bf35de426ce7423cb5886768def1424b4fc8f05b0e9732b2bcfb652",
+      "files_after": [
+        ".claude/commands/ai-pm.md",
+        ".claude/commands/approve-gate.md",
+        ".claude/commands/check-gate.md",
+        ".claude/commands/check-progress.md",
+        ".claude/commands/daily-summary.md",
+        ".claude/commands/doc-design-validation.md",
+        ".claude/commands/end-day.md",
+        ".claude/commands/expert-review.md",
+        ".claude/commands/gen-demo.md",
+        ".claude/commands/gui-cleanup.md",
+        ".claude/commands/gui-connect.md",
+        ".claude/commands/gui-disconnect.md",
+        ".claude/commands/init-project.md",
+        ".claude/commands/integrate-project.md",
+        ".claude/commands/iresume.md",
+        ".claude/commands/new-feature.md",
+        ".claude/commands/next-phase.md",
+        ".claude/commands/plan-features.md",
+        ".claude/commands/project-pm.md",
+        ".claude/commands/release.md",
+        ".claude/commands/reverse-api.md",
+        ".claude/commands/reverse-schema.md",
+        ".claude/commands/run-tests.md",
+        ".claude/commands/scan-project.md",
+        ".claude/commands/start-day.md",
+        ".claude/commands/sync-docs.md",
+        ".claude/skills/ai_pm_state_manager.md",
+        ".claude/skills/design_from_demo.md",
+        ".claude/skills/doc_generator.md",
+        ".claude/skills/mock_api_generator.md",
+        ".claude/skills/review_alignment.md",
+        ".claude/skills/ui_demo.md",
+        ".claude/subagents/expert_reviewer.md",
+        ".claude/subagents/progress_tracker.md",
+        ".claude/subagents/release_summarizer.md",
+        ".claude/subagents/spec_writer.md",
+        ".claude/subagents/test_plan_writer.md"
+      ],
+      "settings_installed": false
+    },
+    {
+      "id": "R08-existing-file-repeat",
+      "command": [
+        "bash",
+        "scripts/init-claude-tools.sh",
+        "--target=."
+      ],
+      "cwd": "<fixture>/path-only",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "observation_matches": true,
+      "log": "R08-existing-file-repeat.txt",
+      "log_sha256": "80907a7e8bf35de426ce7423cb5886768def1424b4fc8f05b0e9732b2bcfb652",
+      "custom_content_preserved": true
+    },
+    {
+      "id": "R09-ready-example",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "<fixture>/ready-example.py"
+      ],
+      "cwd": "<fixture>",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "observation_matches": true,
+      "log": "R09-ready-example.txt",
+      "log_sha256": "7a5822d272a00efa4b92fcc8840bf7e0244720d68afcaf1e9ec26ea0473af684",
+      "scope": "Documentation algorithm only; not execution of /project-pm by a provider"
+    },
+    {
+      "id": "R12-ready-with-helpers",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "<fixture>/ready-example.py"
+      ],
+      "cwd": "<fixture>",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "observation_matches": true,
+      "log": "R12-ready-with-helpers.txt",
+      "log_sha256": "7c224a9332a3722802219b836472f57b92c551a8828e17f705112ba765615c44",
+      "scope": "Algorithm fixture with explicit Record and directory_exists helpers; authorization denied"
+    },
+    {
+      "id": "R10-hook-receipt",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "<repository>/.claude/hooks/check-gui-cmd.py"
+      ],
+      "cwd": "<fixture>/hook-project",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "observation_matches": true,
+      "log": "R10-hook-receipt.txt",
+      "log_sha256": "d688280b43c740237e03fbb511e4e154bb56da100e2d701e72d2ec88c0a740ef",
+      "ack": {
+        "cmdId": "audit-1",
+        "status": "received",
+        "timestamp": "2026-11-26T20:25:42.691353Z"
+      }
+    },
+    {
+      "id": "R11-hook-repeat",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "<repository>/.claude/hooks/check-gui-cmd.py"
+      ],
+      "cwd": "<fixture>/hook-project",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "observation_matches": true,
+      "log": "R11-hook-repeat.txt",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "drift": {
+    "commands": {
+      "source_count": 26,
+      "installed_count": 25,
+      "source_only": [
+        "project-pm.md"
+      ],
+      "installed_only": [],
+      "different": [
+        "ai-pm.md",
+        "check-gate.md",
+        "check-progress.md",
+        "daily-summary.md",
+        "new-feature.md"
+      ]
+    },
+    "skills": {
+      "source_count": 6,
+      "installed_count": 21,
+      "source_only": [],
+      "installed_only": [
+        "api_scanner.md",
+        "changelog_updater.md",
+        "context_writer.md",
+        "contract_resolver.md",
+        "gate_checker.md",
+        "module_scanner.md",
+        "openai_expert_review.md",
+        "progress_updater.md",
+        "schema_generator.md",
+        "schema_scanner.md",
+        "spec_validator.md",
+        "system_scaffolder.md",
+        "tech_stack_detector.md",
+        "test_report_generator.md",
+        "test_runner.md"
+      ],
+      "different": []
+    },
+    "subagents": {
+      "source_count": 5,
+      "installed_count": 5,
+      "source_only": [],
+      "installed_only": [],
+      "different": []
+    }
+  },
+  "tracked_backup_files": 228,
+  "tracked_backup_bytes": 20950550,
+  "active_exec_test_e2e_gate_types": [],
+  "all_observations_match": true,
+  "limitations": [
+    "Not an independent review",
+    "No live coding-agent workflow invoked",
+    "No V4 acceptance executed",
+    "No private source data"
+  ]
+}

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "<fixture>/ready-example.py", line 31, in <module>
+    print(compute_ready_set({'demo': {'status': 'pending', 'blocked_by': [], 'priority': 1, 'authorization': 'denied'}}))
+  File "<fixture>/ready-example.py", line 11, in compute_ready_set
+    if feature.status == "done":
+AttributeError: 'dict' object has no attribute 'status'
