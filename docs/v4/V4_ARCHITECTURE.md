@@ -185,6 +185,10 @@ operation_key 由 project + source_event_id + action_kind + target + intent_revi
 
 Advisor 可以反对 PMO，PMO 也能以证据反驳；关闭必须由规定复核方核对实际条件。战略/权限/重大资源分歧交 Owner；普通建议不阻塞无关已授权工作。
 
+评审处理结局分别为 `needs_review / closed / needs_owner / result`：有新证据、修订或需要判断的异议才发请复核；GO 且无待办记录范围化收口，不再递归请审；真正的范围/放行决定才转 Owner。`result` 表示处理进展，不冒充最终关闭。对已成功 push 但无评论回执的旧操作，先按远端 HEAD/祖先关系确认提交，再核对评论 ID/SHA/操作键；仅缺已核查的回复时可继续回复，绝不重做代码或 push。POST 结果不明且查询仍无回执时冻结重发，保留待对账状态。
+
+本项目先行运维按 A01 收窄：后台只读 GitHub 事实并发布前台 Project Lead 已核查的文本 outbox；没有候选代码执行、模型改写或 Git 写入。发布凭证仅供固定 broker 使用，不能传给候选验证进程。恢复通用无人值守执行需另外完成固定可信验证器或无发布权限隔离执行的验收；当前运行器不能证明此能力已完成。详见 [本机修复证据](evidence/poll-repair/README.md)。
+
 ## 11. 资产与可视化边界
 
 资产最小记录：asset_id、kind（六类之一）、version、owner、source WP、artifact_ref/digest、适用条件、验证证据、状态 candidate/validated/standard/deprecated、复用记录。Experience 默认 candidate；进入 standard 须有验证 WP 和规则变更记录。一个 registry 即可，不建设六套引擎。

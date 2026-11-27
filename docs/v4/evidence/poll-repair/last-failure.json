@@ -1,0 +1,13 @@
+{
+  "started_at": "2026-11-27T04:52:00.254123+00:00",
+  "trigger": [
+    "scheduled"
+  ],
+  "status": "failed",
+  "runner_sha256": "0d5a4c1f7baae64d830ebb39f056e3d6e217060054aa28ba30f220a20b92559c",
+  "comments_read": 3,
+  "pending": 1,
+  "processed": 0,
+  "error": "git failed (128): fatal: Unable to read current working directory: Operation not permitted\n",
+  "finished_at": "2026-11-27T04:52:05.409443+00:00"
+}

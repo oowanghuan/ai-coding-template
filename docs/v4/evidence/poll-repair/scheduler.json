@@ -1,0 +1,11 @@
+{
+  "observed_at": "2026-11-27T05:10:02.846858+00:00",
+  "label": "com.ai-coding-template.v4.project-lead",
+  "interval_seconds": 900,
+  "RunAtLoad": true,
+  "runs_after_reload": 2,
+  "last_exit_code": 0,
+  "first_trigger": "bootstrap RunAtLoad",
+  "second_trigger": "launchctl kickstart of the same registered LaunchAgent, no -k",
+  "physical_reboot_tested": false
+}

@@ -1,0 +1,20 @@
+{
+  "private_snapshot": "Preserved outside the repository before repair; raw logs and input not published.",
+  "foreground_and_remote_head_before_repair": "6efbc7525416f36963000e45029c6e3ce6403273",
+  "main": "8ed245f5a5c7adeebd31b3f31272164ee85a1d39",
+  "uncommitted_before_repair": [],
+  "additional_worktrees_before_repair": [],
+  "journals_before_repair": [],
+  "files": {
+    "README.md": "ab419b8755bbc0c09c43a31e28b65c7299fe82918fc2c4e4fc7998d98e4da128",
+    "design-checks.json": "9940fd1a8d3f1166009baccab6977c0369d817131fe614023ff656ab8a211b4c",
+    "first-background.json": "33f9bc6f26c15dee0723c8fbf8d252de921a2326fa8428892987aed9860aed85",
+    "journal-receipt.json": "f44b96af0e7c5917fd46deb1ece28ad0ab936d535528259ddc1e80aa8511d07e",
+    "last-failure.json": "39bdc1abae35e9c5e86a0f4384a1cca98d22e164b7124d94ab40a7aa94aa5d28",
+    "negative-checks.json": "9c1e877364703f951e51b8568a900df0089dc464ea99e28bda473bb2704a335a",
+    "runner.py.txt": "e02468ddcdbd037bd14f597308339da088f34644ddfcecfa434eed7aa50a6fd5",
+    "scheduler.json": "b9b5b3acf0a67e46471d8936d453c786d3827591e86b513264646857908ec4db",
+    "second-background.json": "21c3ef3a9b37321528e16625a70071774f1899cb4505157fd373771fb76ffad8",
+    "test_restricted.py.txt": "6630ce26feccadcff26efc1707bcce0f5907082ce8269592c37f2ffbfbd0ce6d"
+  }
+}
