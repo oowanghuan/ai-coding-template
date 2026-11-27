@@ -1,0 +1,10 @@
+{
+  "decision_id": "da59a62fab890f10f4360c2e454dc0c57cbff6fe6775bb9351baf4ff7e715a2d",
+  "format": "governance-decision/1",
+  "reasons": [
+    "protected-verification:input outside protected boundary"
+  ],
+  "signoff_id": "S1",
+  "status": "unverifiable",
+  "trust_sha256": "5da8a253cd97ae5472187792dcf2638345b1388c588c2648eb5936702e0db11c"
+}

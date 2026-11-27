@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "/public/fixture/stage-01/coordinator.py",
+    "--reviewed-coordinator",
+    "8bd00643268d6999bed4adcd81da42caea8f2b72ad180679f1e546363a476ff2",
+    "--product-manifest",
+    "/public/fixture/stage-01/product-manifest.json",
+    "--product-manifest-sha256",
+    "c493ff5cf69e942c2cd020f5c8babcf1f8c6a5fa35a5a2072afc0527d866d5cf"
+  ],
+  "started_at": "2026-11-27T20:01:24.796936+00:00",
+  "finished_at": "2026-11-27T20:01:26.642855+00:00",
+  "exit_code": 1
+}

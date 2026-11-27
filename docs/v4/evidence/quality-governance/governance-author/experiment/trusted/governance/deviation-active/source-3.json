@@ -1,0 +1,1 @@
+{"format":"governance-record/1","issued_at":"2026-11-27T22:00:00Z","kind":"deviation","payload":{"baseline":null,"closure":null,"expires_at":"2026-12-01T00:00:00Z","id":"D1","reason":"Synthetic finite deviation fixture","revision":1,"scope_paths":["check.py"],"status":"open","subject_commit":"1761b52e88f4a9bf6a270dd50e61c2ddd6568ef0","wp_id":"WP-203","wp_revision":1}}

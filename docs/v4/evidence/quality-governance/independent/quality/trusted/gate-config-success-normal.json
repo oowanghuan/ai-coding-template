@@ -1,0 +1,1 @@
+{"candidate":"<QUALITY_EXPERIMENT>/gate-C","outside":"<QUALITY_EXPERIMENT>/outside-canary","owned_canary_pid":67427,"pin":"d8beefd2285563f7fd4670ba08ecdcd371ff1a5f15adfe19a3f5aef336c37562","repo":"<REPOSITORY>","run_id":"success","trust":"<QUALITY_EXPERIMENT>/T/trust.json","trusted_target":"<QUALITY_EXPERIMENT>/T/sentinel"}

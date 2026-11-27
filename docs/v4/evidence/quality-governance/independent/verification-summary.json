@@ -1,0 +1,219 @@
+{
+  "role": "Independent product reviewer reran author fixture design in fresh T/C; added independent SIGINT and false-independence/source-boundary cases",
+  "collector_sha256": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+  "quality_summary": {
+    "collector_sha256": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "completed_at": "2026-11-27T18:45:07.842346+00:00",
+    "coordinator_sha256": "80b06647f702899a20ca317fb2fc0a8a3ead66ddf95936c3c8c13a79eb8acf56",
+    "immutable_inputs_unchanged": true,
+    "passed": true,
+    "replay": {
+      "exit_code": 2,
+      "inputs_unchanged": true,
+      "passed": true
+    },
+    "runs": [
+      {
+        "id": "success",
+        "passed": true,
+        "status": "passed"
+      },
+      {
+        "id": "selfreport",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "id": "timeout",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "id": "close-pipes",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "id": "flood",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "id": "requiredskip",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "id": "empty",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "id": "document",
+        "passed": true,
+        "status": "passed"
+      },
+      {
+        "id": "fork",
+        "passed": true,
+        "status": "passed"
+      },
+      {
+        "id": "forged-write",
+        "passed": true,
+        "status": "passed"
+      },
+      {
+        "id": "no-collector",
+        "passed": true,
+        "status": "unverifiable"
+      }
+    ],
+    "wrong_pin_rejected": true
+  },
+  "interrupt_summary": {
+    "collector_exit": 2,
+    "case_exit": -15,
+    "state": "unknown",
+    "second_case_absent": true,
+    "gate": "unverifiable",
+    "replay_bytes_unchanged": true
+  },
+  "governance_summary": {
+    "collector_sha256": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "commands": 19,
+    "completed_at": "2026-11-27T18:51:18.328001+00:00",
+    "coordinator_sha256": "c6e058f3f9d647eb6ff07afd073db5be5421f98c91e855cfdd0dd5387cc8a0c0",
+    "identity_limit": "All protected principals are synthetic fixture identities, not actual human/project acceptance.",
+    "inputs_unchanged": true,
+    "passed": true,
+    "results": [
+      {
+        "exit_code": 1,
+        "label": "quality-baseline",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "exit_code": 1,
+        "label": "quality-current",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "exit_code": 0,
+        "label": "quality-mechanical",
+        "passed": true,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "label": "quality-success",
+        "passed": true,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "label": "positive",
+        "passed": true,
+        "status": "effective"
+      },
+      {
+        "exit_code": 2,
+        "label": "false-independent-role",
+        "passed": true,
+        "status": "rejected"
+      },
+      {
+        "exit_code": 3,
+        "label": "candidate-forged-review-source",
+        "passed": true,
+        "status": "unverifiable"
+      },
+      {
+        "exit_code": 0,
+        "label": "same-tree-new-commit",
+        "passed": true,
+        "status": "effective"
+      },
+      {
+        "exit_code": 0,
+        "label": "mechanical-exact",
+        "passed": true,
+        "status": "effective"
+      },
+      {
+        "exit_code": 2,
+        "label": "target-base-changed",
+        "passed": true,
+        "status": "rejected"
+      },
+      {
+        "exit_code": 2,
+        "label": "contract-changed",
+        "passed": true,
+        "status": "rejected"
+      },
+      {
+        "exit_code": 2,
+        "label": "contract-restored-old-signoff",
+        "passed": true,
+        "status": "rejected"
+      },
+      {
+        "exit_code": 0,
+        "label": "quality-fresh-success",
+        "passed": true,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "label": "fresh-review-after-restore",
+        "passed": true,
+        "status": "effective"
+      },
+      {
+        "exit_code": 2,
+        "label": "revoked",
+        "passed": true,
+        "status": "rejected"
+      },
+      {
+        "exit_code": 0,
+        "label": "deviation-active",
+        "passed": true,
+        "status": "effective"
+      },
+      {
+        "exit_code": 2,
+        "label": "deviation-expired",
+        "passed": true,
+        "status": "rejected"
+      },
+      {
+        "exit_code": 0,
+        "label": "deviation-closed",
+        "passed": true,
+        "status": "effective"
+      },
+      {
+        "exit_code": 2,
+        "label": "baseline-known-new-no-waiver",
+        "passed": true,
+        "status": "rejected"
+      }
+    ]
+  },
+  "source_input_checks": {
+    "quality": true,
+    "interrupt": true,
+    "governance": true
+  },
+  "limits": [
+    "Finite local Python stdio adapter only; no arbitrary shell/unit-test/plugin support",
+    "Protected governance identities are synthetic fixture identities, not actual human/project signoff",
+    "No claims of model/cloud integration, hostile host-owner resistance or complete test design",
+    "Old direct backend skips remain separate",
+    "Raw local bytes remain outside repository; hashes embedded in exported evidence still refer to raw originals"
+  ]
+}

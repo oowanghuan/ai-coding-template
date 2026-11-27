@@ -1,0 +1,45 @@
+{
+  "active_deviations": [
+    "D1"
+  ],
+  "candidate_gate_id": null,
+  "candidate_subject": {
+    "commit": "4f5da3dafb488422721807a4666dee8896c11028",
+    "manifest_sha256": "44faaee8d7a83f74827288c478cfbaa754cfef97d6deaefaa1ee88fb451e6647",
+    "tree": "93b1379bb9813315b6df41ffedfc873ad57e266c"
+  },
+  "decision_id": "2bf1e55814d9219a3b4f27355b1690e3a3117afddbc8439a39def23b3bebcae2",
+  "equivalence": "exact_object",
+  "failure_analysis": [
+    {
+      "baseline_run_id": "baseline",
+      "deviation_id": "D1",
+      "known_failures": [
+        "known"
+      ],
+      "new_failures": [
+        "new"
+      ],
+      "status": "verified"
+    }
+  ],
+  "format": "governance-decision/1",
+  "gate_id": "ec74838c0d2d15129a1ac1f546bcc820c47aca0e8bd5259e412d4aa34f9a5c43",
+  "invalidated_signoffs": [],
+  "ledger_tip": "bcc5a51f690fbe2a8bf0071c4432d2f03d6c853dc2905e152a207031d99c7ef6",
+  "reasons": [
+    "quality-gate-not-passed"
+  ],
+  "review_id": "R1",
+  "reviewed_subject": {
+    "commit": "4f5da3dafb488422721807a4666dee8896c11028",
+    "manifest_sha256": "44faaee8d7a83f74827288c478cfbaa754cfef97d6deaefaa1ee88fb451e6647",
+    "tree": "93b1379bb9813315b6df41ffedfc873ad57e266c"
+  },
+  "signoff_id": "S1",
+  "status": "rejected",
+  "target_base_sha": "3333333333333333333333333333333333333333",
+  "trust_sha256": "3d7d6dd3434820c71fa0d0cc9cc344db8f766cc5321d9b212fd05e174bae438e",
+  "wp_id": "WP-203",
+  "wp_revision": 1
+}

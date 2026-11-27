@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "/STAGE/coordinator.py",
+    "--reviewed-coordinator",
+    "e941a7ec74bc1fbd5818181fed75b84037fadb467194841405594249e2963137",
+    "--product-manifest",
+    "/STAGE/product-manifest.json",
+    "--product-manifest-sha256",
+    "c493ff5cf69e942c2cd020f5c8babcf1f8c6a5fa35a5a2072afc0527d866d5cf"
+  ],
+  "environment": {
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "HOME": "/STAGE",
+    "TMPDIR": "/STAGE",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "cwd": "/STAGE",
+  "started_at": "2026-11-27T20:03:17.063288+00:00",
+  "finished_at": "2026-11-27T20:03:19.177965+00:00",
+  "exit_code": 0,
+  "stdout_sha256": "42fa5a1870c5c9683e21725473a1ec683eba7e735b61a2b7bf5afdc2c257e5b3",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

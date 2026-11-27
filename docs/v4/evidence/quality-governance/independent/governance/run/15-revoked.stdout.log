@@ -1,0 +1,33 @@
+{
+  "active_deviations": [],
+  "candidate_gate_id": null,
+  "candidate_subject": {
+    "commit": "1761b52e88f4a9bf6a270dd50e61c2ddd6568ef0",
+    "manifest_sha256": "7279e944c37aa3ee1b681c37174f54037d3b4622e4a0b5abbf0a4b91b61ffe1f",
+    "tree": "afc5ded1b7ce02aa71348e134c2b3253ebc6cf28"
+  },
+  "decision_id": "f21d36c45a7424d110ee9b2953c1101cbb743a83a50bccadfd8089a029683108",
+  "equivalence": "exact_object",
+  "failure_analysis": [],
+  "format": "governance-decision/1",
+  "gate_id": "e039d8f4071950a4fae82e00ddfbeab5775ac80af50084654feea6336fbd9f48",
+  "invalidated_signoffs": [
+    "S1"
+  ],
+  "ledger_tip": "c2730421b06f84bb9193d2cfce551ea79254dbd2233e861b430287980a3d1ea6",
+  "reasons": [
+    "signoff-revoked"
+  ],
+  "review_id": "R2",
+  "reviewed_subject": {
+    "commit": "1761b52e88f4a9bf6a270dd50e61c2ddd6568ef0",
+    "manifest_sha256": "7279e944c37aa3ee1b681c37174f54037d3b4622e4a0b5abbf0a4b91b61ffe1f",
+    "tree": "afc5ded1b7ce02aa71348e134c2b3253ebc6cf28"
+  },
+  "signoff_id": "S2",
+  "status": "rejected",
+  "target_base_sha": "3333333333333333333333333333333333333333",
+  "trust_sha256": "0a9f324fffcd9b0a31fb393aa1b3ff23b16d075fa573363362e022e868f221b8",
+  "wp_id": "WP-203",
+  "wp_revision": 1
+}

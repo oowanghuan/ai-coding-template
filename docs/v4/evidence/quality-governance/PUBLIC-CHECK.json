@@ -1,0 +1,11 @@
+{
+  "scope": "Final new public evidence tree and changed design/example links; static pattern check plus independent content review, not complete secret-detection proof",
+  "evidence_files": 953,
+  "evidence_bytes": 4216137,
+  "privacy_findings": [],
+  "local_links_checked": 140,
+  "broken_links": [],
+  "code_commit": "580cc0a8ce40fe9d4d235f94d7ab1e7aba2ddafc",
+  "checked_before_indexing": true,
+  "ignored_logs_require_force_add": true
+}

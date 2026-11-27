@@ -1,0 +1,56 @@
+{
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<UNIT_STAGE>/hardened-profile.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/governance",
+    "-v"
+  ],
+  "environment": {
+    "HOME": "<UNIT_STAGE>/home",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONPATH": "<FRAMEWORK_ROOT>:<READONLY_DEPS>",
+    "TMPDIR": "<UNIT_STAGE>/tmp",
+    "V4_OUTER_SEATBELT": "1"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1795804914.538003,
+  "head": "711ba906b5ffbc1f86fba149c83a87404429dfd3",
+  "notes": [
+    "Author tests; identity and successful Gate context are synthetic fixtures.",
+    "run-1 failed on ancestor read. run-2 directory-listing workaround withdrawn. run-3/frozen use O_SEARCH and hardened profile.",
+    "Earlier profiles did not prevent process environment observation; not credential-isolation evidence."
+  ],
+  "profile_sha256": "782a2296f133c870984acfc8f56573eee0e5fd24041fa8e9f38525e93e8d2537",
+  "source_hashes_after": {
+    "examples/governance/README.md": "2f7073d03975d3147a076137ed92724eeed99546fb797cd408a0fb8b5dfdd93a",
+    "framework/governance/CONTRACT.md": "59fa17d9aa3e8c4a5c206f1a90b73a5a3321552e5f56110455a2a810d8f3a60e",
+    "framework/governance/core.py": "173d11f297fb397b7da8c8ec4601b382d457183d45cdfb7f208ba090953d2dfb",
+    "framework/governance/evaluate.py": "5038ffb63ded1ae0a6532826f681c479b5168a67d21b3a90f1d4a9d18b231ecd",
+    "schemas/governance.schema.json": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+    "scripts/v4_governance.py": "0b559eb00ab164cb2a507713ba275b0470ecd94733f5132dc6358fc99186abe1",
+    "tests/governance/test_governance.py": "5886d3024f2b5787b386186c1e18f270e12edd05690fa2137017055bcc04eb59"
+  },
+  "source_hashes_before": {
+    "examples/governance/README.md": "2f7073d03975d3147a076137ed92724eeed99546fb797cd408a0fb8b5dfdd93a",
+    "framework/governance/CONTRACT.md": "59fa17d9aa3e8c4a5c206f1a90b73a5a3321552e5f56110455a2a810d8f3a60e",
+    "framework/governance/core.py": "173d11f297fb397b7da8c8ec4601b382d457183d45cdfb7f208ba090953d2dfb",
+    "framework/governance/evaluate.py": "5038ffb63ded1ae0a6532826f681c479b5168a67d21b3a90f1d4a9d18b231ecd",
+    "schemas/governance.schema.json": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+    "scripts/v4_governance.py": "0b559eb00ab164cb2a507713ba275b0470ecd94733f5132dc6358fc99186abe1",
+    "tests/governance/test_governance.py": "5886d3024f2b5787b386186c1e18f270e12edd05690fa2137017055bcc04eb59"
+  },
+  "source_unchanged": true,
+  "started_epoch": 1795804912.1236238,
+  "stderr_sha256": "ebc35d463d556b97a7b0652b69ffbf726b13888e513211a76349c03638661471",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

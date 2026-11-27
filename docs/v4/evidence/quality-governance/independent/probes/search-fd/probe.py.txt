@@ -1,0 +1,48 @@
+import errno,json,os,stat
+from pathlib import Path
+from unittest.mock import patch
+base=Path(__file__).resolve().parent
+outside=Path('<OTHER_SYNTHETIC_TEMP>')
+flags=0x40000000|os.O_DIRECTORY|os.O_NOFOLLOW
+
+def read(path):
+ path=Path(path)
+ if not path.is_absolute() or path.resolve()!=path:raise ValueError('linked input')
+ parent=os.open('/',flags)
+ try:
+  for part in path.parts[1:-1]:
+   following=os.open(part,flags,dir_fd=parent);os.close(parent);parent=following
+  fd=os.open(path.name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=parent)
+  try:
+   info=os.fstat(fd);assert stat.S_ISREG(info.st_mode) and info.st_nlink==1
+   return os.read(fd,4096)
+  finally:os.close(fd)
+ finally:os.close(parent)
+
+result={}
+folder=base/'source';folder.mkdir();(folder/'data').write_bytes(b'inside')
+assert read(folder/'data')==b'inside';result['allowed_leaf_through_search_fds']='passed'
+try:os.listdir('/private')
+except PermissionError as e:result['parent_listing_denied_errno']=e.errno
+else:raise AssertionError('parent unexpectedly listable')
+try:read(outside/'data')
+except PermissionError as e:result['outside_leaf_denied_errno']=e.errno
+else:raise AssertionError('outside unexpectedly readable')
+original=os.open;injected=[False]
+def race(path,fl,*args,**kwargs):
+ if not injected[0]:
+  injected[0]=True;folder.rename(base/'original');folder.symlink_to(outside,target_is_directory=True)
+ return original(path,fl,*args,**kwargs)
+try:
+ with patch.object(os,'open',race):read(folder/'data')
+except OSError as e:
+ assert e.errno in (errno.ELOOP,errno.ENOTDIR),e
+ result['ancestor_swap_rejected_errno']=e.errno
+else:raise AssertionError('ancestor swap followed')
+folder.unlink();folder.mkdir();(folder/'data').write_bytes(b'pinned')
+def late_race(path,fl,*args,**kwargs):
+ if path=='data':folder.rename(base/'pinned');folder.symlink_to(outside,target_is_directory=True)
+ return original(path,fl,*args,**kwargs)
+with patch.object(os,'open',late_race):assert read(folder/'data')==b'pinned'
+result['late_swap_reads_pinned_original']=True
+(base/'observations.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))

@@ -1,0 +1,20 @@
+{
+  "redaction": "Paths; preserve raw source outside repository",
+  "files": [
+    {
+      "path": "stderr.log",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "result.json",
+      "original_sha256": "fe20b7d9d7c39707a411effb5f53c0f421eb0872d3cdf8e31b9894590093c79f",
+      "public_sha256": "3596a7aa4554db4ff4c8ce604e47ca41904d89ee58d63a518c1d9bbf66916dce"
+    },
+    {
+      "path": "stdout.log",
+      "original_sha256": "e486b32b65ce60e17954cfa694e63c59b8487626544a7d0c9be00353c31d5bfe",
+      "public_sha256": "e486b32b65ce60e17954cfa694e63c59b8487626544a7d0c9be00353c31d5bfe"
+    }
+  ]
+}

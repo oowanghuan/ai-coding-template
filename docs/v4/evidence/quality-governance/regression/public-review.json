@@ -1,0 +1,2254 @@
+{
+  "at": "2026-11-27T18:50:37.262209+00:00",
+  "broken_links": [],
+  "changed_files_snapshot": {
+    "docs/v4/OWNER_DECISIONS.md": "f44aff03e7b4e1de9c1b15d4607e3fc3a865a1f1ea5131494b7a69854316aa47",
+    "docs/v4/V4_WORK_PACKAGES.md": "300171af8862c041866d4c907ec274e9708d658f4cc55525a98c595dcfa79c90",
+    "docs/v4/evidence/quality-governance/governance-author/INDEX.json": "17ab0e72f91acc04128ef4ed8555d8163c9cceeba5a42753ac83a9d12b805f7a",
+    "docs/v4/evidence/quality-governance/governance-author/README.md": "f056b4f5ca4fec12af5cb8588a85089c4e3f9e9cec63af5b159c73ff35e398c3",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/candidates/baseline-known-new-no-waiver-candidate.json": "76ecbffa941a6fce4f4a55a7636d545ae987ade362d0e901b405e70d1d923636",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/candidates/contract-changed-candidate.json": "127595babc452c297c56e1f0bf31e9a599728502dbc576d2a6786df61141885d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/candidates/contract-restored-old-signoff-candidate.json": "127595babc452c297c56e1f0bf31e9a599728502dbc576d2a6786df61141885d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/candidates/deviation-active-candidate.json": "127595babc452c297c56e1f0bf31e9a599728502dbc576d2a6786df61141885d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/candidates/deviation-closed-candidate.json": "127595babc452c297c56e1f0bf31e9a599728502dbc576d2a6786df61141885d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/candidates/deviation-expired-candidate.json": "127595babc452c297c56e1f0bf31e9a599728502dbc576d2a6786df61141885d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/candidates/fresh-review-after-restore-candidate.json": "127595babc452c297c56e1f0bf31e9a599728502dbc576d2a6786df61141885d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/candidates/mechanical-exact-candidate.json": "932c64556c864bf4f94ee78dadbc706a8abc1cbdf79e8612a6437707fb2dbfa5",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/candidates/positive-candidate.json": "127595babc452c297c56e1f0bf31e9a599728502dbc576d2a6786df61141885d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/candidates/revoked-candidate.json": "127595babc452c297c56e1f0bf31e9a599728502dbc576d2a6786df61141885d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/candidates/same-tree-new-commit-candidate.json": "a42be089f7a4e93f265b182fb2f6d6a072319b06c6cbe066e83d0674e496124e",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/candidates/target-base-changed-candidate.json": "9cfee0be668eb8b453fbd86404e62690c417dfa5a5ff2830a81d05de95feefc0",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/01-quality-baseline.json": "8d924cd1c34b54a043c3badc70dbe8dbf393332c850766d06475d000b1af2053",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/01-quality-baseline.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/01-quality-baseline.stdout.log": "bb4c583a1ba1d0641f30560788920090989911964fb44555e20b17f3886f54b3",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/02-quality-current.json": "b2e385f89094660984aaacdf60122856c2014642ab0bdf0965c03c2b7323777b",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/02-quality-current.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/02-quality-current.stdout.log": "2fa2cccd89d9cc365f4480fd790dbba5088fa0ee29fa2332fbcd11822b310556",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/03-quality-mechanical.json": "79397e443b75c30f8238017dd936d48729a03dc98825b102fdbd80db43a619b9",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/03-quality-mechanical.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/03-quality-mechanical.stdout.log": "679d3d849109cf3df80e11655848223b964214148095fcdbdd892674e1d0fb12",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/04-quality-success.json": "179e76d2868b38db1bef686cab69d701db48fc2e6be48f4cbae563a8e458d416",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/04-quality-success.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/04-quality-success.stdout.log": "f72aaa6a39d2a64b6bd9fe27a77bd8f4d952ddbaa5e1c9751fae02d9dc5060ca",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/05-positive.json": "ed50308219e3b6f2f8b319d0177a5e86e842f3b34b97d602c59a7c59f7c48401",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/05-positive.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/05-positive.stdout.log": "d0ffa80b63735dc0bf1c41dbc305462c9eebb5fb7687b1fbed6a743e00177371",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/06-same-tree-new-commit.json": "225cfe16d922ce6de4dc309a77ce447c71348ba977340504d88bf5eaa0d2223c",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/06-same-tree-new-commit.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/06-same-tree-new-commit.stdout.log": "8e8d45cd193efa6df335827167553ed4dbc38ba023623879262a240d0ceb33e2",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/07-mechanical-exact.json": "1456625b81b60ee72cd3ad092c7ef1da0d7f0b9b622544852e6c38d7f32045d1",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/07-mechanical-exact.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/07-mechanical-exact.stdout.log": "900c4962820842ea0f0182526b12fdfd7321d9f25fa259d9228f1b7c47a32c26",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/08-target-base-changed.json": "28915571b4e5468015f503dc05ce0bbca4eadedc3764f543af0d2d918bca6ce1",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/08-target-base-changed.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/08-target-base-changed.stdout.log": "6eef2cba2123fb3221ab3e1def919bdb1051d3cb8052f4e25a71ceba5a5bdb34",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/09-contract-changed.json": "7d8d267218e33dd49662b43107d53472082d4e604e391d1587f03b0f255ed5b8",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/09-contract-changed.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/09-contract-changed.stdout.log": "37c80cce02921dc568abdef9e75c0b99777c440ea0906a08971a000f22db62c7",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/10-contract-restored-old-signoff.json": "c06d6a435a5b934d32755ce9f4418cde36d74405f6e0f554af3f0e1eeac0ab68",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/10-contract-restored-old-signoff.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/10-contract-restored-old-signoff.stdout.log": "eeabaca9675ff3ab4b03841979a380aaf5ffd26d0ee7fc345cec6a15883bea62",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/11-quality-fresh-success.json": "ab9fe6c2948928315b80feec7cf8f01420ba4f6d5f586bb6313108379194ddc7",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/11-quality-fresh-success.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/11-quality-fresh-success.stdout.log": "3535101c5e5efb561aa0110e7397d4c9fc894faef449be8c4275de0bf1f0ebf6",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/12-fresh-review-after-restore.json": "8301ba5a42956d89a177768de28036026efa981f2ea96a37f3c62998fde21f6c",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/12-fresh-review-after-restore.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/12-fresh-review-after-restore.stdout.log": "08434018ce5a73403e5ab3957da904dac88d16ea498a92609d9fbe60e1679290",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/13-revoked.json": "1c54c5d115e52e8840447d03aa00ff294b5c4c2e07f86043fdff23c93e6cf67c",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/13-revoked.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/13-revoked.stdout.log": "841d3ee48ce75e92bc22bdeb6d3ca15b531a0909672b9b812121a7a0291eea73",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/14-deviation-active.json": "0d681dfacc3c8a943e6ed3b7515a99e6ac1f724bcb429cb41f61e45509f12447",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/14-deviation-active.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/14-deviation-active.stdout.log": "6b5a54a735848f20ae26023807bece302806daa232933945fc83403f474e9c8b",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/15-deviation-expired.json": "3d1e8b1768fd8fdea4cd619becbac7e7825e1a33a27fdb651a467f0e21963a04",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/15-deviation-expired.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/15-deviation-expired.stdout.log": "05027ef80e8cab2c012baf30a9d2969aa0b20ce9afe42dea44e5fda036c24784",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/16-deviation-closed.json": "8bc3bb04eebefca310c56f8534e38e6f5ec4cdba38032827a9a7b1840d82eb65",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/16-deviation-closed.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/16-deviation-closed.stdout.log": "45b87ed46449f87536947ae7b6cd21ed37b1729ebf152984aa4c08ab725ee6cc",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/17-baseline-known-new-no-waiver.json": "89ad254ff800129d5e0573c0a4f9bb4abdc546dbeedd64c4f9d6e476f193e7e0",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/17-baseline-known-new-no-waiver.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/17-baseline-known-new-no-waiver.stdout.log": "59568a48ed52bac12a68552f8238a0652be0bfc87ffc85e4de72a227fce36f20",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/baseline-collector.json": "3fbba58f5e644c4dbba0e5a0d130b7b8228567330cc16430dd4bf34fdbee648f",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/baseline-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/baseline-collector.stdout.log": "e3faad401d4237789715b261c44605618b6c2d9a1232b404b270319a543b592a",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/coordinator-before-fresh.txt": "75d35126012844c2d0a214cea9500a51d9e21589240d0d09e9a2679514e6703e",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/coordinator.py.txt": "f093388340bb1e0d4bea8828632ccdd0b2e53bb1b49961f8a3c8c0c18b459c5f",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/current-collector.json": "2cad50bf70c6b772a6ffbc71aa067fe0a50b241280313daaa3b80072b605ee14",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/current-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/current-collector.stdout.log": "ff2acbe634837562846de896bf4327f2c4e6588f0e549e72d1e1dd45b8c516ea",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/execute-intent.json": "214bd94d7db6b3a8a786dd7776192f512f1bcf3fe33a6baff864f875e79fc12c",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/execute.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/execute.stdout.log": "f02814b3e37b17b0d66d108d4d2ee7f38c44201e67ae0fc9945c256b442e1167",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/fresh-success-collector.json": "5e0779aae58eff3ec80a9fd01e87c427363afbf7b1b3e7a7849e5483b6ee3969",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/fresh-success-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/fresh-success-collector.stdout.log": "a97869a9080bd0522e1fbc133f32531514dd515c04f3a67095a488b5ceaecab8",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/mechanical-collector.json": "807a8caf508eb509a87fdcdeb597e4c54aeba2f6b1c516b67239a533bfa7b118",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/mechanical-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/mechanical-collector.stdout.log": "e8126f9e292394dd401d2951d7a05abd284795e8a4073dd944f1393356a183ce",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/prepared.json": "3fa15968fd63912cd756dfeebe00bb4c98b3a520781f72baf5c5780e0a22bba3",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/success-collector.json": "edeebd032da89083a56d87d4d5eaa85f4da8ee7e675ea249731b64ad75665f1b",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/success-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/success-collector.stdout.log": "c5c9f4915cbc058fb85a4a418c71d4f49ead9759d3b3ac1b2177eb3198f9cd34",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/stage/summary.json": "06f318856e689070516e9fc6b919746bff7c5542f935cbc52f48e66de97f3fb3",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/baseline-comparison/ledger.json": "3a17c56f47644b45fc127d9eb897a3a3bed21a239d28c4958769ea25a08c1c33",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/baseline-comparison/source-1.json": "28aeda6926b027169b7cc366fb1233a054299d2b34198c407561a006750ea9dd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/baseline-comparison/source-2.json": "d8f856c23ad721845e7f3d02b8c429105a4d8920901a76bd9514906a605dba35",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/baseline-comparison/source-3.json": "6d54ef959add0ac5934c9b15546a5225aa6de31ebf353f5a4cc80c624ea1f9d5",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/baseline-comparison/source-4.json": "4deaa42dca5b9bfff873e9e0b4d163cc0d705fc08eb9ea2d39f751e7ec85a4c5",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/baseline-comparison/source-5.json": "670f2756627572fa607bdee7f7aff4376ea331f357c8905164acbc5f392b7208",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/baseline-comparison/trust.json": "fbe223c63ba644fed9c085ff207426b00c3c3ca7422d60871d613668a05f0bfd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/changed/ledger.json": "b0a59a39ee560680b828f08dfcfad153f111375c4689b9552e35f02742619572",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/changed/source-1.json": "28aeda6926b027169b7cc366fb1233a054299d2b34198c407561a006750ea9dd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/changed/source-2.json": "d8f856c23ad721845e7f3d02b8c429105a4d8920901a76bd9514906a605dba35",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/changed/source-3.json": "555641afea2f439b1d003b70e1c69d00e9aceba44c7a58a2def303b5234b833d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/changed/source-4.json": "f385ccd5fe08c4b6a1f5f5c549b51b2c7b8b1de8934cfa32b6097a6115b808cd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/changed/source-5.json": "1574b43601743a704033a2ef16f8a3d187ae6d18f360f4b665b549d47a6ab068",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/changed/trust.json": "d43045b33751f1cad862d24bfd3eda3119058bed43995b2b358ebbab56b88dfc",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-active/ledger.json": "a676987a18d99c69ec3c41a5761f8a945f5fbfa92c24323a5712c961e254cfe5",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-active/source-1.json": "28aeda6926b027169b7cc366fb1233a054299d2b34198c407561a006750ea9dd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-active/source-2.json": "d8f856c23ad721845e7f3d02b8c429105a4d8920901a76bd9514906a605dba35",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-active/source-3.json": "24757af5d03e6683aeda3273a59f1f42baaf0fda8677854fe2787100427ab296",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-active/source-4.json": "3c6167d82d91eb29157a4c864392f4ad5ddcf38ee1e11e8539b669d973945157",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-active/source-5.json": "f385ccd5fe08c4b6a1f5f5c549b51b2c7b8b1de8934cfa32b6097a6115b808cd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-active/trust.json": "680d7090b558d1a9273811ca0b7132015ad0c70aeeae852beac291ac57bd85ab",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-closed/ledger.json": "4ae36a0a25e7996b3ebb2d43a9ce2329c1926e5cf043b0402587c8e3538f99f8",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-closed/source-1.json": "28aeda6926b027169b7cc366fb1233a054299d2b34198c407561a006750ea9dd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-closed/source-2.json": "d8f856c23ad721845e7f3d02b8c429105a4d8920901a76bd9514906a605dba35",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-closed/source-3.json": "6bc07922631977dee3a857d5187b13f47c3158be6b04b685b757bf7655a988ac",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-closed/source-4.json": "3c6167d82d91eb29157a4c864392f4ad5ddcf38ee1e11e8539b669d973945157",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-closed/source-5.json": "f385ccd5fe08c4b6a1f5f5c549b51b2c7b8b1de8934cfa32b6097a6115b808cd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-closed/trust.json": "39eb97018ac6724cc6cf47352680b0dc1f0cfc1f0316bf5adcc62a63880f2740",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-expired/ledger.json": "3bac79ffe8b501ec91873bc415e2274626d9c12b9b28270ef6536cc6be9574e8",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-expired/source-1.json": "28aeda6926b027169b7cc366fb1233a054299d2b34198c407561a006750ea9dd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-expired/source-2.json": "d8f856c23ad721845e7f3d02b8c429105a4d8920901a76bd9514906a605dba35",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-expired/source-3.json": "7ac3705dfd1ca1ae2b41f857b013459639e60010cd0d6ca8017be5e4ce373c4a",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-expired/source-4.json": "3c6167d82d91eb29157a4c864392f4ad5ddcf38ee1e11e8539b669d973945157",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-expired/source-5.json": "f385ccd5fe08c4b6a1f5f5c549b51b2c7b8b1de8934cfa32b6097a6115b808cd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/deviation-expired/trust.json": "305eb8bf4ee8c484834c0a5e4ad135a29e7cba383d751d91d10af34be71844df",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/original/ledger.json": "1bdde73fdaddad28cef45c5fc0b3eefa368c33f525bedf051e7c74b0e47c73ed",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/original/source-1.json": "28aeda6926b027169b7cc366fb1233a054299d2b34198c407561a006750ea9dd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/original/source-2.json": "d8f856c23ad721845e7f3d02b8c429105a4d8920901a76bd9514906a605dba35",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/original/source-3.json": "555641afea2f439b1d003b70e1c69d00e9aceba44c7a58a2def303b5234b833d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/original/source-4.json": "f385ccd5fe08c4b6a1f5f5c549b51b2c7b8b1de8934cfa32b6097a6115b808cd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/original/trust.json": "0d1d2ac3166c33ea4617c7a376b13040da7965a0584b3be42cbe3ad7d883ca42",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/renewed/ledger.json": "e4d59e89c6b7388aa0cc210cf827628d526ed5382e9d5aefa13221ffba4980f8",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/renewed/source-1.json": "28aeda6926b027169b7cc366fb1233a054299d2b34198c407561a006750ea9dd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/renewed/source-2.json": "d8f856c23ad721845e7f3d02b8c429105a4d8920901a76bd9514906a605dba35",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/renewed/source-3.json": "555641afea2f439b1d003b70e1c69d00e9aceba44c7a58a2def303b5234b833d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/renewed/source-4.json": "f385ccd5fe08c4b6a1f5f5c549b51b2c7b8b1de8934cfa32b6097a6115b808cd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/renewed/source-5.json": "1574b43601743a704033a2ef16f8a3d187ae6d18f360f4b665b549d47a6ab068",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/renewed/source-6.json": "28aeda6926b027169b7cc366fb1233a054299d2b34198c407561a006750ea9dd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/renewed/source-7.json": "fa207768c5be1be95ad9129fe4402bae081e8768c3fa6b05612a2b4d81ad5621",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/renewed/source-8.json": "8237bada64d25717c43af1f7a7473abed245b4f2ffb31f24e2d57c36dcb924d7",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/renewed/trust.json": "57d727d5c9221af82f421e27c59d4624d7df28ec31fdcd0076bf0b30c44697b6",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/restored/ledger.json": "8232b796ff1f4f65d290012c783d35f11ef7baa55b5c35bc9a539745ee2b4fb8",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/restored/source-1.json": "28aeda6926b027169b7cc366fb1233a054299d2b34198c407561a006750ea9dd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/restored/source-2.json": "d8f856c23ad721845e7f3d02b8c429105a4d8920901a76bd9514906a605dba35",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/restored/source-3.json": "555641afea2f439b1d003b70e1c69d00e9aceba44c7a58a2def303b5234b833d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/restored/source-4.json": "f385ccd5fe08c4b6a1f5f5c549b51b2c7b8b1de8934cfa32b6097a6115b808cd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/restored/source-5.json": "1574b43601743a704033a2ef16f8a3d187ae6d18f360f4b665b549d47a6ab068",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/restored/source-6.json": "28aeda6926b027169b7cc366fb1233a054299d2b34198c407561a006750ea9dd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/restored/trust.json": "4b016a0b012b2e787aabf3bc6eeb742dd4da1fc8d64100fd1b188bdf6315ac5a",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/revoked/ledger.json": "199844521fd33cb27ce821ae7445e03e86f161e9b089e2a9ab8542e661d7d65e",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/revoked/source-1.json": "28aeda6926b027169b7cc366fb1233a054299d2b34198c407561a006750ea9dd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/revoked/source-2.json": "d8f856c23ad721845e7f3d02b8c429105a4d8920901a76bd9514906a605dba35",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/revoked/source-3.json": "555641afea2f439b1d003b70e1c69d00e9aceba44c7a58a2def303b5234b833d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/revoked/source-4.json": "f385ccd5fe08c4b6a1f5f5c549b51b2c7b8b1de8934cfa32b6097a6115b808cd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/revoked/source-5.json": "1574b43601743a704033a2ef16f8a3d187ae6d18f360f4b665b549d47a6ab068",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/revoked/source-6.json": "28aeda6926b027169b7cc366fb1233a054299d2b34198c407561a006750ea9dd",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/revoked/source-7.json": "fa207768c5be1be95ad9129fe4402bae081e8768c3fa6b05612a2b4d81ad5621",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/revoked/source-8.json": "8237bada64d25717c43af1f7a7473abed245b4f2ffb31f24e2d57c36dcb924d7",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/revoked/source-9.json": "22ce3b87caec486c41d1bfbc1e53e75ab1c0bc88c50bc72fb091e249e56f6080",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/governance/revoked/trust.json": "e35c475484adb1a88abc03be06c69e7c035da8ad030d300a2e1ec7ffd21da877",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/outer.sb": "b4f64b5dec0b38b0c532c48b393cfeb59c81b5815b57262fa12c790f6e80a1ab",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/collector.py.txt": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/evidence.json": "df836bb723347efa81b420dacce911464f56b3c1d19e7dd7c60d8c1c0a82f4cc",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/intent.json": "35fc6e3a0cda6880131198a968e0b97f70af70fc84f60fb24be90c2832b79b32",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/logs/known.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/logs/known.stdout": "2056a28ea38a000f3a3328cb7fabe330638d3258affe1a869e3f92986222d997",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/logs/new.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/logs/new.stdout": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/plan.json": "8f92d3d9a663993c8dc0ed2c30d8b9686e12fca77397d989d6a5027fb57bc2ed",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/policies/known.sb": "06cf39fc24d4e1d719133715f1feb4b9a154647a1544e0ac9d2506db4ba39d58",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/policies/new.sb": "65e20358d15c612567069bf1cb2e89e83b1ae4f8d53459d367d5207978a3140e",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/subject/GUIDE.md": "999af77187383cbbdd11d3d4aa0908d9a03f4ea86a43bd9607b0d27bc19494b7",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/subject/check.py.txt": "16fc336741b731d25e9ab9510a5ae64bb5f654a4bb41abc4724e8f547b80bd59",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/subject/data.json": "64b48aa750843f2823eccabb36235ac6d32192f488c1ca9e1f4e37724922a327",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/collector.py.txt": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/evidence.json": "75e815480a64c54284eee7c47115e72889f73f33a98cf03a648286c7d2535fb6",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/intent.json": "4afdc36680f676cc5cec4a2783fe64f87063f590c32fd1a18d7d050508073c71",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/logs/known.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/logs/known.stdout": "2056a28ea38a000f3a3328cb7fabe330638d3258affe1a869e3f92986222d997",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/logs/new.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/logs/new.stdout": "2056a28ea38a000f3a3328cb7fabe330638d3258affe1a869e3f92986222d997",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/plan.json": "17e5cde66548af178effa64f04f8237c26512f7b8048614c7bf14152526a3861",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/policies/known.sb": "19bfb8daccfd21b67f963b5f19b512b06dd865ded9832272072bbb96c37ffc92",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/policies/new.sb": "53e9b2b9487030f3078608bc96124a64bf9bb26969dead372db63e266749614a",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/subject/GUIDE.md": "999af77187383cbbdd11d3d4aa0908d9a03f4ea86a43bd9607b0d27bc19494b7",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/subject/check.py.txt": "16fc336741b731d25e9ab9510a5ae64bb5f654a4bb41abc4724e8f547b80bd59",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/subject/data.json": "4905bf501ada4aec6ae2a8ab5574318f19aefa1dc8c8cb92a20c7986a7d384a9",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/collector.py.txt": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/evidence.json": "562ff363209b51002b91e599664b6ff4ffe3c4c6a06e36f1386d19f371304036",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/intent.json": "8ca4a709aae7ad33e5a70471dca9aa783de7d05127525bb67da4c46a9a2b6140",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/logs/known.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/logs/known.stdout": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/logs/new.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/logs/new.stdout": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/plan.json": "173af6669d52633266d0a3bd90aa082c6b60d6e062aa59a0e3ef35a65bc2e0c4",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/policies/known.sb": "5942240422c712f8e4890bdd99da53aa5cabb09787b0b4148b8d297e72245b10",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/policies/new.sb": "a764719fe8f941a72f598e15aad532ebfe8bf487943d51c0ee6fffcef1c26856",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/subject/GUIDE.md": "999af77187383cbbdd11d3d4aa0908d9a03f4ea86a43bd9607b0d27bc19494b7",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/subject/check.py.txt": "16fc336741b731d25e9ab9510a5ae64bb5f654a4bb41abc4724e8f547b80bd59",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/subject/data.json": "dbe4082a379d90f4cdf324710fbb12e8d802c5c99f5989e77e7e146581243f93",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/collector.py.txt": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/evidence.json": "751362948438d21fb1879bd01948ed24c0b1e14313ac119586a4b506440f8908",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/intent.json": "dfd2f99670e3f1429e91b7b18a669cb520a2963d5cb4bc5f10ed77ed7b0da0e3",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/logs/known.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/logs/known.stdout": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/logs/new.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/logs/new.stdout": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/plan.json": "70f640ff0a2e259319291000d691e2df54c02ed035de240d16bbcc58d5306f15",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/policies/known.sb": "b430ecb08f42719bece6634bbe4e08198d4e353aa6757342b0c7de176c7120d3",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/policies/new.sb": "8867071aba3e23324ec666758006dc8806b95eee2e09a07f74b2af26d6d864d4",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/subject/GUIDE.md": "ca431d5dfca120a34e4c8007238a8681a8dd7c07b26d2abb82ba8de2bf87f6d3",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/subject/check.py.txt": "16fc336741b731d25e9ab9510a5ae64bb5f654a4bb41abc4724e8f547b80bd59",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/subject/data.json": "dbe4082a379d90f4cdf324710fbb12e8d802c5c99f5989e77e7e146581243f93",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/collector.py.txt": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/evidence.json": "4eba1a75f47a9944dfe1896a67dd6e476df667d2be822e202dc0d8d51199d9ff",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/intent.json": "2bffe6f8242f99f790075bf583b7bb28630ffbce979ee55a81ceb3976e58ee77",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/logs/known.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/logs/known.stdout": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/logs/new.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/logs/new.stdout": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/plan.json": "80cc56638b8ab1ac665c9290acab3fc5e50589c7f83a89c69c1ea4753a0e5ea9",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/policies/known.sb": "4ad5f26560592d50a95b780a42c8ee656c871e630f4fb4a70fda0d3024c6ab0d",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/policies/new.sb": "c593a9d56384187bbf63067fe92e325c0be54a96413d61ed289708d5ee94de00",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/subject/GUIDE.md": "999af77187383cbbdd11d3d4aa0908d9a03f4ea86a43bd9607b0d27bc19494b7",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/subject/check.py.txt": "16fc336741b731d25e9ab9510a5ae64bb5f654a4bb41abc4724e8f547b80bd59",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/subject/data.json": "dbe4082a379d90f4cdf324710fbb12e8d802c5c99f5989e77e7e146581243f93",
+    "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/quality-trust.json": "307f18962321d3ff3d0b83a1359e420d0ea8eca01b5e01f2730d1496e6db86c3",
+    "docs/v4/evidence/quality-governance/governance-author/source/examples/governance/README.md.txt": "2f7073d03975d3147a076137ed92724eeed99546fb797cd408a0fb8b5dfdd93a",
+    "docs/v4/evidence/quality-governance/governance-author/source/framework/governance/CONTRACT.md.txt": "59fa17d9aa3e8c4a5c206f1a90b73a5a3321552e5f56110455a2a810d8f3a60e",
+    "docs/v4/evidence/quality-governance/governance-author/source/framework/governance/core.py.txt": "173d11f297fb397b7da8c8ec4601b382d457183d45cdfb7f208ba090953d2dfb",
+    "docs/v4/evidence/quality-governance/governance-author/source/framework/governance/evaluate.py.txt": "5038ffb63ded1ae0a6532826f681c479b5168a67d21b3a90f1d4a9d18b231ecd",
+    "docs/v4/evidence/quality-governance/governance-author/source/schemas/governance.schema.json.txt": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+    "docs/v4/evidence/quality-governance/governance-author/source/scripts/v4_governance.py.txt": "0b559eb00ab164cb2a507713ba275b0470ecd94733f5132dc6358fc99186abe1",
+    "docs/v4/evidence/quality-governance/governance-author/source/tests/governance/test_governance.py.txt": "5886d3024f2b5787b386186c1e18f270e12edd05690fa2137017055bcc04eb59",
+    "docs/v4/evidence/quality-governance/governance-author/unit/frozen-result.json": "fca751e1869cf2807e56dc7d682eb92b22ce087fae4eb89496c939ead3951a78",
+    "docs/v4/evidence/quality-governance/governance-author/unit/frozen-stderr.log": "ebc35d463d556b97a7b0652b69ffbf726b13888e513211a76349c03638661471",
+    "docs/v4/evidence/quality-governance/governance-author/unit/frozen-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/governance-author/unit/hardened-profile.sb": "486a91ee86b9aa60ea514aa4656876a003a5362af322aa63367312bc2bb323dd",
+    "docs/v4/evidence/quality-governance/governance-author/unit/run-1.log": "5e8ba1d98aa8a4cb9e1d5bc5ba4e37b0263f28e501aab5c7299ea87777e371e0",
+    "docs/v4/evidence/quality-governance/governance-author/unit/run-2.log": "aba0e7179a914c538879c06f7b0d7b1df29d767c1b486b882566ede8240fb136",
+    "docs/v4/evidence/quality-governance/governance-author/unit/run-3.log": "ebc35d463d556b97a7b0652b69ffbf726b13888e513211a76349c03638661471",
+    "docs/v4/evidence/quality-governance/governance-author/unit/run_frozen.py.txt": "c3a202e0b16b39d2225e9a39662818e7cbf04dddddb29597230ae758feeac1a8",
+    "docs/v4/evidence/quality-governance/quality-author/PUBLIC-CHECK.json": "8ec38d2e045e9001bb07199196f9e9968259d4ab193cd2520df4bb934d0a0afd",
+    "docs/v4/evidence/quality-governance/quality-author/PUBLIC-SHA256.json": "5abb7b18f33e9871a1c8a6a4ed2e3f3c2e4a82c070333d448bc13bb4e17f0db0",
+    "docs/v4/evidence/quality-governance/quality-author/README.md": "c54c77f94d0848686919c7fb839ee88fd5cc3c9965245065d171847e38bf7e09",
+    "docs/v4/evidence/quality-governance/quality-author/SHA256-MANIFEST.json": "396c32489cb85955aa5e3b0b6e51e0641a40a04db99b005f9a9004b43c425945",
+    "docs/v4/evidence/quality-governance/quality-author/candidate-artifacts/forged-write/boundary/forged-report.json": "b10ccfdb052426fdadf9470287b64d3f8143359d9ce1cce5fa49ca9ca43264f6",
+    "docs/v4/evidence/quality-governance/quality-author/candidate-artifacts/forged-write/boundary/forged-report.sha256": "a907a70c66c2de09bb78111dbb15a389f693103918e4d50fdbaa2aa0ed18cdb5",
+    "docs/v4/evidence/quality-governance/quality-author/candidate-artifacts/no-collector/forged-report.json": "b10ccfdb052426fdadf9470287b64d3f8143359d9ce1cce5fa49ca9ca43264f6",
+    "docs/v4/evidence/quality-governance/quality-author/candidate-artifacts/no-collector/forged-report.sha256": "a907a70c66c2de09bb78111dbb15a389f693103918e4d50fdbaa2aa0ed18cdb5",
+    "docs/v4/evidence/quality-governance/quality-author/fixture/GUIDE.md": "df76e45d6a5a657cfe0991cdd64d36ba5488e7fdd0c7675b2d8ae228aaf1bc58",
+    "docs/v4/evidence/quality-governance/quality-author/fixture/check.py": "9419ccb3c47c687ebacad618dffc102d03d32a816e9e40dfbb1df48cc804f074",
+    "docs/v4/evidence/quality-governance/quality-author/fixture/commit.raw": "d9f6e8a0baa1c1aecdf196c2a255d0f3989c0fda36cf03f6e6d5263663de9683",
+    "docs/v4/evidence/quality-governance/quality-author/gate-unit/harness.py": "951db9720523068ba3b36dbfb269f13ab02f40154680b4ef8eea78fdf00c725b",
+    "docs/v4/evidence/quality-governance/quality-author/gate-unit/result-01.json": "e01a17c12973054b31c32d869b00d1b306e79b9bb4e372be98787b5687ebafa7",
+    "docs/v4/evidence/quality-governance/quality-author/gate-unit/result-02.json": "c306cba02e83ab9d7900429517cd26ef95b6650087bddf4694ce382ef5f03c60",
+    "docs/v4/evidence/quality-governance/quality-author/gate-unit/result-03.json": "b7ae6d62010426e033f272dcc3f645509c8b93e3d2dd4a075475bdf3ce9c3f6e",
+    "docs/v4/evidence/quality-governance/quality-author/gate-unit/stderr-01.log": "ef06951e073b726266fc24559121d7a2c5fc0f566a99821c5c8bcd06c3286db1",
+    "docs/v4/evidence/quality-governance/quality-author/gate-unit/stderr-02.log": "4a1fb7ebab582333e8739ad6f96b9a2cce9f7d05093bb1c377bcba275e95b739",
+    "docs/v4/evidence/quality-governance/quality-author/gate-unit/stderr-03.log": "ed7197f1dae6254197fa460cc040dc768c86a3eb921023847274274dc581bca3",
+    "docs/v4/evidence/quality-governance/quality-author/gate-unit/stdout-01.log": "792322d44c05e87b3f6fedc617563cbd6d8af24eadfaf9593cb71e290385a3a6",
+    "docs/v4/evidence/quality-governance/quality-author/gate-unit/stdout-02.log": "ef3b01724b8d8a4027e6089e1dd6a2a48059cc1a649c92150a103514d9738dde",
+    "docs/v4/evidence/quality-governance/quality-author/gate-unit/stdout-03.log": "c221e914d7f5e727695decf80a19c1add22bf1854295e7107b62398f01449135",
+    "docs/v4/evidence/quality-governance/quality-author/integration/close-pipes-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/close-pipes-collector.stdout.log": "2dbc78aba5af34abafed7111c7a1b7557028b7fcc3b434f4dacff14d52246013",
+    "docs/v4/evidence/quality-governance/quality-author/integration/close-pipes-gate-normal.json": "1f2561814ce3fa9f12f31f8b8d03a045267b8261d7571d7efaefe3e523a3cdd5",
+    "docs/v4/evidence/quality-governance/quality-author/integration/close-pipes-gate-normal.stderr.log": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/integration/close-pipes-gate-normal.stdout.log": "d4d7ad43564c0b9717660e8dfbac38866261513dcd9e18b1f1b3db36920f7144",
+    "docs/v4/evidence/quality-governance/quality-author/integration/close-pipes-result.json": "6b83812eb0167f44b1c524de322ccdb940cc07ac3c9e1f61e6bcaf69acfef47a",
+    "docs/v4/evidence/quality-governance/quality-author/integration/coordinator.py": "59989ea6ab698c70710ad116b97cdb975211396f69f7e946504d3adfe90d8a68",
+    "docs/v4/evidence/quality-governance/quality-author/integration/document-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/document-collector.stdout.log": "22493b252f9ab97801ecb3adc67273a9698126b61d81933a7db049b7a14e33e1",
+    "docs/v4/evidence/quality-governance/quality-author/integration/document-gate-normal.json": "52ba42f002a474b1305d1525fd9692f91f1eeb8b7326058551ee3878107d7be8",
+    "docs/v4/evidence/quality-governance/quality-author/integration/document-gate-normal.stderr.log": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/integration/document-gate-normal.stdout.log": "ae55cb03e1aa30a9f823c28eab80a96b57ff9fe86e0aef27e76f72e3d338b746",
+    "docs/v4/evidence/quality-governance/quality-author/integration/document-result.json": "c48fea6c2982bdb9c62d21ca06bfa3e39fb9cdfa0ea5db41dba016892d972ef6",
+    "docs/v4/evidence/quality-governance/quality-author/integration/empty-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/empty-collector.stdout.log": "8de3e785148fcc2a434ed02b09ed3c7deab17e34aef69b17f593da96784cd7c5",
+    "docs/v4/evidence/quality-governance/quality-author/integration/empty-gate-normal.json": "d896ca33363c67c83f3c2bfca5c75c16aa20d4cc76918656c4e02448a4ae4bdd",
+    "docs/v4/evidence/quality-governance/quality-author/integration/empty-gate-normal.stderr.log": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/integration/empty-gate-normal.stdout.log": "5a21bce56ed1ccc82e6d0b2c505119a3c25f72c75a0e18ae333a35e9cd4786b2",
+    "docs/v4/evidence/quality-governance/quality-author/integration/empty-result.json": "724b4ee2091012c246a366ade84f9b9d7523374927bfe62e08f9a85d8509ba9a",
+    "docs/v4/evidence/quality-governance/quality-author/integration/execute-invocation.json": "2c2486fc3c3b43e9ba43ea2a78bf4b842ea3e276c0c6c23525eb9a796d1d9ecd",
+    "docs/v4/evidence/quality-governance/quality-author/integration/execute.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/execute.stdout.log": "58cbc761eaa9a3351f88cd994bc7ce211f7b8f7e4f44e1bff1f97d349fe7fa58",
+    "docs/v4/evidence/quality-governance/quality-author/integration/execution-intent.json": "e9088364ea3bfbd3fd9200362c560d469345d424cca38f0f76565baba67b4865",
+    "docs/v4/evidence/quality-governance/quality-author/integration/flood-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/flood-collector.stdout.log": "3fac733befe07848828e7a01cf2a9bf10ed5c744bbb2e89e586efcfe6efd4948",
+    "docs/v4/evidence/quality-governance/quality-author/integration/flood-gate-normal.json": "a2d78f095fe516f3269ff9a2993c77422ed7cc2a5d8ff1bb61451bd0fa85953e",
+    "docs/v4/evidence/quality-governance/quality-author/integration/flood-gate-normal.stderr.log": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/integration/flood-gate-normal.stdout.log": "d0679463eec113a252b92b9f6c002219c6eba6c130f20bf59261f0d31cc78f8c",
+    "docs/v4/evidence/quality-governance/quality-author/integration/flood-result.json": "e49864636f06977ecdea243b356986674b25a3eb297907b38913476016a6b69e",
+    "docs/v4/evidence/quality-governance/quality-author/integration/forged-write-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/forged-write-collector.stdout.log": "aa1d48b16911ee11004ea2175dfc1250e566ede07c48e13fd0fa7ed807419e68",
+    "docs/v4/evidence/quality-governance/quality-author/integration/forged-write-gate-normal.json": "ad956dce4286f08866d97f9ecb2decc7eedb50564429ce2cd6b54f6e342661ae",
+    "docs/v4/evidence/quality-governance/quality-author/integration/forged-write-gate-normal.stderr.log": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/integration/forged-write-gate-normal.stdout.log": "d6a7c299840854cba1eecffaf52966218a873367770c8ff4bd9d0bd9e719b596",
+    "docs/v4/evidence/quality-governance/quality-author/integration/forged-write-result.json": "4ca6da907c52031433d8bcc5563c0fdea36972523316cbfefebdba6b9aba7574",
+    "docs/v4/evidence/quality-governance/quality-author/integration/fork-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/fork-collector.stdout.log": "ac35576a5f9333b4265f28eaaba74e784397e3869a1e94ae6367e4f8c5e9f07c",
+    "docs/v4/evidence/quality-governance/quality-author/integration/fork-gate-normal.json": "434cedd70047fe4bce336cdb3755776c3130139b8a018e8f3a929b6eafe85edc",
+    "docs/v4/evidence/quality-governance/quality-author/integration/fork-gate-normal.stderr.log": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/integration/fork-gate-normal.stdout.log": "3468d7963edf7f7ff52de9ecb94713ce5165efa50b8b28fb640965a444191200",
+    "docs/v4/evidence/quality-governance/quality-author/integration/fork-result.json": "f57fb82ffd8a32aa5444077f408d7f9541804e46642559b2c9a7a037c36117d5",
+    "docs/v4/evidence/quality-governance/quality-author/integration/no-collector-gate-normal.json": "d492e4f4b8e1fccdd1f79dae0af39a235f4ce5e0dbaeef90d5a5edfc0f8f03f9",
+    "docs/v4/evidence/quality-governance/quality-author/integration/no-collector-gate-normal.stderr.log": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/integration/no-collector-gate-normal.stdout.log": "99fef70e38b99117045217ea207776163a1b7943c1d9897b6e44e82456f65770",
+    "docs/v4/evidence/quality-governance/quality-author/integration/no-collector-result.json": "263005150c15aba6118d23c73ccb145a5c16babec3f159220b8dff1e1c4ff6c1",
+    "docs/v4/evidence/quality-governance/quality-author/integration/owned-canary-cleanup.json": "5f71ce1b17f5db3927107737fa5153a60dca485366879e21decd5ed4b80234af",
+    "docs/v4/evidence/quality-governance/quality-author/integration/owned-canary.json": "62c24c4c1f8e6743047752b92bcabe73f0dad9d8053df4f9afac6669735c17de",
+    "docs/v4/evidence/quality-governance/quality-author/integration/prepare-invocation.json": "fe11687b38f1f1d6bfaa903d3e73cccd07a7d8a1cfd8862b709c72f5837bbbf9",
+    "docs/v4/evidence/quality-governance/quality-author/integration/prepare.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/prepare.stdout.log": "5a926535e863ce26e47e66ed392f186ce7ff7d97aeefbc526000310d05161f08",
+    "docs/v4/evidence/quality-governance/quality-author/integration/prepared.json": "fbe9e99df16e5e0e95c3f789feccb1fde156bf3c9d178eed8c08e42ecfecdb38",
+    "docs/v4/evidence/quality-governance/quality-author/integration/replay.json": "83168860fed145291cba471f9741f14315cbf865b8c0d269cabcf098126a4f1e",
+    "docs/v4/evidence/quality-governance/quality-author/integration/replay.stderr.log": "a0735d83ea04e88f9333fef472e1e7bac8126e1a62b73a29fcdf7982eb95fcd2",
+    "docs/v4/evidence/quality-governance/quality-author/integration/replay.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/requiredskip-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/requiredskip-collector.stdout.log": "2ad92c76aee0cfeac1eb8a541d1017a95def87ceff489aa367fae293d9ac9d5e",
+    "docs/v4/evidence/quality-governance/quality-author/integration/requiredskip-gate-normal.json": "40f22a6e9fb0e63f16491f6de06a1a016650e05a3618140a24a91e6a5e67aad4",
+    "docs/v4/evidence/quality-governance/quality-author/integration/requiredskip-gate-normal.stderr.log": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/integration/requiredskip-gate-normal.stdout.log": "517115b411aff4d681a974aa78c7f6018c7c5992c90210f245cdfa8bf695f975",
+    "docs/v4/evidence/quality-governance/quality-author/integration/requiredskip-result.json": "a4834d8bbfd6d385c88fd7722e40049008d015deb7441178323c798a22b4aea6",
+    "docs/v4/evidence/quality-governance/quality-author/integration/sealed-manifest.json": "04239a15e45caa08a69a82abad8d54118cc948cafba5ae5cda2887854f6645a2",
+    "docs/v4/evidence/quality-governance/quality-author/integration/selfreport-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/selfreport-collector.stdout.log": "70d9bbebdad5e575ea49066adb2f254c90e5d3f44cf200c790a9ad2626a990cf",
+    "docs/v4/evidence/quality-governance/quality-author/integration/selfreport-gate-normal.json": "44066604b591603282f2de458ef2c4cae771ba6746139f946e61aa49f76c8075",
+    "docs/v4/evidence/quality-governance/quality-author/integration/selfreport-gate-normal.stderr.log": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/integration/selfreport-gate-normal.stdout.log": "4852cc7eaa7b20715c0fcbd624cfffaf00206b3daf4d8c5ce83250c79c2f4211",
+    "docs/v4/evidence/quality-governance/quality-author/integration/selfreport-result.json": "17623a6b6935b9ac42a17c3c2f738c5f92ee076fc603827fb2a1e3b3fb968b61",
+    "docs/v4/evidence/quality-governance/quality-author/integration/success-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/success-collector.stdout.log": "76c3fa9c5bb957753de066a71ad9e9539d6874c9f14280277327ebb6130ed16b",
+    "docs/v4/evidence/quality-governance/quality-author/integration/success-gate-normal.json": "460644a3060fa48a2be33b73369ba1867fdfa94afc5f562caf66f1a781535194",
+    "docs/v4/evidence/quality-governance/quality-author/integration/success-gate-normal.stderr.log": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/integration/success-gate-normal.stdout.log": "5bf6377a0777f3a25cbef7ab908917883f0aebb12b85b52ea178e9a96c8bdfa7",
+    "docs/v4/evidence/quality-governance/quality-author/integration/success-gate-wrong-pin.json": "59b6942b6df93ba656d751788079deb0af79db9b4c2def2f0b4135e2f113a7a6",
+    "docs/v4/evidence/quality-governance/quality-author/integration/success-gate-wrong-pin.stderr.log": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/integration/success-gate-wrong-pin.stdout.log": "f73896ddc63985f7fe9e21505137b88c0b855850a648cd89fbeadbc5f6ac366f",
+    "docs/v4/evidence/quality-governance/quality-author/integration/success-result.json": "f243efd538f0b1c0643d57048fc410bf1611f176271a7289a206e0bb57df12a8",
+    "docs/v4/evidence/quality-governance/quality-author/integration/summary.json": "948f1be8f28414167f0975e65987bdbf1dcb34eb9fdfd555b13a5598b39ce9cf",
+    "docs/v4/evidence/quality-governance/quality-author/integration/timeout-collector.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/integration/timeout-collector.stdout.log": "55a0550a4e0d1e9402ea95ba50abc3ff1e740a488e2493103d85248db4a3719b",
+    "docs/v4/evidence/quality-governance/quality-author/integration/timeout-gate-normal.json": "95b5491452a93b24533b8bc8370c1217f2a16a33dc875367dbe10a49b533fa2f",
+    "docs/v4/evidence/quality-governance/quality-author/integration/timeout-gate-normal.stderr.log": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/integration/timeout-gate-normal.stdout.log": "0fda8516d45b6a6bab2f23189f9f3e7e5ed25d8596e06070dec72954ad181dc3",
+    "docs/v4/evidence/quality-governance/quality-author/integration/timeout-result.json": "1b1b338ef71626fd55bbdca5c629d17e52b66771bd28c78b286be491b64cf36d",
+    "docs/v4/evidence/quality-governance/quality-author/tested-source/framework/quality/gate.py": "1e445d0b8407a68bce5d01615e2705528894d700f6ebd3432e4dae59e21cc398",
+    "docs/v4/evidence/quality-governance/quality-author/tested-source/schemas/evidence.schema.json": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+    "docs/v4/evidence/quality-governance/quality-author/tested-source/scripts/v4_quality.py": "e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1",
+    "docs/v4/evidence/quality-governance/quality-author/tested-source/tests/quality/test_gate.py": "41e2c28161b0a92c81a4132a25a1a7c82c23a597af8ec6233d04647e73a628b1",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/close-pipes/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/close-pipes/evidence.json": "425f8207d034d2c3b4ddb022224021dccfa71e4595821737b52fdef2aab6a54e",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/close-pipes/intent.json": "6335483fde1c95bb78d5e33de3ec9c8ee7244321b001dcc081b972fe63d6a0cf",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/close-pipes/logs/closed.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/close-pipes/logs/closed.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/close-pipes/plan.json": "c1b5fd1d81ca38fb8b2e469fe6080c7d540e6bba88df648bef4948812ef5a976",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/close-pipes/policies/closed.sb": "dfc287fb17d3bb67b5d083c6ed381c352891ca3dec485f3a7242e0a64e0ef3da",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/close-pipes/subject/GUIDE.md": "df76e45d6a5a657cfe0991cdd64d36ba5488e7fdd0c7675b2d8ae228aaf1bc58",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/close-pipes/subject/check.py": "9419ccb3c47c687ebacad618dffc102d03d32a816e9e40dfbb1df48cc804f074",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/document/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/document/evidence.json": "80dd83cced23a531204ba9c98b49e836e2222fd69004be9a231d8cbbbf0a7c8a",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/document/intent.json": "bd32193dec3d3f464ecdb95193123bc96b10b241a7af401b4170a61e5bda9ea4",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/document/logs/documentation.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/document/logs/documentation.stdout": "7f6d40be2fe9ae6962d7ff6d7855a7bf35b50e38ca5f82638f37d9b403b80d84",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/document/plan.json": "53d042aa513946bc39916be632712402e6b0092274db9483cab63ec8a781b035",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/document/policies/documentation.sb": "0a43006a906390761c1a48457f58fab05c8de97b396a225e37d2d085f0a43ef8",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/document/subject/GUIDE.md": "df76e45d6a5a657cfe0991cdd64d36ba5488e7fdd0c7675b2d8ae228aaf1bc58",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/document/subject/check.py": "9419ccb3c47c687ebacad618dffc102d03d32a816e9e40dfbb1df48cc804f074",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/empty/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/empty/evidence.json": "820179137bca55540ff9abe6ad9facedffd81b3248de2cb2b785d85def61fdee",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/empty/intent.json": "894efa440e2dd9bac8d59f14e54c4bc3154ac9ce80539f0c75c4eed1dae23e22",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/empty/plan.json": "84175b087aedc815cadc6e4cec3040bab2b1d24723f15fe49138797b0c7290a1",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/empty/subject/GUIDE.md": "df76e45d6a5a657cfe0991cdd64d36ba5488e7fdd0c7675b2d8ae228aaf1bc58",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/empty/subject/check.py": "9419ccb3c47c687ebacad618dffc102d03d32a816e9e40dfbb1df48cc804f074",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/flood/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/flood/evidence.json": "579157ee40133c024c952223c54f132a5df4b4b75f6427476030970ee636714e",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/flood/intent.json": "74cc858ad894b1278481d8324bca20ef13cfd4ae94917a901ea6619763912cbe",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/flood/logs/flood.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/flood/logs/flood.stdout": "8f990ba0b577b51cf009ea049368c16bbda1b21e1b93be07a824758bb253c39b",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/flood/plan.json": "cc9c5c61b9b2dfc54f255201f01d65080c353ca8cf45ac3bee938eb243c5af38",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/flood/policies/flood.sb": "8c534764434262ac4b527d053a5b70cb0ee9b76630da7efffe5f643908de8113",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/flood/subject/GUIDE.md": "df76e45d6a5a657cfe0991cdd64d36ba5488e7fdd0c7675b2d8ae228aaf1bc58",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/flood/subject/check.py": "9419ccb3c47c687ebacad618dffc102d03d32a816e9e40dfbb1df48cc804f074",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/forged-write/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/forged-write/evidence.json": "1acdb362ddf7b553cfea691cccc8b19042d4fde2db2ba5e501fc681020359c2f",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/forged-write/intent.json": "c156a7f5d2db7c2e26ce651b937d3c2ee6b4dcd0aacecefcc7000b4a2652bfd0",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/forged-write/logs/boundary.stderr": "5b7bbe981ec53ca677dc8a5d30e0226d2f8345d6adb5d489e9aa38743548b849",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/forged-write/logs/boundary.stdout": "7cd76677dd4e603b664e6692582e01782341cfea72524ae7a13cdf6d6500ff9c",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/forged-write/plan.json": "499beecf3033222903322275a54f159a626ee632f2fa3fc8fbc1704e5e5181a8",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/forged-write/policies/boundary.sb": "63c587f4a08f310918854118e68f442a6a06068ea4c9adcb9b8bdab786d99c09",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/forged-write/subject/GUIDE.md": "df76e45d6a5a657cfe0991cdd64d36ba5488e7fdd0c7675b2d8ae228aaf1bc58",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/forged-write/subject/check.py": "9419ccb3c47c687ebacad618dffc102d03d32a816e9e40dfbb1df48cc804f074",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/fork/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/fork/evidence.json": "098a5fa55a578b042889925e9b057575d66a2362c65fa5f90bc85695146bcd19",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/fork/intent.json": "b84257a98cbd01936df2a41d2988eb54b6f2f3b738f507694e79990d7e8d0259",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/fork/logs/fork.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/fork/logs/fork.stdout": "6bfed9d6463df40ddc5163b5891a06d7dd463010590a9eed8fa2ca2d6f0d9457",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/fork/plan.json": "67884487f152360df0cc3e9a59799ab0d43bcf1d5522cc3cbdabc1868dc434df",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/fork/policies/fork.sb": "26e50ca0fae22712234a94ad5e363acb32ab29ba2d6105f4c9b4e9dcc8284ebc",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/fork/subject/GUIDE.md": "df76e45d6a5a657cfe0991cdd64d36ba5488e7fdd0c7675b2d8ae228aaf1bc58",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/fork/subject/check.py": "9419ccb3c47c687ebacad618dffc102d03d32a816e9e40dfbb1df48cc804f074",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-config-close-pipes-normal.json": "5fb1455fb86ad20df0b3b8ab533bfa7ce1f71487be3c53f3efb1dbc94bbc72c1",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-config-document-normal.json": "230999df6d324ffd7b207de0bbef73fd32631ac6f67700522ddf9e87f5c7f360",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-config-empty-normal.json": "b2efb22100cbb147b081e0ed642da7cbedc90a65ec6790f887dcc7304004d4bf",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-config-flood-normal.json": "e159ef69f67e66ebfc855356422fa2cfd05c47628696832cbafd7a12371a74af",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-config-forged-write-normal.json": "4b2b241b96e0c3ee30e76301bbc783b9ea7371fd7e369451b3dc6405ff299184",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-config-fork-normal.json": "ee5c2ad4531a85aa127525e969b13d0b96fc5670b21f306554a4142062441269",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-config-no-collector-normal.json": "214f712fe4a4894f10b934ebd5e5307825ee0d94985b4db979b75c5d7c20477c",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-config-requiredskip-normal.json": "65b92d77c75fa3699c8d2b6e11956fe6140b42c760d5a8e6ccc7648e13d8f2ac",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-config-selfreport-normal.json": "991d85acc6a3d9b4b05f0c3c55865d0480a7d8d5480e454ca3d5ee6f85da80ea",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-config-success-normal.json": "0e80f8135375e00ec89db477ac64505b6d30a021af1255aaf7969a7a3b0c5c91",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-config-success-wrong-pin.json": "bc2961ae25711ba9be7f094aa74523ccd8b80ac1e59dc571d098499fa1e32f24",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-config-timeout-normal.json": "ab2bf50fd1e032e010cef604c8417c45ad062512424372739ddf3f0785fbf901",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate-probe.py": "6e609fca65dde9532abdb2a57ae52a56078b2ab72e57820363b3bc0389877841",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/gate.sb": "48ef99d71e33fd0560d3332e134958457b4d1af60f27e01215ebe74e3220803b",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/no-collector/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/no-collector/plan.json": "847535ea08e8e6bdb2dd95b75b94711753f21bbe0711558021a5ea061f006df7",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/no-collector/subject/GUIDE.md": "df76e45d6a5a657cfe0991cdd64d36ba5488e7fdd0c7675b2d8ae228aaf1bc58",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/no-collector/subject/check.py": "9419ccb3c47c687ebacad618dffc102d03d32a816e9e40dfbb1df48cc804f074",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/requiredskip/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/requiredskip/evidence.json": "519f540153e4a21fd6e7ff67f7caaaf6f10c82f09e30d31ee32c8ad4cb8fc77c",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/requiredskip/intent.json": "21cb7f813a16686bec01928d4022a1a4455402f611b957ddd3d585465a5baeea",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/requiredskip/plan.json": "8e03efa2c7afb8481e69f99b839cc8ca6aa07932013ef56c5e4edf6c0e218f8d",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/requiredskip/subject/GUIDE.md": "df76e45d6a5a657cfe0991cdd64d36ba5488e7fdd0c7675b2d8ae228aaf1bc58",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/requiredskip/subject/check.py": "9419ccb3c47c687ebacad618dffc102d03d32a816e9e40dfbb1df48cc804f074",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/selfreport/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/selfreport/evidence.json": "bb46b67884a53ce71e5030a71813f9ea3782d0c1367a78f03f24de49593f1b5b",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/selfreport/intent.json": "60685f4c46d1cf766c93c221174c36384aab90cf75ba99476be3456840c0b645",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/selfreport/logs/selfreport.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/selfreport/logs/selfreport.stdout": "cbfa211f9c72710a995276907619dede5babe1681b69500f8acf7b09c4e74625",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/selfreport/plan.json": "65cc7b76d85130e6600b8a7ab7e97a456bc540baef23503ba5adf208f40696d0",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/selfreport/policies/selfreport.sb": "e750f60a2ba49e2a79d0b541b8b69fb20e0e87497545a539d0fb50136b38d780",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/selfreport/subject/GUIDE.md": "df76e45d6a5a657cfe0991cdd64d36ba5488e7fdd0c7675b2d8ae228aaf1bc58",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/selfreport/subject/check.py": "9419ccb3c47c687ebacad618dffc102d03d32a816e9e40dfbb1df48cc804f074",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/sentinel": "b8ee7cbbd1f64cfda162a1b200fc8f207aae7f0cdd892f138de91381dd14feab",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/success/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/success/evidence.json": "5942a2dfca3524d099deb35be86cbc7519641069a1b3fff5368f8c78f0f3b926",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/success/intent.json": "8a43dc55ead785cf6a20275e2d09a13a69ff42389f1838c636f799530ac62335",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/success/logs/negative.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/success/logs/negative.stdout": "3d99616c1ea0abcd3757c2f1d6b4ab7363336dd51bc29818f9e5686b41709e87",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/success/logs/unicode.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/success/logs/unicode.stdout": "47002f3d34390ba683c093731502cedc544c5c30dfb3d59b7f68e3e05a435489",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/success/plan.json": "36e5952068edde96c36b25c7f106f74e3161e3bc4ae1b323e684a462eae15eb6",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/success/policies/negative.sb": "d36ee2fe9938369380de070b6bacb432e0abfd4f8720580f1b73b41c9e6029a0",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/success/policies/unicode.sb": "3ee384134da83a88bf2a9b6d56c5832f68ac32e1f67e19d318b9fcc7912981dc",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/success/subject/GUIDE.md": "df76e45d6a5a657cfe0991cdd64d36ba5488e7fdd0c7675b2d8ae228aaf1bc58",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/success/subject/check.py": "9419ccb3c47c687ebacad618dffc102d03d32a816e9e40dfbb1df48cc804f074",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/timeout/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/timeout/evidence.json": "4406154eae5130e24d754f3026c31953753bba58ac857f6afb741206d007b808",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/timeout/intent.json": "b40cc83326e45b1a41dbc6340d8a8398192726276f53a99d504b11c0e07d83f4",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/timeout/logs/timeout.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/timeout/logs/timeout.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/timeout/plan.json": "e3379084fcc9148c78049b844f106697bd0108f329a6b662e3ae0cb3e5f52a67",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/timeout/policies/timeout.sb": "15ede0bc46deecdbab6be12f62a6b0030ac0c54cbd832fd3f69af9c9b1d4e6a2",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/timeout/subject/GUIDE.md": "df76e45d6a5a657cfe0991cdd64d36ba5488e7fdd0c7675b2d8ae228aaf1bc58",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/timeout/subject/check.py": "9419ccb3c47c687ebacad618dffc102d03d32a816e9e40dfbb1df48cc804f074",
+    "docs/v4/evidence/quality-governance/quality-author/trusted/trust.json": "b88e5f1ea84c704a8ce3fe2e2cf5e39090e7a4610613d742de219b4dbac27958",
+    "examples/governance/README.md": "2f7073d03975d3147a076137ed92724eeed99546fb797cd408a0fb8b5dfdd93a",
+    "examples/quality/README.md": "0835f68a80520f96fc68d10f2e359a165c243407e39539aa5398f7eb836ed99e",
+    "examples/quality/requirements.txt": "dc442343a67c1373046f61f252036de2f6f594a4e94dc588c09270175624ccc2",
+    "examples/quality/stdio_check.py": "f675d494cc99a02a7c0174f4188c21fb49d1bf1b7601dd3e75ed0d0332c78629",
+    "framework/governance/CONTRACT.md": "59fa17d9aa3e8c4a5c206f1a90b73a5a3321552e5f56110455a2a810d8f3a60e",
+    "framework/governance/core.py": "173d11f297fb397b7da8c8ec4601b382d457183d45cdfb7f208ba090953d2dfb",
+    "framework/governance/evaluate.py": "5038ffb63ded1ae0a6532826f681c479b5168a67d21b3a90f1d4a9d18b231ecd",
+    "framework/local/runner.py": "c6b06a0fd06f543f25d576cd583df9a22c06b070f501368d7eb9a522aefb74df",
+    "framework/quality/CONTRACT.md": "8e4756548ba7e9e84e401406089768653e4ca8533ee9a9861b406fac18275fc9",
+    "framework/quality/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "framework/quality/gate.py": "1e445d0b8407a68bce5d01615e2705528894d700f6ebd3432e4dae59e21cc398",
+    "schemas/evidence.schema.json": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+    "schemas/governance.schema.json": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+    "scripts/v4_governance.py": "0b559eb00ab164cb2a507713ba275b0470ecd94733f5132dc6358fc99186abe1",
+    "scripts/v4_quality.py": "e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1",
+    "tests/governance/test_governance.py": "5886d3024f2b5787b386186c1e18f270e12edd05690fa2137017055bcc04eb59",
+    "tests/quality/test_collector.py": "4c99022f873bf78621a4db40b8d679424d0a906a25e4625579d770328fc6548a",
+    "tests/quality/test_gate.py": "41e2c28161b0a92c81a4132a25a1a7c82c23a597af8ec6233d04647e73a628b1"
+  },
+  "claim_checks": [
+    {
+      "case_outcomes": [
+        {
+          "exit_code": 0,
+          "id": "unicode",
+          "output_limit_exceeded": false,
+          "pid": 66627,
+          "status": "passed",
+          "timed_out": false
+        },
+        {
+          "exit_code": 3,
+          "id": "negative",
+          "output_limit_exceeded": false,
+          "pid": 66629,
+          "status": "passed",
+          "timed_out": false
+        },
+        {
+          "exit_code": null,
+          "id": "optional",
+          "output_limit_exceeded": false,
+          "pid": null,
+          "status": "skipped",
+          "timed_out": false
+        }
+      ],
+      "collector_exit": 0,
+      "counts": {
+        "failed": 0,
+        "not_run": 0,
+        "passed": 2,
+        "skipped": 1
+      },
+      "id": "success",
+      "scenario_passed": true,
+      "summary_matches_gate": true
+    },
+    {
+      "case_outcomes": [
+        {
+          "exit_code": 1,
+          "id": "selfreport",
+          "output_limit_exceeded": false,
+          "pid": 66637,
+          "status": "failed",
+          "timed_out": false
+        }
+      ],
+      "collector_exit": 0,
+      "counts": {
+        "failed": 1,
+        "not_run": 0,
+        "passed": 0,
+        "skipped": 0
+      },
+      "id": "selfreport",
+      "scenario_passed": true,
+      "summary_matches_gate": true
+    },
+    {
+      "case_outcomes": [
+        {
+          "exit_code": -15,
+          "id": "timeout",
+          "output_limit_exceeded": false,
+          "pid": 66645,
+          "status": "failed",
+          "timed_out": true
+        }
+      ],
+      "collector_exit": 0,
+      "counts": {
+        "failed": 1,
+        "not_run": 0,
+        "passed": 0,
+        "skipped": 0
+      },
+      "id": "timeout",
+      "scenario_passed": true,
+      "summary_matches_gate": true
+    },
+    {
+      "case_outcomes": [
+        {
+          "exit_code": -15,
+          "id": "closed",
+          "output_limit_exceeded": false,
+          "pid": 66658,
+          "status": "failed",
+          "timed_out": true
+        }
+      ],
+      "collector_exit": 0,
+      "counts": {
+        "failed": 1,
+        "not_run": 0,
+        "passed": 0,
+        "skipped": 0
+      },
+      "id": "close-pipes",
+      "scenario_passed": true,
+      "summary_matches_gate": true
+    },
+    {
+      "case_outcomes": [
+        {
+          "exit_code": -15,
+          "id": "flood",
+          "output_limit_exceeded": true,
+          "pid": 66669,
+          "status": "failed",
+          "timed_out": false
+        }
+      ],
+      "collector_exit": 0,
+      "counts": {
+        "failed": 1,
+        "not_run": 0,
+        "passed": 0,
+        "skipped": 0
+      },
+      "id": "flood",
+      "scenario_passed": true,
+      "summary_matches_gate": true
+    },
+    {
+      "case_outcomes": [
+        {
+          "exit_code": null,
+          "id": "required",
+          "output_limit_exceeded": false,
+          "pid": null,
+          "status": "skipped",
+          "timed_out": false
+        }
+      ],
+      "collector_exit": 0,
+      "counts": {
+        "failed": 0,
+        "not_run": 0,
+        "passed": 0,
+        "skipped": 1
+      },
+      "id": "requiredskip",
+      "scenario_passed": true,
+      "summary_matches_gate": true
+    },
+    {
+      "case_outcomes": [],
+      "collector_exit": 0,
+      "counts": {
+        "failed": 0,
+        "not_run": 0,
+        "passed": 0,
+        "skipped": 0
+      },
+      "id": "empty",
+      "scenario_passed": true,
+      "summary_matches_gate": true
+    },
+    {
+      "case_outcomes": [
+        {
+          "exit_code": 0,
+          "id": "documentation",
+          "output_limit_exceeded": false,
+          "pid": 66690,
+          "status": "passed",
+          "timed_out": false
+        }
+      ],
+      "collector_exit": 0,
+      "counts": {
+        "failed": 0,
+        "not_run": 0,
+        "passed": 1,
+        "skipped": 0
+      },
+      "id": "document",
+      "scenario_passed": true,
+      "summary_matches_gate": true
+    },
+    {
+      "case_outcomes": [
+        {
+          "exit_code": 0,
+          "id": "fork",
+          "output_limit_exceeded": false,
+          "pid": 66697,
+          "status": "passed",
+          "timed_out": false
+        }
+      ],
+      "collector_exit": 0,
+      "counts": {
+        "failed": 0,
+        "not_run": 0,
+        "passed": 1,
+        "skipped": 0
+      },
+      "id": "fork",
+      "scenario_passed": true,
+      "summary_matches_gate": true
+    },
+    {
+      "case_outcomes": [
+        {
+          "exit_code": 0,
+          "id": "boundary",
+          "output_limit_exceeded": false,
+          "pid": 66704,
+          "status": "passed",
+          "timed_out": false
+        }
+      ],
+      "collector_exit": 0,
+      "counts": {
+        "failed": 0,
+        "not_run": 0,
+        "passed": 1,
+        "skipped": 0
+      },
+      "id": "forged-write",
+      "scenario_passed": true,
+      "summary_matches_gate": true
+    },
+    {
+      "collector_exit": null,
+      "id": "no-collector",
+      "no_evidence_file": true,
+      "scenario_passed": true,
+      "summary_matches_gate": true
+    }
+  ],
+  "completed_at": "2026-11-27T18:51:07.337522+00:00",
+  "conclusion": "Public content and quality evidence consistent at recorded snapshot; publication requires resolving ignored evidence coverage and rechecking any later added files.",
+  "fixture_object_validation": {
+    "commit": "e8f60e30700985ecee0f2b1640cdff24759d133b",
+    "matches_index": true,
+    "tree": "d5456ecfaab5520bcc12d2a1e02239b734dd8d80"
+  },
+  "manual_conclusions": [
+    "Quality-author 211 entries match both original bytes and public hashes; current Gate/schema/CLI/test source and collector pins match tested/approved sources.",
+    "CLI exit mapping matches docs: passed=0 failed=1 unverifiable=2. Example explicitly labels inputs as not executed evidence and requires reviewed operator boundary.",
+    "Actual 11 integration outcomes distinguish expected negative rejection from passed engineering Gates. Timeout/closed-pipes exits -15, selfreport exit1, no collector no receipt, real flood retained1MiB, replay exit2 unchanged, owned canary exit-15 all match records.",
+    "Unit final41/41 is synthetic fixture logic evidence; README separates actual collector integration and retains first failure50/45pass5error. No false independent acceptance claim identified.",
+    "Gate unit five old-wrapper checks do not establish other-process credential isolation; full integration uses hardened policy and owned-only process probe. README does not claim those old five checks alone prove credential isolation.",
+    "No matching private-project URLs, workstation identity paths, key/token-shaped credentials, actual session/thread identifiers or UUIDs found across snapshot including ignored evidence. This is pattern and contextual review, not a proof of absence of every possible secret.",
+    "No independent governance code signoff given: this reviewer authored governance code. Its package only included in publication/privacy snapshot.",
+    "Raw source original/public paths correctly describe redaction; redacted bundles are explicitly not replayable under original pins."
+  ],
+  "package_file_checks": [
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/close-pipes-collector.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/close-pipes-collector.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/close-pipes-collector.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/close-pipes-collector.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/close-pipes-gate-normal.json",
+      "public_hash_matches": true,
+      "public_path": "integration/close-pipes-gate-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/close-pipes-gate-normal.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/close-pipes-gate-normal.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/close-pipes-gate-normal.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/close-pipes-gate-normal.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/close-pipes-result.json",
+      "public_hash_matches": true,
+      "public_path": "integration/close-pipes-result.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/coordinator.py",
+      "public_hash_matches": true,
+      "public_path": "integration/coordinator.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/document-collector.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/document-collector.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/document-collector.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/document-collector.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/document-gate-normal.json",
+      "public_hash_matches": true,
+      "public_path": "integration/document-gate-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/document-gate-normal.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/document-gate-normal.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/document-gate-normal.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/document-gate-normal.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/document-result.json",
+      "public_hash_matches": true,
+      "public_path": "integration/document-result.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/empty-collector.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/empty-collector.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/empty-collector.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/empty-collector.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/empty-gate-normal.json",
+      "public_hash_matches": true,
+      "public_path": "integration/empty-gate-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/empty-gate-normal.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/empty-gate-normal.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/empty-gate-normal.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/empty-gate-normal.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/empty-result.json",
+      "public_hash_matches": true,
+      "public_path": "integration/empty-result.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/execute-invocation.json",
+      "public_hash_matches": true,
+      "public_path": "integration/execute-invocation.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/execute.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/execute.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/execute.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/execute.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/execution-intent.json",
+      "public_hash_matches": true,
+      "public_path": "integration/execution-intent.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/flood-collector.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/flood-collector.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/flood-collector.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/flood-collector.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/flood-gate-normal.json",
+      "public_hash_matches": true,
+      "public_path": "integration/flood-gate-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/flood-gate-normal.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/flood-gate-normal.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/flood-gate-normal.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/flood-gate-normal.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/flood-result.json",
+      "public_hash_matches": true,
+      "public_path": "integration/flood-result.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/forged-write-collector.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/forged-write-collector.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/forged-write-collector.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/forged-write-collector.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/forged-write-gate-normal.json",
+      "public_hash_matches": true,
+      "public_path": "integration/forged-write-gate-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/forged-write-gate-normal.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/forged-write-gate-normal.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/forged-write-gate-normal.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/forged-write-gate-normal.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/forged-write-result.json",
+      "public_hash_matches": true,
+      "public_path": "integration/forged-write-result.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/fork-collector.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/fork-collector.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/fork-collector.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/fork-collector.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/fork-gate-normal.json",
+      "public_hash_matches": true,
+      "public_path": "integration/fork-gate-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/fork-gate-normal.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/fork-gate-normal.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/fork-gate-normal.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/fork-gate-normal.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/fork-result.json",
+      "public_hash_matches": true,
+      "public_path": "integration/fork-result.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/no-collector-gate-normal.json",
+      "public_hash_matches": true,
+      "public_path": "integration/no-collector-gate-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/no-collector-gate-normal.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/no-collector-gate-normal.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/no-collector-gate-normal.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/no-collector-gate-normal.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/no-collector-result.json",
+      "public_hash_matches": true,
+      "public_path": "integration/no-collector-result.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/owned-canary-cleanup.json",
+      "public_hash_matches": true,
+      "public_path": "integration/owned-canary-cleanup.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/owned-canary.json",
+      "public_hash_matches": true,
+      "public_path": "integration/owned-canary.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/prepare-invocation.json",
+      "public_hash_matches": true,
+      "public_path": "integration/prepare-invocation.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/prepare.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/prepare.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/prepare.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/prepare.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/prepared.json",
+      "public_hash_matches": true,
+      "public_path": "integration/prepared.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/replay.json",
+      "public_hash_matches": true,
+      "public_path": "integration/replay.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/replay.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/replay.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/replay.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/replay.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/requiredskip-collector.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/requiredskip-collector.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/requiredskip-collector.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/requiredskip-collector.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/requiredskip-gate-normal.json",
+      "public_hash_matches": true,
+      "public_path": "integration/requiredskip-gate-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/requiredskip-gate-normal.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/requiredskip-gate-normal.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/requiredskip-gate-normal.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/requiredskip-gate-normal.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/requiredskip-result.json",
+      "public_hash_matches": true,
+      "public_path": "integration/requiredskip-result.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/sealed-manifest.json",
+      "public_hash_matches": true,
+      "public_path": "integration/sealed-manifest.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/selfreport-collector.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/selfreport-collector.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/selfreport-collector.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/selfreport-collector.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/selfreport-gate-normal.json",
+      "public_hash_matches": true,
+      "public_path": "integration/selfreport-gate-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/selfreport-gate-normal.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/selfreport-gate-normal.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/selfreport-gate-normal.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/selfreport-gate-normal.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/selfreport-result.json",
+      "public_hash_matches": true,
+      "public_path": "integration/selfreport-result.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/success-collector.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/success-collector.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/success-collector.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/success-collector.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/success-gate-normal.json",
+      "public_hash_matches": true,
+      "public_path": "integration/success-gate-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/success-gate-normal.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/success-gate-normal.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/success-gate-normal.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/success-gate-normal.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/success-gate-wrong-pin.json",
+      "public_hash_matches": true,
+      "public_path": "integration/success-gate-wrong-pin.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/success-gate-wrong-pin.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/success-gate-wrong-pin.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/success-gate-wrong-pin.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/success-gate-wrong-pin.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/success-result.json",
+      "public_hash_matches": true,
+      "public_path": "integration/success-result.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/summary.json",
+      "public_hash_matches": true,
+      "public_path": "integration/summary.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/timeout-collector.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/timeout-collector.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/timeout-collector.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/timeout-collector.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/timeout-gate-normal.json",
+      "public_hash_matches": true,
+      "public_path": "integration/timeout-gate-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/timeout-gate-normal.stderr.log",
+      "public_hash_matches": true,
+      "public_path": "integration/timeout-gate-normal.stderr.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/timeout-gate-normal.stdout.log",
+      "public_hash_matches": true,
+      "public_path": "integration/timeout-gate-normal.stdout.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/timeout-result.json",
+      "public_hash_matches": true,
+      "public_path": "integration/timeout-result.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/close-pipes/collector.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/close-pipes/collector.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/close-pipes/evidence.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/close-pipes/evidence.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/close-pipes/intent.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/close-pipes/intent.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/close-pipes/logs/closed.stderr",
+      "public_hash_matches": true,
+      "public_path": "trusted/close-pipes/logs/closed.stderr"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/close-pipes/logs/closed.stdout",
+      "public_hash_matches": true,
+      "public_path": "trusted/close-pipes/logs/closed.stdout"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/close-pipes/plan.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/close-pipes/plan.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/close-pipes/policies/closed.sb",
+      "public_hash_matches": true,
+      "public_path": "trusted/close-pipes/policies/closed.sb"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/close-pipes/subject/GUIDE.md",
+      "public_hash_matches": true,
+      "public_path": "trusted/close-pipes/subject/GUIDE.md"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/close-pipes/subject/check.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/close-pipes/subject/check.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/document/collector.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/document/collector.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/document/evidence.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/document/evidence.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/document/intent.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/document/intent.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/document/logs/documentation.stderr",
+      "public_hash_matches": true,
+      "public_path": "trusted/document/logs/documentation.stderr"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/document/logs/documentation.stdout",
+      "public_hash_matches": true,
+      "public_path": "trusted/document/logs/documentation.stdout"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/document/plan.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/document/plan.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/document/policies/documentation.sb",
+      "public_hash_matches": true,
+      "public_path": "trusted/document/policies/documentation.sb"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/document/subject/GUIDE.md",
+      "public_hash_matches": true,
+      "public_path": "trusted/document/subject/GUIDE.md"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/document/subject/check.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/document/subject/check.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/empty/collector.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/empty/collector.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/empty/evidence.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/empty/evidence.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/empty/intent.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/empty/intent.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/empty/plan.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/empty/plan.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/empty/subject/GUIDE.md",
+      "public_hash_matches": true,
+      "public_path": "trusted/empty/subject/GUIDE.md"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/empty/subject/check.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/empty/subject/check.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/flood/collector.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/flood/collector.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/flood/evidence.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/flood/evidence.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/flood/intent.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/flood/intent.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/flood/logs/flood.stderr",
+      "public_hash_matches": true,
+      "public_path": "trusted/flood/logs/flood.stderr"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/flood/logs/flood.stdout",
+      "public_hash_matches": true,
+      "public_path": "trusted/flood/logs/flood.stdout"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/flood/plan.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/flood/plan.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/flood/policies/flood.sb",
+      "public_hash_matches": true,
+      "public_path": "trusted/flood/policies/flood.sb"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/flood/subject/GUIDE.md",
+      "public_hash_matches": true,
+      "public_path": "trusted/flood/subject/GUIDE.md"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/flood/subject/check.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/flood/subject/check.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/forged-write/collector.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/forged-write/collector.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/forged-write/evidence.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/forged-write/evidence.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/forged-write/intent.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/forged-write/intent.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/forged-write/logs/boundary.stderr",
+      "public_hash_matches": true,
+      "public_path": "trusted/forged-write/logs/boundary.stderr"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/forged-write/logs/boundary.stdout",
+      "public_hash_matches": true,
+      "public_path": "trusted/forged-write/logs/boundary.stdout"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/forged-write/plan.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/forged-write/plan.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/forged-write/policies/boundary.sb",
+      "public_hash_matches": true,
+      "public_path": "trusted/forged-write/policies/boundary.sb"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/forged-write/subject/GUIDE.md",
+      "public_hash_matches": true,
+      "public_path": "trusted/forged-write/subject/GUIDE.md"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/forged-write/subject/check.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/forged-write/subject/check.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/fork/collector.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/fork/collector.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/fork/evidence.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/fork/evidence.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/fork/intent.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/fork/intent.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/fork/logs/fork.stderr",
+      "public_hash_matches": true,
+      "public_path": "trusted/fork/logs/fork.stderr"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/fork/logs/fork.stdout",
+      "public_hash_matches": true,
+      "public_path": "trusted/fork/logs/fork.stdout"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/fork/plan.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/fork/plan.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/fork/policies/fork.sb",
+      "public_hash_matches": true,
+      "public_path": "trusted/fork/policies/fork.sb"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/fork/subject/GUIDE.md",
+      "public_hash_matches": true,
+      "public_path": "trusted/fork/subject/GUIDE.md"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/fork/subject/check.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/fork/subject/check.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-config-close-pipes-normal.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-config-close-pipes-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-config-document-normal.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-config-document-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-config-empty-normal.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-config-empty-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-config-flood-normal.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-config-flood-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-config-forged-write-normal.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-config-forged-write-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-config-fork-normal.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-config-fork-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-config-no-collector-normal.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-config-no-collector-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-config-requiredskip-normal.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-config-requiredskip-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-config-selfreport-normal.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-config-selfreport-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-config-success-normal.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-config-success-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-config-success-wrong-pin.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-config-success-wrong-pin.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-config-timeout-normal.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-config-timeout-normal.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate-probe.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate-probe.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/gate.sb",
+      "public_hash_matches": true,
+      "public_path": "trusted/gate.sb"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/no-collector/collector.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/no-collector/collector.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/no-collector/plan.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/no-collector/plan.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/no-collector/subject/GUIDE.md",
+      "public_hash_matches": true,
+      "public_path": "trusted/no-collector/subject/GUIDE.md"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/no-collector/subject/check.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/no-collector/subject/check.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/requiredskip/collector.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/requiredskip/collector.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/requiredskip/evidence.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/requiredskip/evidence.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/requiredskip/intent.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/requiredskip/intent.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/requiredskip/plan.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/requiredskip/plan.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/requiredskip/subject/GUIDE.md",
+      "public_hash_matches": true,
+      "public_path": "trusted/requiredskip/subject/GUIDE.md"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/requiredskip/subject/check.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/requiredskip/subject/check.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/selfreport/collector.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/selfreport/collector.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/selfreport/evidence.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/selfreport/evidence.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/selfreport/intent.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/selfreport/intent.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/selfreport/logs/selfreport.stderr",
+      "public_hash_matches": true,
+      "public_path": "trusted/selfreport/logs/selfreport.stderr"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/selfreport/logs/selfreport.stdout",
+      "public_hash_matches": true,
+      "public_path": "trusted/selfreport/logs/selfreport.stdout"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/selfreport/plan.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/selfreport/plan.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/selfreport/policies/selfreport.sb",
+      "public_hash_matches": true,
+      "public_path": "trusted/selfreport/policies/selfreport.sb"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/selfreport/subject/GUIDE.md",
+      "public_hash_matches": true,
+      "public_path": "trusted/selfreport/subject/GUIDE.md"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/selfreport/subject/check.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/selfreport/subject/check.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/sentinel",
+      "public_hash_matches": true,
+      "public_path": "trusted/sentinel"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/collector.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/success/collector.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/evidence.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/success/evidence.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/intent.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/success/intent.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/logs/negative.stderr",
+      "public_hash_matches": true,
+      "public_path": "trusted/success/logs/negative.stderr"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/logs/negative.stdout",
+      "public_hash_matches": true,
+      "public_path": "trusted/success/logs/negative.stdout"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/logs/unicode.stderr",
+      "public_hash_matches": true,
+      "public_path": "trusted/success/logs/unicode.stderr"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/logs/unicode.stdout",
+      "public_hash_matches": true,
+      "public_path": "trusted/success/logs/unicode.stdout"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/plan.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/success/plan.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/policies/negative.sb",
+      "public_hash_matches": true,
+      "public_path": "trusted/success/policies/negative.sb"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/policies/unicode.sb",
+      "public_hash_matches": true,
+      "public_path": "trusted/success/policies/unicode.sb"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/subject/GUIDE.md",
+      "public_hash_matches": true,
+      "public_path": "trusted/success/subject/GUIDE.md"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/subject/check.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/success/subject/check.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/timeout/collector.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/timeout/collector.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/timeout/evidence.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/timeout/evidence.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/timeout/intent.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/timeout/intent.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/timeout/logs/timeout.stderr",
+      "public_hash_matches": true,
+      "public_path": "trusted/timeout/logs/timeout.stderr"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/timeout/logs/timeout.stdout",
+      "public_hash_matches": true,
+      "public_path": "trusted/timeout/logs/timeout.stdout"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/timeout/plan.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/timeout/plan.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/timeout/policies/timeout.sb",
+      "public_hash_matches": true,
+      "public_path": "trusted/timeout/policies/timeout.sb"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/timeout/subject/GUIDE.md",
+      "public_hash_matches": true,
+      "public_path": "trusted/timeout/subject/GUIDE.md"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/timeout/subject/check.py",
+      "public_hash_matches": true,
+      "public_path": "trusted/timeout/subject/check.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/trust.json",
+      "public_hash_matches": true,
+      "public_path": "trusted/trust.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/C/forged-write/boundary/forged-report.json",
+      "public_hash_matches": true,
+      "public_path": "candidate-artifacts/forged-write/boundary/forged-report.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/C/forged-write/boundary/forged-report.sha256",
+      "public_hash_matches": true,
+      "public_path": "candidate-artifacts/forged-write/boundary/forged-report.sha256"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/C/no-collector/forged-report.json",
+      "public_hash_matches": true,
+      "public_path": "candidate-artifacts/no-collector/forged-report.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/C/no-collector/forged-report.sha256",
+      "public_hash_matches": true,
+      "public_path": "candidate-artifacts/no-collector/forged-report.sha256"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-gate-author/harness.py",
+      "public_hash_matches": true,
+      "public_path": "gate-unit/harness.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-gate-author/result-01.json",
+      "public_hash_matches": true,
+      "public_path": "gate-unit/result-01.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-gate-author/result-02.json",
+      "public_hash_matches": true,
+      "public_path": "gate-unit/result-02.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-gate-author/result-03.json",
+      "public_hash_matches": true,
+      "public_path": "gate-unit/result-03.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-gate-author/stderr-01.log",
+      "public_hash_matches": true,
+      "public_path": "gate-unit/stderr-01.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-gate-author/stderr-02.log",
+      "public_hash_matches": true,
+      "public_path": "gate-unit/stderr-02.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-gate-author/stderr-03.log",
+      "public_hash_matches": true,
+      "public_path": "gate-unit/stderr-03.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-gate-author/stdout-01.log",
+      "public_hash_matches": true,
+      "public_path": "gate-unit/stdout-01.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-gate-author/stdout-02.log",
+      "public_hash_matches": true,
+      "public_path": "gate-unit/stdout-02.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-gate-author/stdout-03.log",
+      "public_hash_matches": true,
+      "public_path": "gate-unit/stdout-03.log"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/framework/framework/quality/gate.py",
+      "public_hash_matches": true,
+      "public_path": "tested-source/framework/quality/gate.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/framework/schemas/evidence.schema.json",
+      "public_hash_matches": true,
+      "public_path": "tested-source/schemas/evidence.schema.json"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/framework/scripts/v4_quality.py",
+      "public_hash_matches": true,
+      "public_path": "tested-source/scripts/v4_quality.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/framework/tests/quality/test_gate.py",
+      "public_hash_matches": true,
+      "public_path": "tested-source/tests/quality/test_gate.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/experiments/quality-real-stage/fixture-commit.raw",
+      "public_hash_matches": true,
+      "public_path": "fixture/commit.raw"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/subject/check.py",
+      "public_hash_matches": true,
+      "public_path": "fixture/check.py"
+    },
+    {
+      "original_hash_matches": true,
+      "original_path": "/public/fixture/v4-quality-real-r2axox5t/T/success/subject/GUIDE.md",
+      "public_hash_matches": true,
+      "public_path": "fixture/GUIDE.md"
+    }
+  ],
+  "package_files_checked": 211,
+  "package_hash_errors": [],
+  "pending_manual_review": false,
+  "privacy_pattern_findings": [],
+  "product_binding": {
+    "framework/quality/collector.py": {
+      "approved": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+      "current_sha256": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+      "matches": true
+    },
+    "framework/quality/gate.py": {
+      "current_sha256": "1e445d0b8407a68bce5d01615e2705528894d700f6ebd3432e4dae59e21cc398",
+      "matches": true,
+      "tested_source_sha256": "1e445d0b8407a68bce5d01615e2705528894d700f6ebd3432e4dae59e21cc398"
+    },
+    "schemas/evidence.schema.json": {
+      "current_sha256": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+      "matches": true,
+      "tested_source_sha256": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9"
+    },
+    "scripts/v4_quality.py": {
+      "current_sha256": "e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1",
+      "matches": true,
+      "tested_source_sha256": "e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1"
+    },
+    "tests/quality/test_gate.py": {
+      "current_sha256": "41e2c28161b0a92c81a4132a25a1a7c82c23a597af8ec6233d04647e73a628b1",
+      "matches": true,
+      "tested_source_sha256": "41e2c28161b0a92c81a4132a25a1a7c82c23a597af8ec6233d04647e73a628b1"
+    }
+  },
+  "publication_blocker": {
+    "ignored_paths": [
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/01-quality-baseline.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/01-quality-baseline.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/02-quality-current.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/02-quality-current.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/03-quality-mechanical.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/03-quality-mechanical.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/04-quality-success.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/04-quality-success.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/05-positive.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/05-positive.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/06-same-tree-new-commit.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/06-same-tree-new-commit.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/07-mechanical-exact.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/07-mechanical-exact.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/08-target-base-changed.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/08-target-base-changed.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/09-contract-changed.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/09-contract-changed.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/10-contract-restored-old-signoff.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/10-contract-restored-old-signoff.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/11-quality-fresh-success.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/11-quality-fresh-success.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/12-fresh-review-after-restore.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/12-fresh-review-after-restore.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/13-revoked.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/13-revoked.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/14-deviation-active.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/14-deviation-active.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/15-deviation-expired.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/15-deviation-expired.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/16-deviation-closed.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/16-deviation-closed.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/17-baseline-known-new-no-waiver.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/17-baseline-known-new-no-waiver.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/baseline-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/baseline-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/current-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/current-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/execute.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/execute.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/fresh-success-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/fresh-success-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/mechanical-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/mechanical-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/success-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/stage/success-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/logs/known.stderr",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/logs/known.stdout",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/logs/new.stderr",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-baseline/logs/new.stdout",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/logs/known.stderr",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/logs/known.stdout",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/logs/new.stderr",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-current/logs/new.stdout",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/logs/known.stderr",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/logs/known.stdout",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/logs/new.stderr",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-fresh-success/logs/new.stdout",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/logs/known.stderr",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/logs/known.stdout",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/logs/new.stderr",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-mechanical/logs/new.stdout",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/logs/known.stderr",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/logs/known.stdout",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/logs/new.stderr",
+      "docs/v4/evidence/quality-governance/governance-author/experiment/trusted/q-success/logs/new.stdout",
+      "docs/v4/evidence/quality-governance/governance-author/unit/frozen-stderr.log",
+      "docs/v4/evidence/quality-governance/governance-author/unit/frozen-stdout.log",
+      "docs/v4/evidence/quality-governance/governance-author/unit/run-1.log",
+      "docs/v4/evidence/quality-governance/governance-author/unit/run-2.log",
+      "docs/v4/evidence/quality-governance/governance-author/unit/run-3.log",
+      "docs/v4/evidence/quality-governance/quality-author/gate-unit/stderr-01.log",
+      "docs/v4/evidence/quality-governance/quality-author/gate-unit/stderr-02.log",
+      "docs/v4/evidence/quality-governance/quality-author/gate-unit/stderr-03.log",
+      "docs/v4/evidence/quality-governance/quality-author/gate-unit/stdout-01.log",
+      "docs/v4/evidence/quality-governance/quality-author/gate-unit/stdout-02.log",
+      "docs/v4/evidence/quality-governance/quality-author/gate-unit/stdout-03.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/close-pipes-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/close-pipes-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/close-pipes-gate-normal.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/close-pipes-gate-normal.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/document-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/document-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/document-gate-normal.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/document-gate-normal.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/empty-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/empty-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/empty-gate-normal.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/empty-gate-normal.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/execute.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/execute.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/flood-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/flood-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/flood-gate-normal.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/flood-gate-normal.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/forged-write-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/forged-write-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/forged-write-gate-normal.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/forged-write-gate-normal.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/fork-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/fork-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/fork-gate-normal.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/fork-gate-normal.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/no-collector-gate-normal.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/no-collector-gate-normal.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/prepare.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/prepare.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/replay.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/replay.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/requiredskip-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/requiredskip-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/requiredskip-gate-normal.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/requiredskip-gate-normal.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/selfreport-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/selfreport-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/selfreport-gate-normal.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/selfreport-gate-normal.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/success-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/success-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/success-gate-normal.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/success-gate-normal.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/success-gate-wrong-pin.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/success-gate-wrong-pin.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/timeout-collector.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/timeout-collector.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/timeout-gate-normal.stderr.log",
+      "docs/v4/evidence/quality-governance/quality-author/integration/timeout-gate-normal.stdout.log",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/close-pipes/logs/closed.stderr",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/close-pipes/logs/closed.stdout",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/document/logs/documentation.stderr",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/document/logs/documentation.stdout",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/flood/logs/flood.stderr",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/flood/logs/flood.stdout",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/forged-write/logs/boundary.stderr",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/forged-write/logs/boundary.stdout",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/fork/logs/fork.stderr",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/fork/logs/fork.stdout",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/selfreport/logs/selfreport.stderr",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/selfreport/logs/selfreport.stdout",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/success/logs/negative.stderr",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/success/logs/negative.stdout",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/success/logs/unicode.stderr",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/success/logs/unicode.stdout",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/timeout/logs/timeout.stderr",
+      "docs/v4/evidence/quality-governance/quality-author/trusted/timeout/logs/timeout.stdout"
+    ],
+    "kind": "tracked_evidence_coverage",
+    "resolution_owner": "root acknowledged exact git add -f of reviewed evidence, followed by Git blob versus public-manifest equality; not yet verified by this review"
+  },
+  "quality_summary": {
+    "collector_sha256": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "completed_at": "2026-11-27T18:43:12.742484+00:00",
+    "coordinator_sha256": "8e6050e7eb4fe069b8d1601ec46ebde0a990aecbf86fc1bd2181af328d85be2e",
+    "immutable_inputs_unchanged": true,
+    "passed": true,
+    "replay": {
+      "exit_code": 2,
+      "inputs_unchanged": true,
+      "passed": true
+    },
+    "runs": [
+      {
+        "id": "success",
+        "passed": true,
+        "status": "passed"
+      },
+      {
+        "id": "selfreport",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "id": "timeout",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "id": "close-pipes",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "id": "flood",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "id": "requiredskip",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "id": "empty",
+        "passed": true,
+        "status": "failed"
+      },
+      {
+        "id": "document",
+        "passed": true,
+        "status": "passed"
+      },
+      {
+        "id": "fork",
+        "passed": true,
+        "status": "passed"
+      },
+      {
+        "id": "forged-write",
+        "passed": true,
+        "status": "passed"
+      },
+      {
+        "id": "no-collector",
+        "passed": true,
+        "status": "unverifiable"
+      }
+    ],
+    "wrong_pin_rejected": true
+  },
+  "scope": "Read-only public delivery consistency/privacy review; no candidate execution; does not independently sign author-owned governance code."
+}

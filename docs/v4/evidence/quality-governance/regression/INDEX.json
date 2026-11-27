@@ -1,0 +1,123 @@
+{
+  "redaction": "Paths only; original bytes retained outside repository. Public copies do not preserve original trust pins. Public reviewer initially observed ignored logs; final Git-index inclusion is checked separately.",
+  "files": [
+    {
+      "path": "initial/coordinator.py",
+      "source_alias": "quality-governance-regression/coordinator.py",
+      "original_sha256": "db0cdd21bd2780c0baea886969aa95429823529e8d6eaf5c680cf8849f10cbfc",
+      "public_sha256": "d0c5e41223713e52832c1bea48f3c03a42a78259889ab50287d6ace81cd41f7d",
+      "original_size": 1615,
+      "public_size": 1571
+    },
+    {
+      "path": "initial/runner.py",
+      "source_alias": "quality-governance-regression/runner.py",
+      "original_sha256": "daf3a487f5e1bed1f16cbe55aaf46b94fcf5e644660347a285345b9f4d335263",
+      "public_sha256": "daf3a487f5e1bed1f16cbe55aaf46b94fcf5e644660347a285345b9f4d335263",
+      "original_size": 1425,
+      "public_size": 1425
+    },
+    {
+      "path": "initial/config.json",
+      "source_alias": "quality-governance-regression/config.json",
+      "original_sha256": "33868101a2e10cc2dd77ac24b630ae94340c87a08a319513283bd6c95e91c9f4",
+      "public_sha256": "13296b69879ddb13db05857a9e5dc28d050a4247c3fdb3c66991d0dd7d515e7e",
+      "original_size": 230,
+      "public_size": 189
+    },
+    {
+      "path": "initial/sandbox.sb",
+      "source_alias": "quality-governance-regression/sandbox.sb",
+      "original_sha256": "03258f4c0e78251c0603803a6ce6116d9beb7fa9d4167c6452bdd9a7d9c7209f",
+      "public_sha256": "016b607a36795e9691127456079ce93b204262258ab5b93b5a9268a6192dedd5",
+      "original_size": 917,
+      "public_size": 856
+    },
+    {
+      "path": "initial/stdout.log",
+      "source_alias": "quality-governance-regression/stdout.log",
+      "original_sha256": "d284ec94ec5742feea367fc1b7060875f38fa79e9eadb85c4deb13f65cf68bb9",
+      "public_sha256": "d284ec94ec5742feea367fc1b7060875f38fa79e9eadb85c4deb13f65cf68bb9",
+      "original_size": 652,
+      "public_size": 652
+    },
+    {
+      "path": "initial/stderr.log",
+      "source_alias": "quality-governance-regression/stderr.log",
+      "original_sha256": "b6ed9fd493f071db04d66e0f33a52473536a0aad385077d5e0b3e2c74d4afb2e",
+      "public_sha256": "f05e620d2cc84b880785e24020d8acd50058582a87d83bfaddfedc5873b62eef",
+      "original_size": 25765,
+      "public_size": 25485
+    },
+    {
+      "path": "initial/result.json",
+      "source_alias": "quality-governance-regression/result.json",
+      "original_sha256": "2181367a6f8e9eb60d830746308241f648380dcd0161a9259b651e5ef638d8fa",
+      "public_sha256": "d2b46795cdba310a42e58c06c4e8bc6a0fb30b93ff6cec7c6013cd4b3eca0c4a",
+      "original_size": 6122,
+      "public_size": 6010
+    },
+    {
+      "path": "final/coordinator.py",
+      "source_alias": "quality-governance-regression-02/coordinator.py",
+      "original_sha256": "69e09e4d6c2471c5f11d1ba347c671d632a6bb93220b835d6dbb23aba4931f56",
+      "public_sha256": "4cf23c843e2eab2836f241576342c0cdd348eebe10bf2c881041ee9d9cc7d05e",
+      "original_size": 1618,
+      "public_size": 1574
+    },
+    {
+      "path": "final/runner.py",
+      "source_alias": "quality-governance-regression-02/runner.py",
+      "original_sha256": "daf3a487f5e1bed1f16cbe55aaf46b94fcf5e644660347a285345b9f4d335263",
+      "public_sha256": "daf3a487f5e1bed1f16cbe55aaf46b94fcf5e644660347a285345b9f4d335263",
+      "original_size": 1425,
+      "public_size": 1425
+    },
+    {
+      "path": "final/config.json",
+      "source_alias": "quality-governance-regression-02/config.json",
+      "original_sha256": "33868101a2e10cc2dd77ac24b630ae94340c87a08a319513283bd6c95e91c9f4",
+      "public_sha256": "13296b69879ddb13db05857a9e5dc28d050a4247c3fdb3c66991d0dd7d515e7e",
+      "original_size": 230,
+      "public_size": 189
+    },
+    {
+      "path": "final/sandbox.sb",
+      "source_alias": "quality-governance-regression-02/sandbox.sb",
+      "original_sha256": "03258f4c0e78251c0603803a6ce6116d9beb7fa9d4167c6452bdd9a7d9c7209f",
+      "public_sha256": "016b607a36795e9691127456079ce93b204262258ab5b93b5a9268a6192dedd5",
+      "original_size": 917,
+      "public_size": 856
+    },
+    {
+      "path": "final/stdout.log",
+      "source_alias": "quality-governance-regression-02/stdout.log",
+      "original_sha256": "a03d71123d054975642ac283c592bbf78b932a5d69fb8eeee6375d56a5bd03b6",
+      "public_sha256": "a03d71123d054975642ac283c592bbf78b932a5d69fb8eeee6375d56a5bd03b6",
+      "original_size": 652,
+      "public_size": 652
+    },
+    {
+      "path": "final/stderr.log",
+      "source_alias": "quality-governance-regression-02/stderr.log",
+      "original_sha256": "fd9175ad0459657e3de690cc49617d986c1995a45318c00787d5c29d14527550",
+      "public_sha256": "fd9175ad0459657e3de690cc49617d986c1995a45318c00787d5c29d14527550",
+      "original_size": 20196,
+      "public_size": 20196
+    },
+    {
+      "path": "final/result.json",
+      "source_alias": "quality-governance-regression-02/result.json",
+      "original_sha256": "e415143a4538e3052563422fad99da26d626b59dca62d1c5d25173d0fe86c6c6",
+      "public_sha256": "ba32700da9abb994351a7076dcb62ed23875c0634154dced3e6c3c29f951e37b",
+      "original_size": 6137,
+      "public_size": 6025
+    },
+    {
+      "path": "public-review.json",
+      "original_sha256": "08fd8a61b2bbebf0474de4c21c59c2b47c135ac73bdce194ae0f07c0d7b69a0e",
+      "public_sha256": "1d2031ae9d0ecb6a3e5f3fb570bce062580bd381e6f053132dc3a1a459e47126",
+      "public_size": 154771
+    }
+  ]
+}

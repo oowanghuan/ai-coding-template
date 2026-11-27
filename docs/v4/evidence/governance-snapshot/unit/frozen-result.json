@@ -1,0 +1,56 @@
+{
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "/public/fixture/v4-first-batch-v0tq3t3j/governance-snapshot-remediation/profile.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/governance",
+    "-v"
+  ],
+  "environment": {
+    "HOME": "/public/fixture/v4-first-batch-v0tq3t3j/governance-snapshot-remediation/home",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONPATH": "/public/framework:/public/operator/Library/Python/3.9/lib/python/site-packages",
+    "TMPDIR": "/public/fixture/v4-first-batch-v0tq3t3j/governance-snapshot-remediation/tmp",
+    "V4_OUTER_SEATBELT": "1"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1795809478.7030442,
+  "head": "9d05026208f18dff372300f149e5f1ae2007c1c2",
+  "notes": [
+    "Author tests; identity and successful Gate context are synthetic fixtures.",
+    "Advisor 7226757604 remediation: locked-baseline result metadata, no live observer added.",
+    "Actual Git target advance regression uses real sandboxed Git; Gate/reviewer values are explicitly synthetic unit fixtures."
+  ],
+  "profile_sha256": "782a2296f133c870984acfc8f56573eee0e5fd24041fa8e9f38525e93e8d2537",
+  "source_hashes_after": {
+    "examples/governance/README.md": "9f8b19d362d734fa550904f92386ebb8fe4033d9453beb2f7c204ad5a5469113",
+    "framework/governance/CONTRACT.md": "db0baa0c56623aec1dcaffef8f9c5e648f191ee964783c63c85acc3fc9f02e35",
+    "framework/governance/core.py": "615991140e0fa38d8309daba17dc307b035ff0eb6420202cb055d57d38862b32",
+    "framework/governance/evaluate.py": "119fe4e2e36d8e1a4f994f72252ea8947f84d84e683ab7a778f386d8564ef25a",
+    "schemas/governance.schema.json": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+    "scripts/v4_governance.py": "5b42fd8a101b3bc2300d7f021299d1cfb55f11216cbab611abb14611d9e545ff",
+    "tests/governance/test_governance.py": "2be231408cf50640f8180e078eafb5e4624f6851ff22877ffba1c3bf4c0f4e52"
+  },
+  "source_hashes_before": {
+    "examples/governance/README.md": "9f8b19d362d734fa550904f92386ebb8fe4033d9453beb2f7c204ad5a5469113",
+    "framework/governance/CONTRACT.md": "db0baa0c56623aec1dcaffef8f9c5e648f191ee964783c63c85acc3fc9f02e35",
+    "framework/governance/core.py": "615991140e0fa38d8309daba17dc307b035ff0eb6420202cb055d57d38862b32",
+    "framework/governance/evaluate.py": "119fe4e2e36d8e1a4f994f72252ea8947f84d84e683ab7a778f386d8564ef25a",
+    "schemas/governance.schema.json": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+    "scripts/v4_governance.py": "5b42fd8a101b3bc2300d7f021299d1cfb55f11216cbab611abb14611d9e545ff",
+    "tests/governance/test_governance.py": "2be231408cf50640f8180e078eafb5e4624f6851ff22877ffba1c3bf4c0f4e52"
+  },
+  "source_unchanged": true,
+  "started_epoch": 1795809473.6129339,
+  "stderr_sha256": "b116d184eebc2319e87c97f92b2d1feff2dab73e41b1ec4b95ac3e5ecf108e82",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

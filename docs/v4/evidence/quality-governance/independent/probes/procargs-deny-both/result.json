@@ -1,0 +1,38 @@
+{
+  "scope": "Fixed system probe targeting only owned synthetic process; no real credentials or unrelated PID accessed",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<PROBE_PROCARGS_DENY_BOTH>/policy.sb",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "-c",
+    "import ctypes,json,sys,os,subprocess\npid=int(sys.argv[1]);lib=ctypes.CDLL(None,use_errno=True)\nlib.sysctl.argtypes=[ctypes.POINTER(ctypes.c_int),ctypes.c_uint,ctypes.c_void_p,ctypes.POINTER(ctypes.c_size_t),ctypes.c_void_p,ctypes.c_size_t]\nlib.sysctl.restype=ctypes.c_int\nmib=(ctypes.c_int*3)(1,49,pid);buf=ctypes.create_string_buffer(262144);size=ctypes.c_size_t(len(buf))\nrc=lib.sysctl(mib,3,buf,ctypes.byref(size),None,0)\nrecord={'target':'owned synthetic canary only','return_code':rc,'errno':ctypes.get_errno(),'returned_bytes':size.value if rc==0 else 0,'synthetic_marker_visible':b'public-harmless-procargs-marker' in buf.raw if rc==0 else False}\nrecord['python_started']=True;record['stdio_input']=sys.stdin.read()\ntry:\n child=os.fork()\nexcept PermissionError as e:record['fork_denied_errno']=e.errno\nelse:\n if child==0:os._exit(0)\n os.waitpid(child,0);record['fork_denied_errno']=None\ntry:\n process=subprocess.run([sys.executable,'-I','-B','-S','-c','print(1)'],capture_output=True,timeout=3)\n record['subprocess_denied_errno']=None\nexcept PermissionError as e:record['subprocess_denied_errno']=e.errno\nrecord['session_leader']=os.getpid()==os.getsid(0)==os.getpgrp()\ntry:os.setsid();record['setsid_denied_errno']=None\nexcept PermissionError as e:record['setsid_denied_errno']=e.errno\nprint(json.dumps(record))\n",
+    "65267"
+  ],
+  "environment": {
+    "HOME": "<PROBE_PROCARGS_DENY_BOTH>/scratch",
+    "TMPDIR": "<PROBE_PROCARGS_DENY_BOTH>/scratch",
+    "PATH": "/usr/bin:/bin"
+  },
+  "canary_command": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "-c",
+    "import time; time.sleep(15)"
+  ],
+  "canary_environment": {
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<PROBE_PROCARGS_DENY_BOTH>",
+    "TMPDIR": "<PROBE_PROCARGS_DENY_BOTH>",
+    "V4_SYNTHETIC_CANARY": "public-harmless-procargs-marker"
+  },
+  "canary_pid": 65267,
+  "exit_code": -5,
+  "policy_sha256": "48d4d38493965c042d8df9f1492acab924cc1c7402d68695e332217062b9be8d",
+  "observed": null
+}

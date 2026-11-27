@@ -1,0 +1,6 @@
+{
+  "manifest_entries": 86,
+  "hashes_match": true,
+  "findings": [],
+  "limits": "Pattern scan plus manual review of source selection; names of credential variables occur only in absence canaries. All identities are synthetic fixtures."
+}

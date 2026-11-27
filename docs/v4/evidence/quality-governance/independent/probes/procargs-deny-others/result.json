@@ -1,0 +1,50 @@
+{
+  "scope": "Fixed system probe targeting only owned synthetic process; no real credentials or unrelated PID accessed",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<PROBE_PROCARGS_DENY_OTHERS>/policy.sb",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "-c",
+    "import sys\nprint(\"PYTHON_START\",flush=True)\nimport ctypes,json,os,subprocess\npid=int(sys.argv[1]);lib=ctypes.CDLL(None,use_errno=True)\nlib.sysctl.argtypes=[ctypes.POINTER(ctypes.c_int),ctypes.c_uint,ctypes.c_void_p,ctypes.POINTER(ctypes.c_size_t),ctypes.c_void_p,ctypes.c_size_t]\nlib.sysctl.restype=ctypes.c_int\nmib=(ctypes.c_int*3)(1,49,pid);buf=ctypes.create_string_buffer(262144);size=ctypes.c_size_t(len(buf))\nrc=lib.sysctl(mib,3,buf,ctypes.byref(size),None,0)\nrecord={'target':'owned synthetic canary only','return_code':rc,'errno':ctypes.get_errno(),'returned_bytes':size.value if rc==0 else 0,'synthetic_marker_visible':b'public-harmless-procargs-marker' in buf.raw if rc==0 else False}\nrecord['python_started']=True;record['stdio_input']=sys.stdin.read()\ntry:\n child=os.fork()\nexcept PermissionError as e:record['fork_denied_errno']=e.errno\nelse:\n if child==0:os._exit(0)\n os.waitpid(child,0);record['fork_denied_errno']=None\ntry:\n process=subprocess.run([sys.executable,'-I','-B','-S','-c','print(1)'],capture_output=True,timeout=3)\n record['subprocess_denied_errno']=None\nexcept PermissionError as e:record['subprocess_denied_errno']=e.errno\nrecord['session_leader']=os.getpid()==os.getsid(0)==os.getpgrp()\ntry:os.setsid();record['setsid_denied_errno']=None\nexcept PermissionError as e:record['setsid_denied_errno']=e.errno\nprint(json.dumps(record))\n",
+    "65416"
+  ],
+  "environment": {
+    "HOME": "<PROBE_PROCARGS_DENY_OTHERS>/scratch",
+    "TMPDIR": "<PROBE_PROCARGS_DENY_OTHERS>/scratch",
+    "PATH": "/usr/bin:/bin"
+  },
+  "canary_command": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "-c",
+    "import time; time.sleep(15)"
+  ],
+  "canary_environment": {
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<PROBE_PROCARGS_DENY_OTHERS>",
+    "TMPDIR": "<PROBE_PROCARGS_DENY_OTHERS>",
+    "V4_SYNTHETIC_CANARY": "public-harmless-procargs-marker"
+  },
+  "canary_pid": 65416,
+  "exit_code": 0,
+  "policy_sha256": "1846cddc2f6ca3b7b9a9561f698092214378014b7d3a21e459db00fdc7620f65",
+  "observed": {
+    "target": "owned synthetic canary only",
+    "return_code": -1,
+    "errno": 1,
+    "returned_bytes": 0,
+    "synthetic_marker_visible": false,
+    "python_started": true,
+    "stdio_input": "fixed stdio smoke",
+    "fork_denied_errno": 1,
+    "subprocess_denied_errno": 1,
+    "session_leader": true,
+    "setsid_denied_errno": 1
+  }
+}

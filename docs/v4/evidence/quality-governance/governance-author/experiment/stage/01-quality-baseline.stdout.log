@@ -1,0 +1,19 @@
+{
+  "evidence_id": "baseline",
+  "evidence_sha256": "44907b5c9ad84b8ea1bd49753ba2ad4352b525aa161b698263b9fc375f28ba63",
+  "format": "quality-gate/1",
+  "gate_id": "e6394b2a5667b2962f1a4c35756439dce6e1c2192c09b24ba1cca49f5130a530",
+  "plan_sha256": "d15a9136ce33500552af8cd3e0fc7be412a698e1dd7a4ae440a67b088073dadc",
+  "reasons": [
+    "case:known:observed-check-failed"
+  ],
+  "status": "failed",
+  "subject": {
+    "commit": "1adee8fa8388ffe8342921ca970060ea2befe9c8",
+    "manifest_sha256": "f47e1e169f84e50060200c9b038fcb19ae8497a197addfd376d09141a04ab002",
+    "tree": "515150d9a48ce65b71154eb2472a2b799ac5397f"
+  },
+  "trust_sha256": "6e188deec0a2efeba52d9272c56e0c38a37d200e7cf7b8cb98a80663c7c3ad3a",
+  "wp_id": "WP-203",
+  "wp_revision": 1
+}

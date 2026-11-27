@@ -1,0 +1,13 @@
+(version 1)
+(deny default)
+(allow process-exec)
+(deny process-fork)
+(allow file-read-metadata)
+(allow file-map-executable)
+(allow mach-lookup (global-name "com.apple.system.logger"))
+(deny mach-lookup (global-name "com.apple.securityd") (global-name "com.apple.security.agent"))
+(allow file-read* (literal "/") (literal "/dev/null") (literal "/dev/urandom") (subpath "/System") (subpath "/usr") (subpath "/bin") (subpath "/Library/Developer") (subpath "/Library/Apple") (subpath "/private/preboot/Cryptexes") (subpath "/private/var/db/dyld") (subpath "<PROBE_PROCARGS_DENY_PIDINFO>/scratch"))
+(allow file-write* (literal "/dev/null") (subpath "<PROBE_PROCARGS_DENY_PIDINFO>/scratch"))
+(deny file-write-unlink (literal "<PROBE_PROCARGS_DENY_PIDINFO>/scratch"))
+
+(deny process-info-pidinfo)

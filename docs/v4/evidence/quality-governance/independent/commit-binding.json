@@ -1,0 +1,64 @@
+{
+  "reviewed_code_commit": "580cc0a8ce40fe9d4d235f94d7ab1e7aba2ddafc",
+  "scope": "Exact Git blob binding for source files recorded by the independent real-run manifests; not an assertion that every repository file was tested",
+  "source_files": {
+    "framework/quality/gate.py": {
+      "sha256": "1e445d0b8407a68bce5d01615e2705528894d700f6ebd3432e4dae59e21cc398",
+      "matched_runs": [
+        "quality-independent-stage",
+        "quality-interrupt-independent",
+        "governance-independent-stage"
+      ]
+    },
+    "schemas/evidence.schema.json": {
+      "sha256": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+      "matched_runs": [
+        "quality-independent-stage",
+        "quality-interrupt-independent",
+        "governance-independent-stage"
+      ]
+    },
+    "scripts/v4_quality.py": {
+      "sha256": "e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1",
+      "matched_runs": [
+        "quality-independent-stage",
+        "quality-interrupt-independent",
+        "governance-independent-stage"
+      ]
+    },
+    "framework/governance/core.py": {
+      "sha256": "173d11f297fb397b7da8c8ec4601b382d457183d45cdfb7f208ba090953d2dfb",
+      "matched_runs": [
+        "governance-independent-stage"
+      ]
+    },
+    "framework/governance/evaluate.py": {
+      "sha256": "5038ffb63ded1ae0a6532826f681c479b5168a67d21b3a90f1d4a9d18b231ecd",
+      "matched_runs": [
+        "governance-independent-stage"
+      ]
+    },
+    "schemas/governance.schema.json": {
+      "sha256": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+      "matched_runs": [
+        "governance-independent-stage"
+      ]
+    },
+    "scripts/v4_governance.py": {
+      "sha256": "0b559eb00ab164cb2a507713ba275b0470ecd94733f5132dc6358fc99186abe1",
+      "matched_runs": [
+        "governance-independent-stage"
+      ]
+    },
+    "framework/quality/collector.py": {
+      "sha256": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+      "matched_runs": [
+        "independent host-copy approval",
+        "all real quality runs",
+        "SIGINT run",
+        "all real governance quality runs"
+      ]
+    }
+  },
+  "mismatches": 0
+}

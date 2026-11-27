@@ -1,0 +1,81 @@
+{
+  "scope": "Actual policy generated inside A01 by fixed collector; only trusted system -c probe executed on host under that policy; no candidate collector host execution",
+  "collector_sha256": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/actual-policy.sb",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "-c",
+    "import ctypes,errno,hashlib,json,os,socket,stat,subprocess,sys\nfrom pathlib import Path\ncfg=json.loads(sys.argv[1]);r={};scratch=Path.cwd()\n# Only remove a known startup cache in this fresh scratch; preserve its fingerprint.\ncache=scratch/'xcrun_db'\nif cache.exists():\n info=cache.lstat();assert stat.S_ISREG(info.st_mode) and info.st_nlink==1 and info.st_size<=1048576\n r['startup_cache_sha256']=hashlib.sha256(cache.read_bytes()).hexdigest();cache.unlink()\nassert not list(scratch.iterdir())\ntry:scratch.rmdir();r['scratch_unlink']='unexpected_allowed'\nexcept PermissionError as e:r['scratch_unlink']=e.errno\npaths=cfg['paths']\nfor name,path in paths.items():\n for operation in ['read','write']:\n  try:\n   fd=os.open(path,(os.O_RDONLY if operation=='read' else os.O_WRONLY)|os.O_NOFOLLOW)\n   try:\n    if operation=='read':os.read(fd,1)\n   finally:os.close(fd)\n   r[name+'_'+operation]='allowed'\n  except PermissionError as e:r[name+'_'+operation]=e.errno\ntry:\n with socket.socket() as connection:connection.connect(('127.0.0.1',9))\n r['network']='unexpected_allowed'\nexcept PermissionError as e:r['network']=e.errno\ntry:child=os.fork()\nexcept PermissionError as e:r['fork']=e.errno\nelse:\n if child==0:os._exit(0)\n os.waitpid(child,0);r['fork']='unexpected_allowed_reaped'\ntry:\n child=os.posix_spawn('/usr/bin/true',['/usr/bin/true'],{'PATH':'/usr/bin:/bin'});os.waitpid(child,0);r['posix_spawn']='unexpected_allowed_reaped'\nexcept PermissionError as e:r['posix_spawn']=e.errno\ntry:subprocess.run([sys.executable,'-I','-B','-S','-c','print(1)'],timeout=3,capture_output=True);r['subprocess']='unexpected_allowed'\nexcept PermissionError as e:r['subprocess']=e.errno\nlib=ctypes.CDLL(None,use_errno=True);mib=(ctypes.c_int*3)(1,49,cfg['host_pid']);buf=ctypes.create_string_buffer(262144);size=ctypes.c_size_t(len(buf))\nrc=lib.sysctl(mib,3,buf,ctypes.byref(size),None,0);r['other_process_env']={'rc':rc,'errno':ctypes.get_errno(),'marker_visible':b'fixed-public-marker' in buf.raw if rc==0 else False}\nr['session_leader']=os.getpid()==os.getsid(0)==os.getpgrp()\ntry:os.setsid();r['setsid']='unexpected_allowed'\nexcept PermissionError as e:r['setsid']=e.errno\n(scratch/'unique-canary').write_text('harmless scratch output');r['scratch_write']=(scratch/'unique-canary').read_text()=='harmless scratch output'\nr['stdio']=sys.stdin.read();r['credentials_absent']=not any(k in os.environ for k in ('GH_TOKEN','GITHUB_TOKEN','OPENAI_API_KEY','ANTHROPIC_API_KEY','SSH_AUTH_SOCK','CODEX_HOME'))\nprint(json.dumps(r),flush=True)\n",
+    "{\"host_pid\": 66422, \"paths\": {\"plan\": \"<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/plan.json\", \"receipt\": \"<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/evidence.json\", \"log\": \"<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/logs/case.stdout\", \"subject\": \"<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/subject/fixture.txt\", \"outside\": \"<PROBE_ACTUAL_COLLECTOR_POLICY>/outside.txt\", \"sibling\": \"<PROBE_ACTUAL_COLLECTOR_POLICY>/candidate/sibling/data\", \"checkout\": \"<REPOSITORY>/framework/quality/collector.py\"}}"
+  ],
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<PROBE_ACTUAL_COLLECTOR_POLICY>/candidate/case",
+    "TMPDIR": "<PROBE_ACTUAL_COLLECTOR_POLICY>/candidate/case",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "host_canary_environment": {
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/host-home",
+    "TMPDIR": "<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/host-home",
+    "V4_SYNTHETIC_CANARY": "fixed-public-marker"
+  },
+  "policy_sha256": "776c93ecb473d73e7f68f099a4e86d88c25bb73178223db5ca4a92cdabc581f6",
+  "exit_code": 0,
+  "observed": {
+    "startup_cache_sha256": "767b97e4e6c44f3e9a7b2496c54bcc1c3901650873f4fc67d811e051bd9f6e8b",
+    "scratch_unlink": 1,
+    "plan_read": 1,
+    "plan_write": 1,
+    "receipt_read": 1,
+    "receipt_write": 1,
+    "log_read": 1,
+    "log_write": 1,
+    "subject_read": "allowed",
+    "subject_write": 1,
+    "outside_read": 1,
+    "outside_write": 1,
+    "sibling_read": 1,
+    "sibling_write": 1,
+    "checkout_read": 1,
+    "checkout_write": 1,
+    "network": 1,
+    "fork": 1,
+    "posix_spawn": 1,
+    "subprocess": 1,
+    "other_process_env": {
+      "rc": -1,
+      "errno": 1,
+      "marker_visible": false
+    },
+    "session_leader": true,
+    "setsid": 1,
+    "scratch_write": true,
+    "stdio": "fixed-stdio",
+    "credentials_absent": true
+  },
+  "protected_hashes_before": {
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/plan.json": "4e278a8de0dfc96a33ccaa5a7c357b7948e83a77383c5bde6803d24ad40182fb",
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/evidence.json": "4e278a8de0dfc96a33ccaa5a7c357b7948e83a77383c5bde6803d24ad40182fb",
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/logs/case.stdout": "4e278a8de0dfc96a33ccaa5a7c357b7948e83a77383c5bde6803d24ad40182fb",
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/subject/fixture.txt": "4e278a8de0dfc96a33ccaa5a7c357b7948e83a77383c5bde6803d24ad40182fb",
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/outside.txt": "4e278a8de0dfc96a33ccaa5a7c357b7948e83a77383c5bde6803d24ad40182fb",
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/candidate/sibling/data": "18a15128ea09b9d2c4f8b3f7787a310110e6f20672cee4b26e00b9125ef3755f",
+    "<REPOSITORY>/framework/quality/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f"
+  },
+  "protected_hashes_after": {
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/plan.json": "4e278a8de0dfc96a33ccaa5a7c357b7948e83a77383c5bde6803d24ad40182fb",
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/evidence.json": "4e278a8de0dfc96a33ccaa5a7c357b7948e83a77383c5bde6803d24ad40182fb",
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/logs/case.stdout": "4e278a8de0dfc96a33ccaa5a7c357b7948e83a77383c5bde6803d24ad40182fb",
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/subject/fixture.txt": "4e278a8de0dfc96a33ccaa5a7c357b7948e83a77383c5bde6803d24ad40182fb",
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/outside.txt": "4e278a8de0dfc96a33ccaa5a7c357b7948e83a77383c5bde6803d24ad40182fb",
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/candidate/sibling/data": "18a15128ea09b9d2c4f8b3f7787a310110e6f20672cee4b26e00b9125ef3755f",
+    "<REPOSITORY>/framework/quality/collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f"
+  }
+}

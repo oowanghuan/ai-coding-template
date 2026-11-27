@@ -1,0 +1,1 @@
+{"target": "owned synthetic canary only", "return_code": 0, "errno": 0, "returned_bytes": 1396, "synthetic_marker_visible": true, "python_started": true, "stdio_input": "fixed stdio smoke", "fork_denied_errno": 1, "subprocess_denied_errno": 1, "session_leader": true, "setsid_denied_errno": 1}

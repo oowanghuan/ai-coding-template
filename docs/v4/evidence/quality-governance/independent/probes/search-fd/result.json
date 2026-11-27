@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<LOCAL_EVIDENCE>/next-sandbox.sb",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<PROBE_SEARCH_FD>/probe.py"
+  ],
+  "environment": {
+    "HOME": "<PROBE_SEARCH_FD>",
+    "TMPDIR": "<PROBE_SEARCH_FD>",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "profile_sha256": "fa9d026b83170ff714b215d86a4712955889bf6c34a8bb791175cfa1917644a3",
+  "probe_sha256": "e017ef4ba7b053e2b7e964e529d5e64700b7b2a00979282ff0b0a1e03b03f2c4",
+  "scope": "Trusted fixed stdlib O_SEARCH/no-follow helper under existing A01; no product import"
+}

@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "/public/fixture/history/next-sandbox.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "/public/fixture/history/quality-gate-author/harness.py",
+    "/public/fixture/history/config.json"
+  ],
+  "started_at": "2026-11-27T18:34:21.550507+00:00",
+  "finished_at": "2026-11-27T18:34:49.260395+00:00",
+  "exit_code": 0,
+  "before": {
+    "framework/quality/gate.py": "1e445d0b8407a68bce5d01615e2705528894d700f6ebd3432e4dae59e21cc398",
+    "schemas/evidence.schema.json": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+    "scripts/v4_quality.py": "e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1",
+    "tests/quality/test_gate.py": "41e2c28161b0a92c81a4132a25a1a7c82c23a597af8ec6233d04647e73a628b1"
+  },
+  "after": {
+    "framework/quality/gate.py": "1e445d0b8407a68bce5d01615e2705528894d700f6ebd3432e4dae59e21cc398",
+    "schemas/evidence.schema.json": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+    "scripts/v4_quality.py": "e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1",
+    "tests/quality/test_gate.py": "41e2c28161b0a92c81a4132a25a1a7c82c23a597af8ec6233d04647e73a628b1"
+  }
+}

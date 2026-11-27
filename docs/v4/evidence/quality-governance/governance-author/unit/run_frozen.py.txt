@@ -1,0 +1,17 @@
+"""Trusted stdlib orchestrator; imports no candidate modules."""
+import hashlib,json,os,subprocess,time
+from pathlib import Path
+base=Path(__file__).resolve().parent
+repo=Path('<FRAMEWORK_ROOT>')
+paths=sorted([*repo.joinpath('framework/governance').glob('*'),repo/'schemas/governance.schema.json',repo/'scripts/v4_governance.py',*repo.joinpath('tests/governance').glob('*.py'),repo/'examples/governance/README.md'])
+sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
+before={str(p.relative_to(repo)):sha(p) for p in paths if p.is_file()}
+env={'HOME':str(base/'home'),'TMPDIR':str(base/'tmp'),'PATH':'/usr/bin:/bin:/usr/sbin:/sbin','PYTHONPATH':str(repo)+':<READONLY_DEPS>','PYTHONNOUSERSITE':'1','PYTHONDONTWRITEBYTECODE':'1','V4_OUTER_SEATBELT':'1'}
+command=['/usr/bin/sandbox-exec','-f',str(base/'hardened-profile.sb'),'/usr/bin/python3','-B','-S','-m','unittest','discover','-s','tests/governance','-v']
+start=time.time();run=subprocess.run(command,cwd=repo,env=env,capture_output=True)
+(base/'frozen-stdout.log').write_bytes(run.stdout);(base/'frozen-stderr.log').write_bytes(run.stderr)
+after={str(p.relative_to(repo)):sha(p) for p in paths if p.is_file()}
+result={'command':command,'environment':env,'started_epoch':start,'finished_epoch':time.time(),'exit_code':run.returncode,'source_hashes_before':before,'source_hashes_after':after,'source_unchanged':before==after,'profile_sha256':sha(base/'hardened-profile.sb'),'head':subprocess.check_output(['/usr/bin/git','rev-parse','HEAD'],cwd=repo).decode().strip(),'stdout_sha256':sha(base/'frozen-stdout.log'),'stderr_sha256':sha(base/'frozen-stderr.log'),'notes':['Author tests; identity and successful Gate context are synthetic fixtures.','run-1 failed on ancestor read. run-2 directory-listing workaround withdrawn. run-3/frozen use O_SEARCH and hardened profile.','Earlier profiles did not prevent process environment observation; not credential-isolation evidence.']}
+(base/'frozen-result.json').write_text(json.dumps(result,sort_keys=True,indent=2)+'\n')
+print(json.dumps({'exit_code':run.returncode,'source_unchanged':before==after,'result':str(base/'frozen-result.json')}))
+raise SystemExit(run.returncode)

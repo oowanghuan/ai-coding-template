@@ -1,0 +1,623 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai-coding-template:quality-evidence:1",
+  "description": "Local protected trust, plan and evidence records. Schema validity does not establish trusted origin or a passing Gate.",
+  "$defs": {
+    "subject": {
+      "type": "object",
+      "properties": {
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "tree": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "commit",
+        "tree",
+        "manifest_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "environment": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "const": "darwin"
+        },
+        "python": {
+          "const": "/usr/bin/python3"
+        },
+        "python_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "sandbox": {
+          "const": "macos-seatbelt"
+        }
+      },
+      "required": [
+        "platform",
+        "python",
+        "python_version",
+        "sandbox"
+      ],
+      "additionalProperties": false
+    },
+    "test": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "input": {
+          "type": "string",
+          "maxLength": 65536
+        },
+        "expected_exit": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "expected_stdout_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "skip_reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "required",
+        "input",
+        "expected_exit",
+        "expected_stdout_sha256",
+        "timeout_seconds",
+        "skip_reason"
+      ],
+      "additionalProperties": false
+    },
+    "plan": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "quality-plan/1"
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "wp_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "wp_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "kind": {
+          "enum": [
+            "code",
+            "document"
+          ]
+        },
+        "trusted_root": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "scratch_root": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "subject_root": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "entrypoint": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "subject": {
+          "$ref": "#/$defs/subject"
+        },
+        "commit_object": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1048576
+        },
+        "manifest": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 1024,
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "mode": {
+                "enum": [
+                  "100644",
+                  "100755"
+                ]
+              }
+            },
+            "required": [
+              "sha256",
+              "mode"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "collector_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "environment": {
+          "$ref": "#/$defs/environment"
+        },
+        "tests": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/test"
+          }
+        }
+      },
+      "required": [
+        "format",
+        "run_id",
+        "wp_id",
+        "wp_revision",
+        "kind",
+        "trusted_root",
+        "scratch_root",
+        "subject_root",
+        "entrypoint",
+        "subject",
+        "commit_object",
+        "manifest",
+        "collector_sha256",
+        "environment",
+        "tests"
+      ],
+      "additionalProperties": false
+    },
+    "log": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1048576
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size"
+      ],
+      "additionalProperties": false
+    },
+    "case": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "passed",
+            "failed",
+            "skipped",
+            "not_run"
+          ]
+        },
+        "exit_code": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": -255,
+              "maximum": 255
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signal": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 255
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "timed_out": {
+          "type": "boolean"
+        },
+        "output_limit_exceeded": {
+          "type": "boolean"
+        },
+        "collection_error": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "command": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "type": "string",
+            "maxLength": 4096
+          }
+        },
+        "input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_exit": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "expected_stdout_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "stdout": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/log"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stderr": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/log"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "policy_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "skip_reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "started_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "finished_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pid": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cwd": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "id",
+        "required",
+        "status",
+        "exit_code",
+        "signal",
+        "timed_out",
+        "output_limit_exceeded",
+        "collection_error",
+        "command",
+        "input_sha256",
+        "expected_exit",
+        "expected_stdout_sha256",
+        "stdout",
+        "stderr",
+        "policy_sha256",
+        "skip_reason",
+        "started_at",
+        "finished_at",
+        "pid",
+        "cwd"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "quality-evidence/1"
+        },
+        "evidence_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "wp_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "wp_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "kind": {
+          "enum": [
+            "code",
+            "document"
+          ]
+        },
+        "subject": {
+          "$ref": "#/$defs/subject"
+        },
+        "plan_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "collector_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "adapter": {
+          "const": "python-stdio/1"
+        },
+        "state": {
+          "enum": [
+            "complete",
+            "unknown"
+          ]
+        },
+        "started_at": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "finished_at": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "environment": {
+          "$ref": "#/$defs/environment"
+        },
+        "source_unchanged": {
+          "type": "boolean"
+        },
+        "cases": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/case"
+          }
+        },
+        "counts": {
+          "type": "object",
+          "properties": {
+            "passed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 32
+            },
+            "failed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 32
+            },
+            "skipped": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 32
+            },
+            "not_run": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 32
+            }
+          },
+          "required": [
+            "passed",
+            "failed",
+            "skipped",
+            "not_run"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "format",
+        "evidence_id",
+        "wp_id",
+        "wp_revision",
+        "kind",
+        "subject",
+        "plan_sha256",
+        "collector_sha256",
+        "adapter",
+        "state",
+        "started_at",
+        "finished_at",
+        "environment",
+        "source_unchanged",
+        "cases",
+        "counts"
+      ],
+      "additionalProperties": false
+    },
+    "trust": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "quality-trust/1"
+        },
+        "runs": {
+          "type": "object",
+          "maxProperties": 4096,
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "root": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "plan_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "collector_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "wp_id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+              },
+              "wp_revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "subject": {
+                "$ref": "#/$defs/subject"
+              }
+            },
+            "required": [
+              "root",
+              "plan_sha256",
+              "collector_sha256",
+              "wp_id",
+              "wp_revision",
+              "subject"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "format",
+        "runs"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/trust"
+    },
+    {
+      "$ref": "#/$defs/plan"
+    },
+    {
+      "$ref": "#/$defs/evidence"
+    }
+  ]
+}
