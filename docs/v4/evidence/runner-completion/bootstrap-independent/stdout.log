@@ -1,0 +1,1 @@
+{"passed": 42, "commands": 27, "canaries": {"outside_read": true, "outside_write": true, "checkout_write": true, "old_snapshot_write": true, "new_snapshot_write": true, "network": true, "credentials_removed": true}, "source_unchanged": true}

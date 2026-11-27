@@ -1,0 +1,34 @@
+{
+  "format": "v4-launch-config/1",
+  "batch_id": "v4-ext-e2e-g3n4tu1j",
+  "trusted_root": "<EXPERIMENT>/trusted",
+  "candidate_root": "<EXPERIMENT>/candidate",
+  "driver_sha256": "cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce",
+  "python": "/usr/bin/python3",
+  "worker_program": "<EXPERIMENT>/trusted/worker_process.py",
+  "worker_sha256": "05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d",
+  "request_dir": "<EXPERIMENT>/candidate/requests",
+  "receipt_dir": "<EXPERIMENT>/trusted/receipts",
+  "scratch_root": "<EXPERIMENT>/trusted/scratch",
+  "deadline_seconds": 60,
+  "jobs": [
+    {
+      "job_id": "job-a",
+      "operation_id": "external-parallel-a",
+      "workspace": "<EXPERIMENT>/candidate/project/.ai-org/workspaces/workspace-f8ce08acd2a343428d041a6da5e2c926",
+      "output": "src/a/result.txt",
+      "content_sha256": "14a3cc41f0636769c11124af5d5c5c0b8831ff64e34e5411e6772f778ca4a488",
+      "max_delay_seconds": 2,
+      "max_runtime_seconds": 25
+    },
+    {
+      "job_id": "job-b",
+      "operation_id": "external-parallel-b",
+      "workspace": "<EXPERIMENT>/candidate/project/.ai-org/workspaces/workspace-19a43400e7484dfc8eca5ea96e656c77",
+      "output": "src/b/result.txt",
+      "content_sha256": "3f829e42c43fe70dabecf5e77f30df1e489e3e130d939203a22f08743ff735f1",
+      "max_delay_seconds": 2,
+      "max_runtime_seconds": 25
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "<FIXTURE>/worker-overlap-before.py", line 23, in <module>
+    assert overlap, 'separate live PIDs did not prove concurrent Worker execution'
+AssertionError: separate live PIDs did not prove concurrent Worker execution

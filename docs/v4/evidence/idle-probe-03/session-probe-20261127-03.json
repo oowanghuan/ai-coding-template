@@ -1,0 +1,15 @@
+{
+  "event": "v4-session-probe-20261127-03",
+  "thread_id_sha256": "5d4c3da9cb5984c3a6d78dd154cbbb627eab517076b244a1892bcc2c3cd31278",
+  "state": "queued_not_started",
+  "created_at": "2026-11-27T15:49:09.032183+00:00",
+  "new_session_created": false,
+  "permissions_changed": false,
+  "queued_at": "2026-11-27T15:49:27.292594+00:00",
+  "client_id_sha256": "9aeb3f2e31ff28815807264ad2467e7147c099d8f4215fba9699a84353009aa0",
+  "queued_id_sha256": "c3f2551122c080baffe9cda634b9ae6409d85d39959abfee2d648a9f2771859e",
+  "reason": "state/queue changed; no automatic start retry",
+  "received": true,
+  "received_at": "2026-11-27T15:49:39.179862+00:00",
+  "receipt_source": "probe actually appeared in the bound existing model input"
+}

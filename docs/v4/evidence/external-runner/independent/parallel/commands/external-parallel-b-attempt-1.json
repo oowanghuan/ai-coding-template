@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "-B",
+    "-S",
+    "<REPOSITORY>/scripts/v4_local.py",
+    "run-external",
+    "--root",
+    "<EXPERIMENT>/candidate/project",
+    "--actor",
+    "principal-reviewer",
+    "--input",
+    "<EXPERIMENT>/candidate/commands/external-parallel-b.input.json",
+    "--expected-revision",
+    "7",
+    "--operation-id",
+    "external-parallel-b",
+    "--launcher-config",
+    "<EXPERIMENT>/trusted/config.json",
+    "--launcher-job-id",
+    "job-b"
+  ],
+  "exit_code": 2,
+  "started_ns": 1552760333,
+  "finished_ns": 2414517958,
+  "stdout": "",
+  "stderr": "{\"error\": \"revision conflict\"}\n"
+}

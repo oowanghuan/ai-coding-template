@@ -1,0 +1,36 @@
+{
+  "scenario": "failure",
+  "outputs": {
+    "job-a": {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "-S",
+        "<WORKSPACE>/scripts/v4_local.py",
+        "run-external",
+        "--root",
+        "<EXPERIMENT_FAILURE>/candidate/project",
+        "--actor",
+        "principal-implementer",
+        "--input",
+        "<EXPERIMENT_FAILURE>/candidate/commands/external-failure-a.input.json",
+        "--expected-revision",
+        "3",
+        "--operation-id",
+        "external-failure-a",
+        "--launcher-config",
+        "<EXPERIMENT_FAILURE>/trusted/config.json",
+        "--launcher-job-id",
+        "job-a"
+      ],
+      "exit_code": 2,
+      "started_ns": 465631750,
+      "finished_ns": 4609485583,
+      "stdout": "",
+      "stderr": "{\"error\": \"external worker failed/stopped; inspect launcher receipt\"}\n"
+    }
+  },
+  "deliveries": {},
+  "authority_sha256": "3571ef0dd39dff25120731ae3e2d41a3edc0236c4ad2b2edd0a3809344a54531",
+  "boundary": "CLI assertions; trusted coordinator independently validates protected driver receipts/logs."
+}

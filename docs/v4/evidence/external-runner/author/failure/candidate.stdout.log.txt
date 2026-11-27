@@ -1,0 +1,1 @@
+{"phase": "candidate-complete", "scenario": "failure", "deliveries": 0, "acceptance": false}

@@ -1,0 +1,83 @@
+{
+  "scenario": "parallel",
+  "outputs": {
+    "job-b": {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "-S",
+        "<WORKSPACE>/scripts/v4_local.py",
+        "run-external",
+        "--root",
+        "<EXPERIMENT_PARALLEL>/candidate/project",
+        "--actor",
+        "principal-reviewer",
+        "--input",
+        "<EXPERIMENT_PARALLEL>/candidate/commands/external-parallel-b.input.json",
+        "--expected-revision",
+        "8",
+        "--operation-id",
+        "external-parallel-b",
+        "--launcher-config",
+        "<EXPERIMENT_PARALLEL>/trusted/config.json",
+        "--launcher-job-id",
+        "job-b"
+      ],
+      "exit_code": 0,
+      "started_ns": 2544887666,
+      "finished_ns": 6999744833,
+      "stdout": "{\n  \"content_sha256\": \"3f829e42c43fe70dabecf5e77f30df1e489e3e130d939203a22f08743ff735f1\",\n  \"path\": \"src/b/result.txt\",\n  \"started_at\": \"2026-11-27T16:35:44Z\",\n  \"state\": \"finished\",\n  \"backend\": \"external\",\n  \"operation_id\": \"external-parallel-b\",\n  \"job_id\": \"job-b\",\n  \"launcher_config_sha256\": \"a6e296b35e68ca2060ce58d58c6e57ae799f9f924b01e3fc3f87239bfa2921e0\",\n  \"request_sha256\": \"2267ea7b05a87735d8ce152f5164e8dd624d41636b5b84de13a8ca438aab7f77\",\n  \"pid\": 39094,\n  \"exit_code\": 0,\n  \"launcher_receipt\": {\n    \"batch_id\": \"v4-ext-e2e-pvv0n0uc\",\n    \"config_sha256\": \"a6e296b35e68ca2060ce58d58c6e57ae799f9f924b01e3fc3f87239bfa2921e0\",\n    \"exit_code\": 0,\n    \"finished_at\": \"2026-11-27T16:35:47.764679+00:00\",\n    \"format\": \"v4-launch-receipt/1\",\n    \"job_id\": \"job-b\",\n    \"operation_id\": \"external-parallel-b\",\n    \"pid\": 39094,\n    \"request_sha256\": \"2267ea7b05a87735d8ce152f5164e8dd624d41636b5b84de13a8ca438aab7f77\",\n    \"sequence\": 3,\n    \"started_at\": \"2026-11-27T16:35:45.629699+00:00\",\n    \"state\": \"finished\",\n    \"stderr_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n    \"stdout_sha256\": \"560123ba27fe801c47e8787fe985acfe2560aee60769624049a50194224c9a2d\"\n  }\n}\n",
+      "stderr": ""
+    },
+    "job-a": {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-B",
+        "-S",
+        "<WORKSPACE>/scripts/v4_local.py",
+        "run-external",
+        "--root",
+        "<EXPERIMENT_PARALLEL>/candidate/project",
+        "--actor",
+        "principal-implementer",
+        "--input",
+        "<EXPERIMENT_PARALLEL>/candidate/commands/external-parallel-a.input.json",
+        "--expected-revision",
+        "6",
+        "--operation-id",
+        "external-parallel-a",
+        "--launcher-config",
+        "<EXPERIMENT_PARALLEL>/trusted/config.json",
+        "--launcher-job-id",
+        "job-a"
+      ],
+      "exit_code": 0,
+      "started_ns": 494648333,
+      "finished_ns": 7060685333,
+      "stdout": "{\n  \"content_sha256\": \"14a3cc41f0636769c11124af5d5c5c0b8831ff64e34e5411e6772f778ca4a488\",\n  \"path\": \"src/a/result.txt\",\n  \"started_at\": \"2026-11-27T16:35:42Z\",\n  \"state\": \"finished\",\n  \"backend\": \"external\",\n  \"operation_id\": \"external-parallel-a\",\n  \"job_id\": \"job-a\",\n  \"launcher_config_sha256\": \"a6e296b35e68ca2060ce58d58c6e57ae799f9f924b01e3fc3f87239bfa2921e0\",\n  \"request_sha256\": \"7424e5186de5e27300d6aaa56550106fea48624f551064cae1486cdb2e38efad\",\n  \"pid\": 39093,\n  \"exit_code\": 0,\n  \"launcher_receipt\": {\n    \"batch_id\": \"v4-ext-e2e-pvv0n0uc\",\n    \"config_sha256\": \"a6e296b35e68ca2060ce58d58c6e57ae799f9f924b01e3fc3f87239bfa2921e0\",\n    \"exit_code\": 0,\n    \"finished_at\": \"2026-11-27T16:35:47.763924+00:00\",\n    \"format\": \"v4-launch-receipt/1\",\n    \"job_id\": \"job-a\",\n    \"operation_id\": \"external-parallel-a\",\n    \"pid\": 39093,\n    \"request_sha256\": \"7424e5186de5e27300d6aaa56550106fea48624f551064cae1486cdb2e38efad\",\n    \"sequence\": 3,\n    \"started_at\": \"2026-11-27T16:35:45.626163+00:00\",\n    \"state\": \"finished\",\n    \"stderr_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n    \"stdout_sha256\": \"b53f494df2b4b2c7bec550879085028d0f937590513022eefaa1ca7a5137e906\"\n  }\n}\n",
+      "stderr": ""
+    }
+  },
+  "deliveries": {
+    "WP-DEMO": {
+      "assignment_id": "assignment-d4c1c6c8a91440059c1eeb1625bcc7c2",
+      "baseline_sha": "d839123352d482ee6a3494f15c34c407d04e8130",
+      "content_base64": "c3ludGhldGljLXBhcmFsbGVsLWE=",
+      "epoch": 1,
+      "path": "src/a/result.txt",
+      "sha256": "14a3cc41f0636769c11124af5d5c5c0b8831ff64e34e5411e6772f778ca4a488",
+      "token": 1
+    },
+    "WP-SECOND": {
+      "assignment_id": "assignment-e92b9200a24d410b884a5cd66e863917",
+      "baseline_sha": "d839123352d482ee6a3494f15c34c407d04e8130",
+      "content_base64": "c3ludGhldGljLXBhcmFsbGVsLWI=",
+      "epoch": 1,
+      "path": "src/b/result.txt",
+      "sha256": "3f829e42c43fe70dabecf5e77f30df1e489e3e130d939203a22f08743ff735f1",
+      "token": 1
+    }
+  },
+  "authority_sha256": "9fa8f4ca2ed4de1d835dc6b0e705b51e37a7cfe6975ef0d0e601eb7d92ebd606",
+  "boundary": "CLI assertions; trusted coordinator independently validates protected driver receipts/logs."
+}

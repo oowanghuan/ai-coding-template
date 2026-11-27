@@ -1,0 +1,202 @@
+"""Candidate-side fixture and CLI driver: always run inside the outer sandbox."""
+import argparse
+import base64
+import copy
+import hashlib
+import json
+import os
+from pathlib import Path
+import socket
+import stat
+import subprocess
+import sys
+import threading
+import time
+
+
+def digest(data): return hashlib.sha256(data).hexdigest()
+def write(path, value): path.write_text(json.dumps(value, indent=2) + '\n')
+def read(path): return json.loads(path.read_text())
+
+
+def canaries(experiment, repo):
+    candidate = experiment / 'candidate'; trusted = experiment / 'trusted'; result = {}
+    startup_cleanup = []
+    cache = candidate / 'xcrun_db'
+    if cache.exists() or cache.is_symlink():
+        info = cache.lstat()
+        assert stat.S_ISREG(info.st_mode) and info.st_nlink == 1 and info.st_size <= 1048576, 'unsafe startup cache; preserve'
+        data = cache.read_bytes()
+        startup_cleanup.append({'name': cache.name, 'bytes': len(data), 'sha256': digest(data),
+                                'reason': 'known macOS Python startup cache in fresh candidate anchor'})
+        cache.unlink()
+    assert not list(candidate.iterdir()), 'unexpected candidate anchor entries; preserve before rmdir probe'
+    for name, action in [
+        ('trusted_write', lambda: (trusted / 'canary.txt').write_text('changed')),
+        ('trusted_hardlink_alias', lambda: os.link(trusted / 'canary.txt', candidate / 'alias')),
+        ('repo_write', lambda: (repo / 'external-e2e-forbidden-write').write_text('changed')),
+        ('outside_read', lambda: (experiment / 'outside-canary.txt').read_text()),
+        ('outside_write', lambda: (experiment / 'outside-canary.txt').write_text('changed')),
+        ('candidate_root_unlink', lambda: candidate.rmdir()),
+    ]:
+        try: action(); result[name] = False
+        except PermissionError: result[name] = True
+        except OSError as error: raise AssertionError('canary did not prove sandbox denial: ' + name) from error
+    try:
+        with socket.socket() as connection: connection.connect(('127.0.0.1', 9))
+        result['network'] = False
+    except PermissionError: result['network'] = True
+    result['credentials_removed'] = not any(k in os.environ for k in
+        ['GH_TOKEN', 'GITHUB_TOKEN', 'OPENAI_API_KEY', 'ANTHROPIC_API_KEY', 'SSH_AUTH_SOCK', 'CODEX_HOME'])
+    assert all(result.values()), result
+    return result, startup_cleanup
+
+
+def prepare(experiment, repo, scenario):
+    isolation, startup_cleanup = canaries(experiment, repo)
+    # Product imports happen only after actual outer-sandbox probes succeed.
+    from framework.local.runner import git, prepare as make_worktree
+    from framework.local.store import Store
+    candidate = experiment / 'candidate'; root = candidate / 'project'; root.mkdir()
+    (candidate / 'requests').mkdir(); (candidate / 'commands').mkdir()
+    git(root, 'init', '-q'); (root / 'src').mkdir(); (root / 'src/base.txt').write_text('synthetic baseline')
+    git(root, 'add', 'src')
+    git(root, '-c', 'user.name=Synthetic', '-c', 'user.email=synthetic@example.invalid', 'commit', '-qm', 'synthetic baseline')
+    sha = git(root, 'rev-parse', 'HEAD').decode().strip()
+    snapshot = read(repo / 'examples/protocol/in-progress.json')
+    snapshot['assignments'] = []; snapshot['checkpoints'] = []
+    task = snapshot['work_packages'][0]
+    task.update(state='planned', assignment_ref=None, checkpoint_ref=None, baseline_sha=sha,
+                allowed_paths=['src/a/'])
+    snapshot['workers'][0]['state'] = 'available'
+    if scenario == 'parallel':
+        second = copy.deepcopy(task); second.update(id='WP-SECOND', allowed_paths=['src/b/'])
+        snapshot['work_packages'].append(second); snapshot['authorizations'][0]['wp_refs'].append('WP-SECOND')
+        snapshot['workers'][1].update(role_refs=['role-developer'], capabilities=['code'], quota='available')
+        snapshot['sessions'].append(dict(id='session-b', worker_ref='worker-b', provider_ref='provider-b',
+                                        host_ref='host-local', context_ref='synthetic-b'))
+    store = Store(root); store.initialize(snapshot, 'principal-owner')
+    jobs = []
+    for letter, wp, worker, session, actor in [('a', 'WP-DEMO', 'worker-a', 'session-a', 'principal-implementer')] + (
+            [('b', 'WP-SECOND', 'worker-b', 'session-b', 'principal-reviewer')] if scenario == 'parallel' else []):
+        state = store.inspect()['state']
+        c = store.change('claim', dict(wp_id=wp, worker_id=worker, session_id=session, lease_seconds=300),
+                         actor, state['revision'], 'claim-' + letter)['operation']['result']
+        make_worktree(root, c, actor, store.inspect()['state']['revision'], 'prepare-' + letter)
+        worktree = root / store.inspect()['state']['workspaces'][c['workspace_id']]['path']
+        path = 'src/' + letter + '/result.txt'; (worktree / path).parent.mkdir(parents=True)
+        if scenario == 'failure':
+            (worktree / path).write_text('preserved read-only synthetic target'); (worktree / path).chmod(0o400)
+        jobs.append(dict(job_id='job-' + letter, operation_id='external-' + scenario + '-' + letter,
+                         workspace=str(worktree), output=path, content='synthetic-' + scenario + '-' + letter,
+                         credentials=c, actor=actor, wp_id=wp, delay_seconds=15 if scenario == 'revoke' else 2,
+                         timeout=25))
+    result = dict(scenario=scenario, root=str(root), baseline_sha=sha, jobs=jobs, canaries=isolation, startup_cleanup=startup_cleanup)
+    write(candidate / 'prepared.json', result)
+    print(json.dumps({'phase': 'prepared', 'scenario': scenario, 'jobs': len(jobs), 'canaries': isolation}), flush=True)
+
+
+def execute(experiment, repo):
+    from framework.local.store import Store
+    from framework.local.runner import git
+    candidate = experiment / 'candidate'; trusted = experiment / 'trusted'
+    prepared = read(trusted / 'prepared.json'); root = Path(prepared['root']); store = Store(root)
+    config = trusted / 'config.json'; cli = repo / 'scripts/v4_local.py'; outputs = {}; errors = []; lock = threading.Lock()
+    def invoke(job, action, payload, key, extra=()):
+        path = candidate / 'commands' / (key + '.input.json'); write(path, payload)
+        for attempt in range(12):
+            args = [sys.executable, '-B', '-S', str(cli), action, '--root', str(root), '--actor', job['actor'],
+                    '--input', str(path), '--expected-revision', str(store.inspect()['state']['revision']),
+                    '--operation-id', key, *extra]
+            start = time.monotonic_ns(); process = subprocess.run(args, capture_output=True, timeout=40)
+            record = dict(command=args, exit_code=process.returncode, started_ns=start, finished_ns=time.monotonic_ns(),
+                          stdout=process.stdout.decode(), stderr=process.stderr.decode())
+            write(candidate / 'commands' / (key + '-attempt-' + str(attempt) + '.json'), record)
+            try: error = json.loads(process.stderr).get('error') if process.returncode else None
+            except (ValueError, AttributeError): error = None
+            if error == 'revision conflict': continue  # No committed intent; never retry unknown outcomes.
+            return record
+        raise AssertionError('CAS retries exhausted')
+    def launch(job):
+        try:
+            payload = dict(credentials=job['credentials'], path=job['output'], content=job['content'],
+                           delay_seconds=job['delay_seconds'], timeout=job['timeout'])
+            result = invoke(job, 'run-external', payload, job['operation_id'],
+                            ('--launcher-config', str(config), '--launcher-job-id', job['job_id']))
+            with lock: outputs[job['job_id']] = result
+        except BaseException as error:
+            with lock: errors.append(str(error))
+    threads = [threading.Thread(target=launch, args=(job,)) for job in prepared['jobs']]
+    for thread in threads: thread.start()
+    if prepared['scenario'] == 'revoke':
+        job = prepared['jobs'][0]; deadline = time.monotonic() + 35
+        while time.monotonic() < deadline:
+            receipt_path = trusted / 'receipts' / (job['job_id'] + '.json')
+            receipt = read(receipt_path) if receipt_path.exists() else None
+            if receipt and receipt['state'] == 'running':
+                for _ in range(12):
+                    state = store.inspect()['state']
+                    try:
+                        store.change('revoke', dict(assignment_id=job['credentials']['assignment_id'], reason='synthetic revoke test'),
+                                     'principal-owner', state['revision'], 'owner-revoke')
+                        break
+                    except ValueError as error:
+                        if str(error) != 'revision conflict': raise
+                else: raise AssertionError('revocation CAS retries exhausted')
+                write(candidate / 'revoke-observed.json', {'receipt': receipt, 'at_ns': time.monotonic_ns()})
+                break
+            time.sleep(0.05)
+        else: raise AssertionError('real running receipt was never observed')
+    for thread in threads: thread.join(timeout=45)
+    assert all(not t.is_alive() for t in threads) and not errors, errors
+    assert len(outputs) == len(prepared['jobs']), outputs
+    successful = prepared['scenario'] in ('single', 'parallel')
+    for job in prepared['jobs']:
+        outcome = outputs[job['job_id']]
+        assert (outcome['exit_code'] == 0) == successful, outcome
+        before_state = (root / '.ai-org/state.json').read_bytes()
+        before_receipt = (trusted / 'receipts' / (job['job_id'] + '.json')).read_bytes()
+        payload = dict(credentials=job['credentials'], path=job['output'], content=job['content'],
+                       delay_seconds=job['delay_seconds'], timeout=job['timeout'])
+        replay = invoke(job, 'run-external', payload, job['operation_id'],
+                        ('--launcher-config', str(config), '--launcher-job-id', job['job_id']))
+        assert (replay['exit_code'] == 0) == successful, replay
+        assert (root / '.ai-org/state.json').read_bytes() == before_state
+        assert (trusted / 'receipts' / (job['job_id'] + '.json')).read_bytes() == before_receipt
+        if successful:
+            delivery = invoke(job, 'submit', dict(job['credentials'], path=job['output'],
+                              sha256=digest(job['content'].encode())), 'deliver-' + job['job_id'])
+            assert delivery['exit_code'] == 0, delivery
+            result = json.loads(delivery['stdout'])['operation']['result']; assert result['accepted'] is False, result
+    state = store.inspect()['state']
+    if successful:
+        assert set(state['deliveries']) == {j['wp_id'] for j in prepared['jobs']}
+        for job in prepared['jobs']:
+            delivery = state['deliveries'][job['wp_id']]
+            assert delivery['assignment_id'] == job['credentials']['assignment_id']
+            assert (delivery['epoch'], delivery['token']) == (job['credentials']['epoch'], job['credentials']['token'])
+            assert base64.b64decode(delivery['content_base64']) == job['content'].encode()
+            assert state['snapshot']['work_packages'][0]['state'] == 'in_progress'
+    else:
+        assert state['deliveries'] == {}, state['deliveries']
+        workspace = state['workspaces'][prepared['jobs'][0]['credentials']['workspace_id']]
+        assert workspace['state'] in ('finished', 'stopped'), workspace
+        assert type(workspace['run']['launcher_receipt']['exit_code']) is int
+        assert workspace['run']['launcher_receipt']['exit_code'] != 0
+    assert git(root, 'rev-parse', 'HEAD').decode().strip() == prepared['baseline_sha']
+    assert (root / 'src/base.txt').read_text() == 'synthetic baseline'
+    assert all(not (root / j['output']).exists() for j in prepared['jobs'])
+    write(candidate / 'candidate-result.json', dict(scenario=prepared['scenario'], outputs=outputs,
+          deliveries=state['deliveries'], authority_sha256=digest((root / '.ai-org/state.json').read_bytes()),
+          boundary='CLI assertions; trusted coordinator independently validates protected driver receipts/logs.'))
+    print(json.dumps({'phase': 'candidate-complete', 'scenario': prepared['scenario'],
+                      'deliveries': len(state['deliveries']), 'acceptance': False}), flush=True)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(); parser.add_argument('phase', choices=['prepare', 'execute'])
+    parser.add_argument('--experiment', type=Path, required=True); parser.add_argument('--repo', type=Path, required=True)
+    parser.add_argument('--scenario', choices=['single', 'parallel', 'failure', 'revoke'])
+    args = parser.parse_args()
+    if args.phase == 'prepare': prepare(args.experiment, args.repo, args.scenario)
+    else: execute(args.experiment, args.repo)

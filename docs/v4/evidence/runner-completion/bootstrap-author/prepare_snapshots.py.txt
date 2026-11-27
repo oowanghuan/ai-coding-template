@@ -1,0 +1,13 @@
+import hashlib,json,shutil,subprocess
+from pathlib import Path
+repo=Path('<WORKSPACE>');base=Path(__file__).resolve().parent;sha='f95b03ab733fd45ed480aba162fee1943ea58c43';old=base/'old-framework';new=base/'new-framework'
+old.mkdir();roots={'framework','schemas','scripts','templates','manifests','examples','tests','.claude','CC_COLLABORATION'}
+paths=subprocess.check_output(['/usr/bin/git','-C',str(repo),'ls-tree','-r','--name-only',sha],text=True).splitlines();index={}
+for name in paths:
+ if name.split('/')[0] not in roots:continue
+ data=subprocess.check_output(['/usr/bin/git','-C',str(repo),'show',sha+':'+name]);path=old/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(data);index[name]=hashlib.sha256(data).hexdigest()
+shutil.copytree(old,new)
+overlay={}
+for name in ['templates/project/BOOTSTRAP.md','examples/bootstrap/README.md','framework/local/README.md','framework/local/bootstrap.py','tests/bootstrap/test_cli.py']:
+ data=(repo/name).read_bytes();(new/name).write_bytes(data);overlay[name]=hashlib.sha256(data).hexdigest()
+(base/'input-manifest.json').write_text(json.dumps({'base_sha':sha,'old_version':'0.2.0-preview','new_version':'0.2.1-preview','old_files_sha256':index,'new_overlay_sha256':overlay,'source_policy':'New snapshot is fixed old commit plus these five overlay files only; parallel Runner edits excluded.','role':'implementation author verification, not independent acceptance'},indent=2)+'\n');print(json.dumps({'old_files':len(index),'overlay':overlay}))

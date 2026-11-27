@@ -1,0 +1,27 @@
+test_authority_reference_blocks_asset_removal (test_bootstrap.BootstrapTests) ... ok
+test_committed_receipt_can_reconcile_lost_final_response (test_bootstrap.BootstrapTests) ... ok
+test_custom_bootstrap_conflict (test_bootstrap.BootstrapTests) ... ok
+test_dirty_import_preserves_git_files_and_custom_rules (test_bootstrap.BootstrapTests) ... ok
+test_dry_run_writes_nothing_and_initial_state_is_honest (test_bootstrap.BootstrapTests) ... ok
+test_edited_file_blocks_rollback_before_any_deletion (test_bootstrap.BootstrapTests) ... ok
+test_fault_after_unrecorded_write_preserves_unknown_and_blocks_store (test_bootstrap.BootstrapTests) ... ok
+test_invalid_execution_state_blocks_upgrade (test_bootstrap.BootstrapTests) ... ok
+test_journal_only_crash_recovers_via_new_process_cli (test_bootstrap.BootstrapTests) ... ok
+test_journal_only_recovery_preserves_unknown_file (test_bootstrap.BootstrapTests) ... ok
+test_old_receipt_cannot_delete_new_installation (test_bootstrap.BootstrapTests) ... ok
+test_plan_cannot_select_arbitrary_files (test_bootstrap.BootstrapTests) ... ok
+test_reinstall_after_rollback_preserves_newer_ownership (test_bootstrap.BootstrapTests) ... ok
+test_repeat_apply_and_rollback_are_safe (test_bootstrap.BootstrapTests) ... ok
+test_rollback_lost_response_can_reconcile (test_bootstrap.BootstrapTests) ... ok
+test_stale_plan_and_wrong_hash_rejected (test_bootstrap.BootstrapTests) ... ok
+test_state_progress_is_not_rewound_by_rollback (test_bootstrap.BootstrapTests) ... ok
+test_symlink_destination_refused (test_bootstrap.BootstrapTests) ... ok
+test_unknown_execution_blocks_upgrade (test_bootstrap.BootstrapTests) ... ok
+test_upgrade_and_rollback_preserve_task_authority (test_bootstrap.BootstrapTests) ... ok
+test_empty_target_can_use_reviewed_cli_from_target_directory (test_cli.ProjectCliTests) ... ok
+test_stale_public_plan_preserves_work_then_imports_after_replanning (test_cli.ProjectCliTests) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 18.605s
+
+OK

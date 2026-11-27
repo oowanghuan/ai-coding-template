@@ -1,0 +1,9 @@
+{
+  "assignment_id": "assignment-d4c1c6c8a91440059c1eeb1625bcc7c2",
+  "epoch": 1,
+  "token": 1,
+  "lease_expires_at": "2026-11-27T16:39:56Z",
+  "workspace_id": "workspace-68fdc29139384c7283ef5467c35a846d",
+  "path": "src/a/result.txt",
+  "sha256": "14a3cc41f0636769c11124af5d5c5c0b8831ff64e34e5411e6772f778ca4a488"
+}

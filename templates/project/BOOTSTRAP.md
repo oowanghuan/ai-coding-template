@@ -3,7 +3,20 @@
 `.ai-org/state.json` is the only task authority. Installation receipts describe
 installed files; they never authorize work or certify acceptance.
 
-1. Read the current snapshot with the reviewed `scripts/v4_local.py inspect`.
+The installer does not copy the CLI or its Python dependencies into this project.
+Keep a reviewed framework checkout with its required dependencies available.
+`FRAMEWORK_ROOT` identifies that checkout; `TARGET_ROOT` identifies this project.
+Use absolute, canonical paths (on macOS, `/private/tmp/...`, not the `/tmp` symlink).
+For example, this command works even when your current directory is the project:
+
+```sh
+FRAMEWORK_ROOT='/absolute/path/to/reviewed-framework'
+TARGET_ROOT='/absolute/path/to/your-project'
+python3 "$FRAMEWORK_ROOT/scripts/v4_local.py" inspect --root "$TARGET_ROOT"
+```
+
+1. Read the current snapshot with the command above, using the reviewed controller
+   and its required execution isolation. Do not look for `scripts/` in this project.
 2. Confirm project goal, scope, Owner, Git baseline, contracts and test commands.
    A newly installed task is planned. No Worker, review or authorization is invented.
 3. Before execution, import an explicitly reviewed snapshot and register resources.

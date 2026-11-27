@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "transaction_id": "f7b91f77fa06441eacdfd78e5b172ac1",
+  "state": "committed",
+  "predecessors": [],
+  "planned": [
+    {
+      "path": ".ai-org/versions/0.2.1-preview/BOOTSTRAP.md",
+      "sha256": "89108c2da89e29d123190126b92ed6fd706b8ca5f3046b3a86225ecd3409a5df",
+      "action": "create"
+    }
+  ],
+  "created": [
+    {
+      "path": ".ai-org/versions/0.2.1-preview/BOOTSTRAP.md",
+      "sha256": "89108c2da89e29d123190126b92ed6fd706b8ca5f3046b3a86225ecd3409a5df"
+    }
+  ],
+  "created_dirs": [
+    ".ai-org/versions/0.2.1-preview"
+  ],
+  "plan_sha256": "8aa333519378d43182e2cbee50dcbca29ce05d57f0775040abc05e52d3d04b05",
+  "previous": {
+    "guide": ".ai-org/versions/0.2.0-preview/BOOTSTRAP.md",
+    "state": "committed",
+    "transaction_id": "ef957b3515b3492fb2a6f18135d1be53"
+  },
+  "guide": ".ai-org/versions/0.2.1-preview/BOOTSTRAP.md",
+  "template_version": "0.2.1-preview"
+}

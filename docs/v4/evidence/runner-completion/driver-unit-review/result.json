@@ -1,0 +1,27 @@
+{
+  "started_at": "2026-11-27T16:23:42.089722+00:00",
+  "finished_at": "2026-11-27T16:23:42.403770+00:00",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<FIXTURE>/next-sandbox.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "<FIXTURE>/driver-unit-review/run.py",
+    "<FIXTURE>/config.json"
+  ],
+  "exit_code": 0,
+  "before": {
+    "framework/local/launch_driver.py": "cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce",
+    "tests/local/test_launch_driver.py": "815a62c123f68de3d9af282a7c3105a96415e71b957707afe23e3c878609a8a3"
+  },
+  "after": {
+    "framework/local/launch_driver.py": "cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce",
+    "tests/local/test_launch_driver.py": "815a62c123f68de3d9af282a7c3105a96415e71b957707afe23e3c878609a8a3"
+  },
+  "actual_worker_launch": false,
+  "fake_subprocess_only": true,
+  "harness_sha256": "13610a7e38e5246ddf563eedb9fee6579c00c89a4ddb6ca4f1a03a1467003e85",
+  "sandbox_sha256": "fa9d026b83170ff714b215d86a4712955889bf6c34a8bb791175cfa1917644a3"
+}

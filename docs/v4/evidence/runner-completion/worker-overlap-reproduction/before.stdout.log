@@ -1,0 +1,1 @@
+{"sequential_stdin_eof": true, "actual_intervals": [{"path": "out", "result": "synthetic-file-written", "pid": 36154, "started_ns": 156071708, "finished_ns": 1165094666}, {"path": "out", "result": "synthetic-file-written", "pid": 36157, "started_ns": 1002677250, "finished_ns": 2006569791}], "overlap": true}

@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-27T16:21:25.428109+00:00",
+  "exit_code": 0,
+  "observations": {
+    "rename_anchor": "denied:1",
+    "remove_empty_anchor": "denied:1",
+    "replace_anchor_with_symlink": "denied:17",
+    "write_child": "allowed"
+  },
+  "candidate_remains_directory": true,
+  "trusted_canary_unchanged": true,
+  "stderr": "",
+  "evidence_root": "<ANCHOR_FIXED>"
+}

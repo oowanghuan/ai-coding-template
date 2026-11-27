@@ -1,0 +1,19 @@
+(version 1)
+(deny default)
+(allow process*)
+(allow sysctl-read)
+(allow file-read-metadata)
+(allow mach-lookup (global-name "com.apple.system.logger"))
+(allow file-read* (subpath "/System") (subpath "/usr") (subpath "/Library/Developer") (subpath "/Library/Apple") (subpath "/private/var/db/dyld") (literal "/dev/null") (literal "/dev/urandom") (subpath "<WORKSPACE>") (subpath "<DEPENDENCIES>") (subpath "<FIXTURE>"))
+(allow file-write* (subpath "<FIXTURE>") (literal "/dev/null"))
+(allow file-map-executable)
+(allow file-read* (subpath "/bin") (subpath "/sbin") (subpath "/private/preboot/Cryptexes"))
+(deny mach-lookup (global-name "com.apple.securityd") (global-name "com.apple.security.agent"))
+
+(allow file-read* (literal "/"))
+
+(allow signal (target children))
+
+(deny file-write* (subpath "<FIXTURE>/bootstrap-021-author/old-framework"))
+
+(deny file-write* (subpath "<FIXTURE>/bootstrap-021-author/new-framework"))

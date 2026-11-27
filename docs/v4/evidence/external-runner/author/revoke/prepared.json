@@ -1,0 +1,43 @@
+{
+  "scenario": "revoke",
+  "root": "<EXPERIMENT_REVOKE>/candidate/project",
+  "baseline_sha": "d839123352d482ee6a3494f15c34c407d04e8130",
+  "jobs": [
+    {
+      "job_id": "job-a",
+      "operation_id": "external-revoke-a",
+      "workspace": "<EXPERIMENT_REVOKE>/candidate/project/.ai-org/workspaces/workspace-126ec0be6d924fc2a7afb5b5396a39aa",
+      "output": "src/a/result.txt",
+      "content": "synthetic-revoke-a",
+      "credentials": {
+        "assignment_id": "assignment-dfe07b40170b40b5ba7664e2c9b9db6f",
+        "epoch": 1,
+        "token": 1,
+        "lease_expires_at": "2026-11-27T16:39:56Z",
+        "workspace_id": "workspace-126ec0be6d924fc2a7afb5b5396a39aa"
+      },
+      "actor": "principal-implementer",
+      "wp_id": "WP-DEMO",
+      "delay_seconds": 15,
+      "timeout": 25
+    }
+  ],
+  "canaries": {
+    "trusted_write": true,
+    "trusted_hardlink_alias": true,
+    "repo_write": true,
+    "outside_read": true,
+    "outside_write": true,
+    "candidate_root_unlink": true,
+    "network": true,
+    "credentials_removed": true
+  },
+  "startup_cleanup": [
+    {
+      "name": "xcrun_db",
+      "bytes": 499,
+      "sha256": "767b97e4e6c44f3e9a7b2496c54bcc1c3901650873f4fc67d811e051bd9f6e8b",
+      "reason": "known macOS Python startup cache in fresh candidate anchor"
+    }
+  ]
+}

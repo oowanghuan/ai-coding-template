@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-27T16:22:38.782259+00:00",
+  "normal": {
+    "exit": 0,
+    "stdout": "{\"write\": \"allowed\", \"read\": \"denied:1\"}\n",
+    "stderr": ""
+  },
+  "ancestor_swapped_before_policy_load": {
+    "exit": 0,
+    "stdout": "{\"write\": \"denied:1\", \"read\": \"denied:1\"}\n",
+    "stderr": ""
+  },
+  "outside_victim_unchanged": true,
+  "scope": "Trusted fixed system-Python policy canary only; not candidate driver integration",
+  "evidence_root": "<OUTPUT_BOUNDARY>"
+}

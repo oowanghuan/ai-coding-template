@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "-B",
+    "-S",
+    "<REPOSITORY>/scripts/v4_local.py",
+    "run-external",
+    "--root",
+    "<EXPERIMENT>/candidate/project",
+    "--actor",
+    "principal-implementer",
+    "--input",
+    "<EXPERIMENT>/candidate/commands/external-revoke-a.input.json",
+    "--expected-revision",
+    "7",
+    "--operation-id",
+    "external-revoke-a",
+    "--launcher-config",
+    "<EXPERIMENT>/trusted/config.json",
+    "--launcher-job-id",
+    "job-a"
+  ],
+  "exit_code": 2,
+  "started_ns": 2906614666,
+  "finished_ns": 3691324291,
+  "stdout": "",
+  "stderr": "{\"error\": \"external run failed or unresolved; no automatic repeat\"}\n"
+}

@@ -1,0 +1,16 @@
+{
+  "reviewed_commit": "e7618b5a535e67aaca6aef7d5dfe30d3eb0b6291",
+  "tested_source_blob_matches": {
+    "framework/local/external.py": true,
+    "tests/local/test_external.py": true,
+    "tests/local/test_external_lifecycle.py": true,
+    "framework/local/store.py": true,
+    "framework/local/runner.py": true,
+    "scripts/v4_local.py": true
+  },
+  "trusted_programs": {
+    "framework/local/launch_driver.py": "cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce",
+    "framework/local/worker_process.py": "05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d"
+  },
+  "result_sha256": "45f33e753b9a68fcb81cc4c0de9188bc270c6f73a0262df400c5dbb413b15d00"
+}

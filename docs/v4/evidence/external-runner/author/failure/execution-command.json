@@ -1,0 +1,43 @@
+{
+  "candidate": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<EXPERIMENT_FAILURE>/trusted/outer.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "<EXPERIMENT_FAILURE>/trusted/candidate_harness.py",
+    "execute",
+    "--experiment",
+    "<EXPERIMENT_FAILURE>",
+    "--repo",
+    "<WORKSPACE>",
+    "--scenario",
+    "failure"
+  ],
+  "candidate_environment": {
+    "HOME": "<EXPERIMENT_FAILURE>/candidate",
+    "TMPDIR": "<EXPERIMENT_FAILURE>/candidate",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONPATH": "<WORKSPACE>:<DEPENDENCIES>",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "V4_OUTER_SEATBELT": "1"
+  },
+  "driver": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<EXPERIMENT_FAILURE>/trusted/launch_driver.py",
+    "--config",
+    "<EXPERIMENT_FAILURE>/trusted/config.json"
+  ],
+  "driver_environment": {
+    "HOME": "<EXPERIMENT_FAILURE>/trusted/home",
+    "TMPDIR": "<EXPERIMENT_FAILURE>/trusted/tmp",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

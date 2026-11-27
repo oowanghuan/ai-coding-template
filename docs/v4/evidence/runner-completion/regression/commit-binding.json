@@ -1,0 +1,178 @@
+{
+  "code_commit": "e7618b5a535e67aaca6aef7d5dfe30d3eb0b6291",
+  "manifest_count": 32,
+  "matching_inputs": 31,
+  "nonmatching_during_run": [
+    "framework/local/README.md"
+  ],
+  "explanation": "README documentation was edited by the documentation worker during this run. All 31 other recorded inputs, including tested source, tests, schemas and bootstrap assets, match the fixed code commit. Original result retains inputs_unchanged=false; no claim that README stayed frozen. Manifest covers these paths, not every legacy installation asset.",
+  "tests": {
+    "run": 150,
+    "passed": 147,
+    "skipped": 3,
+    "failures": 0,
+    "errors": 0
+  },
+  "bindings": {
+    "examples/bootstrap/README.md": {
+      "recorded_sha256": "9b1c67e11ff64d904802d1a159a02b4aa86d390c0772c2a86ea3d69f484304a1",
+      "commit_sha256": "9b1c67e11ff64d904802d1a159a02b4aa86d390c0772c2a86ea3d69f484304a1",
+      "match": true
+    },
+    "examples/protocol/in-progress.json": {
+      "recorded_sha256": "7cf2fad959882203f00b74d8f15a79e4a6f1a8c524dfb7eaf5468a81e061013e",
+      "commit_sha256": "7cf2fad959882203f00b74d8f15a79e4a6f1a8c524dfb7eaf5468a81e061013e",
+      "match": true
+    },
+    "framework/core/protocol.py": {
+      "recorded_sha256": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+      "commit_sha256": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+      "match": true
+    },
+    "framework/local/README.md": {
+      "recorded_sha256": "d1f1b4127b1d11b27db3a6f10345269473c506f5045c2bc1ef78b1bc99af7c03",
+      "commit_sha256": "339cb03fb93d0dd0415eb61370d87f48e4b52d7dd21c0b790ec034cf1084e7ce",
+      "match": false
+    },
+    "framework/local/bootstrap.py": {
+      "recorded_sha256": "05d4810f9a748d9785a76598ea2bbd91a3b414d16cec43b71bff506b1c58afa8",
+      "commit_sha256": "05d4810f9a748d9785a76598ea2bbd91a3b414d16cec43b71bff506b1c58afa8",
+      "match": true
+    },
+    "framework/local/external.py": {
+      "recorded_sha256": "a96f448a659ee95e3718e876738d450cd7a422ffc1a9a0b70483677302f12d74",
+      "commit_sha256": "a96f448a659ee95e3718e876738d450cd7a422ffc1a9a0b70483677302f12d74",
+      "match": true
+    },
+    "framework/local/launch_driver.py": {
+      "recorded_sha256": "cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce",
+      "commit_sha256": "cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce",
+      "match": true
+    },
+    "framework/local/runner.py": {
+      "recorded_sha256": "d87247853d1266d730e1bea38e780da36bdae08b1c4075bacc2da336404fb497",
+      "commit_sha256": "d87247853d1266d730e1bea38e780da36bdae08b1c4075bacc2da336404fb497",
+      "match": true
+    },
+    "framework/local/storage.py": {
+      "recorded_sha256": "af2ddd9d5d717d1f3afe71fc8bcf09f1aaca7b514d3a1e1b1d389f0113a37dea",
+      "commit_sha256": "af2ddd9d5d717d1f3afe71fc8bcf09f1aaca7b514d3a1e1b1d389f0113a37dea",
+      "match": true
+    },
+    "framework/local/store.py": {
+      "recorded_sha256": "13ee8c97456c294006bac174a2a3200af773e74aceb186c4efe3980012d09676",
+      "commit_sha256": "13ee8c97456c294006bac174a2a3200af773e74aceb186c4efe3980012d09676",
+      "match": true
+    },
+    "framework/local/worker_process.py": {
+      "recorded_sha256": "05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d",
+      "commit_sha256": "05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d",
+      "match": true
+    },
+    "schemas/README.md": {
+      "recorded_sha256": "9d1bc355ff88412cfdcbd301641494a71bfbf5c9c04af12373090aed0ef0bd56",
+      "commit_sha256": "9d1bc355ff88412cfdcbd301641494a71bfbf5c9c04af12373090aed0ef0bd56",
+      "match": true
+    },
+    "schemas/install-plan.schema.json": {
+      "recorded_sha256": "b276d52b899267c431274a11e8d0880d72ffda43a399ba94cf1c2235d8f7ebdb",
+      "commit_sha256": "b276d52b899267c431274a11e8d0880d72ffda43a399ba94cf1c2235d8f7ebdb",
+      "match": true
+    },
+    "schemas/local-state.schema.json": {
+      "recorded_sha256": "09575cca244eeee43871b5d4f5ddf355632550bfeefadee2653fb464a5dcd470",
+      "commit_sha256": "09575cca244eeee43871b5d4f5ddf355632550bfeefadee2653fb464a5dcd470",
+      "match": true
+    },
+    "schemas/protocol.schema.json": {
+      "recorded_sha256": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+      "commit_sha256": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+      "match": true
+    },
+    "scripts/init-claude-tools.sh": {
+      "recorded_sha256": "a12ac467c1ca0ec8ff4bfda970b75330acf30a39b231358b7e1ff68ba22a62f8",
+      "commit_sha256": "a12ac467c1ca0ec8ff4bfda970b75330acf30a39b231358b7e1ff68ba22a62f8",
+      "match": true
+    },
+    "scripts/install_claude_tools.py": {
+      "recorded_sha256": "db33efd523d66e0bd74f334c262d874a4d347befc84ca2a0db8c4deac979b86d",
+      "commit_sha256": "db33efd523d66e0bd74f334c262d874a4d347befc84ca2a0db8c4deac979b86d",
+      "match": true
+    },
+    "scripts/v4_local.py": {
+      "recorded_sha256": "1e779f01864c05a4e69b2e36a6903db68d3fdb692d09c237a77edead6bbc562c",
+      "commit_sha256": "1e779f01864c05a4e69b2e36a6903db68d3fdb692d09c237a77edead6bbc562c",
+      "match": true
+    },
+    "scripts/v4_project.py": {
+      "recorded_sha256": "c51af4e9e0fe11b7bfe765500c335278d0db0646e5336aafeb61399d0a7419a3",
+      "commit_sha256": "c51af4e9e0fe11b7bfe765500c335278d0db0646e5336aafeb61399d0a7419a3",
+      "match": true
+    },
+    "scripts/validate_protocol.py": {
+      "recorded_sha256": "a4debf2140c2e10c32170009fa64426218cb518e5344f0ec39baa8daad091a75",
+      "commit_sha256": "a4debf2140c2e10c32170009fa64426218cb518e5344f0ec39baa8daad091a75",
+      "match": true
+    },
+    "templates/project/BOOTSTRAP.md": {
+      "recorded_sha256": "89108c2da89e29d123190126b92ed6fd706b8ca5f3046b3a86225ecd3409a5df",
+      "commit_sha256": "89108c2da89e29d123190126b92ed6fd706b8ca5f3046b3a86225ecd3409a5df",
+      "match": true
+    },
+    "templates/project/planned.json": {
+      "recorded_sha256": "5b8bc2c8156c564dcf9361411c28c5c9ca745add73e2510363d32b892659a3e9",
+      "commit_sha256": "5b8bc2c8156c564dcf9361411c28c5c9ca745add73e2510363d32b892659a3e9",
+      "match": true
+    },
+    "tests/bootstrap/test_bootstrap.py": {
+      "recorded_sha256": "5c18377ef768a6d2bffdfe1ceb9b6068000b37ef08043d700732bccf9253492e",
+      "commit_sha256": "5c18377ef768a6d2bffdfe1ceb9b6068000b37ef08043d700732bccf9253492e",
+      "match": true
+    },
+    "tests/bootstrap/test_cli.py": {
+      "recorded_sha256": "d9f5ca6ca135e31d196ddb8634a5c1b26e2d6d9f003c74ecdb19ffc66cd3bb54",
+      "commit_sha256": "d9f5ca6ca135e31d196ddb8634a5c1b26e2d6d9f003c74ecdb19ffc66cd3bb54",
+      "match": true
+    },
+    "tests/install/test_install.py": {
+      "recorded_sha256": "afa7ad929c67b6643bbe0503eb44561a88af61a4d05c3bae1828fe96a0dcc54c",
+      "commit_sha256": "afa7ad929c67b6643bbe0503eb44561a88af61a4d05c3bae1828fe96a0dcc54c",
+      "match": true
+    },
+    "tests/local/test_external.py": {
+      "recorded_sha256": "13669f1daa675e48b3f827c099c52bfc63e083c6dad4c2302a3c678798d59203",
+      "commit_sha256": "13669f1daa675e48b3f827c099c52bfc63e083c6dad4c2302a3c678798d59203",
+      "match": true
+    },
+    "tests/local/test_external_lifecycle.py": {
+      "recorded_sha256": "9577577e6975c68cb8d868d5a6bc6525d5a4b87cda5791b8fc1bc1f403ff2147",
+      "commit_sha256": "9577577e6975c68cb8d868d5a6bc6525d5a4b87cda5791b8fc1bc1f403ff2147",
+      "match": true
+    },
+    "tests/local/test_launch_driver.py": {
+      "recorded_sha256": "815a62c123f68de3d9af282a7c3105a96415e71b957707afe23e3c878609a8a3",
+      "commit_sha256": "815a62c123f68de3d9af282a7c3105a96415e71b957707afe23e3c878609a8a3",
+      "match": true
+    },
+    "tests/local/test_local.py": {
+      "recorded_sha256": "e16ce23b606089ca09528fa52cc5a4cab58cb066872fd06da18fed0804019eec",
+      "commit_sha256": "e16ce23b606089ca09528fa52cc5a4cab58cb066872fd06da18fed0804019eec",
+      "match": true
+    },
+    "tests/p0_audit.py": {
+      "recorded_sha256": "ddb078796258c2f2724d627ebb476e214df1519c8f878fafaa472b86b3f32009",
+      "commit_sha256": "ddb078796258c2f2724d627ebb476e214df1519c8f878fafaa472b86b3f32009",
+      "match": true
+    },
+    "tests/protocol/test_protocol.py": {
+      "recorded_sha256": "8daa43d95cd6cea9a43eeec64ef7c3fd3ca860d095d94cc7b66b8e4b544b5c8c",
+      "commit_sha256": "8daa43d95cd6cea9a43eeec64ef7c3fd3ca860d095d94cc7b66b8e4b544b5c8c",
+      "match": true
+    },
+    "tests/validate_v4_design.py": {
+      "recorded_sha256": "fafb99fd6e9328946fe8fc5fa778a85b7b3de3153a190ab271085ecef1c83be3",
+      "commit_sha256": "fafb99fd6e9328946fe8fc5fa778a85b7b3de3153a190ab271085ecef1c83be3",
+      "match": true
+    }
+  }
+}

@@ -1,0 +1,32 @@
+import hashlib,json,os,subprocess,sys,time
+from pathlib import Path
+base=Path(__file__).resolve().parent
+worker=Path('<REPOSITORY>/framework/local/worker_process.py')
+expected='05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d'
+assert hashlib.sha256(worker.read_bytes()).hexdigest()==expected
+clock=lambda:time.clock_gettime_ns(time.CLOCK_MONOTONIC)
+observations=[]
+def start(name):
+ before=clock()
+ p=subprocess.Popen([sys.executable,'-I','-B','-S',str(worker)],cwd=base,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+ p.stdin.write(json.dumps({'path':name+'.txt','content':name,'delay_seconds':1}).encode());p.stdin.close();p.stdin=None
+ return before,p,name
+def finish(item):
+ before,p,name=item;out,err=p.communicate(timeout=10);after=clock()
+ (base/(name+'.stdout')).write_bytes(out);(base/(name+'.stderr')).write_bytes(err)
+ r=json.loads(out);assert p.returncode==0 and not err
+ assert r['pid']==p.pid and r['clock']=='CLOCK_MONOTONIC'
+ assert before<=r['started_ns']<=r['finished_ns']<=after
+ assert (base/(name+'.txt')).read_text()==name
+ obs={'name':name,'parent_before':before,'parent_after':after,'worker':r,'exit_code':p.returncode,'stdout_sha256':hashlib.sha256(out).hexdigest()}
+ observations.append(obs);return r
+first=finish(start('serial-a'));second=finish(start('serial-b'))
+serial_overlap=max(first['started_ns'],second['started_ns'])<min(first['finished_ns'],second['finished_ns'])
+assert not serial_overlap and first['finished_ns']<second['started_ns']
+a=start('parallel-a');b=start('parallel-b');a=finish(a);b=finish(b)
+parallel_overlap=max(a['started_ns'],b['started_ns'])<min(a['finished_ns'],b['finished_ns'])
+assert parallel_overlap
+assert hashlib.sha256(worker.read_bytes()).hexdigest()==expected
+result={'python':sys.version,'worker_sha256':expected,'clock':'CLOCK_MONOTONIC','serial_overlap':serial_overlap,'parallel_overlap':parallel_overlap,'parent_child_clock_bracketing':True,'observations':observations,'scope':'A01 execution of fixed Worker directly as child; clock comparability and real interval control only, not external launcher integration'}
+(base/'observations.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({'serial_overlap':serial_overlap,'parallel_overlap':parallel_overlap,'parent_child_clock_bracketing':True}))

@@ -1,0 +1,29 @@
+{
+  "role": "Independent reviewer execution of inspected author CLI journey harness",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<FIXTURE>/bootstrap-021-independent/sandbox.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "<FIXTURE>/bootstrap-021-independent/cross_version.py"
+  ],
+  "environment": {
+    "HOME": "<FIXTURE>/bootstrap-021-independent/home",
+    "TMPDIR": "<FIXTURE>/bootstrap-021-independent/tmp",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONPATH": "<FIXTURE>/bootstrap-021-independent/new-framework:<DEPENDENCIES>",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "V4_OUTER_SEATBELT": "1"
+  },
+  "started_epoch": 1795796827.463278,
+  "finished_epoch": 1795796843.134942,
+  "exit_code": 0,
+  "source_manifest_sha256": "b4058c6fbc00109a80af547c21a2a998b403fbc7765ea9ae230e2c66d4e822f9",
+  "harness_sha256": "0ba765b7c3643bcefcd8dc33b319814cc51dff5de17019937ced9b3149cd3078",
+  "sandbox_sha256": "61dd4f550793d562aa93dbd382a915c8d754558f651767749617ec424bd907b9",
+  "stdout_sha256": "c214e0b77377295bb63bfce72ebd5990461d07816f4f11f3d4493f8be0250698",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,272 @@
+"""Trusted finite experiment coordinator. Stdlib only; never imports candidate code.
+
+prepare: candidate fixture runs only in outer Seatbelt; no host driver launch.
+execute: requires explicit approval hashes, then launches only their pinned T copies.
+Every experiment is single-use. Unknown execution is preserved, never retried.
+"""
+import argparse
+import base64
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import signal
+import stat
+import subprocess
+import tempfile
+import time
+
+DRIVER_SHA = 'cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce'
+WORKER_SHA = '05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d'
+LIMIT = 4 * 1024 * 1024
+
+
+def digest(data): return hashlib.sha256(data).hexdigest()
+def utc(): return datetime.now(timezone.utc).isoformat()
+def canonical(value): return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()
+def save(path, value): path.write_text(json.dumps(value, indent=2) + '\n')
+def regular(path):
+    path = Path(path)
+    if not path.is_absolute() or '..' in path.parts or path.resolve() != path:
+        raise ValueError('noncanonical input path')
+    # Pin every ancestor, not merely the final leaf. Candidate-side ancestors
+    # may change after resolve(); O_NOFOLLOW directory walks must reject swaps.
+    parent_fd = os.open('/', os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        for part in path.parts[1:-1]:
+            following = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=parent_fd)
+            os.close(parent_fd); parent_fd = following
+        fd = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=parent_fd)
+        try:
+            info = os.fstat(fd)
+            if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1 or info.st_size > LIMIT:
+                raise ValueError('unsafe input file')
+            data = os.read(fd, LIMIT + 1)
+            if len(data) > LIMIT: raise ValueError('oversized input')
+            return data
+        finally: os.close(fd)
+    finally: os.close(parent_fd)
+
+def load(path): return json.loads(regular(path))
+def directory(path):
+    path = Path(path)
+    if not path.is_absolute() or path.resolve() != path or not path.is_dir(): raise ValueError('unsafe directory')
+    return path
+
+def sources(repo):
+    paths = [p for folder in ('framework', 'schemas') for p in (repo / folder).rglob('*')
+             if p.is_file() and p.suffix in ('.py', '.json')]
+    paths += [repo / 'scripts/v4_local.py', repo / 'examples/protocol/in-progress.json']
+    return {str(p.relative_to(repo)): digest(regular(p)) for p in sorted(paths)}
+
+def sandbox(candidate, trusted, repo, deps):
+    quote = lambda p: json.dumps(str(p))
+    reads = ['/System', '/usr', '/bin', '/sbin', '/Library/Developer', '/Library/Apple',
+             '/private/preboot/Cryptexes', '/private/var/db/dyld', candidate, trusted, repo, deps]
+    return '\n'.join([
+        '(version 1)', '(deny default)', '(allow process*)', '(allow sysctl-read)',
+        '(allow file-read-metadata)', '(allow file-map-executable)',
+        '(allow mach-lookup (global-name "com.apple.system.logger"))',
+        '(deny mach-lookup (global-name "com.apple.securityd") (global-name "com.apple.security.agent"))',
+        '(allow file-read* (literal "/") (literal "/dev/null") (literal "/dev/urandom") ' +
+        ' '.join('(subpath ' + quote(p) + ')' for p in reads) + ')',
+        '(allow file-write* (literal "/dev/null") (subpath ' + quote(candidate) + '))',
+        # The anchor itself must survive. An empty-directory rmdir is otherwise permitted.
+        '(deny file-write-unlink (literal ' + quote(candidate) + '))',
+        '(allow signal (target children))',
+    ]) + '\n'
+
+def candidate_command(experiment, manifest, phase):
+    trusted = experiment / 'trusted'; candidate = experiment / 'candidate'
+    command = ['/usr/bin/sandbox-exec', '-f', str(trusted / 'outer.sb'), '/usr/bin/python3', '-B', '-S',
+               str(trusted / 'candidate_harness.py'), phase, '--experiment', str(experiment),
+               '--repo', manifest['repo'], '--scenario', manifest['scenario']]
+    env = dict(HOME=str(candidate), TMPDIR=str(candidate), PATH='/usr/bin:/bin:/usr/sbin:/sbin',
+               PYTHONPATH=manifest['repo'] + ':' + manifest['deps'], PYTHONNOUSERSITE='1',
+               PYTHONDONTWRITEBYTECODE='1', V4_OUTER_SEATBELT='1')
+    return command, env
+
+def stop_candidate(process):
+    if process.poll() is None:
+        os.killpg(process.pid, signal.SIGTERM)
+        try: process.wait(timeout=3)
+        except subprocess.TimeoutExpired: os.killpg(process.pid, signal.SIGKILL); process.wait(timeout=3)
+
+def prepare(args):
+    repo, deps = directory(args.repo), directory(args.deps)
+    driver = regular(repo / 'framework/local/launch_driver.py'); worker = regular(repo / 'framework/local/worker_process.py')
+    if digest(driver) != DRIVER_SHA or digest(worker) != WORKER_SHA: raise ValueError('source differs from pinned review candidates')
+    experiment = Path(tempfile.mkdtemp(prefix='v4-ext-e2e-', dir='/private/tmp'))
+    candidate = experiment / 'candidate'; trusted = experiment / 'trusted'
+    candidate.mkdir(mode=0o700); trusted.mkdir(mode=0o700)
+    (experiment / 'outside-canary.txt').write_text('harmless outside fixture')
+    (trusted / 'canary.txt').write_text('protected harmless fixture')
+    for name in ('receipts', 'scratch', 'home', 'tmp'): (trusted / name).mkdir(mode=0o700)
+    harness = regular(Path(__file__).resolve().with_name('candidate_harness.py'))
+    for name, data in [('launch_driver.py', driver), ('worker_process.py', worker), ('candidate_harness.py', harness)]:
+        (trusted / name).write_bytes(data); (trusted / name).chmod(0o400)
+    (trusted / 'outer.sb').write_text(sandbox(candidate, trusted, repo, deps))
+    manifest = dict(format='external-e2e/1', scenario=args.scenario, repo=str(repo), deps=str(deps),
+        created_at=utc(), driver_sha256=DRIVER_SHA, worker_sha256=WORKER_SHA,
+        harness_sha256=digest(harness), coordinator_sha256=digest(regular(Path(__file__).resolve())),
+        outer_sha256=digest(regular(trusted / 'outer.sb')), sources=sources(repo))
+    command, env = candidate_command(experiment, manifest, 'prepare')
+    manifest['prepare_command'] = command; manifest['candidate_environment'] = env
+    save(trusted / 'manifest.json', manifest)
+    process = subprocess.Popen(command, cwd=candidate, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
+    try: stdout, stderr = process.communicate(timeout=90)
+    except BaseException: stop_candidate(process); raise
+    (trusted / 'prepare.stdout.log').write_bytes(stdout); (trusted / 'prepare.stderr.log').write_bytes(stderr)
+    if process.returncode: raise RuntimeError('isolated preparation failed; preserve ' + str(experiment))
+    prepared = load(candidate / 'prepared.json')
+    if not all(prepared['canaries'].values()): raise ValueError('canaries did not pass')
+    if regular(trusted / 'canary.txt') != b'protected harmless fixture': raise ValueError('protected canary changed')
+    if str(candidate / 'project') != prepared['root'] or prepared['scenario'] != args.scenario: raise ValueError('fixture root mismatch')
+    if len(prepared['jobs']) != (2 if args.scenario == 'parallel' else 1): raise ValueError('unexpected job count')
+    jobs = []
+    for index, job in enumerate(prepared['jobs']):
+        letter = 'ab'[index]; workspace = directory(job['workspace'])
+        if workspace.parent != candidate / 'project/.ai-org/workspaces': raise ValueError('worktree outside exact fixture registry')
+        if job['job_id'] != 'job-' + letter or job['output'] != 'src/' + letter + '/result.txt': raise ValueError('unexpected output/job')
+        if job['content'] != 'synthetic-' + args.scenario + '-' + letter: raise ValueError('unexpected content')
+        jobs.append(dict(job_id=job['job_id'], operation_id=job['operation_id'], workspace=str(workspace),
+                         output=job['output'], content_sha256=digest(job['content'].encode()),
+                         max_delay_seconds=15 if args.scenario == 'revoke' else 2, max_runtime_seconds=25))
+    config = dict(format='v4-launch-config/1', batch_id=experiment.name, trusted_root=str(trusted),
+        candidate_root=str(candidate), driver_sha256=DRIVER_SHA, python='/usr/bin/python3',
+        worker_program=str(trusted / 'worker_process.py'), worker_sha256=WORKER_SHA,
+        request_dir=str(candidate / 'requests'), receipt_dir=str(trusted / 'receipts'),
+        scratch_root=str(trusted / 'scratch'), deadline_seconds=60, jobs=jobs)
+    save(trusted / 'config.json', config); save(trusted / 'prepared.json', prepared)
+    manifest.update(prepared_at=utc(), config_sha256=digest(regular(trusted / 'config.json')),
+                    prepared_sha256=digest(regular(trusted / 'prepared.json')))
+    save(trusted / 'manifest.json', manifest)
+    print(json.dumps({'experiment': str(experiment), 'phase': 'prepared-only', 'host_driver_started': False,
+                      'scenario': args.scenario, 'canaries': prepared['canaries']}))
+
+
+def verify(experiment, manifest):
+    trusted = experiment / 'trusted'; candidate = experiment / 'candidate'; prepared = load(trusted / 'prepared.json')
+    state_bytes = regular(candidate / 'project/.ai-org/state.json'); state = json.loads(state_bytes)
+    successful = manifest['scenario'] in ('single', 'parallel'); records = []; completions = []
+    for job in prepared['jobs']:
+        receipt = load(trusted / 'receipts' / (job['job_id'] + '.json'))
+        request = load(candidate / 'requests' / (job['job_id'] + '.request.json'))
+        assert receipt['config_sha256'] == manifest['config_sha256']
+        assert receipt['request_sha256'] == digest(canonical(request))
+        assert receipt['operation_id'] == job['operation_id'] and receipt['job_id'] == job['job_id']
+        assert type(receipt['pid']) is int and receipt['pid'] > 0 and type(receipt['exit_code']) is int
+        logs = {}
+        for name in ('stdout', 'stderr'):
+            logs[name] = regular(trusted / 'scratch' / job['job_id'] / (name + '.log'))
+            assert digest(logs[name]) == receipt[name + '_sha256']
+        if successful:
+            assert receipt['state'] == 'finished' and receipt['exit_code'] == 0
+            completion = json.loads(logs['stdout'])
+            assert completion['pid'] == receipt['pid'] and completion['path'] == job['output']
+            assert completion['result'] == 'synthetic-file-written' and completion['clock'] == 'CLOCK_MONOTONIC'
+            assert type(completion['started_ns']) is int and completion['finished_ns'] > completion['started_ns'] > 0
+            completions.append(completion)
+            artifact = regular(Path(job['workspace']) / job['output']); assert artifact == job['content'].encode()
+            delivery = state['deliveries'][job['wp_id']]
+            assert delivery['assignment_id'] == job['credentials']['assignment_id']
+            assert (delivery['epoch'], delivery['token']) == (job['credentials']['epoch'], job['credentials']['token'])
+            assert delivery['baseline_sha'] == prepared['baseline_sha'] and delivery['sha256'] == digest(artifact)
+            assert base64.b64decode(delivery['content_base64']) == artifact
+        else:
+            assert receipt['state'] in ('finished', 'stopped') and receipt['exit_code'] != 0
+            assert state['deliveries'] == {}
+            if manifest['scenario'] == 'revoke':
+                cancel = load(candidate / 'requests' / (job['job_id'] + '.cancel.json'))
+                assert cancel['request_sha256'] == receipt['request_sha256'] and receipt['state'] == 'stopped'
+                assignment = next(a for a in state['snapshot']['assignments'] if a['id'] == job['credentials']['assignment_id'])
+                workspace = state['workspaces'][job['credentials']['workspace_id']]
+                package = next(w for w in state['snapshot']['work_packages'] if w['id'] == job['wp_id'])
+                assert assignment['state'] == 'revoked' and workspace['state'] == 'stopped' and package['state'] == 'paused'
+        records.append(receipt)
+    observed = {}
+    if manifest['scenario'] == 'parallel':
+        assert len({r['pid'] for r in records}) == 2
+        observed['worker_clock'] = 'OS CLOCK_MONOTONIC via clock_gettime_ns, not process-relative monotonic_ns'
+        observed['worker_intervals'] = [{'pid': c['pid'], 'started_ns': c['started_ns'], 'finished_ns': c['finished_ns']} for c in completions]
+        observed['worker_overlap_ns'] = min(c['finished_ns'] for c in completions) - max(c['started_ns'] for c in completions)
+        observed['driver_observation_intervals'] = [{'pid': r['pid'], 'started_at': r['started_at'], 'finished_at': r['finished_at']} for r in records]
+        assert observed['worker_overlap_ns'] > 0, 'actual Worker intervals did not overlap'
+    if sources(Path(manifest['repo'])) != manifest['sources']: raise ValueError('candidate sources changed during experiment')
+    assert regular(trusted / 'canary.txt') == b'protected harmless fixture'
+    return dict(verified_at=utc(), scenario=manifest['scenario'], receipts=records, completions=completions,
+                observations=observed, authority_sha256=digest(state_bytes), accepted=False,
+                scope='Finite synthetic CLI/controller/driver integration only; no provider or business acceptance.')
+
+
+def execute(args):
+    if args.approved_driver_sha256 != DRIVER_SHA or args.approved_worker_sha256 != WORKER_SHA:
+        raise ValueError('explicit exact independently reviewed driver and worker hashes required')
+    experiment = directory(args.experiment)
+    if experiment.parent != Path('/private/tmp') or not experiment.name.startswith('v4-ext-e2e-'): raise ValueError('not a prepared experiment')
+    trusted = directory(experiment / 'trusted'); candidate = directory(experiment / 'candidate'); manifest = load(trusted / 'manifest.json')
+    for filename, expected in [('launch_driver.py', DRIVER_SHA), ('worker_process.py', WORKER_SHA),
+        ('candidate_harness.py', manifest['harness_sha256']), ('outer.sb', manifest['outer_sha256']),
+        ('config.json', manifest['config_sha256']), ('prepared.json', manifest['prepared_sha256'])]:
+        if digest(regular(trusted / filename)) != expected: raise ValueError('prepared file changed: ' + filename)
+    if digest(regular(Path(__file__).resolve())) != manifest['coordinator_sha256']: raise ValueError('coordinator changed after preparation')
+    if sources(Path(manifest['repo'])) != manifest['sources']: raise ValueError('candidate sources changed before execution')
+    with (trusted / 'execution-intent.json').open('x') as stream:
+        json.dump({'started_at': utc(), 'driver_sha256': DRIVER_SHA, 'worker_sha256': WORKER_SHA,
+                   'unknown_result_policy': 'single-use experiment; never repeat host launch'}, stream)
+        stream.flush(); os.fsync(stream.fileno())
+    candidate_args, candidate_env = candidate_command(experiment, manifest, 'execute')
+    driver_args = ['/usr/bin/python3', '-I', '-B', '-S', str(trusted / 'launch_driver.py'), '--config', str(trusted / 'config.json')]
+    driver_env = dict(HOME=str(trusted / 'home'), TMPDIR=str(trusted / 'tmp'), PATH='/usr/bin:/bin:/usr/sbin:/sbin',
+                      PYTHONNOUSERSITE='1', PYTHONDONTWRITEBYTECODE='1')
+    save(trusted / 'execution-command.json', {'candidate': candidate_args, 'candidate_environment': candidate_env,
+                                            'driver': driver_args, 'driver_environment': driver_env})
+    driver = None
+    child = subprocess.Popen(candidate_args, cwd=candidate, env=candidate_env,
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
+    try:
+        config = load(trusted / 'config.json'); deadline = time.monotonic() + 15
+        # Both real CLI requests must be visible before driver start; no inference from threads/PIDs.
+        while time.monotonic() < deadline:
+            if child.poll() is not None: raise RuntimeError('candidate exited before request barrier')
+            if all((candidate / 'requests' / (j['job_id'] + '.request.json')).exists() for j in config['jobs']):
+                for job in config['jobs']: regular(candidate / 'requests' / (job['job_id'] + '.request.json'))
+                break
+            time.sleep(0.05)
+        else: raise RuntimeError('request barrier timeout; no host driver was launched')
+        save(trusted / 'request-barrier.json', {'observed_at': utc(), 'jobs': [j['job_id'] for j in config['jobs']]})
+        driver = subprocess.Popen(driver_args, cwd=trusted, env=driver_env,
+                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
+        stdout, stderr = child.communicate(timeout=75)
+        (trusted / 'candidate.stdout.log').write_bytes(stdout); (trusted / 'candidate.stderr.log').write_bytes(stderr)
+        dout, derr = driver.communicate(timeout=75)
+        (trusted / 'driver.stdout.log').write_bytes(dout); (trusted / 'driver.stderr.log').write_bytes(derr)
+        save(trusted / 'exit-codes.json', {'candidate': child.returncode, 'driver': driver.returncode})
+        if child.returncode != 0 or driver.returncode != 0: raise RuntimeError('integration process failed; preserve receipts')
+        result = verify(experiment, manifest); save(trusted / 'verified-result.json', result)
+        print(json.dumps({'experiment': str(experiment), 'phase': 'verified', 'scenario': manifest['scenario'],
+                          'observations': result['observations'], 'accepted': False}))
+    except BaseException as error:
+        save(trusted / 'unknown-or-failed.json', {'at': utc(), 'error': str(error), 'host_driver_was_started': driver is not None})
+        raise
+    finally:
+        stop_candidate(child)
+        if driver is not None and driver.poll() is None:
+            # Interrupt only this owned driver; Python finally requests cancellation of its owned Workers.
+            driver.send_signal(signal.SIGINT)
+            try: driver.wait(timeout=8)
+            except subprocess.TimeoutExpired:
+                save(trusted / 'driver-stop-unknown.json', {'at': utc(), 'pid': driver.pid,
+                      'reason': 'owned driver did not confirm stop; do not relaunch or claim completion'})
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__); sub = parser.add_subparsers(dest='action', required=True)
+    p = sub.add_parser('prepare'); p.add_argument('--repo', type=Path, required=True); p.add_argument('--deps', type=Path, required=True)
+    p.add_argument('--scenario', choices=['single', 'parallel', 'failure', 'revoke'], required=True)
+    p = sub.add_parser('execute'); p.add_argument('--experiment', type=Path, required=True)
+    p.add_argument('--approved-driver-sha256', required=True); p.add_argument('--approved-worker-sha256', required=True)
+    args = parser.parse_args()
+    if args.action == 'prepare': prepare(args)
+    else: execute(args)

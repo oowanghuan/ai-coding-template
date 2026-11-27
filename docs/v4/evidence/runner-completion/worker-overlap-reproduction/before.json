@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<FIXTURE>/next-sandbox.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "<FIXTURE>/worker-overlap-before.py",
+    "<WORKSPACE>/framework/local/worker_process.py"
+  ],
+  "exit_code": 0,
+  "expected_failed_overlap_assertion": false
+}

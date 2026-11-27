@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-27T16:18:40.116476+00:00",
+  "exit_code": 0,
+  "observations": {
+    "direct_write": "denied:1",
+    "create_alias": "denied:1",
+    "alias_write": "not_run: alias creation was denied"
+  },
+  "trusted_canary_unchanged": true,
+  "note": "First probe tried writing a new independent C file after alias creation had failed; that was not a successful alias attack. This run avoids that ambiguity."
+}

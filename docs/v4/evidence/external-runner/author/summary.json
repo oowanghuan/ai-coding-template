@@ -1,0 +1,146 @@
+{
+  "single": {
+    "process_exit_codes": {
+      "candidate": 0,
+      "driver": 0
+    },
+    "worker_exit_codes": [
+      0
+    ],
+    "deliveries": 1,
+    "canaries": {
+      "trusted_write": true,
+      "trusted_hardlink_alias": true,
+      "repo_write": true,
+      "outside_read": true,
+      "outside_write": true,
+      "candidate_root_unlink": true,
+      "network": true,
+      "credentials_removed": true
+    },
+    "startup_cleanup": [
+      {
+        "name": "xcrun_db",
+        "bytes": 499,
+        "sha256": "767b97e4e6c44f3e9a7b2496c54bcc1c3901650873f4fc67d811e051bd9f6e8b",
+        "reason": "known macOS Python startup cache in fresh candidate anchor"
+      }
+    ],
+    "observations": {}
+  },
+  "parallel": {
+    "process_exit_codes": {
+      "candidate": 0,
+      "driver": 0
+    },
+    "worker_exit_codes": [
+      0,
+      0
+    ],
+    "deliveries": 2,
+    "canaries": {
+      "trusted_write": true,
+      "trusted_hardlink_alias": true,
+      "repo_write": true,
+      "outside_read": true,
+      "outside_write": true,
+      "candidate_root_unlink": true,
+      "network": true,
+      "credentials_removed": true
+    },
+    "startup_cleanup": [
+      {
+        "name": "xcrun_db",
+        "bytes": 499,
+        "sha256": "767b97e4e6c44f3e9a7b2496c54bcc1c3901650873f4fc67d811e051bd9f6e8b",
+        "reason": "known macOS Python startup cache in fresh candidate anchor"
+      }
+    ],
+    "observations": {
+      "worker_clock": "OS CLOCK_MONOTONIC via clock_gettime_ns, not process-relative monotonic_ns",
+      "worker_intervals": [
+        {
+          "pid": 39093,
+          "started_ns": 152266525044000,
+          "finished_ns": 152268525929000
+        },
+        {
+          "pid": 39094,
+          "started_ns": 152266527037000,
+          "finished_ns": 152268537344000
+        }
+      ],
+      "worker_overlap_ns": 1998892000,
+      "driver_observation_intervals": [
+        {
+          "pid": 39093,
+          "started_at": "2026-11-27T16:35:45.626163+00:00",
+          "finished_at": "2026-11-27T16:35:47.763924+00:00"
+        },
+        {
+          "pid": 39094,
+          "started_at": "2026-11-27T16:35:45.629699+00:00",
+          "finished_at": "2026-11-27T16:35:47.764679+00:00"
+        }
+      ]
+    }
+  },
+  "failure": {
+    "process_exit_codes": {
+      "candidate": 0,
+      "driver": 0
+    },
+    "worker_exit_codes": [
+      1
+    ],
+    "deliveries": 0,
+    "canaries": {
+      "trusted_write": true,
+      "trusted_hardlink_alias": true,
+      "repo_write": true,
+      "outside_read": true,
+      "outside_write": true,
+      "candidate_root_unlink": true,
+      "network": true,
+      "credentials_removed": true
+    },
+    "startup_cleanup": [
+      {
+        "name": "xcrun_db",
+        "bytes": 499,
+        "sha256": "767b97e4e6c44f3e9a7b2496c54bcc1c3901650873f4fc67d811e051bd9f6e8b",
+        "reason": "known macOS Python startup cache in fresh candidate anchor"
+      }
+    ],
+    "observations": {}
+  },
+  "revoke": {
+    "process_exit_codes": {
+      "candidate": 0,
+      "driver": 0
+    },
+    "worker_exit_codes": [
+      -15
+    ],
+    "deliveries": 0,
+    "canaries": {
+      "trusted_write": true,
+      "trusted_hardlink_alias": true,
+      "repo_write": true,
+      "outside_read": true,
+      "outside_write": true,
+      "candidate_root_unlink": true,
+      "network": true,
+      "credentials_removed": true
+    },
+    "startup_cleanup": [
+      {
+        "name": "xcrun_db",
+        "bytes": 499,
+        "sha256": "767b97e4e6c44f3e9a7b2496c54bcc1c3901650873f4fc67d811e051bd9f6e8b",
+        "reason": "known macOS Python startup cache in fresh candidate anchor"
+      }
+    ],
+    "observations": {}
+  }
+}
