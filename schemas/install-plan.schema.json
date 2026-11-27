@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai-coding-template:project-plan:1",
+  "type": "object",
+  "required": [
+    "format",
+    "operation_id",
+    "mode",
+    "version",
+    "target",
+    "before",
+    "previous",
+    "guide",
+    "source_sha256",
+    "plan_sha256",
+    "files",
+    "payloads"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "format": {
+      "const": "project-plan/1"
+    },
+    "operation_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "mode": {
+      "enum": [
+        "init",
+        "import",
+        "upgrade"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "target": {
+      "type": "string"
+    },
+    "before": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "previous": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "guide": {
+      "type": "string"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "plan_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256",
+          "action"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "action": {
+            "enum": [
+              "create",
+              "unchanged",
+              "conflict"
+            ]
+          }
+        }
+      }
+    },
+    "payloads": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

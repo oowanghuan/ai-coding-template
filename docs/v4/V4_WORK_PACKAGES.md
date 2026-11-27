@@ -80,9 +80,9 @@ WP-001 独占 `tests/install/`、`manifests/`、安装脚本及明确列出的�
 
 验证归属：WP-303/S04 先验证本地并行与相同质量门禁，WP-401/403 再比较同一合成任务图的串行/并行总耗时、资源成本、返工和冲突、评审等待、验收通过率及恢复行为。只有证据支持、风险没有退化时，才通过 WP-502 将其从 Experience 候选升级为 Workflow/Cognition 规则；后续正式位置是调度策略和评测案例，不先增加一个新调度引擎。
 
-## 7. 下一批开工方案（待 OD-07 放行）
+## 7. 下一批开工方案（OD-07 已放行）
 
-状态为 planned，本节是可评审计划，不是实现或运行证据。输入固定为首批受审提交 `673d6baa13283180b342f446bcadc17ad66efaf9`、Schema 0.1、57 项组件自测及独立 GO 7217342565。建议 Owner 明确允许该未合入版本作为开发依赖，使用 `review_passed + component_checks` 准入，不把它改称 merged/完整 accepted。OD-02 的 GitHub 控制分支不是本批前置。
+当前状态为 `in_progress`（实现中，未工程验收）。OD-07 已由评论 7218268841 放行；现有 Project Lead 会话由人工提醒接手，独占实现分支 `v4/local-execution`，未启动第二名实施 Worker。此状态更新替代上方历史检查点中“等待 OD-07”的记录。本节保留获批的范围与完成判据，不是测试证据。输入固定为首批受审提交 `673d6baa13283180b342f446bcadc17ad66efaf9`、Schema 0.1、57 项组件自测及独立 GO 7217342565；允许使用该未合入版本作为依赖，以 `review_passed + component_checks` 准入，不改称 merged/完整 accepted。OD-02 不是本批前置。
 
 ### WP-102：单机执行权与受控交付
 
@@ -113,3 +113,13 @@ WP-001 独占 `tests/install/`、`manifests/`、安装脚本及明确列出的�
 3. 所有候选继续在 A01 隔离边界内测试。计划测试入口为 `tests/local/`、`tests/bootstrap/`，当前均尚未实现/未运行；以提交 SHA、命令、返回码、统计、原始日志和故障注入点取证。原 57 项测试是回归基准，新用例数量以实际实现为准。
 4. 独立 Advisor 技术复核；高风险工程验收由非作者上下文独立复跑关键竞争/失效/恢复用例。若只能静态检查，分别记录 review_passed 与 engineering_acceptance pending，不自签。合入责任和 main 放行仍由 Owner 决定。
 5. 输出独立分支、Draft PR、准确 SHA、完整恢复检查点和局限。两个包通过仍不等于 V4 Alpha：真实双 CLI、额度恢复、可信证据 Gate、跨机/云端及 S01–S12 完整验收继续按后续工作包处理。没有新增付费 API、分布式服务、GUI 或无人值守模型调度。
+
+## 8. OD-07 实施检查点
+
+本次现有 Project Lead 会话由 Owner 人工提醒接手，回执 7219186379；自动路径仍停在已登记 pending、没有既有会话投递消费者。12:40 UTC 首次读到裁定，随后 12:55/13:10 仍 waiting，不冒称自动接手。仅在 `v4/local-execution` 修改获批的 WP-102/103；PR #5/#6 和 main 保持原 SHA。
+
+已实现待复核：`framework/local/` 单机原子状态、认领/租约/fencing、Worktree 物化和受控合成 Runner；`scripts/v4_local.py`；`scripts/v4_project.py` 及中立安装/预演/回退；两个新 Schema、模板、示例与 `tests/local/`、`tests/bootstrap/`。最小共享变更为协议 0.2 与旧回退函数的纯 preflight 参数；旧能力保留并回归。
+
+当前仍为 `in_progress`，不是工程 accepted。迭代测试发现 macOS 拒绝外层 Seatbelt 内再初始化内层沙盒；没有取消 A01 隔离，也没有添加不受保护的回退。完整 Runner 集成三项在该环境明确 skipped，另验证失败关闭、真实双进程/双 Worktree、交付 fencing 和单独的 Worker 沙盒。完整父控制器→内层沙盒启动成功链仍须独立隔离环境实测。未知进程中断不自动接管；目前只自动对账完整的启动前 Worktree，不能宣称 WP-302 恢复已实现。
+
+安装后的最小项目可 inspect，初始任务 planned、预算 unknown、无 Worker/授权；没有通用活跃任务编辑入口，不能靠手改权威 JSON 开工。完整 Lite 用户执行路径仍待 WP-303。独立 Advisor 技术复核及高风险非作者工程复跑均未完成。后续先对固定提交保存隔离测试、失败和 skipped 证据，开 Draft PR，请 Advisor 在准确 SHA 上复核。没有扩展其他工作包或新增 Owner 审批要求。

@@ -175,6 +175,7 @@ def validate(snapshot, at):
                     require(milestone.get('status') == 'passed' and
                             milestone.get('subject_sha') == dep['artifact_revision'], 'dependency-not-ready:' + key)
         if wp['state'] in ('ready', 'in_progress'):
+            require(wp['baseline_sha'] is not None, 'unknown-baseline:' + key)
             auth = tables['authorizations'].get(wp['authorization_ref'])
             require(not project['paused'] and project['budget'] == 'available' and not wp['blocking_conditions'],
                     'project-or-task-blocked:' + key)
@@ -227,10 +228,11 @@ def validate(snapshot, at):
             cp = lookup('checkpoints', assignment['last_checkpoint'], key)
             if cp:
                 require(cp['assignment_ref'] == key, 'assignment-checkpoint:' + key)
-        if assignment['state'] != 'active':
+        if assignment['state'] not in ('reserved', 'active'):
             continue
         active.append(assignment)
-        require(wp['state'] == 'in_progress' and wp['assignment_ref'] == key and
+        expected_state = 'ready' if assignment['state'] == 'reserved' else 'in_progress'
+        require(wp['state'] == expected_state and wp['assignment_ref'] == key and
                 wp['implementer'] == worker['principal'], 'active-assignment-binding:' + key)
         require(assignment['authority_epoch'] == project['authority_epoch'] and
                 timestamp(assignment['heartbeat_at']) <= now < timestamp(assignment['lease_expires_at']),
@@ -292,7 +294,7 @@ def validate_transition(before, after, at):
                                                          'authority_epoch', 'fencing_token', 'workspace_id',
                                                          'base_sha', 'allowed_paths')):
                 errors.append('assignment-identity-changed:' + assignment['id'])
-            if previous['state'] != 'active' and assignment['state'] == 'active':
+            if previous['state'] not in ('reserved', 'active') and assignment['state'] in ('reserved', 'active'):
                 errors.append('assignment-reactivated:' + assignment['id'])
         else:
             earlier = [a['fencing_token'] for a in before['assignments']

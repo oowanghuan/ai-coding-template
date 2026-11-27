@@ -1,4 +1,6 @@
-# 本地核心协议 0.1（WP-101）
+# 本地核心协议 0.1 / 0.2（WP-101 / WP-102）
+
+WP-102 的最小兼容扩展：0.2 支持认领后的 `reserved` Assignment（对应 ready），并允许尚未建立 Git 基线的 planned 任务使用 null baseline、空 Provider/Host 登记。0.1 的原有形状约束保留。`local-state.schema.json` 定义单机权威封装；`install-plan.schema.json` 定义只读接入计划。实际写入和恢复边界见 [本地控制器](../framework/local/README.md)。下文的纯协议校验仍不等于执行授权。
 
 `protocol.schema.json` 是 JSON Schema Draft 2020-12，根对象为一个本地声明快照；`$defs` 独立定义 Role、Provider、Host、Worker、Session、Work Package、Authorization、Assignment 和 Checkpoint。三种 Profile 共用同一格式；本批只接受 `local_git`，不部署尚待 OD-02 的 GitHub 控制分支。
 

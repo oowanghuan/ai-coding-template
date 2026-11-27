@@ -1,0 +1,118 @@
+{
+  "schema_version": "0.2",
+  "project": {
+    "id": "new-project",
+    "profile": "lite",
+    "state_backend": "local_git",
+    "authority_epoch": 1,
+    "revision": 0,
+    "paused": false,
+    "budget": "unknown",
+    "owner_principals": [
+      "owner"
+    ],
+    "policy_revision": "1"
+  },
+  "roles": [
+    {
+      "id": "role-owner",
+      "responsibilities": [
+        "Define goal and authorize scope"
+      ],
+      "permissions": [
+        "review-plan"
+      ],
+      "asset_refs": []
+    }
+  ],
+  "providers": [],
+  "hosts": [],
+  "workers": [],
+  "sessions": [],
+  "authorizations": [],
+  "work_packages": [
+    {
+      "id": "WP-BOOTSTRAP",
+      "project_id": "new-project",
+      "kind": "spec",
+      "title": "Confirm project foundation",
+      "objective": "Define the project goal, contracts and authorized work",
+      "deliverables": [
+        "Reviewed project foundation"
+      ],
+      "goal_refs": [
+        "GOAL-FOUNDATION"
+      ],
+      "requirement_refs": [
+        "REQ-FOUNDATION"
+      ],
+      "accountable_role": "role-owner",
+      "implementer": null,
+      "reviewer": null,
+      "acceptor": null,
+      "merger": "owner",
+      "dependencies": [],
+      "authorization_ref": null,
+      "baseline_sha": null,
+      "spec_refs": [],
+      "inputs": [],
+      "allowed_paths": [
+        "docs/"
+      ],
+      "forbidden_paths": [
+        ".git/",
+        ".ai-org/"
+      ],
+      "external_effects": [],
+      "positive_criteria": [
+        "Owner confirms goal and scope"
+      ],
+      "negative_criteria": [
+        "No inferred implementation authorization"
+      ],
+      "risk": "medium",
+      "rollback": "Preserve worktree; revert reviewed commit",
+      "test_strategy": "Independent foundation review",
+      "state": "planned",
+      "revision": 0,
+      "blocking_conditions": [],
+      "assignment_ref": null,
+      "checkpoint_ref": null,
+      "handoff_refs": [],
+      "submitted_sha": null,
+      "evidence_refs": [],
+      "review_refs": [],
+      "required_milestones": [
+        "review_passed",
+        "spec_ratified",
+        "archived"
+      ],
+      "milestones": {
+        "review_passed": {
+          "status": "pending",
+          "subject_sha": null,
+          "evidence_refs": [],
+          "signer": null,
+          "reason": null
+        },
+        "spec_ratified": {
+          "status": "pending",
+          "subject_sha": null,
+          "evidence_refs": [],
+          "signer": null,
+          "reason": null
+        },
+        "archived": {
+          "status": "pending",
+          "subject_sha": null,
+          "evidence_refs": [],
+          "signer": null,
+          "reason": null
+        }
+      },
+      "change_reason": null
+    }
+  ],
+  "assignments": [],
+  "checkpoints": []
+}

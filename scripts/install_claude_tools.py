@@ -124,7 +124,7 @@ def claimed_paths(receipt):
     return {r['path'] for r in receipt.get('planned', []) + receipt['created']}
 
 
-def rollback(target, receipt, allowed, history):
+def rollback(target, receipt, allowed, history, dry_run=False):
     if receipt['state'] == 'rolled_back':
         return  # A historical receipt must not delete a later reinstallation.
     rows = receipt['created']
@@ -148,6 +148,8 @@ def rollback(target, receipt, allowed, history):
     for r in receipt.get('planned', []):
         if r['path'] not in recorded and checked_path(target, r['path']).exists():
             raise ValueError('Unknown interrupted write; reconcile before rollback: ' + r['path'])
+    if dry_run:
+        return
     for r in reversed(rows):
         p = checked_path(target, r['path'])
         if p.exists():
