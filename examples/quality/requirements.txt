@@ -1,0 +1,4 @@
+Purpose
+Synthetic public quality example.
+Acceptance
+A required heading must exist as an exact line.

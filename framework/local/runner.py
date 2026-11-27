@@ -3,7 +3,6 @@ import hashlib
 import json
 import os
 from pathlib import Path
-import platform
 import signal
 import subprocess
 import sys
@@ -113,7 +112,7 @@ def sandbox_policy(workspace, framework, writable, scratch):
 
 
 def run(root, credentials, actor, path, content, operation_id, expected_revision, delay_seconds=0, timeout=20, fault=None):
-    if platform.system() != 'Darwin' or not Path('/usr/bin/sandbox-exec').exists():
+    if sys.platform != 'darwin' or not Path('/usr/bin/sandbox-exec').exists():
         raise ValueError('supported OS sandbox unavailable; execution refused')
     if not 0 <= delay_seconds <= 30 or not 0 < timeout <= 60 or len(content.encode()) > 65536:
         raise ValueError('bounded synthetic task only')
