@@ -178,7 +178,12 @@ def apply(root, proposed, supplied_hash, fault=None):
                        predecessors=[r['transaction_id'] for r in history if claimed_paths(r) & paths],
                        planned=pending, created=[], created_dirs=[], plan_sha256=supplied_hash,
                        previous=proposed['previous'], guide=proposed['guide'], template_version=proposed['version'])
-        atomic_json(journal_path, dict(state='preparing', transaction_id=receipt['transaction_id'], guide=proposed['guide']))
+        # The first durable record contains the zero-write receipt intent. If the
+        # process dies before the separate receipt, rollback can still reconcile
+        # this exact operation without guessing which files it created.
+        atomic_json(journal_path, dict(state='preparing', transaction_id=receipt['transaction_id'],
+                    guide=proposed['guide'], receipt_intent=receipt, receipt_sha256=fingerprint(receipt)))
+        if fault: fault('journal_saved')
         atomic_json(receipt_path, receipt)
         if fault: fault('intent_saved')
         for row in pending:
@@ -205,9 +210,21 @@ def rollback(root, operation_id, fault=None):
         directory = safe_path(root, '.ai-org/installations')
         history = read_receipts(directory)
         receipt = next((r for r in history if r['transaction_id'] == operation_id), None)
-        if receipt is None: raise ValueError('unknown installation')
         journal_path = safe_path(root, '.ai-org/install-journal.json')
         journal = load_json(journal_path)
+        if receipt is None:
+            intent = journal.get('receipt_intent')
+            if (journal['transaction_id'] != operation_id or journal['state'] not in ('preparing', 'rolling_back') or
+                    not isinstance(intent, dict) or fingerprint(intent) != journal.get('receipt_sha256') or
+                    intent.get('transaction_id') != operation_id or intent.get('version') != 2 or
+                    intent.get('state') != 'preparing' or intent.get('created') != [] or intent.get('created_dirs') != []):
+                raise ValueError('missing receipt without a verifiable zero-write intent; preserve for inspection')
+            allowed = {'BOOTSTRAP.md', '.ai-org/state.json', journal['guide']}
+            if intent.get('guide') != journal['guide'] or any(r['path'] not in allowed for r in intent['planned']):
+                raise ValueError('invalid zero-write receipt paths')
+            receipt = copy.deepcopy(intent)
+            # Existing planned files, even with matching bytes, remain unknown.
+            # The shared rollback preflight below must reject them before writes.
         if receipt['state'] == 'rolled_back':
             if journal['transaction_id'] == operation_id and journal['state'] == 'rolling_back':
                 if any(safe_path(root, r['path']).exists() for r in receipt['created']):

@@ -24,6 +24,8 @@ All mutations carry operation ID and expected revision. One lock serializes
 dependency, authorization, resource and scope checks with allocation. Same ID and
 intent returns the historical receipt; different intent is an error. A replay is
 not a renewed lease. Start/run/submit check fresh epoch, token and lease separately.
+Replaying a failed finished process remains a CLI failure; its original exit code,
+PID and log fingerprints are retained without another launch or delivery.
 Reclaiming a stopped/released workspace allocates a new token and new directory.
 
 This initial API deliberately has no generic JSON overwrite endpoint. Import an
@@ -81,6 +83,13 @@ block new installation/task writes; no guessed deletion. Rollback only deletes
 unchanged owned assets and refuses live/unknown execution, changed initial state
 or references to assets being removed. Git and user assets are never deleted.
 The lock inode and transaction history are retained after rollback.
+
+The first installation journal embeds the zero-write receipt intent. If the
+process dies before the separate receipt exists, `rollback --operation-id ...`
+can validate that intent and abort the installation, then a fresh `plan-import`
+can proceed. Any existing planned output is still an unknown write and blocks this
+recovery, even if its bytes happen to match. Old journals without that intent are
+preserved for inspection; recovery does not invent missing ownership evidence.
 
 ## Verification
 

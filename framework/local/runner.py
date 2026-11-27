@@ -127,6 +127,8 @@ def run(root, credentials, actor, path, content, operation_id, expected_revision
     workspace = state['workspaces'][assignment['workspace_id']]
     if result['replayed']:
         if workspace['state'] == 'finished':
+            if workspace['run'].get('exit_code') != 0:
+                raise ValueError('synthetic process failed; inspect preserved logs')
             return workspace['run']
         raise ValueError('runner outcome unresolved or stopped; do not repeat')
     if fault:

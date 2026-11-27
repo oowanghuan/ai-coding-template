@@ -356,6 +356,45 @@ Path('allowed').write_text('ok')
         self.assertEqual(state['deliveries'], {})
         self.assertFalse((self.root / state['workspaces'][c['workspace_id']]['path'] / 'src/out.txt').exists())
 
+    def test_cli_failed_run_replay_stays_failed_and_does_not_launch(self):
+        if os.environ.get('V4_OUTER_SEATBELT') != '1':
+            self.skipTest('reproduces the actual nested Seatbelt failure')
+        self.init(); c = self.claim(); self.start(c)
+        payload = self.root / 'run-input.json'
+        payload.write_text(json.dumps(dict(credentials=c, path='src/out.txt', content='x')))
+        args = [sys.executable, '-B', '-S', str(ROOT / 'scripts/v4_local.py'), 'run', '--root', str(self.root),
+                '--actor', ACTOR, '--input', str(payload), '--operation-id', 'cli-failure',
+                '--expected-revision', str(self.state()['revision'])]
+        first = subprocess.run(args, capture_output=True, timeout=30)
+        self.assertNotEqual(first.returncode, 0)
+        state = self.state()
+        self.assertEqual(state['workspaces'][c['workspace_id']]['run']['exit_code'], 71)
+        before = self.store.path.read_bytes()
+        logs = self.root / '.ai-org/runner' / c['workspace_id']
+        saved = {p.name:p.read_bytes() for p in logs.iterdir()}
+        second = subprocess.run(args, capture_output=True, timeout=30)
+        self.assertNotEqual(second.returncode, 0, second.stdout.decode())
+        self.assertEqual(first.stderr, second.stderr)
+        self.assertEqual(self.store.path.read_bytes(), before)
+        self.assertEqual({p.name:p.read_bytes() for p in logs.iterdir()}, saved)
+        self.assertEqual(self.state()['deliveries'], {})
+
+    def test_cli_success_receipt_replay_preserves_result(self):
+        # Synthetic committed result, not evidence of a successful nested launch.
+        self.init(); c = self.claim(); self.start(c)
+        p = dict(c, path='src/out.txt', content_sha256=hashlib.sha256(b'x').hexdigest(), delay_seconds=0, timeout=20)
+        self.change('run-begin', p, op='success-replay')
+        self.store.workspace_phase(c, ACTOR, 'launching', 'finished', run=dict(state='finished', exit_code=0, synthetic=True))
+        payload = self.root / 'run-input.json'
+        payload.write_text(json.dumps(dict(credentials=c, path='src/out.txt', content='x')))
+        before = self.store.path.read_bytes()
+        p = subprocess.run([sys.executable, '-B', '-S', str(ROOT / 'scripts/v4_local.py'), 'run', '--root', str(self.root),
+            '--actor', ACTOR, '--input', str(payload), '--operation-id', 'success-replay', '--expected-revision', '0'],
+            capture_output=True, timeout=30)
+        self.assertEqual(p.returncode, 0, p.stderr)
+        self.assertEqual(json.loads(p.stdout)['exit_code'], 0)
+        self.assertEqual(self.store.path.read_bytes(), before)
+
     def test_two_actual_workers_inherit_outer_sandbox_and_submit(self):
         # Tests actual process/worktree isolation and delivery, NOT the nested launcher.
         self.two_tasks(); a = self.claim()

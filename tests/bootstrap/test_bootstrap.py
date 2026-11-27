@@ -3,6 +3,8 @@ import hashlib
 import json
 from pathlib import Path
 import tempfile
+import subprocess
+import sys
 import unittest
 
 from framework.local.bootstrap import apply, inventory, plan, rollback
@@ -173,6 +175,48 @@ class BootstrapTests(unittest.TestCase):
         rollback(self.root, old['transaction_id'])
         self.assertEqual(inventory(self.root), before)
         self.assertEqual(Store(self.root).inspect()['consistency_errors'], [])
+
+    def crash_between_journal_and_receipt(self):
+        (self.root / 'user.txt').write_text('preserved user work')
+        p = self.plan('import')
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / 'plan.json'; path.write_text(json.dumps(p))
+            code = '''import os,sys
+from framework.local import bootstrap as b
+from framework.core.protocol import load_json
+original=b.atomic_json
+def crash(path,value):
+ original(path,value)
+ if path.name == 'install-journal.json' and value['state'] == 'preparing': os._exit(23)
+b.atomic_json=crash
+p=load_json(sys.argv[2]); b.apply(sys.argv[1],p,p['plan_sha256'])
+'''
+            result = subprocess.run([sys.executable, '-B', '-S', '-c', code, str(self.root), str(path)], capture_output=True, timeout=30)
+        self.assertEqual(result.returncode, 23, result.stderr)
+        self.assertFalse((self.root / '.ai-org/installations' / (p['operation_id'] + '.json')).exists())
+        return p
+
+    def rollback_cli(self, p):
+        cli = Path(__file__).resolve().parents[2] / 'scripts/v4_project.py'
+        return subprocess.run([sys.executable, '-B', '-S', str(cli), 'rollback', '--root', str(self.root),
+            '--operation-id', p['operation_id']], capture_output=True, timeout=30)
+
+    def test_journal_only_crash_recovers_via_new_process_cli(self):
+        p = self.crash_between_journal_and_receipt()
+        result = self.rollback_cli(p)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(result.stdout)['state'], 'rolled_back')
+        self.assertEqual((self.root / 'user.txt').read_text(), 'preserved user work')
+        self.install(self.plan('import'))
+        self.assertEqual(Store(self.root).inspect()['consistency_errors'], [])
+
+    def test_journal_only_recovery_preserves_unknown_file(self):
+        p = self.crash_between_journal_and_receipt()
+        (self.root / 'BOOTSTRAP.md').write_text('unknown writer result')
+        before = inventory(self.root)
+        result = self.rollback_cli(p)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(inventory(self.root), before)
 
 
 if __name__ == '__main__':
