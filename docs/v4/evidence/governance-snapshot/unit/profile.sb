@@ -1,0 +1,16 @@
+(version 1)
+(deny default)
+(allow process*)
+(allow file-read-metadata)
+(allow mach-lookup (global-name "com.apple.system.logger"))
+(allow file-read* (subpath "/System") (subpath "/usr") (subpath "/Library/Developer") (subpath "/Library/Apple") (subpath "/private/var/db/dyld") (literal "/dev/null") (literal "/dev/urandom") (subpath "/public/framework") (subpath "/public/operator/Library/Python/3.9/lib/python/site-packages") (subpath "/public/fixture/v4-first-batch-v0tq3t3j"))
+(allow file-write* (subpath "/public/fixture/v4-first-batch-v0tq3t3j") (literal "/dev/null"))
+(allow file-map-executable)
+(allow file-read* (subpath "/bin") (subpath "/sbin") (subpath "/private/preboot/Cryptexes"))
+(deny mach-lookup (global-name "com.apple.securityd") (global-name "com.apple.security.agent"))
+
+(allow file-read* (literal "/"))
+
+(allow signal (target children))
+
+(deny process-info* (target others))

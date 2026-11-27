@@ -222,8 +222,14 @@ Advisor 可以反对 PMO，PMO 也能以证据反驳；关闭必须由规定复�
   在受保护域封存计划、真实 Git 对象、日志和退出事实。候选入口在系统沙盒内。
   Gate 只读取操作方登记和 pin 的真实 bundle，给出 passed/failed/unverifiable。
 - [governance](../../framework/governance/CONTRACT.md)：从受保护、版本化来源取得
-  身份、评审、签认、契约依赖和偏离，调用真实 quality Gate，给出当前候选对象的
+  身份、评审、签认、契约依赖和偏离，调用真实 quality Gate，给出锁定候选快照的
   effective/rejected/unverifiable。历史失效单调保留；同树和精确机械变更按预设策略核验。
+
+这里的 `effective` 只适用于锁定基线快照。所有 verify 输出显式标注
+`verification_scope=locked_baseline`、`current_target_status=not_observed`；
+`target_base_sha` 来自已锁定输入，不是对当前 Git 引用的观测。三份旧输入
+一致而实际目标分支已前移时，快照结论可以不变，不能用于证明当前目标可合入。
+上文 §8 的目标变更重验是完整架构要求，尚不是本版已有能力。
 
 T 是受信域、C 是候选可写域；名称不产生权限。外层隔离必须保护 T 及祖先目录，
 还须阻止通过系统进程信息 API 读取宿主环境；只清空 env 不够。collector 不导入

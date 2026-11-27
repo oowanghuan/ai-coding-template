@@ -1,0 +1,9 @@
+{
+  "files_before_this_report": 138,
+  "privacy_findings": [],
+  "local_links_checked": 105,
+  "broken_links": [],
+  "code_input_files": 10,
+  "source_bindings_match": true,
+  "scope": "Static patterns and independent content review; not exhaustive secret detection. Raw path/hash originals stay outside repository."
+}

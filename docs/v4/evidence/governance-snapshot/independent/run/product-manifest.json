@@ -1,0 +1,9 @@
+{
+  "framework/governance/core.py": "615991140e0fa38d8309daba17dc307b035ff0eb6420202cb055d57d38862b32",
+  "framework/governance/evaluate.py": "119fe4e2e36d8e1a4f994f72252ea8947f84d84e683ab7a778f386d8564ef25a",
+  "framework/quality/gate.py": "1e445d0b8407a68bce5d01615e2705528894d700f6ebd3432e4dae59e21cc398",
+  "schemas/evidence.schema.json": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+  "schemas/governance.schema.json": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+  "scripts/v4_governance.py": "5b42fd8a101b3bc2300d7f021299d1cfb55f11216cbab611abb14611d9e545ff",
+  "scripts/v4_quality.py": "e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1"
+}

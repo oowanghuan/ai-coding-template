@@ -1,0 +1,1 @@
+{"protected_write": true, "protected_hardlink": true, "candidate_root_unlink": true, "target_git_read": true, "outside_write": true, "checkout_write": true, "network": true, "credentials_absent": true}

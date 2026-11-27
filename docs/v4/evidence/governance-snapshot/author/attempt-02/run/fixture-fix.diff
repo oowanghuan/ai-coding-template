@@ -1,0 +1,26 @@
+--- first-attempt
++++ fixture-corrected
+@@ -112,16 +112,19 @@
+  q=command('quality-revalidation',[str(REPO/'scripts/v4_quality.py'),'verify','--trust',str(OLD_T/'quality-trust.json'),'--trust-sha256',QUALITY_PIN,'--run-id','success'])
+  if q['exit_code']!=0 or q['result']['status']!='passed':raise RuntimeError('existing collector evidence did not verify')
+  gate=q['result'];plan=json.loads((OLD_T/'q-success/plan.json').read_text());paths=sorted(plan['manifest'])
+- work=dict(revision=1,risk='high',author_principals=['fixture-author'],author_contexts=['fixture-author-context'],author_groups=['fixture-author-group'],required_paths=paths,target_base_sha=base,allow_same_tree_commit=False,separate_acceptor=True,required_contracts=[],mechanical_changes={})
+- review=dict(id='R-locked',wp_id='WP-203',wp_revision=1,subject=plan['subject'],commit_object=plan['commit_object'],target_base_sha=base,paths=paths,contract_refs=[],quality_run_id='success',conclusion='approved',summary='Synthetic protected snapshot review; no live target observation.',deviation_refs=[],policy_sha256=digest(canonical(work)))
++ work=dict(revision=1,risk='high',author_principals=['fixture-author'],author_contexts=['fixture-author-context'],author_groups=['fixture-author-group'],required_paths=paths,target_base_sha=base,allow_same_tree_commit=False,separate_acceptor=True,required_contracts=['SNAPSHOT'],mechanical_changes={})
++ (t/'specs').mkdir();(t/'specs/snapshot.md').write_text('Fixed baseline verification; live target status is not observed.\n')
++ contract_hash=sha(t/'specs/snapshot.md')
++ contract=dict(id='SNAPSHOT',path='specs/snapshot.md',version='1',sha256=contract_hash,depends_on=[])
++ review=dict(id='R-locked',wp_id='WP-203',wp_revision=1,subject=plan['subject'],commit_object=plan['commit_object'],target_base_sha=base,paths=paths,contract_refs=[dict(id='SNAPSHOT',version='1',sha256=contract_hash)],quality_run_id='success',conclusion='approved',summary='Synthetic protected snapshot review; no live target observation.',deviation_refs=[],policy_sha256=digest(canonical(work)))
+  signoff=dict(id='S-locked',review_id='R-locked',gate_id=gate['gate_id'],evidence_sha256=gate['evidence_sha256'])
+  entries=[];sources={};previous='0'*64
+- for n,(kind,payload,role) in enumerate([('review',review,'reviewer'),('signoff',signoff,'acceptor')],1):
++ for n,(kind,payload,role) in enumerate([('contract',contract,'contract_owner'),('review',review,'reviewer'),('signoff',signoff,'acceptor')],1):
+   identity='source-'+str(n);path=t/(identity+'.json');save(path,dict(format='governance-record/1',kind=kind,issued_at='2026-11-27T22:00:00Z',payload=payload))
+   sources[identity]=dict(path=str(path),sha256=sha(path),principal='fixture-'+role,role=role,context_id='fixture-'+role+'-context',independence_group='fixture-'+role+'-group')
+   row=dict(sequence=n,source_id=identity,source_sha256=sha(path),previous_sha256=previous);row['entry_sha256']=digest(canonical(row));previous=row['entry_sha256'];entries.append(row)
+  save(t/'ledger.json',dict(format='governance-ledger/1',project_id='synthetic-locked-baseline',entries=entries))
+- trust=dict(format='governance-trust/1',trusted_root=str(OLD_T),candidate_root=str(c),project_id='synthetic-locked-baseline',ledger=dict(path=str(t/'ledger.json'),sha256=sha(t/'ledger.json'),sequence=len(entries),head_sha256=previous),sources=sources,work_packages={'WP-203':work},contracts={},graph_complete=True,quality=dict(trust_path=str(OLD_T/'quality-trust.json'),trust_sha256=QUALITY_PIN))
++ trust=dict(format='governance-trust/1',trusted_root=str(OLD_T),candidate_root=str(c),project_id='synthetic-locked-baseline',ledger=dict(path=str(t/'ledger.json'),sha256=sha(t/'ledger.json'),sequence=len(entries),head_sha256=previous),sources=sources,work_packages={'WP-203':work},contracts={'SNAPSHOT':{'depends_on':[]}},graph_complete=True,quality=dict(trust_path=str(OLD_T/'quality-trust.json'),trust_sha256=QUALITY_PIN))
+  save(t/'trust.json',trust);trustpin=sha(t/'trust.json')
+  candidate=dict(format='governance-candidate/1',wp_id='WP-203',wp_revision=1,subject=plan['subject'],commit_object=plan['commit_object'],target_base_sha=base,paths=paths,quality_run_id=None)
+  candidate_path=c/'candidate.json';save(candidate_path,candidate)

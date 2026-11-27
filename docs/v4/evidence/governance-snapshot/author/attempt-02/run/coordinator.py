@@ -1,0 +1,153 @@
+"""Reviewed finite host coordinator: actual temporary target branch movement.
+No candidate imports and no collector execution. Only explicit CLI in Seatbelt.
+"""
+import argparse,datetime,hashlib,json,os,stat,subprocess,sys,tempfile
+from pathlib import Path
+REPO=Path('/public/fixture/repository')
+DEPS=Path('/public/fixture/dependencies')
+STAGE=Path(__file__).resolve().parent
+OLD_T=Path('/public/fixture/reused-quality')
+QUALITY_PIN='6e188deec0a2efeba52d9272c56e0c38a37d200e7cf7b8cb98a80663c7c3ad3a'
+AT='2026-11-27T23:00:00Z'
+PRODUCT_FILES=['framework/governance/core.py','framework/governance/evaluate.py','schemas/governance.schema.json','scripts/v4_governance.py','framework/quality/gate.py','schemas/evidence.schema.json','scripts/v4_quality.py']
+
+def canonical(v):return json.dumps(v,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
+def digest(b):return hashlib.sha256(b).hexdigest()
+def read_regular(p,limit=16*1024*1024):
+ p=Path(p)
+ if not p.is_absolute() or '..' in p.parts or p.resolve()!=p:raise ValueError('canonical no-link path required')
+ access=0x40000000 if sys.platform=='darwin' else getattr(os,'O_PATH',os.O_RDONLY)
+ parent=os.open('/',access|os.O_DIRECTORY|os.O_NOFOLLOW)
+ try:
+  for name in p.parts[1:-1]:
+   child=os.open(name,access|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=parent);os.close(parent);parent=child
+  leaf=os.open(p.name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=parent)
+  try:
+   info=os.fstat(leaf)
+   if not stat.S_ISREG(info.st_mode) or info.st_nlink!=1 or info.st_size>limit:raise ValueError('bounded single-link regular input required')
+   chunks=[];remaining=limit+1
+   while remaining:
+    part=os.read(leaf,min(65536,remaining))
+    if not part:break
+    chunks.append(part);remaining-=len(part)
+   data=b''.join(chunks)
+   if len(data)>limit:raise ValueError('input grew beyond bound')
+   return data
+  finally:os.close(leaf)
+ finally:os.close(parent)
+def sha(p):return digest(read_regular(p))
+def save(p,v):Path(p).write_bytes(canonical(v)+b'\n')
+def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def pin(p,expected):
+ if sha(p)!=expected:raise ValueError('fixed input mismatch: '+str(p))
+def env(home):return dict(HOME=str(home),TMPDIR=str(home),PATH='/usr/bin:/bin:/usr/sbin:/sbin',PYTHONNOUSERSITE='1',PYTHONDONTWRITEBYTECODE='1')
+def invoke(args,cwd,environment,timeout=30):return subprocess.run(args,cwd=cwd,env=environment,capture_output=True,timeout=timeout)
+def files(root):return {str(p):sha(p) for p in root.rglob('*') if p.is_file()}
+def unchanged(record):return all(Path(p).is_file() and sha(p)==value for p,value in record.items())
+def policy(t,c):
+ q=lambda p:json.dumps(str(p))
+ reads=['/System','/usr','/bin','/sbin','/Library/Developer','/Library/Apple','/private/var/db/dyld','/private/preboot/Cryptexes',REPO,DEPS,t,c]
+ return '\n'.join(['(version 1)','(deny default)','(allow process*)','(deny process-info* (target others))',
+ '(allow file-read-metadata)','(allow file-map-executable)',
+ '(allow mach-lookup (global-name "com.apple.system.logger"))',
+ '(allow file-read* (literal "/") (literal "/dev/null") (literal "/dev/urandom") '+' '.join('(subpath '+q(p)+')' for p in reads)+')',
+ '(allow file-write* (literal "/dev/null") (subpath '+q(c)+'))','(deny file-write-unlink (literal '+q(c)+'))',
+ '(deny mach-lookup (global-name "com.apple.securityd") (global-name "com.apple.security.agent"))','(allow signal (target children))'])+'\n'
+
+CANARY=r'''import json,os,socket,sys
+from pathlib import Path
+c=json.loads(sys.argv[1]);checks={}
+def denied(name,op):
+ try:op();checks[name]=False
+ except PermissionError:checks[name]=True
+ except OSError:checks[name]=False
+denied('protected_write',lambda:Path(c['protected']).write_text('forged'))
+denied('protected_hardlink',lambda:os.link(c['protected'],str(Path(c['candidate'])/'alias')))
+denied('candidate_root_unlink',lambda:os.rmdir(c['candidate']))
+denied('target_git_read',lambda:Path(c['target_ref']).read_bytes())
+denied('outside_write',lambda:Path(c['outside']).write_text('forged'))
+denied('checkout_write',lambda:(Path(c['repo'])/'baseline-probe-canary').write_text('forged'))
+def net():
+ with socket.socket() as s:s.connect(('127.0.0.1',9))
+denied('network',net)
+checks['credentials_absent']=not any(k in os.environ for k in ('GH_TOKEN','GITHUB_TOKEN','OPENAI_API_KEY','ANTHROPIC_API_KEY','SSH_AUTH_SOCK','CODEX_HOME'))
+print(json.dumps(checks));sys.exit(0 if all(checks.values()) else 1)
+'''
+
+def execute(script_pin,product_manifest,product_pin):
+ pin(__file__,script_pin);pin(product_manifest,product_pin)
+ approved=json.loads(Path(product_manifest).read_text())
+ if set(approved)!=set(PRODUCT_FILES):raise ValueError('explicit full product input manifest required')
+ for name,value in approved.items():pin(REPO/name,value)
+ pin(OLD_T/'quality-trust.json',QUALITY_PIN)
+ if not (OLD_T/'q-success/evidence.json').is_file():raise ValueError('existing actual evidence unavailable')
+ original=files(OLD_T)
+ with (STAGE/'intent.json').open('x') as f:json.dump(dict(started_at=utc(),coordinator_sha256=script_pin,product_manifest_sha256=product_pin),f)
+ root=Path(tempfile.mkdtemp(prefix='v4-locked-baseline-',dir='/private/tmp')).resolve()
+ c=root/'C';c.mkdir();gitroot=root/'target-project';gitroot.mkdir();outside=root/'outside';outside.write_text('unchanged\n')
+ t=Path(tempfile.mkdtemp(prefix='locked-baseline-probe-',dir=OLD_T)).resolve()
+ (t/'outer.sb').write_text(policy(OLD_T,c));(t/'canary.py').write_text(CANARY)
+ # All Git commands are pinned to this newly-created temporary project.
+ ge=env(gitroot);ge.update(GIT_CONFIG_NOSYSTEM='1',GIT_CONFIG_GLOBAL='/dev/null',GIT_AUTHOR_NAME='Synthetic Target Fixture',GIT_AUTHOR_EMAIL='fixture@example.invalid',GIT_COMMITTER_NAME='Synthetic Target Fixture',GIT_COMMITTER_EMAIL='fixture@example.invalid',GIT_AUTHOR_DATE='2026-11-27T00:00:00+0000',GIT_COMMITTER_DATE='2026-11-27T00:00:00+0000')
+ git_records=[]
+ def git(args):
+  argv=['/usr/bin/git','-c','core.hooksPath=/dev/null','-c','commit.gpgsign=false']+args
+  r=invoke(argv,gitroot,ge);git_records.append(dict(argv=argv,cwd=str(gitroot),exit_code=r.returncode,stdout=r.stdout.decode(),stderr=r.stderr.decode()))
+  save(STAGE/'git-operations.json',git_records)
+  if r.returncode:raise RuntimeError('temporary fixture git operation failed')
+  return r.stdout.decode().strip()
+ git(['init','-q']);git(['symbolic-ref','HEAD','refs/heads/main'])
+ (gitroot/'target.txt').write_text('initial target baseline\n');git(['add','--','target.txt']);git(['commit','-q','-m','Initial temporary target baseline'])
+ base=git(['rev-parse','refs/heads/main']);base_body=git(['cat-file','commit',base]);(STAGE/'target-before.commit.txt').write_text(base_body+'\n')
+ sandbox_env=env(c);sandbox_env['PYTHONPATH']=str(REPO)+':'+str(DEPS)
+ def command(label,args):
+  argv=['/usr/bin/sandbox-exec','-f',str(t/'outer.sb'),'/usr/bin/python3','-B','-S']+args
+  start=utc();r=invoke(argv,c,sandbox_env)
+  (STAGE/(label+'.stdout.log')).write_bytes(r.stdout);(STAGE/(label+'.stderr.log')).write_bytes(r.stderr)
+  value=json.loads(r.stdout) if r.stdout else None
+  record=dict(argv=argv,cwd=str(c),started_at=start,finished_at=utc(),exit_code=r.returncode,result=value)
+  save(STAGE/(label+'.json'),record);return record
+ canary=command('canary',[str(t/'canary.py'),canonical(dict(protected=str(OLD_T/'quality-trust.json'),candidate=str(c),target_ref=str(gitroot/'.git/refs/heads/main'),outside=str(outside),repo=str(REPO))).decode()])
+ if canary['exit_code']!=0 or not all(canary['result'].values()):raise RuntimeError('sandbox canary failed')
+ q=command('quality-revalidation',[str(REPO/'scripts/v4_quality.py'),'verify','--trust',str(OLD_T/'quality-trust.json'),'--trust-sha256',QUALITY_PIN,'--run-id','success'])
+ if q['exit_code']!=0 or q['result']['status']!='passed':raise RuntimeError('existing collector evidence did not verify')
+ gate=q['result'];plan=json.loads((OLD_T/'q-success/plan.json').read_text());paths=sorted(plan['manifest'])
+ work=dict(revision=1,risk='high',author_principals=['fixture-author'],author_contexts=['fixture-author-context'],author_groups=['fixture-author-group'],required_paths=paths,target_base_sha=base,allow_same_tree_commit=False,separate_acceptor=True,required_contracts=['SNAPSHOT'],mechanical_changes={})
+ (t/'specs').mkdir();(t/'specs/snapshot.md').write_text('Fixed baseline verification; live target status is not observed.\n')
+ contract_hash=sha(t/'specs/snapshot.md')
+ contract=dict(id='SNAPSHOT',path='specs/snapshot.md',version='1',sha256=contract_hash,depends_on=[])
+ review=dict(id='R-locked',wp_id='WP-203',wp_revision=1,subject=plan['subject'],commit_object=plan['commit_object'],target_base_sha=base,paths=paths,contract_refs=[dict(id='SNAPSHOT',version='1',sha256=contract_hash)],quality_run_id='success',conclusion='approved',summary='Synthetic protected snapshot review; no live target observation.',deviation_refs=[],policy_sha256=digest(canonical(work)))
+ signoff=dict(id='S-locked',review_id='R-locked',gate_id=gate['gate_id'],evidence_sha256=gate['evidence_sha256'])
+ entries=[];sources={};previous='0'*64
+ for n,(kind,payload,role) in enumerate([('contract',contract,'contract_owner'),('review',review,'reviewer'),('signoff',signoff,'acceptor')],1):
+  identity='source-'+str(n);path=t/(identity+'.json');save(path,dict(format='governance-record/1',kind=kind,issued_at='2026-11-27T22:00:00Z',payload=payload))
+  sources[identity]=dict(path=str(path),sha256=sha(path),principal='fixture-'+role,role=role,context_id='fixture-'+role+'-context',independence_group='fixture-'+role+'-group')
+  row=dict(sequence=n,source_id=identity,source_sha256=sha(path),previous_sha256=previous);row['entry_sha256']=digest(canonical(row));previous=row['entry_sha256'];entries.append(row)
+ save(t/'ledger.json',dict(format='governance-ledger/1',project_id='synthetic-locked-baseline',entries=entries))
+ trust=dict(format='governance-trust/1',trusted_root=str(OLD_T),candidate_root=str(c),project_id='synthetic-locked-baseline',ledger=dict(path=str(t/'ledger.json'),sha256=sha(t/'ledger.json'),sequence=len(entries),head_sha256=previous),sources=sources,work_packages={'WP-203':work},contracts={'SNAPSHOT':{'depends_on':[]}},graph_complete=True,quality=dict(trust_path=str(OLD_T/'quality-trust.json'),trust_sha256=QUALITY_PIN))
+ save(t/'trust.json',trust);trustpin=sha(t/'trust.json')
+ candidate=dict(format='governance-candidate/1',wp_id='WP-203',wp_revision=1,subject=plan['subject'],commit_object=plan['commit_object'],target_base_sha=base,paths=paths,quality_run_id=None)
+ candidate_path=c/'candidate.json';save(candidate_path,candidate)
+ preserved=files(t);preserved[str(candidate_path)]=sha(candidate_path)
+ save(STAGE/'preserved-inputs.json',preserved)
+ args=[str(REPO/'scripts/v4_governance.py'),'verify','--trust',str(t/'trust.json'),'--trust-sha256',trustpin,'--signoff','S-locked','--candidate',str(candidate_path),'--at',AT]
+ before=command('verify-before',args)
+ (gitroot/'target.txt').write_text('target branch genuinely advanced\n');git(['add','--','target.txt']);git(['commit','-q','-m','Advance temporary target after snapshot review'])
+ moved=git(['rev-parse','refs/heads/main']);parent=git(['rev-parse','refs/heads/main^']);moved_body=git(['cat-file','commit',moved]);(STAGE/'target-after.commit.txt').write_text(moved_body+'\n')
+ after=command('verify-after-same-inputs',args)
+ # Separate negative descriptor; never replace original candidate/review/trust.
+ alternate=dict(candidate,target_base_sha=moved);alternate_path=c/'candidate-new-target.json';save(alternate_path,alternate)
+ changed=list(args);changed[changed.index('--candidate')+1]=str(alternate_path)
+ negative=command('verify-new-target-descriptor',changed)
+ expected=lambda result:result is not None and result.get('status')=='effective' and result.get('verification_scope')=='locked_baseline' and result.get('current_target_status')=='not_observed'
+ invariant=unchanged(preserved);original_unchanged=unchanged(original);product_unchanged=all(sha(REPO/name)==value for name,value in approved.items())
+ snapshot_same=before['result']==after['result']
+ summary=dict(completed_at=utc(),coordinator_sha256=script_pin,product_input_sha256=approved,root=str(root),new_protected_records=str(t),quality_evidence_reused=True,new_collector_executions=0,
+ coordinator_git_observations=dict(repository=str(gitroot),ref='refs/heads/main',before=base,after=moved,after_parent=parent,observer='trusted test coordinator; not product observation'),
+ before=before['result'],after=after['result'],negative=negative['result'],same_snapshot_decision=snapshot_same,preserved_inputs_unchanged=invariant,original_quality_and_governance_unchanged=original_unchanged,product_inputs_unchanged=product_unchanged,
+ passed=base!=moved and parent==base and before['exit_code']==0 and after['exit_code']==0 and expected(before['result']) and expected(after['result']) and snapshot_same and negative['exit_code']==2 and negative['result']['status']=='rejected' and negative['result'].get('verification_scope')=='locked_baseline' and negative['result'].get('current_target_status')=='not_observed' and 'target-base-changed-recheck-required' in negative['result'].get('reasons',[]) and invariant and original_unchanged and product_unchanged)
+ save(STAGE/'summary.json',summary);print(json.dumps(summary));return 0 if summary['passed'] else 1
+
+if __name__=='__main__':
+ p=argparse.ArgumentParser();p.add_argument('--reviewed-coordinator',required=True);p.add_argument('--product-manifest',required=True);p.add_argument('--product-manifest-sha256',required=True);a=p.parse_args()
+ sys.exit(execute(a.reviewed_coordinator,a.product_manifest,a.product_manifest_sha256))

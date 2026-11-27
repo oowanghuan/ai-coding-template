@@ -1,0 +1,51 @@
+--- coordinator-before
++++ coordinator-after
+@@ -1,7 +1,7 @@
+ """Reviewed finite host coordinator: actual temporary target branch movement.
+ No candidate imports and no collector execution. Only explicit CLI in Seatbelt.
+ """
+-import argparse,datetime,hashlib,json,os,subprocess,sys,tempfile
++import argparse,datetime,hashlib,json,os,stat,subprocess,sys,tempfile
+ from pathlib import Path
+ REPO=Path('/public/fixture/repository')
+ DEPS=Path('/public/fixture/dependencies')
+@@ -13,7 +13,29 @@
+ 
+ def canonical(v):return json.dumps(v,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
+ def digest(b):return hashlib.sha256(b).hexdigest()
+-def sha(p):return digest(Path(p).read_bytes())
++def read_regular(p,limit=16*1024*1024):
++ p=Path(p)
++ if not p.is_absolute() or '..' in p.parts or p.resolve()!=p:raise ValueError('canonical no-link path required')
++ access=0x40000000 if sys.platform=='darwin' else getattr(os,'O_PATH',os.O_RDONLY)
++ parent=os.open('/',access|os.O_DIRECTORY|os.O_NOFOLLOW)
++ try:
++  for name in p.parts[1:-1]:
++   child=os.open(name,access|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=parent);os.close(parent);parent=child
++  leaf=os.open(p.name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=parent)
++  try:
++   info=os.fstat(leaf)
++   if not stat.S_ISREG(info.st_mode) or info.st_nlink!=1 or info.st_size>limit:raise ValueError('bounded single-link regular input required')
++   chunks=[];remaining=limit+1
++   while remaining:
++    part=os.read(leaf,min(65536,remaining))
++    if not part:break
++    chunks.append(part);remaining-=len(part)
++   data=b''.join(chunks)
++   if len(data)>limit:raise ValueError('input grew beyond bound')
++   return data
++  finally:os.close(leaf)
++ finally:os.close(parent)
++def sha(p):return digest(read_regular(p))
+ def save(p,v):Path(p).write_bytes(canonical(v)+b'\n')
+ def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+ def pin(p,expected):
+@@ -120,7 +142,7 @@
+  summary=dict(completed_at=utc(),coordinator_sha256=script_pin,product_input_sha256=approved,root=str(root),new_protected_records=str(t),quality_evidence_reused=True,new_collector_executions=0,
+  coordinator_git_observations=dict(repository=str(gitroot),ref='refs/heads/main',before=base,after=moved,after_parent=parent,observer='trusted test coordinator; not product observation'),
+  before=before['result'],after=after['result'],negative=negative['result'],same_snapshot_decision=snapshot_same,preserved_inputs_unchanged=invariant,original_quality_and_governance_unchanged=original_unchanged,product_inputs_unchanged=product_unchanged,
+- passed=base!=moved and parent==base and before['exit_code']==0 and after['exit_code']==0 and expected(before['result']) and expected(after['result']) and snapshot_same and negative['exit_code']==2 and negative['result']['status']=='rejected' and invariant and original_unchanged and product_unchanged)
++ passed=base!=moved and parent==base and before['exit_code']==0 and after['exit_code']==0 and expected(before['result']) and expected(after['result']) and snapshot_same and negative['exit_code']==2 and negative['result']['status']=='rejected' and negative['result'].get('verification_scope')=='locked_baseline' and negative['result'].get('current_target_status')=='not_observed' and 'target-base-changed-recheck-required' in negative['result'].get('reasons',[]) and invariant and original_unchanged and product_unchanged)
+  save(STAGE/'summary.json',summary);print(json.dumps(summary));return 0 if summary['passed'] else 1
+ 
+ if __name__=='__main__':

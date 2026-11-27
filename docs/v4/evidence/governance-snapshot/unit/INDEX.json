@@ -1,0 +1,25 @@
+{
+  "scope": "Author 32 governance tests; Gate/reviewer fixtures are synthetic. New real CLI target-movement validation is recorded separately. Paths redacted; raw evidence retained outside repository.",
+  "files": [
+    {
+      "path": "profile.sb",
+      "raw_sha256": "782a2296f133c870984acfc8f56573eee0e5fd24041fa8e9f38525e93e8d2537",
+      "public_sha256": "c0684a42d055e66e4f149760c022ce538a06c077c95b2175ddf5af6796586287"
+    },
+    {
+      "path": "frozen-result.json",
+      "raw_sha256": "3d033e4f781ba275dd74b456ac642a618b988374d6f0aefecbcc0b452471ed97",
+      "public_sha256": "54b5f7e168358d288e1075b1a2ec03824c16c71b4a91ae065fca4aab011985ea"
+    },
+    {
+      "path": "frozen-stderr.log",
+      "raw_sha256": "b116d184eebc2319e87c97f92b2d1feff2dab73e41b1ec4b95ac3e5ecf108e82",
+      "public_sha256": "b116d184eebc2319e87c97f92b2d1feff2dab73e41b1ec4b95ac3e5ecf108e82"
+    },
+    {
+      "path": "frozen-stdout.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

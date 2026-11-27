@@ -1,0 +1,41 @@
+{
+  "commit": "9df70b506dc109f3d4ff0d65332eefae0fff359d",
+  "inputs": {
+    "framework/governance/core.py": {
+      "tested_sha256": "615991140e0fa38d8309daba17dc307b035ff0eb6420202cb055d57d38862b32",
+      "git_blob_sha256": "615991140e0fa38d8309daba17dc307b035ff0eb6420202cb055d57d38862b32",
+      "match": true
+    },
+    "framework/governance/evaluate.py": {
+      "tested_sha256": "119fe4e2e36d8e1a4f994f72252ea8947f84d84e683ab7a778f386d8564ef25a",
+      "git_blob_sha256": "119fe4e2e36d8e1a4f994f72252ea8947f84d84e683ab7a778f386d8564ef25a",
+      "match": true
+    },
+    "framework/quality/gate.py": {
+      "tested_sha256": "1e445d0b8407a68bce5d01615e2705528894d700f6ebd3432e4dae59e21cc398",
+      "git_blob_sha256": "1e445d0b8407a68bce5d01615e2705528894d700f6ebd3432e4dae59e21cc398",
+      "match": true
+    },
+    "schemas/evidence.schema.json": {
+      "tested_sha256": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+      "git_blob_sha256": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+      "match": true
+    },
+    "schemas/governance.schema.json": {
+      "tested_sha256": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+      "git_blob_sha256": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+      "match": true
+    },
+    "scripts/v4_governance.py": {
+      "tested_sha256": "5b42fd8a101b3bc2300d7f021299d1cfb55f11216cbab611abb14611d9e545ff",
+      "git_blob_sha256": "5b42fd8a101b3bc2300d7f021299d1cfb55f11216cbab611abb14611d9e545ff",
+      "match": true
+    },
+    "scripts/v4_quality.py": {
+      "tested_sha256": "e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1",
+      "git_blob_sha256": "e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1",
+      "match": true
+    }
+  },
+  "mismatch_count": 0
+}

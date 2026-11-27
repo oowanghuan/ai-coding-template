@@ -1,0 +1,25 @@
+{
+  "reviewed_at": "2026-11-27T20:00:42.566394+00:00",
+  "advisor_comment": 7226757604,
+  "reviewer": "non-author boundary review execution context",
+  "scope": "read-only source review; real CLI execution not yet run",
+  "source_sha256": {
+    "framework/governance/core.py": "615991140e0fa38d8309daba17dc307b035ff0eb6420202cb055d57d38862b32",
+    "framework/governance/evaluate.py": "119fe4e2e36d8e1a4f994f72252ea8947f84d84e683ab7a778f386d8564ef25a",
+    "scripts/v4_governance.py": "5b42fd8a101b3bc2300d7f021299d1cfb55f11216cbab611abb14611d9e545ff",
+    "framework/governance/CONTRACT.md": "db0baa0c56623aec1dcaffef8f9c5e648f191ee964783c63c85acc3fc9f02e35",
+    "examples/governance/README.md": "9f8b19d362d734fa550904f92386ebb8fe4033d9453beb2f7c204ad5a5469113",
+    "tests/governance/test_governance.py": "2be231408cf50640f8180e078eafb5e4624f6851ff22877ffba1c3bf4c0f4e52"
+  },
+  "findings": [
+    "core result initializes locked_baseline/not_observed and has one final return",
+    "verify_bundle adds both fields to normal and handled-error outcomes before decision_id calculation",
+    "CLI help, contract and example limit effective and exit zero to locked snapshot; no live observer or merge authority",
+    "OWNER_DECISIONS distinguishes session execution interpretation from independently checkable public stage decision"
+  ],
+  "pending": [
+    "approved fixed host coordinator",
+    "actual temporary main advancement with original protected and candidate inputs unchanged",
+    "independent new fixture execution"
+  ]
+}
