@@ -1,0 +1,6 @@
+# Offline tests use these already installed packages; installation is explicit.
+jsonschema==4.25.1
+referencing==0.36.2
+attrs==25.4.0
+jsonschema-specifications==2025.9.1
+rpds-py==0.27.1

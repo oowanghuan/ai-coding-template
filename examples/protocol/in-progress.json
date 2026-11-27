@@ -1,0 +1,270 @@
+{
+  "schema_version": "0.1",
+  "project": {
+    "id": "demo",
+    "profile": "lite",
+    "state_backend": "local_git",
+    "authority_epoch": 1,
+    "revision": 1,
+    "paused": false,
+    "budget": "available",
+    "owner_principals": [
+      "principal-owner"
+    ],
+    "policy_revision": "1"
+  },
+  "roles": [
+    {
+      "id": "role-developer",
+      "responsibilities": [
+        "Implementation"
+      ],
+      "permissions": [
+        "edit-assigned-scope"
+      ],
+      "asset_refs": []
+    },
+    {
+      "id": "role-reviewer",
+      "responsibilities": [
+        "Independent review"
+      ],
+      "permissions": [
+        "read"
+      ],
+      "asset_refs": []
+    }
+  ],
+  "providers": [
+    {
+      "id": "provider-a",
+      "adapter": "synthetic"
+    },
+    {
+      "id": "provider-b",
+      "adapter": "synthetic"
+    }
+  ],
+  "hosts": [
+    {
+      "id": "host-local",
+      "environment": "synthetic-isolated"
+    }
+  ],
+  "workers": [
+    {
+      "id": "worker-a",
+      "principal": "principal-implementer",
+      "role_refs": [
+        "role-developer"
+      ],
+      "provider_ref": "provider-a",
+      "host_ref": "host-local",
+      "capabilities": [
+        "code"
+      ],
+      "state": "busy",
+      "slots": 1,
+      "quota": "available",
+      "authorization_method": "synthetic-no-credentials"
+    },
+    {
+      "id": "worker-b",
+      "principal": "principal-reviewer",
+      "role_refs": [
+        "role-reviewer"
+      ],
+      "provider_ref": "provider-b",
+      "host_ref": "host-local",
+      "capabilities": [
+        "review"
+      ],
+      "state": "available",
+      "slots": 1,
+      "quota": "unknown",
+      "authorization_method": "synthetic-no-credentials"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "session-a",
+      "worker_ref": "worker-a",
+      "provider_ref": "provider-a",
+      "host_ref": "host-local",
+      "context_ref": "synthetic-context"
+    }
+  ],
+  "authorizations": [
+    {
+      "id": "auth-demo",
+      "issuer": "principal-owner",
+      "decision_ref": "synthetic-decision",
+      "wp_refs": [
+        "WP-DEMO"
+      ],
+      "role_refs": [
+        "role-developer"
+      ],
+      "environment_refs": [
+        "host-local"
+      ],
+      "allowed_paths": [
+        "src/"
+      ],
+      "external_effects": [],
+      "state": "granted",
+      "expires_at": "2030-01-01T00:00:00Z"
+    }
+  ],
+  "work_packages": [
+    {
+      "id": "WP-DEMO",
+      "project_id": "demo",
+      "kind": "code",
+      "title": "Synthetic local change",
+      "objective": "Validate protocol consistency",
+      "deliverables": [
+        "Synthetic patch"
+      ],
+      "goal_refs": [
+        "GOAL-DEMO"
+      ],
+      "requirement_refs": [
+        "REQ-DEMO"
+      ],
+      "accountable_role": "role-developer",
+      "implementer": "principal-implementer",
+      "reviewer": "principal-reviewer",
+      "acceptor": "principal-reviewer",
+      "merger": "principal-owner",
+      "dependencies": [],
+      "authorization_ref": "auth-demo",
+      "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "spec_refs": [
+        {
+          "path": "contracts/example.md",
+          "version": "1",
+          "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+      ],
+      "inputs": [],
+      "allowed_paths": [
+        "src/"
+      ],
+      "forbidden_paths": [
+        "secrets/"
+      ],
+      "external_effects": [],
+      "positive_criteria": [
+        "Expected output"
+      ],
+      "negative_criteria": [
+        "Reject invalid input"
+      ],
+      "risk": "medium",
+      "rollback": "Preserve worktree; revert reviewed commit",
+      "test_strategy": "Synthetic unit checks",
+      "state": "in_progress",
+      "revision": 1,
+      "blocking_conditions": [],
+      "assignment_ref": "assignment-demo",
+      "checkpoint_ref": "checkpoint-demo",
+      "handoff_refs": [],
+      "submitted_sha": null,
+      "evidence_refs": [],
+      "review_refs": [],
+      "required_milestones": [
+        "review_passed",
+        "merged",
+        "engineering_accepted"
+      ],
+      "milestones": {
+        "review_passed": {
+          "status": "pending",
+          "subject_sha": null,
+          "evidence_refs": [],
+          "signer": null,
+          "reason": null
+        },
+        "merged": {
+          "status": "pending",
+          "subject_sha": null,
+          "evidence_refs": [],
+          "signer": null,
+          "reason": null
+        },
+        "engineering_accepted": {
+          "status": "pending",
+          "subject_sha": null,
+          "evidence_refs": [],
+          "signer": null,
+          "reason": null
+        }
+      },
+      "change_reason": null
+    }
+  ],
+  "assignments": [
+    {
+      "id": "assignment-demo",
+      "wp_ref": "WP-DEMO",
+      "worker_ref": "worker-a",
+      "session_ref": "session-a",
+      "role_ref": "role-developer",
+      "authority_epoch": 1,
+      "fencing_token": 1,
+      "workspace_id": "synthetic-worktree-a",
+      "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "allowed_paths": [
+        "src/"
+      ],
+      "state": "active",
+      "lease_expires_at": "2026-11-28T00:00:00Z",
+      "heartbeat_at": "2026-11-27T09:00:00Z",
+      "last_checkpoint": "checkpoint-demo",
+      "revocation_reason": null
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "checkpoint-demo",
+      "wp_ref": "WP-DEMO",
+      "wp_revision": 1,
+      "role_ref": "role-developer",
+      "authorization_ref": "auth-demo",
+      "assignment_ref": "assignment-demo",
+      "lease_expires_at": "2026-11-28T00:00:00Z",
+      "created_at": "2026-11-27T09:00:00Z",
+      "spec_refs": [
+        {
+          "path": "contracts/example.md",
+          "version": "1",
+          "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+      ],
+      "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "last_valid_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "uncommitted": [
+        {
+          "location": "synthetic-archive/diff.patch",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        }
+      ],
+      "completed": [
+        "Design"
+      ],
+      "remaining": [
+        "Implementation"
+      ],
+      "evidence_refs": [],
+      "decision_refs": [
+        "synthetic-decision"
+      ],
+      "blockers": [],
+      "unknown_operations": [],
+      "next_actions": [
+        "Verify actual checkout before resuming"
+      ]
+    }
+  ]
+}

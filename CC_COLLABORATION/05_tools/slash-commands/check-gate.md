@@ -98,7 +98,7 @@ foundation_checks:
   ❌ 功能模块 "{feature}" 未启用 Gate 机制
 
   请先运行以下命令初始化 Gate 文件：
-  /init-gate {feature}
+  按 /new-feature 的 Gate 文件生成步骤补齐缺失文件；已存在的规则或状态不得覆盖。
 
   或重新创建功能模块：
   /new-feature {feature}
@@ -141,6 +141,8 @@ Gate 检查流程：
 ```
 
 **检查类型说明**：
+
+兼容说明：对 exec_check、test_check、e2e_check 等细化检查，显式读取已保留的 `.claude/skills/gate_checker.md` 作为 V3 规则素材；不要假定旧平铺文件会被当前 CLI 原生自动加载。这个 V3 命令仍不是 V4 可信证据执行器，未执行的测试必须标未测，不能自报 passed。
 
 | 类型 | 说明 | 执行方式 |
 |------|------|----------|

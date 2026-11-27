@@ -1,0 +1,27 @@
+test_conflict_aborts_before_any_write (test_install.Installation) ... ok
+test_cooperative_single_instance (test_install.Installation) ... ok
+test_dry_run_and_repeat_are_non_destructive (test_install.Installation) ... ok
+test_empty_install_copies_exact_declared_assets (test_install.Installation) ... ok
+test_existing_git_dirty_and_untracked_preserved (test_install.Installation) ... ok
+test_incomplete_transaction_blocks_new_install (test_install.Installation) ... ok
+test_legacy_shell_entry_point (test_install.Installation) ... ok
+test_manifest_coverage_and_preserved_legacy_variants (test_install.Installation) ... ok
+test_manifest_path_escape_and_duplicate_rejected (test_install.Installation) ... ok
+test_missing_dependency_rejected (test_install.Installation) ... ok
+test_missing_or_changed_source_fails_list_and_install (test_install.Installation) ... ok
+test_non_directory_ancestor_refused (test_install.Installation) ... ok
+test_rollback_preserves_preexisting_files (test_install.Installation) ... ok
+test_rollback_refuses_edited_file_without_partial_deletion (test_install.Installation) ... ok
+test_selection_includes_declared_dependencies (test_install.Installation) ... ok
+test_symlink_destination_refused (test_install.Installation) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 9.388s
+
+OK
+Traceback (most recent call last):
+  File "<isolated-run>/run_tests.py", line 27, in <module>
+    suite=unittest.defaultTestLoader.discover(str(Path(c['repo'])/'tests'/group),pattern='test_*.py')
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/loader.py", line 346, in discover
+    raise ImportError('Start directory is not importable: %r' % start_dir)
+ImportError: Start directory is not importable: '<workspace>/tests/protocol'

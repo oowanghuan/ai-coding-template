@@ -1,0 +1,17 @@
+{
+  "README.md": "b1b4563b534da1f643eff22ec8eb4619a0093d38a4a623b8267886d3b6a15e15",
+  "initial-harness.stderr": "df7f327e02de5c3737543625d485ff2f30e8041b971341b4645c6594dac7203f",
+  "initial-harness.stdout": "8ba95ffc1508f277c0fae425ea389d39d778af21096a6470e2c0a93ae720e581",
+  "poll-after-fix.json": "c232b96da6c35b940db8dbb11e9963bb79712bb9770f940d07ab7fbcc71d682e",
+  "poll-before-fix.json": "2ed7c34c1230dc536ab3f3395e8fe99da3785558705a0faa9a3c5094d0fb4492",
+  "poll-next-natural.json": "ad0895509b5ddbee835bf28a7a8625d39592fb62c26bfe152657f60679c910c3",
+  "poll-tests.json": "4af69eea81aee0700caf633d0001a7841d0c0dba23f7f6ff5fd9cf8da3f517fd",
+  "poll.py.txt": "7fd8a25810ac87989f50396ceeedcd3dea7169902594316da31def8c6b97cbc3",
+  "preserved-originals.json": "745feb8fdf63fc40c6d5969e8e63ad08d0ebe7e9f836f230fd1187028470114b",
+  "results.json": "5f578c9c59d47706231fef7d6d989dbf21b3788cbc6e06f61db7f661f41a1905",
+  "run_tests.py.txt": "10839aab5dacace4aed105d39ec8f268e6bbe7c7a4c127dc4dba3c8efe1e2f96",
+  "sandbox.sb.txt": "ff0f6cd7ea764edfba6c162e1eba5684e842a7d06012602b71dc2432a8d82c71",
+  "test_poll.py.txt": "81bcd54b67088f3388aa690d081484cc105509371bb3a2bdbb93dca6b4cb854c",
+  "tests.stderr": "e0427d80b2481da3fecf3dc9beb4cc73fda9c5673346919a5ebcab75b1797388",
+  "tests.stdout": "ced667d53dff0a17a0ce5271d9a9d736782a609144bf66c08f9376f620e3247d"
+}

@@ -305,8 +305,8 @@ Prompt 内容：
 
 | 模板文件 | 输出文件 | 说明 |
 |---------|---------|------|
-| `CC_COLLABORATION/03_templates/_common/REVIEW_ACTIONS_TEMPLATE.yaml` | `{feature_path}/REVIEW_ACTIONS.yaml` | 结构化评审结果（机器可读） |
-| `CC_COLLABORATION/03_templates/_common/REVIEW_REPORT_TEMPLATE.md` | `{feature_path}/REVIEW_REPORT.md` | 评审报告（人类可读） |
+| `CC_COLLABORATION/03_templates/_shared/REVIEW_ACTIONS_TEMPLATE.yaml` | `{feature_path}/REVIEW_ACTIONS.yaml` | 结构化评审结果（机器可读） |
+| `CC_COLLABORATION/03_templates/_shared/REVIEW_REPORT_TEMPLATE.md` | `{feature_path}/REVIEW_REPORT.md` | 评审报告（人类可读） |
 
 ### 模板使用说明
 
