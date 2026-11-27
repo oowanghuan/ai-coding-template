@@ -1,0 +1,107 @@
+{
+  "iteration-01.stdout.log": {
+    "raw_sha256": "465da603e99ec714f333004b7e3d2a1ef9dfa39dd3b87920846f3b6609c2a504",
+    "public_sha256": "465da603e99ec714f333004b7e3d2a1ef9dfa39dd3b87920846f3b6609c2a504",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "iteration-01.stderr.log": {
+    "raw_sha256": "2608684857438b96d4275c31a9dcc78441babb3483a650316ccb69ea10469c10",
+    "public_sha256": "e9422600355b8cc60131d037bb256c0098a0ef55d364eb7a8eeb08904ff4df8e",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "iteration-02.stdout.log": {
+    "raw_sha256": "f19ad5bf84b3435555b9011fcc0a65d1b4a48fb50c6de1becd22b413f55a5117",
+    "public_sha256": "f19ad5bf84b3435555b9011fcc0a65d1b4a48fb50c6de1becd22b413f55a5117",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "iteration-02.stderr.log": {
+    "raw_sha256": "f7ecb476111b80f32a62b04f16cd6f2ca551d5087fdd1be9f98b23e3947459c7",
+    "public_sha256": "f7ecb476111b80f32a62b04f16cd6f2ca551d5087fdd1be9f98b23e3947459c7",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "tests.stdout.log": {
+    "raw_sha256": "11f36348cd89bb401ec3538667f7350b2e7d24684d9ea1fe3e14df051ad61c94",
+    "public_sha256": "11f36348cd89bb401ec3538667f7350b2e7d24684d9ea1fe3e14df051ad61c94",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "tests.stderr.log": {
+    "raw_sha256": "e9b3c7b523f7f3f32626f2f2761f056bb37f1e62f0156eb125f809b0984b6b23",
+    "public_sha256": "e9b3c7b523f7f3f32626f2f2761f056bb37f1e62f0156eb125f809b0984b6b23",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "test-result.json": {
+    "raw_sha256": "52f87ae50616779aa02ea101f20d364307da836f088abdc9d53d274e70d5dcab",
+    "public_sha256": "6fef0da24f33cee6245bceccc9b636bc6777f0cf77d616b6f4a22188b77cab02",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "run-tests.py.txt": {
+    "raw_sha256": "a30a2d087f5f6afac6edb94ad481a4f606e2f8bd63ad017a63c8f21cef2c0f8d",
+    "public_sha256": "a30a2d087f5f6afac6edb94ad481a4f606e2f8bd63ad017a63c8f21cef2c0f8d",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "outer-sandbox.sb.txt": {
+    "raw_sha256": "fa9d026b83170ff714b215d86a4712955889bf6c34a8bb791175cfa1917644a3",
+    "public_sha256": "3712545fd60932f2627b994eb90aead5b19ade04e052ff92758571cc3144f240",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "worker-sandbox.sb.txt": {
+    "raw_sha256": "4555a704b9bbdd7673608e7571b474e39c1a1694043f0a6b1d51924d7ee92076",
+    "public_sha256": "bfa052d8e87d65f38458c72a72252c6e1a8a0503e0ce2c26040bda03de54f783",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "standalone-probe.py.txt": {
+    "raw_sha256": "bdf196387bdb7aeb88ef860b004ffa2e2124c862566483a18f4f733b014c5b78",
+    "public_sha256": "bdf196387bdb7aeb88ef860b004ffa2e2124c862566483a18f4f733b014c5b78",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "standalone-probe.stdout.log": {
+    "raw_sha256": "00ae9518b443c5de1fd7bcfc48508446a9cfce7e0b963474c524708a5120c0ce",
+    "public_sha256": "00ae9518b443c5de1fd7bcfc48508446a9cfce7e0b963474c524708a5120c0ce",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "standalone-probe.stderr.log": {
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "standalone-worker.stdout.log": {
+    "raw_sha256": "2d4068249252bfa061c28525549fe35e5b98752f6d601dfd9a0703c175f3887f",
+    "public_sha256": "2d4068249252bfa061c28525549fe35e5b98752f6d601dfd9a0703c175f3887f",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "standalone-worker.stderr.log": {
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "standalone-result.json": {
+    "raw_sha256": "2930a8117724986b15945695842972d77907fdcbd5ebf544b64f95756087d33e",
+    "public_sha256": "2930a8117724986b15945695842972d77907fdcbd5ebf544b64f95756087d33e",
+    "redaction": "absolute workspace, dependency, fixture and canary paths only"
+  },
+  "poll-20261127T124006043880Z.json": {
+    "raw_sha256": "2e0ede7de6a1ec2589ca9b79ab55e277a4062f77fbce843349e6b5dbbb3469e3",
+    "public_sha256": "2e0ede7de6a1ec2589ca9b79ab55e277a4062f77fbce843349e6b5dbbb3469e3",
+    "redaction": "none; run summary only, no input snapshots"
+  },
+  "poll-20261127T125503185268Z.json": {
+    "raw_sha256": "71049e65283d451ca036153a47922cfded97c1374fb47b4d3b77549dbf2c9a32",
+    "public_sha256": "71049e65283d451ca036153a47922cfded97c1374fb47b4d3b77549dbf2c9a32",
+    "redaction": "none; run summary only, no input snapshots"
+  },
+  "poll-20261127T131006270362Z.json": {
+    "raw_sha256": "a34d7c536911fd5e05f29446ba7166b3909400241c431d2a23934a2035aa3d5b",
+    "public_sha256": "a34d7c536911fd5e05f29446ba7166b3909400241c431d2a23934a2035aa3d5b",
+    "redaction": "none; run summary only, no input snapshots"
+  },
+  "poll-20261127T132506016752Z.json": {
+    "raw_sha256": "9f7029d9246af08a9cca2c4733e580f4e2c119c2af80c01f82df9726d36a91e2",
+    "public_sha256": "9f7029d9246af08a9cca2c4733e580f4e2c119c2af80c01f82df9726d36a91e2",
+    "redaction": "none; run summary only, no input snapshots"
+  },
+  "poll-20261127T134006084142Z.json": {
+    "raw_sha256": "7ff276568029eeea510643ae0f9484312d78f12d264200ae405ed219116dc142",
+    "public_sha256": "7ff276568029eeea510643ae0f9484312d78f12d264200ae405ed219116dc142",
+    "redaction": "none; run summary only, no input snapshots"
+  }
+}

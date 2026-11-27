@@ -1,0 +1,47 @@
+{
+  "run_id": "20261127T125503185268Z",
+  "started_at": "2026-11-27T12:55:03.186199+00:00",
+  "trigger": "com.ai-coding-template.v4.project-lead",
+  "status": "waiting",
+  "mode": "read_only_and_reviewed_reply",
+  "runner_sha256": "be171c6f3250d2de4cac1407269af08f868081366873e199372eeed2526ea9ee",
+  "processed": 0,
+  "waiting": [
+    {
+      "key": "v4-pl:7218268841:unbound",
+      "reason": "Needs Project Lead investigation; candidate execution disabled"
+    }
+  ],
+  "steps": [
+    {
+      "step": "identity_verified",
+      "at": "2026-11-27T12:55:04.972599+00:00"
+    },
+    {
+      "step": "issue_read",
+      "at": "2026-11-27T12:55:06.975404+00:00"
+    },
+    {
+      "step": "pending_selected",
+      "at": "2026-11-27T12:55:09.884771+00:00"
+    },
+    {
+      "step": "remote_head_verified",
+      "at": "2026-11-27T12:55:12.445751+00:00"
+    },
+    {
+      "step": "journals_reconciled",
+      "at": "2026-11-27T12:55:12.461382+00:00"
+    },
+    {
+      "step": "complete",
+      "at": "2026-11-27T12:55:12.464643+00:00"
+    }
+  ],
+  "last_successful_step": "complete",
+  "comments_read": 27,
+  "pending": 1,
+  "owner_decisions_seen": 2,
+  "remote_head": "1fbe382a2ffce858f15ba1769e3068054e589f96",
+  "finished_at": "2026-11-27T12:55:12.466917+00:00"
+}

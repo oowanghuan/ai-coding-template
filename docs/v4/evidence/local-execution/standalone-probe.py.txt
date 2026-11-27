@@ -1,0 +1,9 @@
+import json,os,socket,sys
+from pathlib import Path
+checks={}
+for name,operation in [('outside_read',lambda:Path(sys.argv[1]).read_text()),('outside_write',lambda:Path(sys.argv[1]).write_text('bad')),('checkout_write',lambda:Path(sys.argv[2]).write_text('bad')),('unassigned_output',lambda:Path('forbidden.txt').write_text('bad')),('network',lambda:socket.create_connection(('127.0.0.1',9)))]:
+ try:operation();checks[name]=False
+ except PermissionError:checks[name]=True
+checks['credential_env_absent']=not any(k in os.environ for k in ['GH_TOKEN','GITHUB_TOKEN','OPENAI_API_KEY','ANTHROPIC_API_KEY','SSH_AUTH_SOCK'])
+Path('allowed.txt').write_text('allowed')
+print(json.dumps(checks));sys.exit(0 if all(checks.values()) else 3)
