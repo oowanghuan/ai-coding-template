@@ -14,9 +14,16 @@
     "deployment.json": "40a7624f4e0759fea6f4b566e60ac6c7bc2f974723b3a8e54188c6bcc99658a3",
     "actual-context-receipt": "fd1db452f234a503c8ec663805aaf36bea1bc647ac241b2995ccdbab33eaa134",
     "post-deployment-poll": "48fd47d317da54470eba3d5269f81a8752a9bab8ccd5dbd5b720d89c2cb5ece6",
-    "second-post-deployment-poll": "d0defd8849b1e2c267bc10b2c0f5bc1c589b54e98629375ec25c7dff94de3a2f"
+    "second-post-deployment-poll": "d0defd8849b1e2c267bc10b2c0f5bc1c589b54e98629375ec25c7dff94de3a2f",
+    "poll-20261127T154006046944Z.json": "63d4c209263cfb0cce9199a7b50f29217267b6fb47c9bb9cdb91492edf9e5e7a",
+    "poll-20261127T154145101336Z.json": "c14b718c1f5ac815bb623b4517296e3bc304b88747e31d2abb96ea1f331c176c",
+    "event-7222308870-delivery.json": "bb1253cbc35e9828c716033bf3ff61c5b18e0eb4bf73b5b4a55a453014174a79",
+    "event-7222308870-ack.json": "117cefa2e3df1eb88581d079cb463edac29f7a6377a2ef4128e2216fadabff53",
+    "event-7222308870-operation.json": "8c0100eb76160ed50bb922ec19e4661176a1a378be08d08834ab8330e9b13167",
+    "poll-20261127T154218203726Z.json": "22adc0d1966e0929a859ca81903b527c272a762fb6f8140532c5b8d14492ce9e"
   },
   "native_daemon_version": "0.172.0",
   "cli_version_observed": "0.169.0",
-  "limits": "Internal binding, socket/session identifiers, machine permissions and raw histories remain outside the public repository. Source snapshots are trusted broker review artifacts, not candidate runtime tools."
+  "limits": "Internal binding, socket/session identifiers, machine permissions and raw histories remain outside the public repository. Source snapshots are trusted broker review artifacts, not candidate runtime tools.",
+  "snapshot_note": "Operational journals are immutable public snapshots captured for the linked runs. The live broker may later update reconciliation timestamps; source hashes refer to the captured version, not every future live revision."
 }

@@ -1,0 +1,25 @@
+{
+  "event": "v4-pl:7222308870:unbound",
+  "source_comment_id": 7222308870,
+  "reconciled_reviewed_sha": "ed1bbd8b36df42c8a6ec0ea1f0c44ea52fee3ed6",
+  "detector_sha": "unbound",
+  "reason": "Review body contains reviewed and tested SHAs; foreground reconciled the explicit review object without guessing.",
+  "natural_detection_run": "20261127T154006046944Z",
+  "notification_rpc": "turn/steer",
+  "model_received_at": "2026-11-27T15:40:20.703970+00:00",
+  "first_result": "Read live advice, reconciled Git and exact limited GO, retained open engineering boundaries, prepared public result with previously completed independent evidence.",
+  "publication_run": "20261127T154145101336Z",
+  "published_comment_id": 7222373829,
+  "next_run": "20261127T154218203726Z",
+  "next_pending": 0,
+  "next_processed": 0,
+  "matching_remote_replies": 1,
+  "matching_reply_ids": [
+    7222373829
+  ],
+  "owner_manual_reminder": false,
+  "existing_active_context": true,
+  "new_session_created": false,
+  "permissions_changed": false,
+  "limits": "Natural active detection/delivery; foreground Lead expedited unchanged launchd broker for publication and next-run verification. Idle, quota recovery, sleep/offline and full Runner are not verified by this event."
+}

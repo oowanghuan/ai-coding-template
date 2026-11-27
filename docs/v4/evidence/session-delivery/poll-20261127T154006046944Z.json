@@ -1,0 +1,58 @@
+{
+  "run_id": "20261127T154006046944Z",
+  "started_at": "2026-11-27T15:40:06.048521+00:00",
+  "trigger": "com.ai-coding-template.v4.project-lead",
+  "status": "waiting",
+  "mode": "read_notify_and_reviewed_reply",
+  "runner_sha256": "f3973914504c719f3f2ce2fdd567510955adc88b7dc4e7ddb6492dbf9115b18e",
+  "notification_bridge_sha256": "6b272a3663488ec38085406ceae88162f0642847f54309314c896665fea329b2",
+  "processed": 0,
+  "waiting": [
+    {
+      "key": "v4-pl:7222308870:unbound",
+      "reason": "Await Project Lead handling; candidate execution remains isolated",
+      "notification": {
+        "state": "awaiting_model_ack",
+        "delivery_state": "accepted",
+        "client_id_sha256": "b08857189de9637a5eeba86544c6f7f5437ec22189f94d9b0829ba284840ebff",
+        "reason": "native acceptance/history is not model acknowledgement"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "step": "identity_verified",
+      "at": "2026-11-27T15:40:07.310299+00:00"
+    },
+    {
+      "step": "issue_read",
+      "at": "2026-11-27T15:40:08.727644+00:00"
+    },
+    {
+      "step": "pending_selected",
+      "at": "2026-11-27T15:40:10.918721+00:00"
+    },
+    {
+      "step": "remote_head_verified",
+      "at": "2026-11-27T15:40:11.984398+00:00"
+    },
+    {
+      "step": "journals_reconciled",
+      "at": "2026-11-27T15:40:12.007860+00:00"
+    },
+    {
+      "step": "session_notification_checked",
+      "at": "2026-11-27T15:40:12.168723+00:00"
+    },
+    {
+      "step": "complete",
+      "at": "2026-11-27T15:40:12.171413+00:00"
+    }
+  ],
+  "last_successful_step": "complete",
+  "comments_read": 32,
+  "pending": 1,
+  "owner_decisions_seen": 2,
+  "remote_head": "1fbe382a2ffce858f15ba1769e3068054e589f96",
+  "finished_at": "2026-11-27T15:40:12.172723+00:00"
+}

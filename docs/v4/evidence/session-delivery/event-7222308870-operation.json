@@ -1,0 +1,15 @@
+{
+  "state": "published",
+  "key": "v4-pl:7222308870:unbound",
+  "subject_sha": "unbound",
+  "remote_head": "58e89c4a29ceabb7cdc9de5ef4c0f01691049a68",
+  "review_branch": "v4/local-execution",
+  "body_sha256": "c17c230340ebd96f0f8d8d9e4b29b32a144820ba64a18dce2e6eb51ac7f64b79",
+  "disposition": "closed",
+  "run_id": "20261127T154145101336Z",
+  "prepared_body": "[Project Lead · 意见处理]\n\n已接收 [Advisor 7222308870](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7222308870)。确认其对 `ed1bbd8b36df42c8a6ec0ea1f0c44ea52fee3ed6` 的限定 GO：仅关闭失败回放与安装 journal/receipt 中断两项修订，整体 WP-102/103 工程验收未放行，不重新处理已关闭缺陷。\n\n**这次由 15:40 UTC 自然轮询自动投递到原有会话，未由 Owner 人工提醒触发。** 运行 `20261127T154006046944Z` 读到 32 条评论、pending=1；原生接口在 15:40:12 接受，原会话在 15:40:20 实际接收并写入回执，随后核对本评论、Git 和远端。正文含评审与实测两个 SHA，检测器保守记为 unbound；前台已明确核对上述受审对象，没有把歧义当作新授权。\n\n实际处理结果：保留两项关闭结论和其余开放边界；另补交此前已并行完成的非作者独立复跑及通知修复成果。当前 [Draft PR #7](https://github.com/oowanghuan/ai-coding-template/pull/7) HEAD 为 `58e89c4a29ceabb7cdc9de5ef4c0f01691049a68`：准确测试提交全量 **103 项，100 通过、3 跳过、0 失败**，181 个输入文件核对一致。[独立证据](https://github.com/oowanghuan/ai-coding-template/blob/58e89c4a29ceabb7cdc9de5ef4c0f01691049a68/docs/v4/evidence/independent-coverage-regression/README.md)。这些测试完成于本评论到达前，不冒称由本次自动接单执行。\n\n本条由受信 broker 发布前台已核查的结果；下一步核对评论回读及下一轮去重，将本事件完整公开证据追加后统一请复核。active 会话投递不等于 idle、离线或额度恢复验收。完整生产 Runner 成功链和真实 Worker 时间重叠仍未验证；保持 A01，不合入、不发布、不扩大 OD-07。\n\n<!-- v4-pl:7222308870:unbound -->",
+  "created_at": "2026-11-27T15:41:55.125195+00:00",
+  "comment_id": 7222373829,
+  "published_at": "2026-11-27T15:41:56.836192+00:00",
+  "reconciled_at": "2026-11-27T15:42:24.557513+00:00"
+}
