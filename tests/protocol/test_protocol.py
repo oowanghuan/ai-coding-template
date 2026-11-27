@@ -224,6 +224,70 @@ class Protocol(unittest.TestCase):
         self.data['project']['revision'] += 1
         self.assertEqual(validate_transition(before, self.data, AT), [])
 
+    def test_external_effect_expansion_invalidates_signatures_at_same_sha(self):
+        self.delivered()
+        before = copy.deepcopy(self.data)
+        self.wp['external_effects'] = ['publish-synthetic-artifact']
+        self.wp['revision'] += 1
+        self.data['project']['revision'] += 1
+        self.assertEqual(self.wp['submitted_sha'], before['work_packages'][0]['submitted_sha'])
+        self.assertIn('signature-invalidation-required:WP-DEMO', validate_transition(before, self.data, AT))
+
+    def reopen_with_external_effect(self):
+        self.delivered()
+        before = copy.deepcopy(self.data)
+        self.wp.update(external_effects=['publish-synthetic-artifact'], state='in_progress',
+                       change_reason='Explicitly reauthorize and review external scope', revision=2)
+        self.data['project']['revision'] += 1
+        self.data['authorizations'][0]['external_effects'] = ['publish-synthetic-artifact']
+        self.data['authorizations'][0]['decision_ref'] = 'synthetic-expanded-scope-decision'
+        for milestone in self.wp['milestones'].values():
+            milestone['status'] = 'invalidated'
+        self.data['assignments'][0].update(state='active', id='assignment-rework', fencing_token=2)
+        self.wp['assignment_ref'] = 'assignment-rework'
+        self.data['checkpoints'][0]['assignment_ref'] = 'assignment-rework'
+        return before
+
+    def test_external_effect_rework_requires_new_signoff_before_acceptance(self):
+        original = self.reopen_with_external_effect()
+        self.assertEqual(validate_transition(original, self.data, AT), [])
+        for state in ('submitted', 'in_review'):
+            before = copy.deepcopy(self.data)
+            self.wp.update(state=state, revision=self.wp['revision'] + 1)
+            self.data['project']['revision'] += 1
+            self.data['assignments'][0]['state'] = 'released'
+            self.assertEqual(validate_transition(before, self.data, AT), [])
+        before = copy.deepcopy(self.data)
+        self.wp.update(state='accepted', revision=self.wp['revision'] + 1)
+        self.data['project']['revision'] += 1
+        for milestone in self.wp['milestones'].values():
+            milestone['status'] = 'passed'  # Simply restoring old records must fail.
+        errors = validate_transition(before, self.data, AT)
+        self.assertTrue(any(e.startswith('fresh-signoff-required:') for e in errors), errors)
+        self.wp['review_refs'].append('synthetic-new-scope-review')
+        for name, milestone in self.wp['milestones'].items():
+            milestone['evidence_refs'] = ['synthetic-new-scope-evidence-' + name]
+        self.assertEqual(validate_transition(before, self.data, AT), [])
+        self.assertEqual(self.wp['submitted_sha'], original['work_packages'][0]['submitted_sha'])
+
+    def test_revoked_signoff_cannot_be_erased_or_reset_to_pending(self):
+        original = self.reopen_with_external_effect()
+        self.wp['milestones']['review_passed']['evidence_refs'] = []
+        self.assertTrue(any(e.startswith('revoked-signature-record-lost:')
+                            for e in validate_transition(original, self.data, AT)))
+        self.wp['milestones']['review_passed']['evidence_refs'] = ['synthetic-evidence']
+        before = copy.deepcopy(self.data)
+        self.wp.update(revision=self.wp['revision'] + 1)
+        self.data['project']['revision'] += 1
+        self.wp['milestones']['review_passed']['status'] = 'pending'
+        self.assertTrue(any(e.startswith('revoked-signature-record-lost:')
+                            for e in validate_transition(before, self.data, AT)))
+
+    def test_external_scope_is_still_required_when_reopening(self):
+        original = self.reopen_with_external_effect()
+        self.data['authorizations'][0]['external_effects'] = []
+        self.assertIn('authorization-scope:WP-DEMO', validate_transition(original, self.data, AT))
+
     def test_assignment_identity_and_tokens_cannot_be_reused(self):
         before = copy.deepcopy(self.data)
         self.data['project']['revision'] += 1

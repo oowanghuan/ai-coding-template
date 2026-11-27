@@ -103,6 +103,69 @@ class Installation(unittest.TestCase):
         self.run_installer('--rollback', first)
         self.assertEqual(tree(self.target), before)
 
+    def test_committed_old_receipt_cannot_delete_later_repair(self):
+        first = self.run_installer()['transaction_id']
+        victim = self.target / '.claude/commands/ai-pm.md'
+        original = victim.read_bytes()
+        victim.unlink()  # A remains committed; B recreates the missing same-content file.
+        second = self.run_installer()['transaction_id']
+        self.assertNotEqual(first, second)
+        self.assertEqual(victim.read_bytes(), original)
+        before = tree(self.target)
+        result = self.run_installer('--rollback', first, expected=2)
+        self.assertIn('ownership', result['error'])
+        self.assertEqual(tree(self.target), before)  # No partial removal of A or B.
+        self.run_installer('--rollback', second)
+        self.assertFalse(victim.exists())
+        self.run_installer('--rollback', first)
+        self.run_installer('--rollback', first)
+        self.assertFalse((self.target / '.claude').exists())
+
+    def test_legacy_receipt_cannot_delete_new_repair_and_ambiguous_history_stops(self):
+        first = self.run_installer()['transaction_id']
+        directory = self.target / '.ai-coding-template/transactions'
+        def legacy(transaction):
+            path = directory / (transaction + '.json')
+            receipt = json.loads(path.read_text())
+            receipt['version'] = 1
+            receipt.pop('predecessors', None)
+            path.write_text(json.dumps(receipt))
+        legacy(first)
+        victim = self.target / '.claude/commands/ai-pm.md'
+        victim.unlink()
+        second = self.run_installer()['transaction_id']
+        before = tree(self.target)
+        self.run_installer('--rollback', first, expected=2)
+        self.assertEqual(tree(self.target), before)
+        legacy(second)  # Two old receipts have no ordering proof: neither may guess.
+        before = tree(self.target)
+        self.run_installer('--rollback', second, expected=2)
+        self.assertEqual(tree(self.target), before)
+
+    def test_unknown_later_write_blocks_old_receipt(self):
+        first = self.run_installer()['transaction_id']
+        victim = self.target / '.claude/commands/ai-pm.md'
+        victim.unlink()
+        second = self.run_installer()['transaction_id']
+        path = self.target / ('.ai-coding-template/transactions/' + second + '.json')
+        receipt = json.loads(path.read_text())
+        receipt.update(state='needs_recovery', created=[])
+        path.write_text(json.dumps(receipt))  # B wrote the file; its result is unknown.
+        before = tree(self.target)
+        self.run_installer('--rollback', first, expected=2)
+        self.assertEqual(tree(self.target), before)
+
+    def test_single_legacy_receipt_can_still_rollback(self):
+        first = self.run_installer()['transaction_id']
+        path = self.target / ('.ai-coding-template/transactions/' + first + '.json')
+        receipt = json.loads(path.read_text())
+        receipt['version'] = 1
+        receipt.pop('predecessors', None)
+        path.write_text(json.dumps(receipt))
+        self.run_installer('--rollback', first)
+        self.run_installer('--rollback', first)
+        self.assertFalse((self.target / '.claude').exists())
+
     def test_unknown_interrupted_write_preserved(self):
         transaction = self.run_installer()['transaction_id']
         path = self.target / ('.ai-coding-template/transactions/' + transaction + '.json')

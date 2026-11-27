@@ -107,16 +107,41 @@ def atomic_json(path, data):
     os.replace(temp, path)
 
 
-def rollback(target, receipt, allowed):
+def read_receipts(directory):
+    history = []
+    for path in sorted(directory.glob('*.json')):
+        if path.is_symlink():
+            raise ValueError('Symlink receipt')
+        receipt = json.loads(path.read_text())
+        if receipt.get('transaction_id') != path.stem or receipt.get('version') not in (1, 2):
+            raise ValueError('Invalid receipt identity/version: ' + path.stem)
+        history.append(receipt)
+    return history
+
+
+def claimed_paths(receipt):
+    # Planned writes are included: a crash can leave bytes before a created record.
+    return {r['path'] for r in receipt.get('planned', []) + receipt['created']}
+
+
+def rollback(target, receipt, allowed, history):
     if receipt['state'] == 'rolled_back':
         return  # A historical receipt must not delete a later reinstallation.
     rows = receipt['created']
+    # v2 records which overlapping transactions existed before this installation.
+    # A later or unordered claimant prevents deletion even when content is identical.
+    # v1 has no ordering proof, so overlapping legacy receipts fail closed.
+    predecessors = set(receipt.get('predecessors', []))
+    competitors = [r for r in history if r['transaction_id'] != receipt['transaction_id']
+                   and r['transaction_id'] not in predecessors]
     if len({r['path'] for r in rows}) != len(rows):
         raise ValueError('Duplicate receipt path')
     for r in rows:
         if r['path'] not in allowed:
             raise ValueError('Receipt contains a non-manifest path')
         p = checked_path(target, r['path'])
+        if p.exists() and any(r['path'] in claimed_paths(other) for other in competitors):
+            raise ValueError('Rollback ownership superseded or ambiguous: ' + r['path'])
         if p.exists() and (not p.is_file() or digest(p.read_bytes()) != r['sha256']):
             raise ValueError('Rollback preserves edited file: ' + r['path'])
     recorded = {r['path'] for r in rows}
@@ -129,6 +154,8 @@ def rollback(target, receipt, allowed):
             p.unlink()
     # Only directories actually created by this transaction, and only if empty.
     for name in reversed(receipt.get('created_dirs', [])):
+        if any(name in other.get('created_dirs', []) for other in competitors):
+            continue
         p = checked_path(target, name)
         try:
             p.rmdir()
@@ -175,20 +202,19 @@ def main():
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         receipts = checked_path(target, '.ai-coding-template/transactions')
         receipts.mkdir(exist_ok=True)
+        history = read_receipts(receipts)
         if args.rollback:
             if len(args.rollback) != 32 or any(c not in '0123456789abcdef' for c in args.rollback):
                 raise ValueError('Invalid transaction ID')
             path = checked_path(target, '.ai-coding-template/transactions/' + args.rollback + '.json')
             receipt = json.loads(path.read_text())
-            rollback(target, receipt, {r['target'] for r in manifest['tools'] + manifest['resources']})
+            rollback(target, receipt, {r['target'] for r in manifest['tools'] + manifest['resources']}, history)
             atomic_json(path, receipt)
             print(json.dumps({'transaction_id': args.rollback, 'state': receipt['state']}))
             return 0
-        for path in receipts.glob('*.json'):
-            if path.is_symlink():
-                raise ValueError('Symlink receipt')
-            if json.loads(path.read_text())['state'] not in ('committed', 'rolled_back'):
-                raise ValueError('Incomplete transaction; inspect and rollback before installing again: ' + path.stem)
+        for previous in history:
+            if previous['state'] not in ('committed', 'rolled_back'):
+                raise ValueError('Incomplete transaction; inspect and rollback before installing again: ' + previous['transaction_id'])
         proposed = plan(target, rows)  # Recheck under the cooperative single-host lock.
         if any(r['action'] == 'conflict' for r in proposed):
             raise ValueError('Target changed while waiting for installation lock')
@@ -201,7 +227,9 @@ def main():
         if any(digest(data[r['path']]) != r['sha256'] for r in pending):
             raise ValueError('Source changed during planning')
         transaction = uuid.uuid4().hex
-        receipt = {'version': 1, 'transaction_id': transaction, 'state': 'preparing',
+        pending_paths = {r['path'] for r in pending}
+        receipt = {'version': 2, 'transaction_id': transaction, 'state': 'preparing',
+                   'predecessors': [r['transaction_id'] for r in history if claimed_paths(r) & pending_paths],
                    'manifest_sha256': digest(MANIFEST.read_bytes()), 'planned': pending,
                    'created': [], 'created_dirs': []}
         receipt_path = receipts / (transaction + '.json')

@@ -14,6 +14,13 @@ MINIMUM = {
     'release': {'review_passed', 'engineering_accepted', 'deployed', 'health_checked', 'rollback_verified'},
     'business-validation': {'business_validated'},
 }
+SIGNED_FIELDS = (
+    'submitted_sha', 'baseline_sha', 'spec_refs', 'inputs', 'positive_criteria', 'negative_criteria',
+    'allowed_paths', 'forbidden_paths', 'external_effects', 'objective', 'deliverables',
+    'risk', 'test_strategy', 'rollback', 'required_milestones', 'accountable_role',
+    'implementer', 'reviewer', 'acceptor', 'merger', 'authorization_ref',
+    'goal_refs', 'requirement_refs', 'dependencies',
+)
 EDGES = {
     'planned': {'ready', 'blocked', 'cancelled'},
     'ready': {'in_progress', 'blocked', 'paused', 'cancelled'},
@@ -304,13 +311,33 @@ def validate_transition(before, after, at):
             errors.append('acceptance-policy-weakened:' + key)
         if ['low', 'medium', 'high'].index(b['risk']) < ['low', 'medium', 'high'].index(a['risk']):
             errors.append('risk-policy-weakened:' + key)
-        material = any(a[k] != b[k] for k in ('submitted_sha', 'spec_refs', 'positive_criteria', 'negative_criteria',
-                                            'allowed_paths', 'forbidden_paths', 'objective', 'deliverables'))
+        material = any(a[k] != b[k] for k in SIGNED_FIELDS)
         signed = [m for m, value in a['milestones'].items() if value['status'] == 'passed']
+        if any(m['status'] in ('passed', 'invalidated') for m in a['milestones'].values()):
+            if not set(a['review_refs']) <= set(b['review_refs']):
+                errors.append('review-history-lost:' + key)
         if material and signed:
             if b['state'] != 'in_progress' or not b['change_reason'] or any(
                     b['milestones'].get(m, {}).get('status') != 'invalidated' for m in signed):
                 errors.append('signature-invalidation-required:' + key)
+            # Keep revoked signoff identity/evidence until replacement is explicitly recorded.
+            if any(any(b['milestones'].get(m, {}).get(field) != a['milestones'][m][field]
+                       for field in ('subject_sha', 'signer', 'evidence_refs')) for m in signed):
+                errors.append('revoked-signature-record-lost:' + key)
+        for name, previous in a['milestones'].items():
+            current = b['milestones'].get(name, {})
+            if previous['status'] == 'passed' and current.get('status') != 'passed':
+                if current.get('status') != 'invalidated' or any(
+                        current.get(field) != previous[field] for field in ('subject_sha', 'signer', 'evidence_refs')):
+                    errors.append('revoked-signature-record-lost:' + key + ':' + name)
+            if previous['status'] == 'invalidated':
+                if current.get('status') == 'passed':
+                    if (set(current['evidence_refs']) & set(previous['evidence_refs']) or
+                            not set(b['review_refs']) - set(a['review_refs'])):
+                        errors.append('fresh-signoff-required:' + key + ':' + name)
+                elif current.get('status') != 'invalidated' or any(
+                        current.get(field) != previous[field] for field in ('subject_sha', 'signer', 'evidence_refs')):
+                    errors.append('revoked-signature-record-lost:' + key + ':' + name)
         if b['state'] == 'in_progress' and a['state'] in ('submitted', 'in_review', 'accepted', 'closed') and not b['change_reason']:
             errors.append('missing-rework-reason:' + key)
     return sorted(set(errors))
