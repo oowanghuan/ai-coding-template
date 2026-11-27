@@ -1,0 +1,27 @@
+[
+  {
+    "path": "legacy/v3.3.0/scripts/init-claude-tools.sh",
+    "baseline_path": "scripts/init-claude-tools.sh",
+    "sha256": "485efae278a232195d5040aad0d1af0f5eef1b9b2585930ab07ba875ba786247"
+  },
+  {
+    "path": "legacy/v3.3.0/CC_COLLABORATION/05_tools/slash-commands/new-feature.md",
+    "baseline_path": "CC_COLLABORATION/05_tools/slash-commands/new-feature.md",
+    "sha256": "827fc322a1dc8c302c5533916f2e3e2056447e8135cb5b467e60ae617b20c4d2"
+  },
+  {
+    "path": "legacy/v3.3.0/CC_COLLABORATION/05_tools/slash-commands/check-gate.md",
+    "baseline_path": "CC_COLLABORATION/05_tools/slash-commands/check-gate.md",
+    "sha256": "d9e4d4a5b58585bf75e8965f2bce5c9ea8e1b9252d6eedb20c245bef1e9f1927"
+  },
+  {
+    "path": "legacy/v3.3.0/CC_COLLABORATION/05_tools/slash-commands/doc-design-validation.md",
+    "baseline_path": "CC_COLLABORATION/05_tools/slash-commands/doc-design-validation.md",
+    "sha256": "c9fc9b9c949e361fc4bcbf668e0e0bf5452464485c0bca2caf986dfbfea49930"
+  },
+  {
+    "path": "legacy/v3.3.0/CC_COLLABORATION/05_tools/slash-commands/expert-review.md",
+    "baseline_path": "CC_COLLABORATION/05_tools/slash-commands/expert-review.md",
+    "sha256": "dadf68b1c3843b079fd9bad2923c3110dafd99a9bedc5d85663a93380d8f0d3e"
+  }
+]
