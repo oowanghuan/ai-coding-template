@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<PROBE_ACTUAL_COLLECTOR_POLICY>/outer-hardened.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "-c",
+    "from framework.quality.collector import policy; from pathlib import Path; Path('<PROBE_ACTUAL_COLLECTOR_POLICY>/actual-policy.sb').write_text(policy('<PROBE_ACTUAL_COLLECTOR_POLICY>/trusted/subject','<PROBE_ACTUAL_COLLECTOR_POLICY>/candidate/case','<PROBE_ACTUAL_COLLECTOR_POLICY>/candidate'))"
+  ],
+  "environment": {
+    "HOME": "<PROBE_ACTUAL_COLLECTOR_POLICY>",
+    "TMPDIR": "<PROBE_ACTUAL_COLLECTOR_POLICY>",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONPATH": "<REPOSITORY>",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "collector_sha256": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+  "scope": "Collector imported only within hardened A01 for policy generation; no host candidate import/execution"
+}

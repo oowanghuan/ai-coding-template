@@ -1,0 +1,33 @@
+test_baseline_known_vs_new_failures_not_a_waiver (test_governance.GovernanceLogic) ... ok
+test_closure_requires_exact_passed_gate (test_governance.GovernanceLogic) ... ok
+test_contract_change_then_restore_does_not_resurrect (test_governance.GovernanceLogic) ... ok
+test_empty_review_or_fake_actor_schema (test_governance.GovernanceLogic) ... ok
+test_exact_mechanical_delta_requires_candidate_gate_and_no_other_change (test_governance.GovernanceLogic) ... ok
+test_expired_deviation (test_governance.GovernanceLogic) ... ok
+test_high_risk_author_cannot_review_despite_model_label (test_governance.GovernanceLogic) ... ok
+test_integer_json_type_is_strict (test_governance.GovernanceLogic) ... ok
+test_missing_impact_relation (test_governance.GovernanceLogic) ... ok
+test_plan_does_not_close_and_failed_gate_stays_failed (test_governance.GovernanceLogic) ... ok
+test_required_contract_binding (test_governance.GovernanceLogic) ... ok
+test_review_before_change_cannot_be_signed_after_restore (test_governance.GovernanceLogic) ... ok
+test_revoke_survives_content_restore_and_old_history_fails_tip (test_governance.GovernanceLogic) ... ok
+test_same_author_group_is_not_independent (test_governance.GovernanceLogic) ... ok
+test_same_tree_needs_prepinned_policy (test_governance.GovernanceLogic) ... ok
+test_same_tree_new_commit_exact_binding (test_governance.GovernanceLogic) ... ok
+test_schema_valid_fixture_and_positive_synthetic_decision (test_governance.GovernanceLogic) ... ok
+test_target_base_recheck (test_governance.GovernanceLogic) ... ok
+test_transitive_impact (test_governance.GovernanceLogic) ... ok
+test_wrong_role_source_rejected (test_governance.GovernanceLogic) ... ok
+test_wrong_sha_and_tree (test_governance.GovernanceLogic) ... ok
+test_cli_inspect_export_impact_proposal_and_no_authority_write (test_governance.ProtectedInputs) ... ok
+test_duplicate_json_key (test_governance.ProtectedInputs) ... ok
+test_external_passed_json_not_consumed (test_governance.ProtectedInputs) ... ok
+test_real_quality_verifier_is_called_fail_closed_missing_trust (test_governance.ProtectedInputs) ... ok
+test_symlink_ancestor_and_hardlink_rejected (test_governance.ProtectedInputs) ... ok
+test_valid_load_and_forged_source_rejected (test_governance.ProtectedInputs) ... ok
+test_wrong_trust_pin (test_governance.ProtectedInputs) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 1.971s
+
+OK

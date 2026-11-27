@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "/public/fixture/history/quality-real-stage/coordinator.py",
+    "prepare",
+    "--reviewed-collector",
+    "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-11-27T18:42:47.154713+00:00",
+  "finished_at": "2026-11-27T18:42:47.425125+00:00",
+  "collector_sha256": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+  "coordinator_sha256": "8e6050e7eb4fe069b8d1601ec46ebde0a990aecbf86fc1bd2181af328d85be2e"
+}

@@ -1,0 +1,1 @@
+{"format":"governance-record/1","issued_at":"2026-11-27T22:00:00Z","kind":"contract","payload":{"depends_on":["API"],"id":"TESTS","path":"specs/tests.md","sha256":"8888888888888888888888888888888888888888888888888888888888888888","version":"1"}}

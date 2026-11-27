@@ -1,0 +1,87 @@
+"""Trusted stdlib-only interrupt experiment; new T/C, owned collector PID only."""
+import argparse,hashlib,json,os,shutil,signal,subprocess,tempfile,time
+from pathlib import Path
+STAGE=Path(__file__).resolve().parent
+REPO=Path('<REPOSITORY>')
+DEPS=Path('<PYTHON_DEPS>')
+PREVIOUS=Path('<QUALITY_EXPERIMENT>/T/success')
+COLLECTOR='f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f'
+def H(data):return hashlib.sha256(data).hexdigest()
+def canonical(value):return json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()
+def save(path,value):path.write_bytes(canonical(value)+b'\n')
+def hashes(root):return {str(p.relative_to(root)):H(p.read_bytes()) for p in root.rglob('*') if p.is_file()}
+def env(home):return {'HOME':str(home),'TMPDIR':str(home),'PATH':'/usr/bin:/bin','PYTHONDONTWRITEBYTECODE':'1','PYTHONNOUSERSITE':'1'}
+def prepare():
+ if (STAGE/'prepared.json').exists():raise ValueError('single-use preparation')
+ root=Path(tempfile.mkdtemp(prefix='v4-quality-interrupt-',dir='/private/tmp'));T=root/'T';C=root/'C';G=root/'gate-C'
+ T.mkdir();C.mkdir();G.mkdir()
+ source=REPO/'framework/quality/collector.py';assert H(source.read_bytes())==COLLECTOR
+ shutil.copyfile(source,T/'collector.py');shutil.copytree(PREVIOUS/'subject',T/'subject')
+ plan=json.loads((PREVIOUS/'plan.json').read_text())
+ plan.update(run_id='interrupt',trusted_root=str(T),scratch_root=str(C),subject_root=str(T/'subject'))
+ def case(identity,mode,text='',timeout=5):
+  request={'mode':mode}
+  if mode=='echo':request['text']=text
+  return {'id':identity,'required':True,'input':canonical(request).decode(),'expected_exit':0,'expected_stdout_sha256':H(b'' if mode!='echo' else (text+'\n').encode()),'timeout_seconds':timeout,'skip_reason':None}
+ plan['tests']=[case('blocked','timeout',timeout=10),case('must-not-start','echo','after-interrupt')]
+ save(T/'plan.json',plan)
+ trust={'format':'quality-trust/1','runs':{'interrupt':{'root':str(T),'plan_sha256':H((T/'plan.json').read_bytes()),'collector_sha256':COLLECTOR,'wp_id':plan['wp_id'],'wp_revision':plan['wp_revision'],'subject':plan['subject']}}}
+ save(T/'trust.json',trust)
+ reads=['/System','/usr','/bin','/sbin','/Library/Developer','/Library/Apple','/private/var/db/dyld','/private/preboot/Cryptexes',str(REPO),str(DEPS),str(T),str(G)]
+ profile='\n'.join(['(version 1)','(deny default)','(allow process*)','(deny process-info* (target others))','(allow file-read-metadata)','(allow file-map-executable)','(allow mach-lookup (global-name "com.apple.system.logger"))','(allow file-read* (literal "/") (literal "/dev/null") (literal "/dev/urandom") '+' '.join('(subpath '+json.dumps(p)+')' for p in reads)+')','(allow file-write* (literal "/dev/null") (subpath '+json.dumps(str(G))+'))','(deny file-write-unlink (literal '+json.dumps(str(G))+'))'])+'\n'
+ (T/'gate.sb').write_text(profile)
+ inputs={str(p):H(p.read_bytes()) for p in [T/'collector.py',T/'plan.json',T/'trust.json',T/'gate.sb',REPO/'framework/quality/gate.py',REPO/'schemas/evidence.schema.json',REPO/'scripts/v4_quality.py']}
+ info={'root':str(root),'T':str(T),'C':str(C),'G':str(G),'inputs':inputs,'coordinator_sha256':H(Path(__file__).read_bytes())}
+ save(STAGE/'prepared.json',info);print(json.dumps(info))
+def execute(approved):
+ assert H(Path(__file__).read_bytes())==approved
+ info=json.loads((STAGE/'prepared.json').read_text());assert info['coordinator_sha256']==approved
+ assert all(H(Path(p).read_bytes())==h for p,h in info['inputs'].items())
+ with (STAGE/'execution-intent.json').open('x') as f:json.dump({'coordinator_sha256':approved},f)
+ T,C,G=(Path(info[k]) for k in ['T','C','G'])
+ command=['/usr/bin/python3','-I','-B','-S',str(T/'collector.py'),'--plan',str(T/'plan.json'),'--plan-sha256',info['inputs'][str(T/'plan.json')]]
+ process=subprocess.Popen(command,cwd=T,env=env(T),stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True)
+ observed=[]
+ try:
+  deadline=time.monotonic()+4
+  while time.monotonic()<deadline:
+   assert process.poll() is None,'collector exited before interrupt'
+   if (T/'policies/blocked.sb').exists():
+    # Read only children of this exact owned collector; no process argv/env access.
+    found=subprocess.run(['/usr/bin/pgrep','-P',str(process.pid)],capture_output=True,env=env(STAGE),timeout=2)
+    observed=[int(x) for x in found.stdout.split()]
+    if observed:break
+   time.sleep(.02)
+  assert len(observed)==1,'no single live case observed'
+  time.sleep(.15);assert process.poll() is None
+  process.send_signal(signal.SIGINT)
+  out,err=process.communicate(timeout=8)
+  (STAGE/'collector.stdout.log').write_bytes(out);(STAGE/'collector.stderr.log').write_bytes(err)
+  evidence=json.loads((T/'evidence.json').read_text())
+  assert process.returncode==2 and evidence['state']=='unknown'
+  assert len(evidence['cases'])==1 and evidence['cases'][0]['id']=='blocked'
+  row=evidence['cases'][0];assert row['pid']==observed[0] and type(row['exit_code']) is int
+  assert row['collection_error'].startswith('KeyboardInterrupt')
+  assert not (C/'must-not-start').exists() and not (T/'policies/must-not-start.sb').exists()
+  assert not (T/'logs/must-not-start.stdout').exists() and (T/'intent.json').is_file()
+  gatecommand=['/usr/bin/sandbox-exec','-f',str(T/'gate.sb'),'/usr/bin/python3','-B','-S',str(REPO/'scripts/v4_quality.py'),'verify','--trust',str(T/'trust.json'),'--trust-sha256',info['inputs'][str(T/'trust.json')],'--run-id','interrupt']
+  gateenv=env(G);gateenv['PYTHONPATH']=str(REPO)+':'+str(DEPS)
+  gate=subprocess.run(gatecommand,cwd=G,env=gateenv,capture_output=True,timeout=20)
+  (STAGE/'gate.stdout.log').write_bytes(gate.stdout);(STAGE/'gate.stderr.log').write_bytes(gate.stderr)
+  decision=json.loads(gate.stdout);assert gate.returncode==2 and decision['status']=='unverifiable'
+  before=hashes(T);replay=subprocess.run(command,cwd=T,env=env(T),capture_output=True,timeout=10)
+  (STAGE/'replay.stdout.log').write_bytes(replay.stdout);(STAGE/'replay.stderr.log').write_bytes(replay.stderr)
+  assert replay.returncode==2 and hashes(T)==before
+  assert all(H(Path(p).read_bytes())==h for p,h in info['inputs'].items())
+  save(STAGE/'result.json',{'coordinator_sha256':approved,'collector_sha256':COLLECTOR,'collector_command':command,'collector_environment':env(T),'signal':'SIGINT to owned live collector PID only','collector_pid':process.pid,'observed_child_pids':observed,'collector_exit':process.returncode,'evidence':evidence,'second_case_absent':True,'gate_command':gatecommand,'gate_environment':gateenv,'gate_exit':gate.returncode,'gate':decision,'replay_exit':replay.returncode,'replay_bytes_unchanged':True,'inputs_unchanged':True})
+  print(json.dumps({'root':str(T.parent),'collector_exit':process.returncode,'state':evidence['state'],'case_exit':row['exit_code'],'second_case_absent':True,'gate':decision['status'],'replay_unchanged':True}))
+ finally:
+  if process.poll() is None:
+   # SIGINT only to this owned collector; no stale PID and no automatic relaunch.
+   process.send_signal(signal.SIGINT)
+   try:process.wait(timeout=8)
+   except subprocess.TimeoutExpired:save(STAGE/'stop-unknown.json',{'collector_pid':process.pid,'reason':'owned collector did not confirm exit; no retry'})
+if __name__=='__main__':
+ parser=argparse.ArgumentParser();parser.add_argument('action',choices=['prepare','execute']);parser.add_argument('--approved-coordinator');args=parser.parse_args()
+ if args.action=='prepare':prepare()
+ else:execute(args.approved_coordinator)

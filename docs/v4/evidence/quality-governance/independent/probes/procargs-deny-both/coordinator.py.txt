@@ -1,0 +1,45 @@
+import hashlib,json,os,signal,subprocess,time
+from pathlib import Path
+base=Path(__file__).resolve().parent;scratch=base/'scratch';scratch.mkdir()
+profile=Path('<PROBE_FORK_FEASIBILITY>/policy.sb').read_text().replace('<PROBE_FORK_FEASIBILITY>/scratch',str(scratch))
+profile=profile.replace('(allow sysctl-read)\n','')
+profile+='\n' + '(deny sysctl-read)\n(deny process-info*)' + '\n'
+(base/'policy.sb').write_text(profile)
+canary_env={'PATH':'/usr/bin:/bin','HOME':str(base),'TMPDIR':str(base),'V4_SYNTHETIC_CANARY':'public-harmless-procargs-marker'}
+canary=subprocess.Popen(['/usr/bin/python3','-I','-B','-S','-c','import time; time.sleep(15)'],env=canary_env,cwd=base,start_new_session=True)
+probe="""import ctypes,json,sys,os,subprocess
+pid=int(sys.argv[1]);lib=ctypes.CDLL(None,use_errno=True)
+lib.sysctl.argtypes=[ctypes.POINTER(ctypes.c_int),ctypes.c_uint,ctypes.c_void_p,ctypes.POINTER(ctypes.c_size_t),ctypes.c_void_p,ctypes.c_size_t]
+lib.sysctl.restype=ctypes.c_int
+mib=(ctypes.c_int*3)(1,49,pid);buf=ctypes.create_string_buffer(262144);size=ctypes.c_size_t(len(buf))
+rc=lib.sysctl(mib,3,buf,ctypes.byref(size),None,0)
+record={'target':'owned synthetic canary only','return_code':rc,'errno':ctypes.get_errno(),'returned_bytes':size.value if rc==0 else 0,'synthetic_marker_visible':b'public-harmless-procargs-marker' in buf.raw if rc==0 else False}
+record['python_started']=True;record['stdio_input']=sys.stdin.read()
+try:
+ child=os.fork()
+except PermissionError as e:record['fork_denied_errno']=e.errno
+else:
+ if child==0:os._exit(0)
+ os.waitpid(child,0);record['fork_denied_errno']=None
+try:
+ process=subprocess.run([sys.executable,'-I','-B','-S','-c','print(1)'],capture_output=True,timeout=3)
+ record['subprocess_denied_errno']=None
+except PermissionError as e:record['subprocess_denied_errno']=e.errno
+record['session_leader']=os.getpid()==os.getsid(0)==os.getpgrp()
+try:os.setsid();record['setsid_denied_errno']=None
+except PermissionError as e:record['setsid_denied_errno']=e.errno
+print(json.dumps(record))
+"""
+command=['/usr/bin/sandbox-exec','-f',str(base/'policy.sb'),'/usr/bin/python3','-I','-B','-S','-c',probe,str(canary.pid)]
+env={'HOME':str(scratch),'TMPDIR':str(scratch),'PATH':'/usr/bin:/bin'}
+try:
+ time.sleep(0.15)
+ assert canary.poll() is None
+ p=subprocess.run(command,env=env,cwd=scratch,capture_output=True,input=b'fixed stdio smoke',timeout=10,start_new_session=True)
+ (base/'stdout.log').write_bytes(p.stdout);(base/'stderr.log').write_bytes(p.stderr)
+ observed=json.loads(p.stdout) if p.returncode==0 else None
+ result={'scope':'Fixed system probe targeting only owned synthetic process; no real credentials or unrelated PID accessed','command':command,'environment':env,'canary_command':['/usr/bin/python3','-I','-B','-S','-c','import time; time.sleep(15)'],'canary_environment':canary_env,'canary_pid':canary.pid,'exit_code':p.returncode,'policy_sha256':hashlib.sha256(profile.encode()).hexdigest(),'observed':observed}
+ (base/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'evidence':str(base),'exit_code':p.returncode,'observed':observed,'stderr':p.stderr.decode()}))
+finally:
+ if canary.poll() is None:os.killpg(canary.pid,signal.SIGTERM)
+ canary.wait(timeout=3)

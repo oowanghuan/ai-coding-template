@@ -1,0 +1,166 @@
+"""Operator-reviewed finite fixture coordinator. Never imports candidate modules on host."""
+import argparse,datetime,hashlib,json,os,shutil,subprocess,sys,tempfile
+from pathlib import Path
+REPO=Path('<FRAMEWORK_ROOT>')
+DEPS=Path('<READONLY_DEPS>')
+STAGE=Path(__file__).resolve().parent
+PYTHON='/usr/bin/python3'
+AT='2026-11-27T23:00:00Z'
+SOURCE='''import json,sys
+from pathlib import Path
+request=json.loads(sys.stdin.read())
+data=json.loads(Path(__file__).with_name('data.json').read_text())
+value=data[request['key']]
+print(value)
+if value=='fail':sys.exit(1)
+'''
+def canonical(v):return json.dumps(v,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
+def digest(b):return hashlib.sha256(b).hexdigest()
+def sha(p):return digest(Path(p).read_bytes())
+def save(p,v):Path(p).write_bytes(canonical(v)+b'\n')
+def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def pin(p,expected):
+ if sha(p)!=expected:raise ValueError('approved input hash mismatch: '+str(p))
+def env(home,tmp):return {'HOME':str(home),'TMPDIR':str(tmp),'PATH':'/usr/bin:/bin:/usr/sbin:/sbin','PYTHONNOUSERSITE':'1','PYTHONDONTWRITEBYTECODE':'1'}
+def invoke(argv,cwd,environment,timeout=45):return subprocess.run(argv,cwd=cwd,env=environment,capture_output=True,timeout=timeout)
+def git(args,cwd,environment):
+ r=invoke(['/usr/bin/git','-c','core.hooksPath=/dev/null','-c','commit.gpgsign=false']+args,cwd,environment)
+ if r.returncode:raise RuntimeError(r.stderr.decode())
+ return r.stdout
+
+def policy(t,c):
+ q=lambda p:json.dumps(str(p))
+ reads=['/System','/usr','/bin','/sbin','/Library/Developer','/Library/Apple','/private/var/db/dyld','/private/preboot/Cryptexes',REPO,DEPS,t,c]
+ return '\n'.join(['(version 1)','(deny default)','(allow process*)','(deny process-info* (target others))',
+ '(allow file-read-metadata)','(allow file-map-executable)',
+ '(allow mach-lookup (global-name "com.apple.system.logger"))',
+ '(allow file-read* (literal "/") (literal "/dev/null") (literal "/dev/urandom") '+' '.join('(subpath '+q(p)+')' for p in reads)+')',
+ '(allow file-write* (literal "/dev/null") (subpath '+q(c)+'))',
+ '(deny file-write-unlink (literal '+q(c)+'))',
+ '(deny mach-lookup (global-name "com.apple.securityd") (global-name "com.apple.security.agent"))',
+ '(allow signal (target children))'])+'\n'
+
+def prepare(collector_hash):
+ pin(REPO/'framework/quality/collector.py',collector_hash)
+ if (STAGE/'prepared.json').exists():raise ValueError('single-use prepare already exists')
+ root=Path(tempfile.mkdtemp(prefix='v4-governance-real-',dir='/private/tmp')).resolve()
+ t=root/'T';c=root/'C';t.mkdir();c.mkdir();(t/'governance').mkdir();(t/'outer.sb').write_text(policy(t,c))
+ version=invoke([PYTHON,'--version'],root,env(root,root)).stdout.decode().strip().removeprefix('Python ')
+ environment=dict(platform='darwin',python=PYTHON,python_version=version,sandbox='macos-seatbelt')
+ specs=[('success',{'known':'ok','new':'ok'},'Initial guide\n'),('mechanical',{'known':'ok','new':'ok'},'Initial guide\n\n'),
+        ('baseline',{'known':'fail','new':'ok'},'Initial guide\n'),('current',{'known':'fail','new':'fail'},'Initial guide\n')]
+ runs={};inputs={}
+ for ident,data,guide in specs:
+  qt=t/('q-'+ident);qc=c/('q-'+ident);qt.mkdir();qc.mkdir();source=qt/'subject';source.mkdir()
+  files={'check.py':SOURCE.encode(),'data.json':canonical(data)+b'\n','GUIDE.md':guide.encode()}
+  fixture=root/('git-'+ident);fixture.mkdir()
+  for name,raw in files.items():(source/name).write_bytes(raw);(fixture/name).write_bytes(raw)
+  ge=env(fixture,fixture);ge.update(GIT_CONFIG_NOSYSTEM='1',GIT_CONFIG_GLOBAL='/dev/null',GIT_AUTHOR_NAME='Synthetic Governance Fixture',GIT_AUTHOR_EMAIL='fixture@example.invalid',GIT_COMMITTER_NAME='Synthetic Governance Fixture',GIT_COMMITTER_EMAIL='fixture@example.invalid',GIT_AUTHOR_DATE='2026-11-27T00:00:00+0000',GIT_COMMITTER_DATE='2026-11-27T00:00:00+0000')
+  git(['init','-q'],fixture,ge);git(['add','--']+list(files),fixture,ge);git(['commit','-q','-m',ident],fixture,ge)
+  manifest={name:dict(sha256=digest(raw),mode='100644') for name,raw in files.items()}
+  subject=dict(commit=git(['rev-parse','HEAD'],fixture,ge).decode().strip(),tree=git(['rev-parse','HEAD^{tree}'],fixture,ge).decode().strip(),manifest_sha256=digest(canonical(manifest)))
+  body=git(['cat-file','commit','HEAD'],fixture,ge).decode()
+  tests=[dict(id=key,required=True,input=canonical({'key':key}).decode(),expected_exit=0,expected_stdout_sha256=digest(b'ok\n'),timeout_seconds=5,skip_reason=None) for key in ('known','new')]
+  plan=dict(format='quality-plan/1',run_id=ident,wp_id='WP-203',wp_revision=1,kind='code',trusted_root=str(qt),scratch_root=str(qc),subject_root=str(source),entrypoint='check.py',subject=subject,commit_object=body,manifest=manifest,collector_sha256=collector_hash,environment=environment,tests=tests)
+  shutil.copyfile(REPO/'framework/quality/collector.py',qt/'collector.py');save(qt/'plan.json',plan)
+  runs[ident]=dict(root=str(qt),scratch=str(qc),plan_sha256=sha(qt/'plan.json'),collector_sha256=collector_hash,wp_id='WP-203',wp_revision=1,subject=subject)
+  for path in qt.rglob('*'):
+   if path.is_file():inputs[str(path)]=sha(path)
+ trust={'format':'quality-trust/1','runs':{key:{k:v for k,v in run.items() if k!='scratch'} for key,run in runs.items()}}
+ save(t/'quality-trust.json',trust)
+ for path in [t/'quality-trust.json',t/'outer.sb',*REPO.joinpath('framework/governance').glob('*.py'),REPO/'scripts/v4_governance.py',REPO/'schemas/governance.schema.json',REPO/'framework/quality/gate.py',REPO/'schemas/evidence.schema.json',REPO/'scripts/v4_quality.py']:
+  inputs[str(path)]=sha(path)
+ prepared=dict(root=str(root),trusted=str(t),candidate=str(c),runs=runs,inputs=inputs,collector_sha256=collector_hash,coordinator_sha256=sha(__file__),quality_trust_sha256=sha(t/'quality-trust.json'),prepared_at=utc())
+ save(STAGE/'prepared.json',prepared);print(json.dumps({'prepared':str(STAGE/'prepared.json'),'root':str(root)}))
+
+class Experiment:
+ def __init__(self,info):
+  self.info=info;self.t=Path(info['trusted']);self.c=Path(info['candidate']);self.results=[];self.counter=0
+  self.environment=env(self.c,self.c);self.environment.update(PYTHONPATH=str(REPO)+':'+str(DEPS),V4_OUTER_SEATBELT='1')
+ def command(self,label,args,expected):
+  self.counter+=1;argv=['/usr/bin/sandbox-exec','-f',str(self.t/'outer.sb'),PYTHON,'-B','-S']+args
+  before=utc();r=invoke(argv,self.c,self.environment)
+  prefix=STAGE/('%02d-'%self.counter+label);prefix.with_suffix('.stdout.log').write_bytes(r.stdout);prefix.with_suffix('.stderr.log').write_bytes(r.stderr)
+  try:decision=json.loads(r.stdout)
+  except Exception:decision=None
+  record=dict(label=label,argv=argv,environment=self.environment,started_at=before,finished_at=utc(),exit_code=r.returncode,decision=decision,expected_status=expected,stdout_sha256=digest(r.stdout),stderr_sha256=digest(r.stderr))
+  record['passed']=decision is not None and decision.get('status')==expected and r.returncode==({'passed':0,'failed':1,'unverifiable':3,'effective':0,'rejected':2}[expected])
+  save(prefix.with_suffix('.json'),record);self.results.append(record)
+  if not record['passed']:raise RuntimeError('unexpected CLI result: '+label+' '+str(record))
+  return decision
+ def quality(self,ident):
+  return self.command('quality-'+ident,[str(REPO/'scripts/v4_quality.py'),'verify','--trust',str(self.t/'quality-trust.json'),'--trust-sha256',self.info['quality_trust_sha256'],'--run-id',ident], 'passed' if ident in ('success','mechanical') else 'failed')
+ def verify(self,label,bundle,candidate,expected='effective',signoff='S1'):
+  path=self.c/(label+'-candidate.json');save(path,candidate)
+  return self.command(label,[str(REPO/'scripts/v4_governance.py'),'verify','--trust',str(bundle[0]),'--trust-sha256',bundle[1],'--signoff',signoff,'--candidate',str(path),'--at',AT],expected)
+
+class Ledger:
+ """Trusted synthetic operator provisions immutable per-scenario records and pins."""
+ def __init__(self,e,work):
+  self.e=e;self.work=work;self.records=[]
+ def add(self,kind,payload,role):self.records.append((kind,payload,role))
+ def bundle(self,label):
+  root=self.e.t/'governance'/label;root.mkdir();entries=[];sources={};prev='0'*64
+  for number,(kind,payload,role) in enumerate(self.records,1):
+   ident='source-'+str(number);path=root/(ident+'.json')
+   record=dict(format='governance-record/1',kind=kind,issued_at='2026-11-27T22:00:00Z',payload=payload);save(path,record)
+   sources[ident]=dict(path=str(path),sha256=sha(path),principal='fixture-'+role,role=role,context_id='fixture-'+role+'-context',independence_group='fixture-'+role+'-group')
+   row=dict(sequence=number,source_id=ident,source_sha256=sha(path),previous_sha256=prev);row['entry_sha256']=digest(canonical(row));prev=row['entry_sha256'];entries.append(row)
+  ledger=dict(format='governance-ledger/1',project_id='synthetic-public-fixture',entries=entries);save(root/'ledger.json',ledger)
+  trust=dict(format='governance-trust/1',trusted_root=str(self.e.t),candidate_root=str(self.e.c),project_id=ledger['project_id'],ledger=dict(path=str(root/'ledger.json'),sha256=sha(root/'ledger.json'),sequence=len(entries),head_sha256=prev),sources=sources,work_packages={'WP-203':self.work},contracts={'API':{'depends_on':[]},'TESTS':{'depends_on':['API']}},graph_complete=True,quality=dict(trust_path=str(self.e.t/'quality-trust.json'),trust_sha256=self.e.info['quality_trust_sha256']))
+  save(root/'trust.json',trust);return root/'trust.json',sha(root/'trust.json')
+
+def execute(collector_hash,coordinator_hash):
+ pin(__file__,coordinator_hash);info=json.loads((STAGE/'prepared.json').read_text())
+ if info['collector_sha256']!=collector_hash or info['coordinator_sha256']!=coordinator_hash:raise ValueError('prepare pin mismatch')
+ for path,expected in info['inputs'].items():pin(path,expected)
+ with (STAGE/'execute-intent.json').open('x') as f:json.dump({'started_at':utc()},f)
+ e=Experiment(info);gates={};plans={}
+ for ident,run in info['runs'].items():
+  qt=Path(run['root']);pin(qt/'collector.py',collector_hash)
+  argv=[PYTHON,'-I','-B','-S',str(qt/'collector.py'),'--plan',str(qt/'plan.json'),'--plan-sha256',run['plan_sha256']]
+  before=utc();r=invoke(argv,qt,env(qt,run['scratch']))
+  (STAGE/(ident+'-collector.stdout.log')).write_bytes(r.stdout);(STAGE/(ident+'-collector.stderr.log')).write_bytes(r.stderr)
+  save(STAGE/(ident+'-collector.json'),dict(argv=argv,started_at=before,finished_at=utc(),exit_code=r.returncode,stdout_sha256=digest(r.stdout),stderr_sha256=digest(r.stderr)))
+  if r.returncode:raise RuntimeError('collector failed: '+ident)
+  gates[ident]=e.quality(ident);plans[ident]=json.loads((qt/'plan.json').read_text())
+ old=plans['success'];new=plans['mechanical']
+ work=dict(revision=1,risk='high',author_principals=['fixture-author'],author_contexts=['fixture-author-context'],author_groups=['fixture-author-group'],required_paths=['check.py','data.json','GUIDE.md'],target_base_sha='3'*40,allow_same_tree_commit=True,separate_acceptor=True,required_contracts=['TESTS'],mechanical_changes={'GUIDE.md':{'old':old['manifest']['GUIDE.md'],'new':new['manifest']['GUIDE.md']}})
+ base=Ledger(e,work)
+ contract=dict(id='API',path='specs/api.md',version='1',sha256='7'*64,depends_on=[])
+ base.add('contract',contract,'contract_owner');base.add('contract',dict(id='TESTS',path='specs/tests.md',version='1',sha256='8'*64,depends_on=['API']),'contract_owner')
+ def review(ident='R1',run='success',deviations=None):
+  p=plans[run]
+  return dict(id=ident,wp_id='WP-203',wp_revision=1,subject=p['subject'],commit_object=p['commit_object'],target_base_sha=work['target_base_sha'],paths=work['required_paths'],contract_refs=[dict(id='API',version='1',sha256='7'*64),dict(id='TESTS',version='1',sha256='8'*64)],quality_run_id=run,conclusion='approved',summary='Synthetic protected identity fixture; not real human acceptance.',deviation_refs=deviations or [],policy_sha256=digest(canonical(work)))
+ def signoff(ident='S1',review_id='R1',run='success'):return dict(id=ident,review_id=review_id,gate_id=gates[run]['gate_id'],evidence_sha256=gates[run]['evidence_sha256'])
+ def candidate(run='success',qrun=None):
+  p=plans[run];return dict(format='governance-candidate/1',wp_id='WP-203',wp_revision=1,subject=p['subject'],commit_object=p['commit_object'],target_base_sha=work['target_base_sha'],paths=work['required_paths'],quality_run_id=qrun)
+ base.add('review',review(),'reviewer');base.add('signoff',signoff(),'acceptor')
+ original=base.bundle('original');e.verify('positive',original,candidate())
+ alt=candidate();body=alt['commit_object']+'\nmetadata-only fixture\n';raw=body.encode();alt['commit_object']=body;alt['subject']=dict(alt['subject'],commit=hashlib.sha1(b'commit '+str(len(raw)).encode()+b'\0'+raw).hexdigest())
+ e.verify('same-tree-new-commit',original,alt)
+ e.verify('mechanical-exact',original,candidate('mechanical','mechanical'))
+ wrong=candidate();wrong['target_base_sha']='9'*40;e.verify('target-base-changed',original,wrong,'rejected')
+ base.add('contract',dict(contract,version='2',sha256='9'*64),'contract_owner');e.verify('contract-changed',base.bundle('changed'),candidate(),'rejected')
+ base.add('contract',contract,'contract_owner');e.verify('contract-restored-old-signoff',base.bundle('restored'),candidate(),'rejected')
+ base.add('review',review('R2'),'reviewer');base.add('signoff',signoff('S2','R2'),'acceptor');renewed=base.bundle('renewed');e.verify('fresh-review-after-restore',renewed,candidate(),signoff='S2')
+ base.add('revoke',dict(signoff_id='S2',reason='Synthetic withdrawal'),'owner');e.verify('revoked',base.bundle('revoked'),candidate(),'rejected','S2')
+ for label,status,expiry,closure in [('active','open','2026-12-01T00:00:00Z',None),('expired','open',AT,None),('closed','closed',AT,dict(quality_run_id='success',gate_id=gates['success']['gate_id'],subject=old['subject'],scope_paths=['check.py']))]:
+  ledger=Ledger(e,work);ledger.records=base.records[:2].copy()
+  deviation=dict(id='D1',revision=1,wp_id='WP-203',wp_revision=1,subject_commit=old['subject']['commit'],scope_paths=['check.py'],reason='Synthetic finite deviation fixture',expires_at=expiry,status=status,closure=closure,baseline=None)
+  ledger.add('deviation',deviation,'owner');ledger.add('review',review(deviations=['D1']),'reviewer');ledger.add('signoff',signoff(),'acceptor')
+  e.verify('deviation-'+label,ledger.bundle('deviation-'+label),candidate(),'rejected' if label=='expired' else 'effective')
+ ledger=Ledger(e,work);ledger.records=base.records[:2].copy()
+ deviation=dict(id='D1',revision=1,wp_id='WP-203',wp_revision=1,subject_commit=plans['current']['subject']['commit'],scope_paths=['check.py'],reason='Synthetic baseline comparison, not a waiver',expires_at='2026-12-01T00:00:00Z',status='remediation_planned',closure=None,baseline=dict(quality_run_id='baseline',subject=plans['baseline']['subject']))
+ ledger.add('deviation',deviation,'owner');ledger.add('review',review(run='current',deviations=['D1']),'reviewer');ledger.add('signoff',signoff(run='current'),'acceptor')
+ decision=e.verify('baseline-known-new-no-waiver',ledger.bundle('baseline-comparison'),candidate('current'),'rejected')
+ analysis=decision['failure_analysis'][0]
+ if analysis['status']!='verified' or analysis['known_failures']!=['known'] or analysis['new_failures']!=['new']:raise RuntimeError('baseline classification mismatch')
+ unchanged=all(sha(path)==expected for path,expected in info['inputs'].items())
+ summary=dict(completed_at=utc(),collector_sha256=collector_hash,coordinator_sha256=coordinator_hash,commands=len(e.results),passed=all(r['passed'] for r in e.results) and unchanged,inputs_unchanged=unchanged,results=[{'label':r['label'],'passed':r['passed'],'exit_code':r['exit_code'],'status':r['decision']['status']} for r in e.results],identity_limit='All protected principals are synthetic fixture identities, not actual human/project acceptance.')
+ save(STAGE/'summary.json',summary);print(json.dumps(summary));return 0 if summary['passed'] else 1
+
+if __name__=='__main__':
+ p=argparse.ArgumentParser();p.add_argument('mode',choices=['prepare','execute']);p.add_argument('--collector-sha256',required=True);p.add_argument('--coordinator-sha256');a=p.parse_args()
+ if a.mode=='prepare':prepare(a.collector_sha256)
+ else:sys.exit(execute(a.collector_sha256,a.coordinator_sha256))

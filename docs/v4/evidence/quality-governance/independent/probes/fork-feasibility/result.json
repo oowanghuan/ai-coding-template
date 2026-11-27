@@ -1,0 +1,53 @@
+{
+  "scope": "Fixed trusted system-Python -c capability probe only; no candidate import, no product collector execution",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<PROBE_FORK_FEASIBILITY>/policy.sb",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "-c",
+    "import errno,json,os,subprocess,sys\nr={'python_started':True,'python_version':sys.version,'pid':os.getpid(),'sid_before':os.getsid(0),'pgrp_before':os.getpgrp()}\ntry:\n pid=os.fork()\nexcept PermissionError as e:r['fork']={'denied_errno':e.errno}\nelse:\n if pid==0:os._exit(0)\n os.waitpid(pid,0);r['fork']='unexpected_allowed_child_reaped'\ntry:\n child=subprocess.run([sys.executable,'-I','-B','-S','-c','print(\"harmless child\")'],capture_output=True,timeout=3)\n r['subprocess']={'unexpected_allowed_exit':child.returncode}\nexcept PermissionError as e:r['subprocess']={'denied_errno':e.errno}\ntry:\n child=os.posix_spawn('/usr/bin/true',['/usr/bin/true'],{'PATH':'/usr/bin:/bin'})\n os.waitpid(child,0);r['posix_spawn']='unexpected_allowed_child_reaped'\nexcept PermissionError as e:r['posix_spawn']={'denied_errno':e.errno}\ntry:os.setsid();r['setsid']='unexpected_allowed'\nexcept PermissionError as e:r['setsid']={'denied_errno':e.errno,'context':'already session leader'}\ntry:os.setpgid(0,0);r['setpgid']='unexpected_allowed'\nexcept PermissionError as e:r['setpgid']={'denied_errno':e.errno,'context':'already session leader'}\nr['sid_after']=os.getsid(0);r['pgrp_after']=os.getpgrp()\nprint(json.dumps(r),flush=True)\n"
+  ],
+  "environment": {
+    "HOME": "<PROBE_FORK_FEASIBILITY>/scratch",
+    "TMPDIR": "<PROBE_FORK_FEASIBILITY>/scratch",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "start_new_session": true,
+  "started_epoch": 1795803976.892738,
+  "finished_epoch": 1795803976.9827251,
+  "exit_code": 0,
+  "policy_sha256": "1267d973158e2246f214e1564ed973e2027f4c5ad8771f2e2e0c8f5c41266e22",
+  "probe_sha256": "d32d4500366a35efb782f753a85185855e2731627a4f72454e10fd22c0e35bfd",
+  "observed": {
+    "python_started": true,
+    "python_version": "3.9.6 (default, Apr 30 2025, 02:07:17) \n[Clang 17.0.0 (clang-1700.0.13.5)]",
+    "pid": 62484,
+    "sid_before": 62484,
+    "pgrp_before": 62484,
+    "fork": {
+      "denied_errno": 1
+    },
+    "subprocess": {
+      "denied_errno": 1
+    },
+    "posix_spawn": {
+      "denied_errno": 1
+    },
+    "setsid": {
+      "denied_errno": 1,
+      "context": "already session leader"
+    },
+    "setpgid": {
+      "denied_errno": 1,
+      "context": "already session leader"
+    },
+    "sid_after": 62484,
+    "pgrp_after": 62484
+  }
+}

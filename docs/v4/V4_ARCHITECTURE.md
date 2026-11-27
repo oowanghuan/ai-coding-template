@@ -211,3 +211,26 @@ Advisor 可以反对 PMO，PMO 也能以证据反驳；关闭必须由规定复�
 | ADR-006 | 旧资产原地保留，按 manifest 发布精简模板 | 重写历史/删除 backup 成本与风险高 | WP-001/501 |
 
 架构失效条件包括：控制分支无法保护；Worker 可改写独立验收环境；无法保全未提交资产；供应商适配无法遵守原生权限；伪造证据负向用例能过门。出现任一项，应收窄能力声明与自动化范围。
+
+## 13. OD-08 实现映射与保留边界
+
+上述 ADR 表保留首轮草案；本节只登记 [OD-08](OWNER_DECISIONS.md#od-08本地证据门禁与签认治理批次)
+实际采用的有限实现，不批准整张架构路线图。产品代码
+`580cc0a8ce40fe9d4d235f94d7ab1e7aba2ddafc` 增加两个可组合、只读输出决策的模块：
+
+- [quality](../../framework/quality/CONTRACT.md)：独立预审、固定哈希的有限取证器
+  在受保护域封存计划、真实 Git 对象、日志和退出事实。候选入口在系统沙盒内。
+  Gate 只读取操作方登记和 pin 的真实 bundle，给出 passed/failed/unverifiable。
+- [governance](../../framework/governance/CONTRACT.md)：从受保护、版本化来源取得
+  身份、评审、签认、契约依赖和偏离，调用真实 quality Gate，给出当前候选对象的
+  effective/rejected/unverifiable。历史失效单调保留；同树和精确机械变更按预设策略核验。
+
+T 是受信域、C 是候选可写域；名称不产生权限。外层隔离必须保护 T 及祖先目录，
+还须阻止通过系统进程信息 API 读取宿主环境；只清空 env 不够。collector 不导入
+候选模块，不接收任意 shell，默认不允许候选 fork，不提供不隔离后备路径。
+本版不建立 PKI，不抵御恶意主机所有者，也不证明批准的检查本身充分。
+
+治理 trust 中的工作包约束是现有权威输入的只读绑定，不是另一套调度状态。
+两个 CLI 均不推进 merged/deployed/business_validated；与实际任务接受、供应商执行
+及恢复的完整结合留给已规划的后续包。独立实际运行见[本批证据](evidence/quality-governance/README.md)，
+不把本地组件验证扩展成整套架构验收。

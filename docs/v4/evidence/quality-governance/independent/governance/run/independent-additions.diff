@@ -1,0 +1,24 @@
+--- <LOCAL_EVIDENCE>/governance-real-stage/coordinator.py	2026-11-27 12:45:53
++++ <GOVERNANCE_STAGE>/coordinator.py	2026-11-27 12:50:22
+@@ -140,6 +140,21 @@
+   p=plans[run];return dict(format='governance-candidate/1',wp_id='WP-203',wp_revision=1,subject=p['subject'],commit_object=p['commit_object'],target_base_sha=work['target_base_sha'],paths=work['required_paths'],quality_run_id=qrun)
+  base.add('review',review(),'reviewer');base.add('signoff',signoff(),'acceptor')
+  original=base.bundle('original');e.verify('positive',original,candidate())
++ # Independently added adversarial controls: a role label does not establish independence.
++ false_bundle=base.bundle('false-independent');false_trust=json.loads(false_bundle[0].read_text())
++ for identity in false_trust['sources'].values():
++  if identity['role']=='reviewer':
++   identity.update(principal='fixture-author',context_id='fixture-author-context',independence_group='fixture-author-group')
++ save(false_bundle[0],false_trust)
++ e.verify('false-independent-role', (false_bundle[0],sha(false_bundle[0])),candidate(),'rejected')
++ # A matching self-created hash in candidate storage does not make a protected reviewer source.
++ forged_bundle=base.bundle('candidate-forged-source');forged_trust=json.loads(forged_bundle[0].read_text())
++ for identity in forged_trust['sources'].values():
++  if identity['role']=='reviewer':
++   forged=e.c/'forged-review-source.json';shutil.copyfile(identity['path'],forged)
++   identity.update(path=str(forged),sha256=sha(forged))
++ save(forged_bundle[0],forged_trust)
++ e.verify('candidate-forged-review-source',(forged_bundle[0],sha(forged_bundle[0])),candidate(),'unverifiable')
+  alt=candidate();body=alt['commit_object']+'\nmetadata-only fixture\n';raw=body.encode();alt['commit_object']=body;alt['subject']=dict(alt['subject'],commit=hashlib.sha1(b'commit '+str(len(raw)).encode()+b'\0'+raw).hexdigest())
+  e.verify('same-tree-new-commit',original,alt)
+  e.verify('mechanical-exact',original,candidate('mechanical','mechanical'))

@@ -1,0 +1,44 @@
+import hashlib,json,os,subprocess,time
+from pathlib import Path
+base=Path(__file__).resolve().parent
+scratch=base/'scratch';scratch.mkdir()
+quote=lambda p:json.dumps(str(p))
+reads=['/System','/usr','/bin','/Library/Developer','/Library/Apple','/private/preboot/Cryptexes','/private/var/db/dyld']
+policy='\n'.join(['(version 1)','(deny default)','(allow process-exec)','(deny process-fork)','(allow sysctl-read)','(allow file-read-metadata)','(allow file-map-executable)','(allow mach-lookup (global-name "com.apple.system.logger"))','(deny mach-lookup (global-name "com.apple.securityd") (global-name "com.apple.security.agent"))','(allow file-read* (literal "/") (literal "/dev/null") (literal "/dev/urandom") '+' '.join('(subpath '+quote(p)+')' for p in reads+[scratch])+')','(allow file-write* (literal "/dev/null") (subpath '+quote(scratch)+'))','(deny file-write-unlink (literal '+quote(scratch)+'))'])+'\n'
+(base/'policy.sb').write_text(policy)
+probe="""import errno,json,os,subprocess,sys
+r={'python_started':True,'python_version':sys.version,'pid':os.getpid(),'sid_before':os.getsid(0),'pgrp_before':os.getpgrp()}
+try:
+ pid=os.fork()
+except PermissionError as e:r['fork']={'denied_errno':e.errno}
+else:
+ if pid==0:os._exit(0)
+ os.waitpid(pid,0);r['fork']='unexpected_allowed_child_reaped'
+try:
+ child=subprocess.run([sys.executable,'-I','-B','-S','-c','print("harmless child")'],capture_output=True,timeout=3)
+ r['subprocess']={'unexpected_allowed_exit':child.returncode}
+except PermissionError as e:r['subprocess']={'denied_errno':e.errno}
+try:
+ child=os.posix_spawn('/usr/bin/true',['/usr/bin/true'],{'PATH':'/usr/bin:/bin'})
+ os.waitpid(child,0);r['posix_spawn']='unexpected_allowed_child_reaped'
+except PermissionError as e:r['posix_spawn']={'denied_errno':e.errno}
+try:os.setsid();r['setsid']='unexpected_allowed'
+except PermissionError as e:r['setsid']={'denied_errno':e.errno,'context':'already session leader'}
+try:os.setpgid(0,0);r['setpgid']='unexpected_allowed'
+except PermissionError as e:r['setpgid']={'denied_errno':e.errno,'context':'already session leader'}
+r['sid_after']=os.getsid(0);r['pgrp_after']=os.getpgrp()
+print(json.dumps(r),flush=True)
+"""
+command=['/usr/bin/sandbox-exec','-f',str(base/'policy.sb'),'/usr/bin/python3','-I','-B','-S','-c',probe]
+env={'HOME':str(scratch),'TMPDIR':str(scratch),'PATH':'/usr/bin:/bin','PYTHONNOUSERSITE':'1','PYTHONDONTWRITEBYTECODE':'1'}
+started=time.time();p=subprocess.Popen(command,cwd=scratch,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True)
+out,err=p.communicate(timeout=15)
+(base/'stdout.log').write_bytes(out);(base/'stderr.log').write_bytes(err)
+observed=json.loads(out) if p.returncode==0 else None
+result={'scope':'Fixed trusted system-Python -c capability probe only; no candidate import, no product collector execution','command':command,'environment':env,'start_new_session':True,'started_epoch':started,'finished_epoch':time.time(),'exit_code':p.returncode,'policy_sha256':hashlib.sha256(policy.encode()).hexdigest(),'probe_sha256':hashlib.sha256(probe.encode()).hexdigest(),'observed':observed}
+(base/'result.json').write_text(json.dumps(result,indent=2)+'\n')
+assert p.returncode==0 and not err,result
+assert all(observed[k]=={'denied_errno':1} for k in ['fork','subprocess','posix_spawn']),observed
+assert observed['setsid']['denied_errno']==1 and observed['setpgid']['denied_errno']==1
+assert observed['pid']==p.pid==observed['sid_before']==observed['sid_after']==observed['pgrp_before']==observed['pgrp_after']
+print(json.dumps({'evidence':str(base),'result':observed,'policy_sha256':result['policy_sha256']}))

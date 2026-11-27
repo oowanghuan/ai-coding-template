@@ -1,0 +1,8 @@
+{
+  "code_commit": "580cc0a8ce40fe9d4d235f94d7ab1e7aba2ddafc",
+  "source_manifest": "regression/final/result.json",
+  "input_files": 49,
+  "mismatches": [],
+  "inputs_unchanged_during_run": true,
+  "meaning": "All recorded framework/schema/script/test/example/template input bytes match the committed code; Git history/entire host not asserted immutable."
+}

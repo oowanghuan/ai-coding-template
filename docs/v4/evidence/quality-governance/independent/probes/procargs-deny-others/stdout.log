@@ -1,0 +1,2 @@
+PYTHON_START
+{"target": "owned synthetic canary only", "return_code": -1, "errno": 1, "returned_bytes": 0, "synthetic_marker_visible": false, "python_started": true, "stdio_input": "fixed stdio smoke", "fork_denied_errno": 1, "subprocess_denied_errno": 1, "session_leader": true, "setsid_denied_errno": 1}

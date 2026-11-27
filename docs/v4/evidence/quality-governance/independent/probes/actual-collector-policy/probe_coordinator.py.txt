@@ -1,0 +1,74 @@
+import hashlib,json,os,signal,subprocess
+from pathlib import Path
+base=Path(__file__).resolve().parent;T=base/'trusted';C=base/'candidate';scratch=C/'case';policy=base/'actual-policy.sb'
+(T/'host-home').mkdir();(C/'sibling').mkdir();(C/'sibling/data').write_text('harmless sibling fixture')
+repo=Path('<REPOSITORY>')
+protected=[T/'plan.json',T/'evidence.json',T/'logs/case.stdout',T/'subject/fixture.txt',base/'outside.txt',C/'sibling/data',repo/'framework/quality/collector.py']
+H=lambda b:hashlib.sha256(b).hexdigest()
+before={str(p):H(p.read_bytes()) for p in protected}
+envhost={'PATH':'/usr/bin:/bin','HOME':str(T/'host-home'),'TMPDIR':str(T/'host-home'),'V4_SYNTHETIC_CANARY':'fixed-public-marker'}
+host=subprocess.Popen(['/usr/bin/python3','-I','-B','-S','-c','import time; time.sleep(15)'],env=envhost,cwd=T,start_new_session=True)
+probe="""import ctypes,errno,hashlib,json,os,socket,stat,subprocess,sys
+from pathlib import Path
+cfg=json.loads(sys.argv[1]);r={};scratch=Path.cwd()
+# Only remove a known startup cache in this fresh scratch; preserve its fingerprint.
+cache=scratch/'xcrun_db'
+if cache.exists():
+ info=cache.lstat();assert stat.S_ISREG(info.st_mode) and info.st_nlink==1 and info.st_size<=1048576
+ r['startup_cache_sha256']=hashlib.sha256(cache.read_bytes()).hexdigest();cache.unlink()
+assert not list(scratch.iterdir())
+try:scratch.rmdir();r['scratch_unlink']='unexpected_allowed'
+except PermissionError as e:r['scratch_unlink']=e.errno
+paths=cfg['paths']
+for name,path in paths.items():
+ for operation in ['read','write']:
+  try:
+   fd=os.open(path,(os.O_RDONLY if operation=='read' else os.O_WRONLY)|os.O_NOFOLLOW)
+   try:
+    if operation=='read':os.read(fd,1)
+   finally:os.close(fd)
+   r[name+'_'+operation]='allowed'
+  except PermissionError as e:r[name+'_'+operation]=e.errno
+try:
+ with socket.socket() as connection:connection.connect(('127.0.0.1',9))
+ r['network']='unexpected_allowed'
+except PermissionError as e:r['network']=e.errno
+try:child=os.fork()
+except PermissionError as e:r['fork']=e.errno
+else:
+ if child==0:os._exit(0)
+ os.waitpid(child,0);r['fork']='unexpected_allowed_reaped'
+try:
+ child=os.posix_spawn('/usr/bin/true',['/usr/bin/true'],{'PATH':'/usr/bin:/bin'});os.waitpid(child,0);r['posix_spawn']='unexpected_allowed_reaped'
+except PermissionError as e:r['posix_spawn']=e.errno
+try:subprocess.run([sys.executable,'-I','-B','-S','-c','print(1)'],timeout=3,capture_output=True);r['subprocess']='unexpected_allowed'
+except PermissionError as e:r['subprocess']=e.errno
+lib=ctypes.CDLL(None,use_errno=True);mib=(ctypes.c_int*3)(1,49,cfg['host_pid']);buf=ctypes.create_string_buffer(262144);size=ctypes.c_size_t(len(buf))
+rc=lib.sysctl(mib,3,buf,ctypes.byref(size),None,0);r['other_process_env']={'rc':rc,'errno':ctypes.get_errno(),'marker_visible':b'fixed-public-marker' in buf.raw if rc==0 else False}
+r['session_leader']=os.getpid()==os.getsid(0)==os.getpgrp()
+try:os.setsid();r['setsid']='unexpected_allowed'
+except PermissionError as e:r['setsid']=e.errno
+(scratch/'unique-canary').write_text('harmless scratch output');r['scratch_write']=(scratch/'unique-canary').read_text()=='harmless scratch output'
+r['stdio']=sys.stdin.read();r['credentials_absent']=not any(k in os.environ for k in ('GH_TOKEN','GITHUB_TOKEN','OPENAI_API_KEY','ANTHROPIC_API_KEY','SSH_AUTH_SOCK','CODEX_HOME'))
+print(json.dumps(r),flush=True)
+"""
+paths={'plan':str(T/'plan.json'),'receipt':str(T/'evidence.json'),'log':str(T/'logs/case.stdout'),'subject':str(T/'subject/fixture.txt'),'outside':str(base/'outside.txt'),'sibling':str(C/'sibling/data'),'checkout':str(repo/'framework/quality/collector.py')}
+command=['/usr/bin/sandbox-exec','-f',str(policy),'/usr/bin/python3','-I','-B','-S','-c',probe,json.dumps({'host_pid':host.pid,'paths':paths})]
+env={'PATH':'/usr/bin:/bin','HOME':str(scratch),'TMPDIR':str(scratch),'PYTHONNOUSERSITE':'1','PYTHONDONTWRITEBYTECODE':'1'}
+try:
+ p=subprocess.run(command,env=env,cwd=scratch,input=b'fixed-stdio',capture_output=True,start_new_session=True,timeout=10)
+ (base/'probe.stdout.log').write_bytes(p.stdout);(base/'probe.stderr.log').write_bytes(p.stderr)
+ observed=json.loads(p.stdout) if p.returncode==0 else None
+ after={str(p):H(p.read_bytes()) for p in protected}
+ result={'scope':'Actual policy generated inside A01 by fixed collector; only trusted system -c probe executed on host under that policy; no candidate collector host execution','collector_sha256':before[str(repo/'framework/quality/collector.py')],'command':command,'environment':env,'host_canary_environment':envhost,'policy_sha256':H(policy.read_bytes()),'exit_code':p.returncode,'observed':observed,'protected_hashes_before':before,'protected_hashes_after':after}
+ (base/'probe-result.json').write_text(json.dumps(result,indent=2)+'\n')
+ assert p.returncode==0 and not p.stderr and before==after,result
+ assert observed['subject_read']=='allowed' and observed['subject_write']==1
+ assert all(observed[name+'_'+op]==1 for name in paths if name!='subject' for op in ('read','write'))
+ assert all(observed[k]==1 for k in ['scratch_unlink','network','fork','posix_spawn','subprocess','setsid'])
+ assert observed['other_process_env']=={'rc':-1,'errno':1,'marker_visible':False}
+ assert observed['session_leader'] and observed['scratch_write'] and observed['credentials_absent'] and observed['stdio']=='fixed-stdio'
+ print(json.dumps({'exit_code':p.returncode,'policy_sha256':result['policy_sha256'],'observed':observed,'original_bytes_unchanged':before==after}))
+finally:
+ if host.poll() is None:os.killpg(host.pid,signal.SIGTERM)
+ host.wait(timeout=3)

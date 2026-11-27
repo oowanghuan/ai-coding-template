@@ -1,0 +1,7 @@
+{
+  "scope": "All files in quality-author; original bytes were never copied without path redaction",
+  "manifest_entries": 211,
+  "hashes_match": true,
+  "findings": [],
+  "allowed_literals": "Credential variable names occur only in absence canaries; the sole marker is a public harmless synthetic value; OS generic paths and observed worker PIDs are retained."
+}

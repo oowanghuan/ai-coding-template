@@ -1,0 +1,334 @@
+test_committed_old_receipt_cannot_delete_later_repair (test_install.Installation) ... ok
+test_conflict_aborts_before_any_write (test_install.Installation) ... ok
+test_cooperative_single_instance (test_install.Installation) ... ok
+test_dry_run_and_repeat_are_non_destructive (test_install.Installation) ... ok
+test_empty_install_copies_exact_declared_assets (test_install.Installation) ... ok
+test_existing_git_dirty_and_untracked_preserved (test_install.Installation) ... ok
+test_incomplete_transaction_blocks_new_install (test_install.Installation) ... ok
+test_legacy_receipt_cannot_delete_new_repair_and_ambiguous_history_stops (test_install.Installation) ... ok
+test_legacy_shell_entry_point (test_install.Installation) ... ok
+test_manifest_coverage_and_preserved_legacy_variants (test_install.Installation) ... ok
+test_manifest_path_escape_and_duplicate_rejected (test_install.Installation) ... ok
+test_missing_dependency_rejected (test_install.Installation) ... ok
+test_missing_or_changed_source_fails_list_and_install (test_install.Installation) ... ok
+test_non_directory_ancestor_refused (test_install.Installation) ... ok
+test_old_rollback_cannot_delete_a_later_install (test_install.Installation) ... ok
+test_rollback_preserves_preexisting_files (test_install.Installation) ... ok
+test_rollback_refuses_edited_file_without_partial_deletion (test_install.Installation) ... ok
+test_selection_includes_declared_dependencies (test_install.Installation) ... ok
+test_single_legacy_receipt_can_still_rollback (test_install.Installation) ... ok
+test_symlink_destination_refused (test_install.Installation) ... ok
+test_symlink_source_refused_even_when_content_matches (test_install.Installation) ... ok
+test_unknown_interrupted_write_preserved (test_install.Installation) ... ok
+test_unknown_later_write_blocks_old_receipt (test_install.Installation) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 18.113s
+
+OK
+test_assignment_identity_and_tokens_cannot_be_reused (test_protocol.Protocol) ... ok
+test_authorization_scope_and_host (test_protocol.Protocol) ... ok
+test_checkpoint_stale_spec_and_cross_assignment (test_protocol.Protocol) ... ok
+test_checkpoint_unknown_operation_blocks_start (test_protocol.Protocol) ... ok
+test_cli_returns_deterministic_json_and_nonzero_for_invalid (test_protocol.Protocol) ... ok
+test_dependency_must_pass_exact_required_revision (test_protocol.Protocol) ... ok
+test_double_assignment_and_capacity (test_protocol.Protocol) ... ok
+test_duplicate_json_keys_rejected (test_protocol.Protocol) ... ok
+test_each_kind_has_distinct_acceptance (test_protocol.Protocol) ... ok
+test_empty_or_wrong_sha_signoff_rejected (test_protocol.Protocol) ... ok
+test_example_valid_and_validation_is_pure_deterministic (test_protocol.Protocol) ... ok
+test_expired_lease_and_epoch (test_protocol.Protocol) ... ok
+test_expired_snapshot_can_be_safely_paused (test_protocol.Protocol) ... ok
+test_external_effect_expansion_invalidates_signatures_at_same_sha (test_protocol.Protocol) ... ok
+test_external_effect_rework_requires_new_signoff_before_acceptance (test_protocol.Protocol) ... ok
+test_external_scope_is_still_required_when_reopening (test_protocol.Protocol) ... ok
+test_high_risk_self_acceptance_rejected_across_models (test_protocol.Protocol) ... ok
+test_invalid_date_and_empty_recovery_location (test_protocol.Protocol) ... ok
+test_merged_is_not_engineering_or_business_acceptance (test_protocol.Protocol) ... ok
+test_missing_and_duplicate_identifiers (test_protocol.Protocol) ... ok
+test_pause_budget_and_unknown_quota_are_not_permission (test_protocol.Protocol) ... ok
+test_proposed_revoked_missing_and_expired_authorization (test_protocol.Protocol) ... ok
+test_provider_session_binding (test_protocol.Protocol) ... ok
+test_required_field_and_unknown_parallel_state_rejected (test_protocol.Protocol) ... ok
+test_required_milestone_cannot_be_not_applicable (test_protocol.Protocol) ... ok
+test_revision_and_deletion_cannot_silently_overwrite (test_protocol.Protocol) ... ok
+test_revoked_signoff_cannot_be_erased_or_reset_to_pending (test_protocol.Protocol) ... ok
+test_satisfied_dependency_requires_the_exact_artifact (test_protocol.Protocol) ... ok
+test_scope_conflict_and_forbidden_scope (test_protocol.Protocol) ... ok
+test_self_and_two_node_dependency_cycles (test_protocol.Protocol) ... ok
+test_signed_contract_change_requires_rework_and_invalidation (test_protocol.Protocol) ... ok
+test_transition_legal_submission_and_illegal_close (test_protocol.Protocol) ... ok
+test_unsafe_scope_paths (test_protocol.Protocol) ... ok
+test_unstarted_task_cannot_also_be_complete (test_protocol.Protocol) ... ok
+
+----------------------------------------------------------------------
+Ran 34 tests in 6.123s
+
+OK
+test_absent_receipt_never_means_success (test_external.ExternalClientTests) ... ok
+test_cancel_is_bound_idempotent_and_does_not_assert_stopped (test_external.ExternalClientTests) ... ok
+test_pid_is_immutable_across_receipts (test_external.ExternalClientTests) ... ok
+test_provisioned_identity_scope_content_and_limits_are_enforced (test_external.ExternalClientTests) ... ok
+test_receipt_binds_job_operation_and_request (test_external.ExternalClientTests) ... ok
+test_receipt_cannot_be_reused_for_another_workspace_capability (test_external.ExternalClientTests) ... ok
+test_receipt_cannot_regress_or_change_same_sequence (test_external.ExternalClientTests) ... ok
+test_receipt_symlink_and_hardlink_are_refused (test_external.ExternalClientTests) ... ok
+test_rejected_cannot_assert_a_spawned_process (test_external.ExternalClientTests) ... ok
+test_request_and_lock_aliases_do_not_overwrite_other_files (test_external.ExternalClientTests) ... ok
+test_request_replay_is_immutable_and_unicode_hash_is_utf8 (test_external.ExternalClientTests) ... ok
+test_terminal_needs_real_exit_and_matching_log_bytes (test_external.ExternalClientTests) ... ok
+test_writable_request_tree_cannot_contain_trusted_storage (test_external.ExternalClientTests) ... ok
+test_cli_requires_both_explicit_launcher_arguments (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_explicit_unknown_receipt_is_not_stop_confirmation (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_invalid_terminal_logs_do_not_release_uncertainty (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_missing_driver_receipt_stays_unknown_and_blocks_reclaim (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_revocation_requests_cancel_without_inventing_stop (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_same_operation_cannot_switch_backend_job_or_config (test_external_lifecycle.ExternalLifecycleTests) ... ERROR
+test_terminal_failure_cli_replay_is_nonzero_and_does_not_submit_again (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_validated_prelaunch_rejection_is_not_success_or_delivery (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_cancel_before_launch_never_spawns (test_launch_driver.LauncherTests) ... ok
+test_cancel_observes_owned_child_exit (test_launch_driver.LauncherTests) ... ok
+test_changed_request_cannot_relaunch_same_slot (test_launch_driver.LauncherTests) ... ok
+test_config_rejects_duplicate_workspace_and_bad_job_id (test_launch_driver.LauncherTests) ... ok
+test_config_rejects_nested_workspaces (test_launch_driver.LauncherTests) ... ok
+test_config_rejects_trust_overlap (test_launch_driver.LauncherTests) ... ok
+test_failure_exit_is_not_success (test_launch_driver.LauncherTests) ... ok
+test_mailbox_pins_original_directory (test_launch_driver.LauncherTests) ... ok
+test_mailbox_rejects_fifo_without_blocking (test_launch_driver.LauncherTests) ... ok
+test_nonreading_pipe_cannot_block_runtime_timeout (test_launch_driver.LauncherTests) ... ok
+test_policy_has_no_network_or_controller_authority_grant (test_launch_driver.LauncherTests) ... ok
+test_real_launch_arguments_are_fixed_but_process_is_fake (test_launch_driver.LauncherTests) ... ok
+test_request_is_bound_to_operation_content_and_limits (test_launch_driver.LauncherTests) ... ok
+test_request_rejects_command_environment_and_policy (test_launch_driver.LauncherTests) ... ok
+test_request_symlink_and_hardlink_refused (test_launch_driver.LauncherTests) ... ok
+test_restarted_launch_is_unknown_without_signal_or_spawn (test_launch_driver.LauncherTests) ... ok
+test_restore_rejects_different_config_bytes (test_launch_driver.LauncherTests) ... ok
+test_spawn_exception_preserves_launch_intent_as_unknown (test_launch_driver.LauncherTests) ... ok
+test_strict_json_rejects_duplicates_and_nonfinite (test_launch_driver.LauncherTests) ... ok
+test_timeout_observes_owned_child_exit (test_launch_driver.LauncherTests) ... ok
+test_two_fixed_slots_have_distinct_processes_and_receipts (test_launch_driver.LauncherTests) ... ok
+test_unconfirmed_stop_is_unknown (test_launch_driver.LauncherTests) ... ok
+test_utf8_request_hash_matches_canonical_protocol (test_launch_driver.LauncherTests) ... ok
+test_worker_hash_and_hardlink_fail_closed (test_launch_driver.LauncherTests) ... ok
+test_authorization_budget_quota_and_pause_block_claim (test_local.LocalTests) ... ok
+test_before_commit_preserves_authority (test_local.LocalTests) ... ok
+test_cli_failed_run_replay_stays_failed_and_does_not_launch (test_local.LocalTests) ... ERROR
+test_cli_success_receipt_replay_preserves_result (test_local.LocalTests) ... FAIL
+test_commit_crash_replay_and_payload_mismatch (test_local.LocalTests) ... ok
+test_created_worktree_can_reconcile_without_duplicate (test_local.LocalTests) ... ok
+test_expired_reservation_reclaims_with_new_token (test_local.LocalTests) ... ok
+test_launch_intent_is_not_retried (test_local.LocalTests) ... ERROR
+test_no_sandbox_fallback_on_nested_launch_failure (test_local.LocalTests) ... ERROR
+test_partial_worktree_cannot_be_reconciled_as_complete (test_local.LocalTests) ... ok
+test_path_escape_symlink_and_hardlink_refused (test_local.LocalTests) ... ok
+test_process_started_failure_is_stopped_not_accepted (test_local.LocalTests) ... ERROR
+test_protocol_01_stays_strict_and_02_requires_known_execution_baseline (test_local.LocalTests) ... ok
+test_real_crash_after_atomic_write_reconciles_on_restart (test_local.LocalTests) ... ok
+test_real_process_race_has_one_winner (test_local.LocalTests) ... ok
+test_reserved_start_and_controlled_delivery (test_local.LocalTests) ... skipped 'nested Seatbelt unavailable; full runner integration requires independent isolated host'
+test_revoke_fences_old_delivery_and_preserves_workspace (test_local.LocalTests) ... ok
+test_sandbox_denies_network_host_read_write_and_credentials (test_local.LocalTests) ... skipped 'nested Seatbelt unavailable; policy/worker is separately tested by trusted outer harness'
+test_scope_conflict_and_capacity (test_local.LocalTests) ... ok
+test_two_actual_workers_inherit_outer_sandbox_and_submit (test_local.LocalTests) ... ok
+test_two_isolated_runners_capture_distinct_deliveries (test_local.LocalTests) ... skipped 'nested Seatbelt unavailable; not counted as end-to-end runner acceptance'
+test_unauthorized_actor_cannot_claim_or_revoke (test_local.LocalTests) ... ok
+test_unknown_worktree_intent_blocks_reassignment (test_local.LocalTests) ... ok
+test_unmet_dependency (test_local.LocalTests) ... ok
+test_worker_registration_owner_only_and_immutable (test_local.LocalTests) ... ok
+test_wrong_epoch_token_and_expired_lease (test_local.LocalTests) ... ok
+
+======================================================================
+ERROR: test_same_operation_cannot_switch_backend_job_or_config (test_external_lifecycle.ExternalLifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/public/framework/tests/local/test_external_lifecycle.py", line 166, in test_same_operation_cannot_switch_backend_job_or_config
+    run(self.root, self.credentials, ACTOR, 'src/out.txt', 'fixture output',
+  File "/public/framework/framework/local/runner.py", line 116, in run
+    if platform.system() != 'Darwin' or not Path('/usr/bin/sandbox-exec').exists():
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/platform.py", line 920, in system
+    return uname().system
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/platform.py", line 843, in uname
+    system, node, release, version, machine = infos = os.uname()
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_cli_failed_run_replay_stays_failed_and_does_not_launch (test_local.LocalTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/public/framework/tests/local/test_local.py", line 394, in test_cli_failed_run_replay_stays_failed_and_does_not_launch
+    self.assertEqual(state['workspaces'][c['workspace_id']]['run']['exit_code'], 71)
+TypeError: 'NoneType' object is not subscriptable
+
+======================================================================
+ERROR: test_launch_intent_is_not_retried (test_local.LocalTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/public/framework/tests/local/test_local.py", line 237, in test_launch_intent_is_not_retried
+    run(self.root, c, ACTOR, 'src/out.txt', 'x', 'run', self.state()['revision'], fault=fault)
+  File "/public/framework/framework/local/runner.py", line 116, in run
+    if platform.system() != 'Darwin' or not Path('/usr/bin/sandbox-exec').exists():
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/platform.py", line 920, in system
+    return uname().system
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/platform.py", line 843, in uname
+    system, node, release, version, machine = infos = os.uname()
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_no_sandbox_fallback_on_nested_launch_failure (test_local.LocalTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/public/framework/tests/local/test_local.py", line 376, in test_no_sandbox_fallback_on_nested_launch_failure
+    run(self.root, c, ACTOR, 'src/out.txt', 'x', 'nested', self.state()['revision'])
+  File "/public/framework/framework/local/runner.py", line 116, in run
+    if platform.system() != 'Darwin' or not Path('/usr/bin/sandbox-exec').exists():
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/platform.py", line 920, in system
+    return uname().system
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/platform.py", line 843, in uname
+    system, node, release, version, machine = infos = os.uname()
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_process_started_failure_is_stopped_not_accepted (test_local.LocalTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/public/framework/tests/local/test_local.py", line 247, in test_process_started_failure_is_stopped_not_accepted
+    run(self.root, c, ACTOR, 'src/out.txt', 'x', 'run', self.state()['revision'], delay_seconds=5, fault=fault)
+  File "/public/framework/framework/local/runner.py", line 116, in run
+    if platform.system() != 'Darwin' or not Path('/usr/bin/sandbox-exec').exists():
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/platform.py", line 920, in system
+    return uname().system
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/platform.py", line 843, in uname
+    system, node, release, version, machine = infos = os.uname()
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+FAIL: test_cli_success_receipt_replay_preserves_result (test_local.LocalTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/public/framework/tests/local/test_local.py", line 417, in test_cli_success_receipt_replay_preserves_result
+    self.assertEqual(p.returncode, 0, p.stderr)
+AssertionError: 2 != 0 : b'{"error": "[Errno 1] Operation not permitted"}\n'
+
+----------------------------------------------------------------------
+Ran 71 tests in 121.172s
+
+FAILED (failures=1, errors=5, skipped=3)
+test_authority_reference_blocks_asset_removal (test_bootstrap.BootstrapTests) ... ok
+test_committed_receipt_can_reconcile_lost_final_response (test_bootstrap.BootstrapTests) ... ok
+test_custom_bootstrap_conflict (test_bootstrap.BootstrapTests) ... ok
+test_dirty_import_preserves_git_files_and_custom_rules (test_bootstrap.BootstrapTests) ... ok
+test_dry_run_writes_nothing_and_initial_state_is_honest (test_bootstrap.BootstrapTests) ... ok
+test_edited_file_blocks_rollback_before_any_deletion (test_bootstrap.BootstrapTests) ... ok
+test_fault_after_unrecorded_write_preserves_unknown_and_blocks_store (test_bootstrap.BootstrapTests) ... ok
+test_invalid_execution_state_blocks_upgrade (test_bootstrap.BootstrapTests) ... ok
+test_journal_only_crash_recovers_via_new_process_cli (test_bootstrap.BootstrapTests) ... ok
+test_journal_only_recovery_preserves_unknown_file (test_bootstrap.BootstrapTests) ... ok
+test_old_receipt_cannot_delete_new_installation (test_bootstrap.BootstrapTests) ... ok
+test_plan_cannot_select_arbitrary_files (test_bootstrap.BootstrapTests) ... ok
+test_reinstall_after_rollback_preserves_newer_ownership (test_bootstrap.BootstrapTests) ... ok
+test_repeat_apply_and_rollback_are_safe (test_bootstrap.BootstrapTests) ... ok
+test_rollback_lost_response_can_reconcile (test_bootstrap.BootstrapTests) ... ok
+test_stale_plan_and_wrong_hash_rejected (test_bootstrap.BootstrapTests) ... ok
+test_state_progress_is_not_rewound_by_rollback (test_bootstrap.BootstrapTests) ... ok
+test_symlink_destination_refused (test_bootstrap.BootstrapTests) ... ok
+test_unknown_execution_blocks_upgrade (test_bootstrap.BootstrapTests) ... ok
+test_upgrade_and_rollback_preserve_task_authority (test_bootstrap.BootstrapTests) ... ok
+test_empty_target_can_use_reviewed_cli_from_target_directory (test_cli.ProjectCliTests) ... ok
+test_stale_public_plan_preserves_work_then_imports_after_replanning (test_cli.ProjectCliTests) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 19.080s
+
+OK
+test_ancestor_swap_is_rejected (test_collector.CollectorContract) ... ok
+test_commit_and_tree_cannot_be_self_reported (test_collector.CollectorContract) ... ok
+test_duplicate_cases_and_timeout_budget_rejected (test_collector.CollectorContract) ... ok
+test_expected_exit_bool_signal_and_large_value_rejected (test_collector.CollectorContract) ... ok
+test_intent_is_exclusive_and_preserved (test_collector.CollectorContract) ... ok
+test_mode_change_is_not_silently_accepted (test_collector.CollectorContract) ... ok
+test_policy_does_not_grant_fork_or_trusted_write (test_collector.CollectorContract) ... ok
+test_skipping_does_not_spawn_or_claim_exit (test_collector.CollectorContract) ... ok
+test_snapshot_is_bound_to_real_git_object_encoding (test_collector.CollectorContract) ... ok
+test_source_changes_and_extra_files_are_rejected (test_collector.CollectorContract) ... ok
+test_source_symlink_and_hardlink_are_rejected (test_collector.CollectorContract) ... ok
+test_strict_json_rejects_duplicates_and_nan (test_collector.CollectorContract) ... ok
+test_trust_and_candidate_roots_cannot_overlap (test_collector.CollectorContract) ... ok
+test_actual_document_check_and_expected_nonzero_exit_can_pass (test_gate.GateTests) ... ok
+test_ancestor_symlink_is_rejected (test_gate.GateTests) ... ok
+test_changed_input_command_cwd_or_expected_result_rejected (test_gate.GateTests) ... ok
+test_changed_log_and_paired_hash_cannot_fake_expected_result (test_gate.GateTests) ... ok
+test_cli_uses_registered_bundle_and_status_exit_codes (test_gate.GateTests) ... ok
+test_collection_error_and_unknown_are_unverifiable (test_gate.GateTests) ... ok
+test_counts_and_boolean_numbers_rejected (test_gate.GateTests) ... ok
+test_declared_trusted_flag_is_not_source_proof (test_gate.GateTests) ... ok
+test_duplicate_json_key_and_nonfinite_rejected (test_gate.GateTests) ... ok
+test_duplicate_plan_case_ids_rejected (test_gate.GateTests) ... ok
+test_empty_code_and_document_are_not_passed (test_gate.GateTests) ... ok
+test_environment_and_signal_binding_rejected (test_gate.GateTests) ... ok
+test_failed_exit_reported_passed_is_unverifiable (test_gate.GateTests) ... ok
+test_float_in_integer_field_is_rejected (test_gate.GateTests) ... ok
+test_forged_trust_plus_own_hash_cannot_replace_operator_pin (test_gate.GateTests) ... ok
+test_genuine_failure_is_failed_without_baseline_waiver (test_gate.GateTests) ... ok
+test_group_execute_bit_does_not_change_git_mode (test_gate.GateTests) ... ok
+test_handwritten_report_and_matching_hash_without_registered_receipt (test_gate.GateTests) ... ok
+test_log_aliases_rejected (test_gate.GateTests) ... ok
+test_log_descriptor_cannot_select_another_path (test_gate.GateTests) ... ok
+test_manifest_fingerprint_rejected (test_gate.GateTests) ... ok
+test_missing_extra_and_duplicate_case_ids_rejected (test_gate.GateTests) ... ok
+test_missing_or_changed_log_rejected (test_gate.GateTests) ... ok
+test_missing_pid_and_invalid_time_rejected (test_gate.GateTests) ... ok
+test_not_run_is_failed_even_if_optional (test_gate.GateTests) ... ok
+test_optional_approved_skip_with_actual_check_passes (test_gate.GateTests) ... ok
+test_oversized_log_is_unverifiable (test_gate.GateTests) ... ok
+test_plan_replacement_and_matching_self_hash_still_rejected (test_gate.GateTests) ... ok
+test_policy_missing_and_tampered_rejected (test_gate.GateTests) ... ok
+test_required_skip_is_failed (test_gate.GateTests) ... ok
+test_source_changed_flag_rejected (test_gate.GateTests) ... ok
+test_source_changed_or_extra_file_rejected (test_gate.GateTests) ... ok
+test_source_mode_change_rejected (test_gate.GateTests) ... ok
+test_source_requires_fixed_subject_path (test_gate.GateTests) ... ok
+test_timeout_signal_and_output_limit_never_pass (test_gate.GateTests) ... ok
+test_trust_hardlink_rejected (test_gate.GateTests) ... ok
+test_unapproved_skip_rejected (test_gate.GateTests) ... ok
+test_unregistered_run_and_wrong_pin_fail_closed (test_gate.GateTests) ... ok
+test_valid_fixture_is_deterministic_and_read_only (test_gate.GateTests) ... ok
+test_wrong_commit_object_rejected (test_gate.GateTests) ... ok
+test_wrong_receipt_identity_and_subject (test_gate.GateTests) ... ok
+
+----------------------------------------------------------------------
+Ran 54 tests in 28.146s
+
+OK
+test_baseline_known_vs_new_failures_not_a_waiver (test_governance.GovernanceLogic) ... ok
+test_closure_requires_exact_passed_gate (test_governance.GovernanceLogic) ... ok
+test_contract_change_then_restore_does_not_resurrect (test_governance.GovernanceLogic) ... ok
+test_empty_review_or_fake_actor_schema (test_governance.GovernanceLogic) ... ok
+test_exact_mechanical_delta_requires_candidate_gate_and_no_other_change (test_governance.GovernanceLogic) ... ok
+test_expired_deviation (test_governance.GovernanceLogic) ... ok
+test_high_risk_author_cannot_review_despite_model_label (test_governance.GovernanceLogic) ... ok
+test_integer_json_type_is_strict (test_governance.GovernanceLogic) ... ok
+test_missing_impact_relation (test_governance.GovernanceLogic) ... ok
+test_plan_does_not_close_and_failed_gate_stays_failed (test_governance.GovernanceLogic) ... ok
+test_required_contract_binding (test_governance.GovernanceLogic) ... ok
+test_review_before_change_cannot_be_signed_after_restore (test_governance.GovernanceLogic) ... ok
+test_revoke_survives_content_restore_and_old_history_fails_tip (test_governance.GovernanceLogic) ... ok
+test_same_author_group_is_not_independent (test_governance.GovernanceLogic) ... ok
+test_same_tree_needs_prepinned_policy (test_governance.GovernanceLogic) ... ok
+test_same_tree_new_commit_exact_binding (test_governance.GovernanceLogic) ... ok
+test_schema_valid_fixture_and_positive_synthetic_decision (test_governance.GovernanceLogic) ... ok
+test_target_base_recheck (test_governance.GovernanceLogic) ... ok
+test_transitive_impact (test_governance.GovernanceLogic) ... ok
+test_wrong_role_source_rejected (test_governance.GovernanceLogic) ... ok
+test_wrong_sha_and_tree (test_governance.GovernanceLogic) ... ok
+test_cli_inspect_export_impact_proposal_and_no_authority_write (test_governance.ProtectedInputs) ... ok
+test_duplicate_json_key (test_governance.ProtectedInputs) ... ok
+test_external_passed_json_not_consumed (test_governance.ProtectedInputs) ... ok
+test_real_quality_verifier_is_called_fail_closed_missing_trust (test_governance.ProtectedInputs) ... ok
+test_symlink_ancestor_and_hardlink_rejected (test_governance.ProtectedInputs) ... ok
+test_valid_load_and_forged_source_rejected (test_governance.ProtectedInputs) ... ok
+test_wrong_trust_pin (test_governance.ProtectedInputs) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 2.001s
+
+OK
