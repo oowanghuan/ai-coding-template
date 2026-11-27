@@ -16,7 +16,7 @@ from framework.local.runner import git
 from scripts.install_claude_tools import plan as file_plan, rollback as rollback_files, read_receipts, claimed_paths
 
 ROOT = Path(__file__).resolve().parents[2]
-VERSION = '0.2.0-preview'
+VERSION = '0.2.1-preview'
 POINTER = b'# Project bootstrap\n\nRead `.ai-org/install-journal.json` and its `guide` path for the installed guide.\nTask authority: `.ai-org/state.json`. Installation does not grant execution rights.\n'
 
 

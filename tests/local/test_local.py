@@ -430,11 +430,22 @@ Path('allowed').write_text('ok')
             process = subprocess.Popen([sys.executable, '-B', '-S', str(ROOT / 'framework/local/worker_process.py')],
                 cwd=directory, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             process.stdin.write(json.dumps(dict(path=relative, content='isolated', delay_seconds=1)).encode())
-            process.stdin.flush(); processes.append(process)
+            # The fixed worker reads to EOF. Leaving stdin open until sequential
+            # communicate() calls would serialize work despite two live PIDs.
+            process.stdin.close(); process.stdin = None
+            processes.append(process)
         self.assertTrue(all(p.poll() is None for p in processes))
+        observations = []
         for p in processes:
             out, err = p.communicate(timeout=15)
             self.assertEqual(p.returncode, 0, err)
+            observation = json.loads(out)
+            self.assertEqual(observation['pid'], p.pid)
+            self.assertEqual(observation['clock'], 'CLOCK_MONOTONIC')
+            self.assertLess(observation['started_ns'], observation['finished_ns'])
+            observations.append(observation)
+        self.assertLess(max(row['started_ns'] for row in observations),
+                        min(row['finished_ns'] for row in observations))
         for c, actor, relative in [(a, ACTOR, 'src/a/out'), (b, 'principal-reviewer', 'src/b/out')]:
             result = self.change('submit', dict(c, path=relative, sha256=hashlib.sha256(b'isolated').hexdigest()), actor)
             self.assertFalse(result['operation']['result']['accepted'])
