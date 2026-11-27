@@ -25,8 +25,14 @@ python3 "$FRAMEWORK_ROOT/scripts/v4_governance.py" verify \
 
 The commands themselves are read-only. Candidate execution belongs in the
 reviewed A01 sandbox; a pasted shell command does not establish that sandbox.
-An effective result means this pinned signoff currently applies to this exact
-candidate under this policy. It does not mean merged, deployed or business accepted.
+Every verify result includes `verification_scope: locked_baseline` and
+`current_target_status: not_observed`, including rejected or unverifiable results.
+An effective result means this pinned signoff applies to the supplied locked
+snapshot of candidate, policy and target-base SHA. It does not observe the live
+Git target ref. If all those inputs still contain the old SHA after the real
+target moves, verification can remain effective within that old snapshot.
+Do not use this result as current-target validation or merge authorization.
+It does not mean merged, deployed or business accepted.
 A failed engineering Gate remains rejected even with an open deviation.
 
 To propose a new immutable source, the operator first registers its protected

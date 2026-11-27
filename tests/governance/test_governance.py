@@ -81,6 +81,41 @@ class GovernanceLogic(unittest.TestCase):
     def test_wrong_sha_and_tree(self):
         self.f.candidate['subject']=dict(self.f.subject,commit='8'*40);self.rejected('commit-object-sha-mismatch')
         self.f.candidate['subject']=dict(self.f.subject,tree='9'*40);self.rejected('commit-object-tree-mismatch')
+    def test_scope_is_explicit_for_each_decision_status(self):
+        for gate_status,decision_status in [('passed','effective'),('failed','rejected'),('unverifiable','unverifiable')]:
+            with self.subTest(status=decision_status):
+                self.f.gate['status']=gate_status
+                result=self.f.run()
+                self.assertEqual(result['status'],decision_status)
+                self.assertEqual(result['verification_scope'],'locked_baseline')
+                self.assertEqual(result['current_target_status'],'not_observed')
+    def test_actual_git_ref_advance_does_not_turn_snapshot_into_live_observation(self):
+        # Real local Git movement; review and Gate identities remain synthetic.
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp).resolve()
+            environment=dict(os.environ, GIT_CONFIG_NOSYSTEM='1', GIT_CONFIG_GLOBAL='/dev/null',
+                GIT_AUTHOR_NAME='Synthetic Fixture', GIT_AUTHOR_EMAIL='fixture@example.invalid',
+                GIT_COMMITTER_NAME='Synthetic Fixture', GIT_COMMITTER_EMAIL='fixture@example.invalid')
+            def git(*args):
+                process=subprocess.run(['/usr/bin/git','-c','core.hooksPath=/dev/null','-c','commit.gpgsign=false',*args],
+                    cwd=root,env=environment,capture_output=True,text=True)
+                self.assertEqual(process.returncode,0,process.stderr)
+                return process.stdout.strip()
+            git('init','-q')
+            (root/'target.txt').write_text('baseline\n');git('add','target.txt');git('commit','-q','-m','baseline')
+            baseline=git('rev-parse','HEAD')
+            work=self.f.trust['work_packages']['WP-203'];work['target_base_sha']=baseline
+            self.f.review['target_base_sha']=baseline;self.f.review['policy_sha256']=fingerprint(work)
+            self.f.candidate['target_base_sha']=baseline
+            before=self.f.run()
+            (root/'target.txt').write_text('advanced\n');git('add','target.txt');git('commit','-q','-m','advance target')
+            self.assertNotEqual(git('rev-parse','HEAD'),baseline)
+            after=self.f.run()
+            self.assertEqual(before,after)
+            self.assertEqual(after['status'],'effective')
+            self.assertEqual(after['target_base_sha'],baseline)
+            self.assertEqual(after['verification_scope'],'locked_baseline')
+            self.assertEqual(after['current_target_status'],'not_observed')
     def test_target_base_recheck(self):
         self.f.candidate['target_base_sha']='9'*40;self.rejected('target-base-changed-recheck-required')
     def test_same_tree_new_commit_exact_binding(self):
@@ -172,6 +207,34 @@ class ProtectedInputs(unittest.TestCase):
         self.assertEqual(load(self.path,self.pin,AT)[0],self.f.trust)
         (self.t/'src-2.json').write_text('{}')
         self.assertEqual(verify_bundle(self.path,self.pin,'S1',self.cp,AT)['status'],'unverifiable')
+    def test_protected_verifier_scope_survives_success_rejection_and_load_error(self):
+        # Only this test substitutes the Gate fixture; the public CLI has no such input.
+        with patch('framework.governance.evaluate.quality_details', return_value=self.f.quality['review']):
+            for gate_status,expected in [('passed','effective'),('failed','rejected'),('unverifiable','unverifiable')]:
+                self.f.gate['status']=gate_status
+                result=verify_bundle(self.path,self.pin,'S1',self.cp,AT)
+                self.assertEqual(result['status'],expected)
+                self.assertEqual(result['verification_scope'],'locked_baseline')
+                self.assertEqual(result['current_target_status'],'not_observed')
+                body={key:value for key,value in result.items() if key!='decision_id'}
+                self.assertEqual(result['decision_id'],fingerprint(body))
+        result=verify_bundle(self.path,'a'*64,'S1',self.cp,AT)
+        self.assertEqual(result['status'],'unverifiable')
+        self.assertEqual(result['verification_scope'],'locked_baseline')
+        self.assertEqual(result['current_target_status'],'not_observed')
+    def test_cli_help_and_unverifiable_output_expose_snapshot_scope(self):
+        cli=Path(__file__).resolve().parents[2]/'scripts/v4_governance.py'
+        for args in [[],['verify']]:
+            process=subprocess.run([sys.executable,'-B','-S',str(cli),*args,'--help'],capture_output=True,text=True)
+            self.assertEqual(process.returncode,0,process.stderr)
+            for text in ('locked_baseline','not_observed','live target ref'):
+                self.assertIn(text,process.stdout)
+        process=subprocess.run([sys.executable,'-B','-S',str(cli),'verify','--trust',str(self.path),
+            '--trust-sha256','a'*64,'--at',AT,'--signoff','S1','--candidate',str(self.cp)],capture_output=True,text=True)
+        self.assertEqual(process.returncode,3,process.stderr)
+        result=json.loads(process.stdout)
+        self.assertEqual(result['verification_scope'],'locked_baseline')
+        self.assertEqual(result['current_target_status'],'not_observed')
     def test_wrong_trust_pin(self):
         self.assertEqual(verify_bundle(self.path,'a'*64,'S1',self.cp,AT)['status'],'unverifiable')
     def test_symlink_ancestor_and_hardlink_rejected(self):

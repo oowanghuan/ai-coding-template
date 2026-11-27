@@ -123,6 +123,7 @@ def finish(result, digest):
 
 
 def verify_bundle(trust_path, expected_trust_sha256, signoff_id, candidate_path, at):
+    """Evaluate only pinned inputs; effective does not establish current target validity."""
     try:
         trust, ledger, records = load(trust_path, expected_trust_sha256, at)
         candidate = validate(decode(read_bytes(inside(candidate_path, Path(trust['candidate_root'])))), 'candidate')
@@ -147,6 +148,9 @@ def verify_bundle(trust_path, expected_trust_sha256, signoff_id, candidate_path,
     except (OSError, ValueError, KeyError, TypeError, OverflowError) as exc:
         result = {'format':'governance-decision/1','status':'unverifiable', 'signoff_id':signoff_id,
                   'reasons':['protected-verification:' + str(exc)]}
+    # Include the limitation even when protected input loading fails. Hash it into
+    # the decision so downstream consumers cannot omit it without changing the ID.
+    result.update(verification_scope='locked_baseline', current_target_status='not_observed')
     return finish(result, expected_trust_sha256)
 
 

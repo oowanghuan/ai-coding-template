@@ -217,11 +217,15 @@ def baseline_analysis(current, baseline, binding, wp_id):
 
 
 def evaluate_loaded(trust, ledger, records, signoff_id, candidate, at, quality):
-    """Pure decision; injected quality details are labelled synthetic tests, never CLI input."""
+    """Locked-baseline decision; no live target ref is observed here.
+
+    Injected quality details are synthetic tests, never CLI input.
+    """
     derived = derive(trust, ledger, records, at); reasons = list(derived['errors']); unknown = bool(reasons)
     reviewed = quality.get('review', {}); gate = reviewed.get('gate', {})
     candidate_details = quality.get('candidate', {}); candidate_gate = candidate_details.get('gate', {})
     result = dict(format='governance-decision/1', status='unverifiable', reasons=[], signoff_id=signoff_id,
+                  verification_scope='locked_baseline', current_target_status='not_observed',
                   review_id=None, wp_id=None, wp_revision=None, reviewed_subject=None,
                   candidate_subject=candidate['subject'], target_base_sha=candidate['target_base_sha'],
                   gate_id=gate.get('gate_id'), candidate_gate_id=candidate_gate.get('gate_id'), equivalence=None,

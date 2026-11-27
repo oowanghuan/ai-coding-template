@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Read-only local governance CLI. Never grants task or protected-write authority."""
+"""Read-only local governance CLI.
+
+Verify reports verification_scope=locked_baseline and
+current_target_status=not_observed. An effective status applies only to the
+locked snapshot; it does not validate the live target ref or grant merge authority.
+"""
 import argparse
 import json
 from pathlib import Path
@@ -13,7 +18,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='operation', required=True)
     for name in ('verify','inspect','export','impact','append-proposal'):
-        command = sub.add_parser(name)
+        command = sub.add_parser(name, description=__doc__ if name == 'verify' else None)
         command.add_argument('--trust', required=True)
         command.add_argument('--trust-sha256', required=True)
         command.add_argument('--at', required=True)

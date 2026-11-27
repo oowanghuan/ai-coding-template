@@ -21,7 +21,18 @@ effective|rejected|unverifiable`, sorted `reasons`, `decision_id`, `signoff_id`,
 `review_id`, `wp_id`, `wp_revision`, `reviewed_subject`, `candidate_subject`,
 `target_base_sha`, `gate_id`, `candidate_gate_id`, `equivalence`,
 `active_deviations`, `failure_analysis`, `invalidated_signoffs`,
-`ledger_tip`, `trust_sha256`. No task/merge/deploy/business milestone is inferred.
+`ledger_tip`, `trust_sha256`, `verification_scope: locked_baseline`,
+`current_target_status: not_observed`. These scope fields are present on every
+verify outcome, including rejected/unverifiable, and are bound by `decision_id`.
+No task/merge/deploy/business milestone is inferred.
+
+`effective` means the pinned signoff applies under the supplied locked-baseline
+snapshot at the explicit evaluation time. This verifier does not observe a live
+Git target ref, fetch a remote branch or determine whether its head has advanced.
+If review, candidate and protected policy all retain the same old target SHA, the
+result may remain `effective` even after the real target moves. It is **not** a
+current-target validity assertion or a merge-time safety check. The status and
+exit code remain compatible; consumers must retain the scope limitation.
 
 CLI `scripts/v4_governance.py verify --trust PATH --trust-sha256 HASH
 --signoff ID --candidate PATH --at UTC`. `inspect` / `export` read the same pinned
@@ -91,7 +102,8 @@ named tree must match. Normally candidate tree and manifest equal the reviewed/G
 object. Different commit with the same tree is allowed only by pre-pinned policy,
 with both exact commits retained in the decision (`equivalence: same_tree_commit`);
 this does not pretend the new commit was itself tested. A changed target base
-requires new review.
+within the supplied snapshot requires new review. A live ref movement absent from
+those inputs is not detected.
 
 For a different tree, `quality_run_id` must identify a new actual passed Gate.
 The complete manifest delta must equal protected `mechanical_changes`, with every
@@ -114,7 +126,8 @@ required paths; contract references bind the registry versions used by that revi
 
 ## Operational boundary and reproducibility
 
-`verify` exits 0 for effective, 2 for rejected, 3 for unverifiable. Other read-only
+`verify` exits 0 for effective within the locked snapshot, 2 for rejected, 3 for
+unverifiable. Exit 0 does not establish the current live target or authorize merge. Other read-only
 commands exit 3 for unverifiable and 0 for a verified result/proposal. A proposal
 is explicitly `effective: false`; it needs a protected operator import and an
 out-of-band updated trust pin. Duplicate source IDs and stale ledger tips fail.
