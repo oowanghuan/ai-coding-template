@@ -217,7 +217,7 @@ docs/{feature-name}/
 
 ### 4. 生成 DOC_CHANGELOG.md
 
-使用模板 `CC_COLLABORATION/03_templates/_shared/DOC_CHANGELOG.md` 生成文档变更日志：
+使用下方内置模板生成文档变更日志（没有独立的 DOC_CHANGELOG 模板文件）：
 
 ```markdown
 # 文档变更日志

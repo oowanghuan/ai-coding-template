@@ -30,9 +30,9 @@
 
 | 文档 | 路径 | 用途 |
 |------|------|------|
-| User Journey | `docs/_foundation/01_USER_JOURNEY.md` | 用户流程定义 |
-| Architecture | `docs/_foundation/02_ARCHITECTURE.md` | 系统边界定义 |
-| Module Decomposition | `docs/_foundation/03_MODULE_DECOMPOSITION.md` | 模块定义 |
+| User Journey | `docs/_foundation/_planning/01_USER_JOURNEY.md` | 用户流程定义 |
+| Architecture | `docs/_foundation/_planning/02_ARCHITECTURE.md` | 系统边界定义 |
+| Module Decomposition | `docs/_foundation/_planning/03_MODULE_DECOMPOSITION.md` | 模块定义 |
 
 ### 1.2 前置检查
 

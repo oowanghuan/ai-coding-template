@@ -13,13 +13,13 @@
 
 本机 GitHub 身份已核实为 `oowanghuan`；不需要新增账号识别授权。Issue 已由 Owner 创建，直接接入 #3，不另建重复台账。
 
-## 2. 待 Owner 裁定的真实选择
+## 2. 重要裁定及未决选择
 
 ### OD-01：首个实现批次及最小产品范围
 
 **推荐**：第一轮独立评审后，批准 WP-001（工具 manifest 与兼容修复）和 WP-101（核心协议），再按依赖逐批放行。以本地闭环 + 两个真实 CLI 为 Alpha，GitHub 自动协调为 Team Beta。详情见 [工作包](V4_WORK_PACKAGES.md)。
 
-替代：一开始同步建设所有企业治理、云端调度与资产平台，会延迟安装/证据/接管的核心验证，增大尚未验证的架构面积。影响：推荐方案更快得到可运行反馈，但不能提前宣称完整 Team/Enterprise 已交付。当前状态 **proposed**；本轮设计提交不自动启动实现。
+替代：一开始同步建设所有企业治理、云端调度与资产平台，会延迟核心验证。当前状态 **approved（仅 WP-001 / WP-101）**。Owner 原文及受托转记见 [7214229053](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7214229053)：仅放行 WP-001 和 WP-101。Project Lead 已核对来源和范围；后续包、合入、发布及新增费用不在此次授权内。
 
 ### OD-02：Team/Enterprise 的原子权威状态
 
@@ -35,7 +35,7 @@
 
 Advisor 的账号若仍为 `oowanghuan`，记录独立执行上下文和只读证据，不能只凭账号或模型名声称独立；若使用其他账号，先向 Owner 报告身份并获得识别授权。影响：没有已绑定的独立评审主体时，作者检查仍然只能记为 self-test。
 
-已有独立评审：[7210718044](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7210718044) 对 `17e65ec619b2e729cb81bd80f5d4f437099a27b6` 的 A01–A03 给出限定范围 GO，对机器接入/额度恢复验收设计提出 A04 REVISE。本轮补设计并请复核；不把局部 GO 扩为产品验收、实现批次或合入授权。Owner 已指示双方在既有范围自行核查/修订/复核，不逐条人工协调；重大取舍与阶段放行边界保持。
+已有独立评审：[7210718044](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7210718044) 对 `17e65ec619b2e729cb81bd80f5d4f437099a27b6` 的 A01–A03 给出限定范围 GO；[7211690143](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7211690143) 对 `1fbe382a2ffce858f15ba1769e3068054e589f96` 的 A04 验收设计给出 GO，第一轮设计意见收口。随后 Owner 单独批准 OD-01 两个包。实现成果仍须按其新 SHA 独立评审，不把设计 GO 扩成产品验收或合入授权。Owner 已指示双方在既有范围自行核查/修订/复核，不逐条人工协调；重大取舍与阶段放行边界保持。
 
 ## 3. 环境待落实，非新增审批门
 
