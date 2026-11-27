@@ -51,6 +51,10 @@ target_base_sha，没有读取真实 Git ref。三份旧输入一致时，实际
 不能直接当作新信任配置使用。候选 CLI 始终在 A01 沙盒内，宿主协调器只使用
 已审核 stdlib 和固定 Git 命令，不导入候选模块、不合入本仓 main。
 
+首次协调器的原始 `author/attempt-01/run/hardening.diff` 包含两条只含空格的
+diff 上下文行。Git 空白检查会报告它们；为保留证据没有改写该文件。产品与文档
+检查排除这一明确原始产物，不能据此宣称整个原始证据树无空白告警。
+
 [OD-08](../../OWNER_DECISIONS.md#od-08本地证据门禁与签认治理批次) 同时更正：
 Owner 的会话原话“继续？”与 Project Lead 的范围解释分开记录。公开可核对的
 Owner 直接阶段裁定仍待确认，不用 Project Lead 的转述或本次 Advisor GO 代替。
