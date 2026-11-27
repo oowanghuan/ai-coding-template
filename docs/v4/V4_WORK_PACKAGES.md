@@ -56,19 +56,19 @@ WP-004 正向验收：读取 Issue 正文、核对 Owner 账号、真实运行�
 
 WP-001 独占 `tests/install/`、`manifests/`、安装脚本及明确列出的四个源命令；被修改的五份旧文件保全于 `legacy/v3.3.0/`。WP-101 独占 `tests/protocol/`、`schemas/`、`framework/core/`、协议 CLI 和 `examples/protocol/`。共享依赖及文档由当前 Project Lead 统一集成。两包可以独立推进，但本次没有虚构第二名执行者或独立实施 Session。其后 WP-102/103 须另获放行。
 
-更新：Owner 已通过评论 7214229053 批准上述两个包。当前执行者为 Project Lead 会话，两个包为 `submitted`（评审修订自测通过，独立验收 pending）；设计基线 `1fbe382a2ffce858f15ba1769e3068054e589f96`，实现分支 `v4/first-batch`、Draft PR #5。Advisor [7216033104](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7216033104) 提出的旧回执误删补装成果、外部操作扩权未失效签认均已实际复现并修复。新测试代码提交 `ea89d0c91a48e71f600f6da2bcaae5a29104e1a9`，安装 23 项、协议 34 项通过，见 [修订证据](evidence/advisor-7216033104/README.md)；[首批历史证据](evidence/first-batch/README.md) 保留。独立 Reviewer 为 #3 Advisor 上下文，待新交付 SHA 复核；合入责任仍待 Owner 指定。本机后台继续只读核查/已核查文字回复，不执行候选代码。其他包不因本次放行自动开工。
+更新：Owner 已通过评论 7214229053 批准上述两个包。Advisor [7217342565](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7217342565) 已对 `673d6baa13283180b342f446bcadc17ad66efaf9` 给出限定 GO，关闭两项整改；里程碑 `review_passed`。生命周期仍记 `submitted`，因为 PR #5 未合入、不能把静态独立复核与作者实测扩成完整产品工程验收。已实测代码提交 `ea89d0c91a48e71f600f6da2bcaae5a29104e1a9`：安装 23 项、协议 34 项通过；[修订证据](evidence/advisor-7216033104/README.md) 和 [首批历史证据](evidence/first-batch/README.md) 保留。`v4/first-batch` 与 PR #5 冻结在受审 SHA；本次收口/下一批计划单列 `v4/next-batch-plan`，不更改受审代码。本机后台只读核查/已核查文字回复；其他包不因 GO 自动开工。
 
 ## 5. 可恢复检查点
 
 首轮提交前的历史检查点：`v4/design`，已有提交为 V3 基线，新增成果位于 `docs/v4/` 和 `tests/`，未修改旧文件。当前精确交付 SHA 以 #3 最新请审/复核评论与 Draft PR 为准，避免文档自引用提交 SHA。
 
-已完成：基线核查；156 个输入文件清单/指纹；重点机制盘点；12 项隔离观察；首轮设计独立复核；本机轮询修复；WP-001/101 实现及隔离组件自测。进行中：两个实现包提交独立评审。未完成：实现独立验收、OD-02、后续包放行、V4 产品端到端验收、云端运行记录的本机核验。
+已完成：基线核查；156 个输入文件清单/指纹；重点机制盘点；12 项隔离观察；首轮设计独立复核；WP-001/101 实现、隔离组件自测及限定范围独立 GO。进行中：GO 收口、下一批具体方案。未完成：main 合入、完整工程/产品验收、OD-02/OD-07、后续包开工、云端运行记录的本机核验。
 
-下一会话必须先读本账本、`git status/diff/log`、远端 `v4/design` 与 `v4/first-batch`、#3 全部评论与已有回复。核对 Owner 决定和 Advisor 意见是两类事件；前者不要求先有请审评论。初次交付 SHA 为 `6efbc7525416f36963000e45029c6e3ce6403273`；历史 REVISE/GO 与旧证据均保留。
+下一会话必须先读本账本、`git status/diff/log`、远端 `v4/design`、`v4/first-batch` 与 `v4/next-batch-plan`、#3 全部评论与已有回复。核对 Owner 决定和 Advisor 意见是两类事件；前者不要求先有请审评论。明确受审 SHA 与测试/比较 SHA 不混用；同一 GO 没有新待办时不再请复核。初次交付 SHA 为 `6efbc7525416f36963000e45029c6e3ce6403273`；历史 REVISE/GO 与旧证据均保留。
 
 2026-11-27 UTC 运维修正：后台读到意见后因 Desktop 工作目录访问被拒而卡在首次 Git 操作；没有修改/提交/未知写入。按 A01 已撤除后台候选执行和 Git 写入路径，改为读取远端与发送前台 Project Lead 已核查的文字 outbox。新意见无已核查回复时保持 pending，不能再宣称无人值守模型整改已启用。普通修订由 Project Lead 在现有范围继续完成，不新增 Owner 审批门。运行记录、互斥锁、原始输入及 journal 均保存在仓库外；公开副本见 [修复记录](evidence/poll-repair/README.md)。未知外部结果先读远端对账，不盲重试。
 
-当前执行权限：WP-001、WP-101 及已有设计/运维意见处理。手工分配给本次 Project Lead 会话，分支 `v4/first-batch`；登记时段 2026-11-27 09:44–16:00 UTC，期满或换会话先核对 Git/未提交成果与执行者，不盲目并发续领。没有软件强制的 Assignment/租约或分布式 fencing。未提交成果保留原工作树，精确已提交版本以分支和 #3 请审记录为准。阻塞项和裁定见 [OWNER_DECISIONS.md](OWNER_DECISIONS.md)。
+当前执行权限：原批次普通意见处理、设计规划及已授权本机运维。2026-11-27 12:09 UTC 已核对 Git 干净且远端一致，当前 Project Lead 在 `v4/next-batch-plan` 登记收口及计划；原 `v4/first-batch` 实现写入停止。此处没有软件强制租约；若换会话/恢复，先核对实际状态和未提交成果，不得盲目并发。下一实现批次需 OD-07 明确放行。裁定见 [OWNER_DECISIONS.md](OWNER_DECISIONS.md)。
 
 ## 6. 经验候选 EXP-001：以真实约束安排 AI 并行，而非套用人类工时
 
@@ -79,3 +79,37 @@ WP-001 独占 `tests/install/`、`manifests/`、安装脚本及明确列出的�
 并行前同时检查文件、契约、共享数据、外部操作和合入目标冲突；不同目录不自动代表互不影响。评审容量是资源约束，可增加具备独立性和授权的评审执行者，不能降低质量门槛或让实现者自签。发布窗口是外部约束，但窗口之前可进行独立开发、评审和隔离验证，不自动阻塞全部研发。
 
 验证归属：WP-303/S04 先验证本地并行与相同质量门禁，WP-401/403 再比较同一合成任务图的串行/并行总耗时、资源成本、返工和冲突、评审等待、验收通过率及恢复行为。只有证据支持、风险没有退化时，才通过 WP-502 将其从 Experience 候选升级为 Workflow/Cognition 规则；后续正式位置是调度策略和评测案例，不先增加一个新调度引擎。
+
+## 7. 下一批开工方案（待 OD-07 放行）
+
+状态为 planned，本节是可评审计划，不是实现或运行证据。输入固定为首批受审提交 `673d6baa13283180b342f446bcadc17ad66efaf9`、Schema 0.1、57 项组件自测及独立 GO 7217342565。建议 Owner 明确允许该未合入版本作为开发依赖，使用 `review_passed + component_checks` 准入，不把它改称 merged/完整 accepted。OD-02 的 GitHub 控制分支不是本批前置。
+
+### WP-102：单机执行权与受控交付
+
+- 目标：从“声明有效”推进到单 Host 上真实的唯一认领和受控执行；两进程争抢同一包仅一个成功，失效执行者不能向受控交付入口提交成果。
+- 交付/修改范围：`framework/local/` 状态存储和认领接口、`scripts/v4_local.py`、`schemas/local-state.schema.json`、`tests/local/` 与合成本地运行示例。若现有核心协议需最小兼容扩展，先记录接口差异，由 Project Lead 单一集成并回归原测试，不另复制协议规则。
+- 状态源：一个 `.ai-org/state.json` 权威聚合，原子保存 snapshot、revision、authority_epoch、操作意图/收据及工作区登记；单机锁、expected_revision 和原子替换在一次事务中约束 WP、Assignment、Worker 槽和文件范围。Git 保存可恢复检查点，不将 Issue/缓存当另一主状态。新封装格式版本化，旧 Schema 0.1 输入需显式转换。
+- 接口：register-worker / claim / start / heartbeat / release / revoke / inspect；每个变更带稳定 operation_id、expected_revision，交付带 assignment_id、epoch、fencing_token。重复同键返回已有结果；同键不同意图拒绝。结果未知时先对账，不能换键重试。
+- Runner：仅运行显式允许的本地任务和合成测试执行器，独立 Worktree；无发布凭证、默认禁止网络与宿主目录写入。创建 Worktree 与启动进程不是单个文件事务，需先记录 intent，失败/中断后按实际 Git/进程/目录对账。状态不明不得分配第二个可写执行者。真实供应商适配不在本批。
+- 关键边界：fencing 强制在受控状态和成果提交入口执行；过期进程可能仍写自己的旧隔离目录，不能仅凭租约到期宣称进程已停止。旧目录保全取证，新 Worker 使用新目录；禁止旧结果被采纳或合入。沙盒不由 Worktree 替代，不默认开放任意宿主命令。
+- 正向验收：实际多进程争抢唯一成功；不同作用域两 Worker 可并行；状态与分配/槽一致；幂等重试；重启后可对账；有效任务可向本地隔离交付区提交一次成果。
+- 负向验收：无授权/过期授权、循环或未满足依赖、项目暂停、预算/额度未知或耗尽、范围冲突、重复工作区、容量超额拒绝；过期 lease/旧 epoch/token 拒绝交付；状态写入前后、Worktree 创建后和进程启动后注入中断，不出现双有效认领或丢失成果；符号链接/穿越不能逃出允许目录。
+- 回退：停新认领、保留状态/日志/Worktree；不删除结果未知的进程成果。旧格式只在无活动认领且快照/指纹核对后导出回退，不能把旧 token 重新启用。
+
+### WP-103：可预演的项目接入与回退
+
+- 目标：空项目和已有项目可以安装最小中立框架、生成初始本地状态和恢复说明；已有代码、Git 历史、定制规则与未提交成果不丢失。
+- 交付/修改范围：`scripts/v4_project.py`、`templates/project/`、`schemas/install-plan.schema.json`、`tests/bootstrap/`、`examples/bootstrap/`。复用 WP-001 manifest/收据关系，不复制第二个安装器业务规则；供应商原生入口适配仍归 WP-301。
+- 接口：plan-init / plan-import / plan-upgrade / apply / rollback。plan 只读，列出源版本、目标文件及原始指纹、冲突、拟创建状态；apply 绑定计划指纹并重新核对目标状态，陈旧计划拒绝。重复 apply 同意图安全，变更路径明确留收据。
+- 状态：只创建/引用选定的本地权威状态；已有 authority 不覆盖、不自动切换 backend。初始任务为 planned，安装不生成 Owner 授权或假 Reviewer/Worker。安装收据是操作证据，不成为任务主状态。
+- 正向验收：空目录与已有干净/脏 Git 项目；多次 dry-run 无写入；可重复 apply；升级预演；用户可用的 bootstrap/recovery 指引；与 WP-102 的状态读写契约联合验证。
+- 负向验收：预演后用户改文件、同名规则、符号链接、部分失败、旧回执与新补装、不同 authority、未知操作、未跟踪成果均不得覆盖/误删；拒绝未经显式选择的 `.git` 初始化或迁移；回退只处理自身仍可证明归属的成果。
+- 回退：保留执行前快照及每次意图/收据；变更或归属不明时停止，不强制覆盖、不 reset/clean。活跃执行任务阻止有影响的迁移，不能借安装工具绕过认领。
+
+### 执行顺序、责任与完成判据
+
+1. Owner 放行后登记实际执行者、独立 Reviewer/验收者、作用域及期限；先锁定共同的状态封装/安装计划接口。WP-102 高风险关键故障用例的独立执行环境需落实，未落实时不得声称 ready 或已验收。
+2. WP-102 的状态/认领模块与 WP-103 的只读安装预演可以在上述不同路径并行；WP-103 创建运行状态和联合验收等待 WP-102 接口稳定。评审资源不足时限制并发，不降低门槛；本计划不虚构已启动的 Worker。
+3. 所有候选继续在 A01 隔离边界内测试。计划测试入口为 `tests/local/`、`tests/bootstrap/`，当前均尚未实现/未运行；以提交 SHA、命令、返回码、统计、原始日志和故障注入点取证。原 57 项测试是回归基准，新用例数量以实际实现为准。
+4. 独立 Advisor 技术复核；高风险工程验收由非作者上下文独立复跑关键竞争/失效/恢复用例。若只能静态检查，分别记录 review_passed 与 engineering_acceptance pending，不自签。合入责任和 main 放行仍由 Owner 决定。
+5. 输出独立分支、Draft PR、准确 SHA、完整恢复检查点和局限。两个包通过仍不等于 V4 Alpha：真实双 CLI、额度恢复、可信证据 Gate、跨机/云端及 S01–S12 完整验收继续按后续工作包处理。没有新增付费 API、分布式服务、GUI 或无人值守模型调度。

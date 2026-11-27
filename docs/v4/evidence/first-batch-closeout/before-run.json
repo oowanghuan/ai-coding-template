@@ -1,0 +1,51 @@
+{
+  "run_id": "20261127T121008297937Z",
+  "started_at": "2026-11-27T12:10:08.299337+00:00",
+  "trigger": "com.ai-coding-template.v4.project-lead",
+  "status": "waiting",
+  "mode": "read_only_and_reviewed_reply",
+  "runner_sha256": "42a86dbee3db17b8730f716102149b76618593566e7ace9ea8c4228e712925ec",
+  "processed": 0,
+  "waiting": [
+    {
+      "key": "v4-pl:7217342565:673d6baa13283180b342f446bcadc17ad66efaf9",
+      "reason": "Needs Project Lead investigation; candidate execution disabled"
+    },
+    {
+      "key": "v4-pl:7217342565:ea89d0c91a48e71f600f6da2bcaae5a29104e1a9",
+      "reason": "Needs Project Lead investigation; candidate execution disabled"
+    }
+  ],
+  "steps": [
+    {
+      "step": "identity_verified",
+      "at": "2026-11-27T12:10:10.755127+00:00"
+    },
+    {
+      "step": "issue_read",
+      "at": "2026-11-27T12:10:13.215970+00:00"
+    },
+    {
+      "step": "pending_selected",
+      "at": "2026-11-27T12:10:18.406937+00:00"
+    },
+    {
+      "step": "remote_head_verified",
+      "at": "2026-11-27T12:10:21.392232+00:00"
+    },
+    {
+      "step": "journals_reconciled",
+      "at": "2026-11-27T12:10:21.414575+00:00"
+    },
+    {
+      "step": "complete",
+      "at": "2026-11-27T12:10:21.576835+00:00"
+    }
+  ],
+  "last_successful_step": "complete",
+  "comments_read": 22,
+  "pending": 2,
+  "owner_decisions_seen": 1,
+  "remote_head": "1fbe382a2ffce858f15ba1769e3068054e589f96",
+  "finished_at": "2026-11-27T12:10:21.593706+00:00"
+}
