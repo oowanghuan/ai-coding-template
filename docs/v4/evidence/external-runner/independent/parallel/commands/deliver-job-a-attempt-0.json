@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "-B",
+    "-S",
+    "<REPOSITORY>/scripts/v4_local.py",
+    "submit",
+    "--root",
+    "<EXPERIMENT>/candidate/project",
+    "--actor",
+    "principal-implementer",
+    "--input",
+    "<EXPERIMENT>/candidate/commands/deliver-job-a.input.json",
+    "--expected-revision",
+    "14",
+    "--operation-id",
+    "deliver-job-a"
+  ],
+  "exit_code": 0,
+  "started_ns": 8276650875,
+  "finished_ns": 8937643625,
+  "stdout": "{\n  \"replayed\": false,\n  \"revision\": 15,\n  \"operation\": {\n    \"intent\": \"93a7b5c97273a6fddc2a65cbd5ec60439b1a2e3317320038fcc98fae1f612cba\",\n    \"action\": \"submit\",\n    \"actor\": \"principal-implementer\",\n    \"at\": \"2026-11-27T16:39:14Z\",\n    \"status\": \"committed\",\n    \"result\": {\n      \"delivery_id\": \"WP-DEMO\",\n      \"sha256\": \"14a3cc41f0636769c11124af5d5c5c0b8831ff64e34e5411e6772f778ca4a488\",\n      \"accepted\": false\n    },\n    \"revision\": 15\n  }\n}\n",
+  "stderr": ""
+}

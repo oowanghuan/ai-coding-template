@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "-B",
+    "-S",
+    "<REPOSITORY>/scripts/v4_local.py",
+    "submit",
+    "--root",
+    "<EXPERIMENT>/candidate/project",
+    "--actor",
+    "principal-reviewer",
+    "--input",
+    "<EXPERIMENT>/candidate/commands/deliver-job-b.input.json",
+    "--expected-revision",
+    "15",
+    "--operation-id",
+    "deliver-job-b"
+  ],
+  "exit_code": 0,
+  "started_ns": 9956332375,
+  "finished_ns": 10616470458,
+  "stdout": "{\n  \"replayed\": false,\n  \"revision\": 16,\n  \"operation\": {\n    \"intent\": \"7a78939b73a268a4d6eaa73d0e859d94f076e23359fc6a712709077e442a2a40\",\n    \"action\": \"submit\",\n    \"actor\": \"principal-reviewer\",\n    \"at\": \"2026-11-27T16:39:16Z\",\n    \"status\": \"committed\",\n    \"result\": {\n      \"delivery_id\": \"WP-SECOND\",\n      \"sha256\": \"3f829e42c43fe70dabecf5e77f30df1e489e3e130d939203a22f08743ff735f1\",\n      \"accepted\": false\n    },\n    \"revision\": 16\n  }\n}\n",
+  "stderr": ""
+}

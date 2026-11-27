@@ -1,0 +1,23 @@
+import json
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+
+with tempfile.TemporaryDirectory() as name:
+    processes = []
+    for index in range(2):
+        work = Path(name) / str(index); work.mkdir()
+        p = subprocess.Popen([sys.executable, '-B', '-S', sys.argv[1]], cwd=work,
+                             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p.stdin.write(json.dumps(dict(path='out', content='isolated', delay_seconds=1)).encode())
+        p.stdin.flush(); processes.append(p)
+    rows = []
+    for p in processes:
+        out, err = p.communicate(timeout=15)
+        assert p.returncode == 0, err
+        row = json.loads(out); assert row['pid'] == p.pid
+        rows.append(row)
+    overlap = max(r['started_ns'] for r in rows) < min(r['finished_ns'] for r in rows)
+    print(json.dumps(dict(sequential_stdin_eof=True, actual_intervals=rows, overlap=overlap)))
+    assert overlap, 'separate live PIDs did not prove concurrent Worker execution'

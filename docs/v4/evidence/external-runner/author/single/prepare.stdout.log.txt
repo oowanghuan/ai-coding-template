@@ -1,0 +1,1 @@
+{"phase": "prepared", "scenario": "single", "jobs": 1, "canaries": {"trusted_write": true, "trusted_hardlink_alias": true, "repo_write": true, "outside_read": true, "outside_write": true, "candidate_root_unlink": true, "network": true, "credentials_removed": true}}

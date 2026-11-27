@@ -1,0 +1,43 @@
+{
+  "candidate": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<EXPERIMENT_PARALLEL>/trusted/outer.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "<EXPERIMENT_PARALLEL>/trusted/candidate_harness.py",
+    "execute",
+    "--experiment",
+    "<EXPERIMENT_PARALLEL>",
+    "--repo",
+    "<WORKSPACE>",
+    "--scenario",
+    "parallel"
+  ],
+  "candidate_environment": {
+    "HOME": "<EXPERIMENT_PARALLEL>/candidate",
+    "TMPDIR": "<EXPERIMENT_PARALLEL>/candidate",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONPATH": "<WORKSPACE>:<DEPENDENCIES>",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "V4_OUTER_SEATBELT": "1"
+  },
+  "driver": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<EXPERIMENT_PARALLEL>/trusted/launch_driver.py",
+    "--config",
+    "<EXPERIMENT_PARALLEL>/trusted/config.json"
+  ],
+  "driver_environment": {
+    "HOME": "<EXPERIMENT_PARALLEL>/trusted/home",
+    "TMPDIR": "<EXPERIMENT_PARALLEL>/trusted/tmp",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

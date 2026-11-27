@@ -1,0 +1,61 @@
+{
+  "scenario": "parallel",
+  "root": "<EXPERIMENT>/candidate/project",
+  "baseline_sha": "1b58f4afac24bea95cec41180cb2f43bb28feaf3",
+  "jobs": [
+    {
+      "job_id": "job-a",
+      "operation_id": "external-parallel-a",
+      "workspace": "<EXPERIMENT>/candidate/project/.ai-org/workspaces/workspace-f8ce08acd2a343428d041a6da5e2c926",
+      "output": "src/a/result.txt",
+      "content": "synthetic-parallel-a",
+      "credentials": {
+        "assignment_id": "assignment-ae49d831d2914d21901bc7e2566dde47",
+        "epoch": 1,
+        "token": 1,
+        "lease_expires_at": "2026-11-27T16:43:51Z",
+        "workspace_id": "workspace-f8ce08acd2a343428d041a6da5e2c926"
+      },
+      "actor": "principal-implementer",
+      "wp_id": "WP-DEMO",
+      "delay_seconds": 2,
+      "timeout": 25
+    },
+    {
+      "job_id": "job-b",
+      "operation_id": "external-parallel-b",
+      "workspace": "<EXPERIMENT>/candidate/project/.ai-org/workspaces/workspace-19a43400e7484dfc8eca5ea96e656c77",
+      "output": "src/b/result.txt",
+      "content": "synthetic-parallel-b",
+      "credentials": {
+        "assignment_id": "assignment-e785b8d3036947dfb8e3c819655710b9",
+        "epoch": 1,
+        "token": 1,
+        "lease_expires_at": "2026-11-27T16:43:54Z",
+        "workspace_id": "workspace-19a43400e7484dfc8eca5ea96e656c77"
+      },
+      "actor": "principal-reviewer",
+      "wp_id": "WP-SECOND",
+      "delay_seconds": 2,
+      "timeout": 25
+    }
+  ],
+  "canaries": {
+    "trusted_write": true,
+    "trusted_hardlink_alias": true,
+    "repo_write": true,
+    "outside_read": true,
+    "outside_write": true,
+    "candidate_root_unlink": true,
+    "network": true,
+    "credentials_removed": true
+  },
+  "startup_cleanup": [
+    {
+      "name": "xcrun_db",
+      "bytes": 499,
+      "sha256": "767b97e4e6c44f3e9a7b2496c54bcc1c3901650873f4fc67d811e051bd9f6e8b",
+      "reason": "known macOS Python startup cache in fresh candidate anchor"
+    }
+  ]
+}

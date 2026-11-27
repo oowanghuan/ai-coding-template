@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<FIXTURE>/next-sandbox.sb",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<FIXTURE>/independent-worker-clock/probe.py"
+  ],
+  "environment": {
+    "HOME": "<FIXTURE>/independent-worker-clock",
+    "TMPDIR": "<FIXTURE>/independent-worker-clock",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started_epoch": 1795797074.7692769,
+  "finished_epoch": 1795797078.7762718,
+  "exit_code": 0,
+  "harness_sha256": "2702c18c52200cc6dcb8df1effbf33b1e341f5abc0ab97819548a9cbbac6e30f",
+  "profile_sha256": "fa9d026b83170ff714b215d86a4712955889bf6c34a8bb791175cfa1917644a3"
+}

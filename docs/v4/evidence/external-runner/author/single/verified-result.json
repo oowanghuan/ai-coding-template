@@ -1,0 +1,36 @@
+{
+  "verified_at": "2026-11-27T16:34:33.311364+00:00",
+  "scenario": "single",
+  "receipts": [
+    {
+      "batch_id": "v4-ext-e2e-bf19yplq",
+      "config_sha256": "cb5cecc89f2653baacce30384a96cc6ccf3136508ae4f1e19d9f384a379aae09",
+      "exit_code": 0,
+      "finished_at": "2026-11-27T16:34:31.130543+00:00",
+      "format": "v4-launch-receipt/1",
+      "job_id": "job-a",
+      "operation_id": "external-single-a",
+      "pid": 38651,
+      "request_sha256": "b13e234ab2f5b651875395458d6ff1030ff961bc3cff6bd54b0c190950184b88",
+      "sequence": 3,
+      "started_at": "2026-11-27T16:34:28.996527+00:00",
+      "state": "finished",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "cf1c08fb23cc3b9cb0ed00a8a12d6081040b1869232b5a39575efa16845a7171"
+    }
+  ],
+  "completions": [
+    {
+      "path": "src/a/result.txt",
+      "result": "synthetic-file-written",
+      "pid": 38651,
+      "clock": "CLOCK_MONOTONIC",
+      "started_ns": 152189894325000,
+      "finished_ns": 152191905057000
+    }
+  ],
+  "observations": {},
+  "authority_sha256": "ff062871f533a033ee744d5e88eebf2f38899e0c3061dc2ea654e127e6a947c3",
+  "accepted": false,
+  "scope": "Finite synthetic CLI/controller/driver integration only; no provider or business acceptance."
+}

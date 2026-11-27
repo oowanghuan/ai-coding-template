@@ -1,0 +1,87 @@
+{
+  "verified_at": "2026-11-27T16:35:51.801695+00:00",
+  "scenario": "parallel",
+  "receipts": [
+    {
+      "batch_id": "v4-ext-e2e-pvv0n0uc",
+      "config_sha256": "a6e296b35e68ca2060ce58d58c6e57ae799f9f924b01e3fc3f87239bfa2921e0",
+      "exit_code": 0,
+      "finished_at": "2026-11-27T16:35:47.763924+00:00",
+      "format": "v4-launch-receipt/1",
+      "job_id": "job-a",
+      "operation_id": "external-parallel-a",
+      "pid": 39093,
+      "request_sha256": "7424e5186de5e27300d6aaa56550106fea48624f551064cae1486cdb2e38efad",
+      "sequence": 3,
+      "started_at": "2026-11-27T16:35:45.626163+00:00",
+      "state": "finished",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "b53f494df2b4b2c7bec550879085028d0f937590513022eefaa1ca7a5137e906"
+    },
+    {
+      "batch_id": "v4-ext-e2e-pvv0n0uc",
+      "config_sha256": "a6e296b35e68ca2060ce58d58c6e57ae799f9f924b01e3fc3f87239bfa2921e0",
+      "exit_code": 0,
+      "finished_at": "2026-11-27T16:35:47.764679+00:00",
+      "format": "v4-launch-receipt/1",
+      "job_id": "job-b",
+      "operation_id": "external-parallel-b",
+      "pid": 39094,
+      "request_sha256": "2267ea7b05a87735d8ce152f5164e8dd624d41636b5b84de13a8ca438aab7f77",
+      "sequence": 3,
+      "started_at": "2026-11-27T16:35:45.629699+00:00",
+      "state": "finished",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "560123ba27fe801c47e8787fe985acfe2560aee60769624049a50194224c9a2d"
+    }
+  ],
+  "completions": [
+    {
+      "path": "src/a/result.txt",
+      "result": "synthetic-file-written",
+      "pid": 39093,
+      "clock": "CLOCK_MONOTONIC",
+      "started_ns": 152266525044000,
+      "finished_ns": 152268525929000
+    },
+    {
+      "path": "src/b/result.txt",
+      "result": "synthetic-file-written",
+      "pid": 39094,
+      "clock": "CLOCK_MONOTONIC",
+      "started_ns": 152266527037000,
+      "finished_ns": 152268537344000
+    }
+  ],
+  "observations": {
+    "worker_clock": "OS CLOCK_MONOTONIC via clock_gettime_ns, not process-relative monotonic_ns",
+    "worker_intervals": [
+      {
+        "pid": 39093,
+        "started_ns": 152266525044000,
+        "finished_ns": 152268525929000
+      },
+      {
+        "pid": 39094,
+        "started_ns": 152266527037000,
+        "finished_ns": 152268537344000
+      }
+    ],
+    "worker_overlap_ns": 1998892000,
+    "driver_observation_intervals": [
+      {
+        "pid": 39093,
+        "started_at": "2026-11-27T16:35:45.626163+00:00",
+        "finished_at": "2026-11-27T16:35:47.763924+00:00"
+      },
+      {
+        "pid": 39094,
+        "started_at": "2026-11-27T16:35:45.629699+00:00",
+        "finished_at": "2026-11-27T16:35:47.764679+00:00"
+      }
+    ]
+  },
+  "authority_sha256": "9fa8f4ca2ed4de1d835dc6b0e705b51e37a7cfe6975ef0d0e601eb7d92ebd606",
+  "accepted": false,
+  "scope": "Finite synthetic CLI/controller/driver integration only; no provider or business acceptance."
+}

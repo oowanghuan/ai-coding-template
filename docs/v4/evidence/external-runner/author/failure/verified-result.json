@@ -1,0 +1,27 @@
+{
+  "verified_at": "2026-11-27T16:35:46.931539+00:00",
+  "scenario": "failure",
+  "receipts": [
+    {
+      "batch_id": "v4-ext-e2e-gpzrfsxo",
+      "config_sha256": "edb286753a48ad055098445a335001b2f9227609db96afd22f26961adbacc705",
+      "exit_code": 1,
+      "finished_at": "2026-11-27T16:35:45.316758+00:00",
+      "format": "v4-launch-receipt/1",
+      "job_id": "job-a",
+      "operation_id": "external-failure-a",
+      "pid": 39075,
+      "request_sha256": "321e9a16474a9fde29fa58b24d7793759e7a6caa6ca6a06ef27bf67ee8a7ef47",
+      "sequence": 3,
+      "started_at": "2026-11-27T16:35:43.188058+00:00",
+      "state": "finished",
+      "stderr_sha256": "7517f3d6fa1b2de54a0acb50a0a2e8835851e8d8116da8022a0c34e97d936015",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "completions": [],
+  "observations": {},
+  "authority_sha256": "3571ef0dd39dff25120731ae3e2d41a3edc0236c4ad2b2edd0a3809344a54531",
+  "accepted": false,
+  "scope": "Finite synthetic CLI/controller/driver integration only; no provider or business acceptance."
+}

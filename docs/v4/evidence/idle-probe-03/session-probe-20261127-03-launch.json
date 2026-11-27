@@ -1,0 +1,15 @@
+{
+  "state": "bootstrapped_once",
+  "label": "com.ai-coding-template.v4.session-probe-03",
+  "script_sha256": "eb73ba03807824deeb4a765eb5cd9e7640e16b08a21a41dd9bfa6cba105df8d0",
+  "created_at": "2026-11-27T15:48:31.001281+00:00",
+  "scope": "One-time probe for bound loaded idle thread; shared production lock; no create/resume/model/permissions settings; no Advisor events replayed",
+  "verified": "9 Fake RPC cases + 5 A01 canaries; real idle still pending",
+  "wait_window_seconds": 300,
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "configured_at": "2026-11-27T15:49:08.663241+00:00",
+  "keep_alive": false,
+  "config_correction": "Replaced submit job before any queue mutation because installed launchctl submit sets KeepAlive. Explicit plist RunAtLoad=true KeepAlive=false; not placed in login LaunchAgents."
+}

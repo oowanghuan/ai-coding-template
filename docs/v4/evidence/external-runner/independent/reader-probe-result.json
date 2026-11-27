@@ -1,0 +1,14 @@
+{
+  "scope": "Trusted host helper only; no candidate product import/launch",
+  "checks": {
+    "old_after_resolve_swap": "read_outside",
+    "new_after_resolve_swap": "rejected",
+    "ordinary_file": "allowed",
+    "after_parent_pin_swap": "read_pinned_original",
+    "hardlink": "rejected",
+    "fifo": "rejected_without_blocking",
+    "outside_unchanged": true
+  },
+  "coordinator_sha256": "9e0e324b2e58fadfe485d21cb41c9554f88f06d28ab6db44e817af972e54ca5f",
+  "old_coordinator_sha256": "efe8b26b7540124fa88295070d0484dc4bb17377ff4556b447647dc3b4e7d6cd"
+}

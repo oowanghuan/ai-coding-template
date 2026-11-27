@@ -1,0 +1,137 @@
+{
+  "state": {
+    "deliveries": {},
+    "format": "local-state/1",
+    "operations": {},
+    "revision": 0,
+    "snapshot": {
+      "assignments": [],
+      "authorizations": [],
+      "checkpoints": [],
+      "hosts": [],
+      "project": {
+        "authority_epoch": 1,
+        "budget": "unknown",
+        "id": "upgrade-demo",
+        "owner_principals": [
+          "synthetic-owner"
+        ],
+        "paused": false,
+        "policy_revision": "1",
+        "profile": "lite",
+        "revision": 0,
+        "state_backend": "local_git"
+      },
+      "providers": [],
+      "roles": [
+        {
+          "asset_refs": [],
+          "id": "role-owner",
+          "permissions": [
+            "review-plan"
+          ],
+          "responsibilities": [
+            "Define goal and authorize scope"
+          ]
+        }
+      ],
+      "schema_version": "0.2",
+      "sessions": [],
+      "work_packages": [
+        {
+          "acceptor": null,
+          "accountable_role": "role-owner",
+          "allowed_paths": [
+            "docs/"
+          ],
+          "assignment_ref": null,
+          "authorization_ref": null,
+          "baseline_sha": "a1f0bc1947784feec558ecc7d8b0003a4b7fea37",
+          "blocking_conditions": [],
+          "change_reason": null,
+          "checkpoint_ref": null,
+          "deliverables": [
+            "Reviewed project foundation"
+          ],
+          "dependencies": [],
+          "evidence_refs": [],
+          "external_effects": [],
+          "forbidden_paths": [
+            ".git/",
+            ".ai-org/"
+          ],
+          "goal_refs": [
+            "GOAL-FOUNDATION"
+          ],
+          "handoff_refs": [],
+          "id": "WP-BOOTSTRAP",
+          "implementer": null,
+          "inputs": [],
+          "kind": "spec",
+          "merger": "synthetic-owner",
+          "milestones": {
+            "archived": {
+              "evidence_refs": [],
+              "reason": null,
+              "signer": null,
+              "status": "pending",
+              "subject_sha": null
+            },
+            "review_passed": {
+              "evidence_refs": [],
+              "reason": null,
+              "signer": null,
+              "status": "pending",
+              "subject_sha": null
+            },
+            "spec_ratified": {
+              "evidence_refs": [],
+              "reason": null,
+              "signer": null,
+              "status": "pending",
+              "subject_sha": null
+            }
+          },
+          "negative_criteria": [
+            "No inferred implementation authorization"
+          ],
+          "objective": "Define the project goal, contracts and authorized work",
+          "positive_criteria": [
+            "Owner confirms goal and scope"
+          ],
+          "project_id": "upgrade-demo",
+          "required_milestones": [
+            "review_passed",
+            "spec_ratified",
+            "archived"
+          ],
+          "requirement_refs": [
+            "REQ-FOUNDATION"
+          ],
+          "review_refs": [],
+          "reviewer": null,
+          "revision": 0,
+          "risk": "medium",
+          "rollback": "Preserve worktree; revert reviewed commit",
+          "spec_refs": [
+            {
+              "path": ".ai-org/versions/0.2.0-preview/BOOTSTRAP.md",
+              "sha256": "6597e906b2c4bae3ff4a0e3786c682b8d84fa6f0985a572f8dc17dec964ceff8",
+              "version": "0.2.0-preview"
+            }
+          ],
+          "state": "planned",
+          "submitted_sha": null,
+          "test_strategy": "Independent foundation review",
+          "title": "Confirm project foundation"
+        }
+      ],
+      "workers": []
+    },
+    "store_id": "b0224404ebf540e286748d94ef2ed2aa",
+    "tokens": {},
+    "workspaces": {}
+  },
+  "observed_at": "2026-11-27T16:13:43Z",
+  "consistency_errors": []
+}

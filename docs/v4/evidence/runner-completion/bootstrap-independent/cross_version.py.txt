@@ -1,0 +1,63 @@
+"""Public CLI upgrade across two real snapshots; no internal product API calls."""
+import hashlib,json,os,socket,subprocess,sys,time
+from pathlib import Path
+BASE=Path(__file__).resolve().parent;OLD=BASE/'old-framework';NEW=BASE/'new-framework';REPO=Path('<WORKSPACE>');config=json.loads((BASE.parent/'config.json').read_text());logs=BASE/'commands';logs.mkdir()
+steps=[];checks=[]
+def H(b):return hashlib.sha256(b).hexdigest()
+def tree(p):return {str(x.relative_to(p)):H(x.read_bytes()) for x in sorted(p.rglob('*')) if x.is_file()}
+def check(n,ok):assert ok,n;checks.append(n)
+def run(name,args,cwd):
+ p=subprocess.run(args,cwd=cwd,capture_output=True,timeout=30);stem='%02d-%s'%(len(steps)+1,name)
+ for suffix,data in [('stdout',p.stdout),('stderr',p.stderr)]: (logs/(stem+'.'+suffix)).write_bytes(data)
+ steps.append({'name':name,'argv':args,'cwd':str(cwd),'exit_code':p.returncode,'stdout_file':stem+'.stdout','stderr_file':stem+'.stderr','stdout_sha256':H(p.stdout),'stderr_sha256':H(p.stderr)})
+ assert p.returncode==0,(name,p.returncode,p.stdout,p.stderr)
+ return json.loads(p.stdout) if p.stdout.strip().startswith(b'{') else p.stdout
+
+def cli(framework,name,root,action,*args):return run(name,[sys.executable,'-B','-S',str(framework/'scripts/v4_project.py'),action,'--root',str(root),*args],root)
+def inspect(framework,name,root):return run(name,[sys.executable,'-B','-S',str(framework/'scripts/v4_local.py'),'inspect','--root',str(root)],root)
+def git(name,root,*args):return run(name,['/usr/bin/git','-c','core.hooksPath=/dev/null','-c','core.fsmonitor=false',*args],root)
+def plan(framework,name,root,mode):
+ p=cli(framework,name,root,'plan-'+mode,'--owner','synthetic-owner','--project-id','upgrade-demo');f=BASE/(name+'.json');f.write_text(json.dumps(p,indent=2)+'\n');return p,f
+def apply(framework,name,root,p,f):return cli(framework,name,root,'apply','--plan',str(f),'--plan-sha256',p['plan_sha256'])
+canaries={}
+for name,fn in [('outside_read',lambda:Path(config['canary']).read_text()),('outside_write',lambda:Path(config['canary']).write_text('bad')),('checkout_write',lambda:(REPO/'forbidden-author-canary').write_text('bad')),('old_snapshot_write',lambda:(OLD/'forbidden').write_text('bad')),('new_snapshot_write',lambda:(NEW/'forbidden').write_text('bad'))]:
+ try:fn();canaries[name]=False
+ except PermissionError:canaries[name]=True
+try:
+ with socket.socket() as s:s.connect(('127.0.0.1',9))
+ canaries['network']=False
+except PermissionError:canaries['network']=True
+canaries['credentials_removed']=not any(k in os.environ for k in ['GH_TOKEN','GITHUB_TOKEN','OPENAI_API_KEY','ANTHROPIC_API_KEY','SSH_AUTH_SOCK','CODEX_HOME']);assert all(canaries.values()),canaries
+old_inputs=tree(OLD);new_inputs=tree(NEW);results=[]
+for mode in ['init','import']:
+ root=BASE/('project-'+mode);root.mkdir()
+ if mode=='import':
+  git('git-init',root,'init','-q');(root/'app.txt').write_text('committed baseline');git('git-add',root,'add','app.txt');git('git-commit',root,'-c','user.name=Synthetic','-c','user.email=synthetic@example.invalid','commit','-qm','baseline')
+  (root/'app.txt').write_text('dirty tracked work');(root/'untracked.txt').write_text('untracked user work');(root/'AGENTS.md').write_text('native user rules');(root/'CLAUDE.md').write_text('native Claude rules')
+ prior=tree(root)
+ p,f=plan(OLD,'old-'+mode+'-plan',root,mode);check(mode+' old CLI version',p['version']=='0.2.0-preview');initial=apply(OLD,'old-'+mode+'-apply',root,p,f)
+ old_guide=root/initial['guide'];old_guide_bytes=old_guide.read_bytes();authority=(root/'.ai-org/state.json').read_bytes();selection=(root/'.ai-org/install-journal.json').read_bytes()
+ check(mode+' old CLI authority readable',inspect(OLD,'old-'+mode+'-inspect',root)['consistency_errors']==[])
+ before_plan=tree(root);up,upfile=plan(NEW,'new-'+mode+'-upgrade-plan',root,'upgrade');check(mode+' upgrade plan read only',tree(root)==before_plan)
+ check(mode+' actual version advancement',up['version']=='0.2.1-preview' and up['guide']!=initial['guide'])
+ receipt=apply(NEW,'new-'+mode+'-upgrade-apply',root,up,upfile)
+ check(mode+' exactly one new immutable guide',[row['path'] for row in receipt['created']]==[up['guide']])
+ check(mode+' installed guide equals new checkout',(root/up['guide']).read_bytes()==(NEW/'templates/project/BOOTSTRAP.md').read_bytes())
+ check(mode+' new guide bytes differ from old',old_guide_bytes!=(root/up['guide']).read_bytes())
+ check(mode+' old guide and authority preserved',old_guide.read_bytes()==old_guide_bytes and (root/'.ai-org/state.json').read_bytes()==authority)
+ check(mode+' selects new guide',json.loads((root/'.ai-org/install-journal.json').read_text())['guide']==up['guide'])
+ newstate=inspect(NEW,'new-'+mode+'-inspect',root);check(mode+' new CLI reads old authority',newstate['consistency_errors']==[])
+ check(mode+' authority contract remains old version',newstate['state']['snapshot']['work_packages'][0]['spec_refs'][0]['version']=='0.2.0-preview')
+ check(mode+' old CLI reads upgraded authority',inspect(OLD,'old-'+mode+'-inspect-after-upgrade',root)['consistency_errors']==[])
+ before=tree(root);check(mode+' repeat upgrade replays',apply(NEW,'new-'+mode+'-upgrade-replay',root,up,upfile)['replayed']);check(mode+' repeat upgrade byte preserving',tree(root)==before)
+ cli(NEW,'new-'+mode+'-rollback',root,'rollback','--operation-id',receipt['transaction_id'])
+ check(mode+' rollback restores selection and authority',(root/'.ai-org/install-journal.json').read_bytes()==selection and (root/'.ai-org/state.json').read_bytes()==authority)
+ check(mode+' rollback removes only new guide',not (root/up['guide']).exists() and old_guide.read_bytes()==old_guide_bytes)
+ check(mode+' old CLI reads rolled-back authority',inspect(OLD,'old-'+mode+'-inspect-after-rollback',root)['consistency_errors']==[])
+ check(mode+' new CLI reads rolled-back authority',inspect(NEW,'new-'+mode+'-inspect-after-rollback',root)['consistency_errors']==[])
+ before=tree(root);cli(NEW,'new-'+mode+'-rollback-replay',root,'rollback','--operation-id',receipt['transaction_id']);check(mode+' repeat rollback byte preserving',tree(root)==before)
+ check(mode+' original user Git and file bytes preserved',all(tree(root).get(k)==v for k,v in prior.items()))
+ results.append({'mode':mode,'initial_version':p['version'],'upgrade_version':up['version'],'initial_guide':initial['guide'],'new_guide':up['guide'],'old_guide_sha256':H(old_guide_bytes),'new_guide_sha256':H((NEW/'templates/project/BOOTSTRAP.md').read_bytes()),'authority_sha256':H(authority),'final_artifacts':tree(root)})
+check('old input snapshot unchanged',tree(OLD)==old_inputs);check('new input snapshot unchanged',tree(NEW)==new_inputs)
+result={'base_sha':'f95b03ab733fd45ed480aba162fee1943ea58c43','role':'independent reviewer rerun of inspected author harness; public CLI only','canaries':canaries,'checks':checks,'passed':len(checks),'commands':steps,'journeys':results,'source_unchanged':True}
+(BASE/'cross-version-result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':len(checks),'commands':len(steps),'canaries':canaries,'source_unchanged':True}))

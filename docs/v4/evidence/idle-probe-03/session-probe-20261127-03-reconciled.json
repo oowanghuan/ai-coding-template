@@ -1,0 +1,17 @@
+{
+  "event": "v4-session-probe-20261127-03",
+  "checked_at": "2026-11-27T15:50:20.473304+00:00",
+  "same_thread": true,
+  "same_cwd": true,
+  "thread_status": "active",
+  "history_receipt": {
+    "turn_id_sha256": "784cadf26d134df7fc249e3621991f2e890c3455667ed6f2adba664b2ea206df",
+    "item_id_sha256": "f5d3e53b97a0575d876c99b30f028e872116196e279a3461a540480cd47e7a68"
+  },
+  "matching_queue_entries": 0,
+  "rpc_receipt_exists": false,
+  "journal_state": "queued_not_started",
+  "received": true,
+  "received_at": "2026-11-27T15:49:39.179862+00:00",
+  "interpretation": "Queue-add reached the existing model. Probe did not call explicit queue/start because its follow-up idle/unique-queue precondition no longer held. The exact native queue consumer is not instrumented."
+}

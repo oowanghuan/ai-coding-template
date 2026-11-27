@@ -1,0 +1,38 @@
+{
+  "at": "2026-11-27T16:24:20.990838+00:00",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<FIXTURE>/next-sandbox.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/local",
+    "-p",
+    "test_launch_driver.py",
+    "-v"
+  ],
+  "environment": {
+    "HOME": "<FIXTURE>",
+    "TMPDIR": "<FIXTURE>",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONPATH": "<WORKSPACE>",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "source_hashes_before": {
+    "framework/local/launch_driver.py": "cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce",
+    "tests/local/test_launch_driver.py": "815a62c123f68de3d9af282a7c3105a96415e71b957707afe23e3c878609a8a3",
+    "framework/local/worker_process.py": "62d4f9a63ec66945965e8d874baf7d9f6f3bab5956990be44dcf8c22ba00804c"
+  },
+  "source_hashes_after": {
+    "framework/local/launch_driver.py": "cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce",
+    "tests/local/test_launch_driver.py": "815a62c123f68de3d9af282a7c3105a96415e71b957707afe23e3c878609a8a3",
+    "framework/local/worker_process.py": "62d4f9a63ec66945965e8d874baf7d9f6f3bab5956990be44dcf8c22ba00804c"
+  },
+  "exit_code": 0,
+  "scope": "Independent Fake Popen / pure-function tests inside A01; no real launcher/Worker execution"
+}

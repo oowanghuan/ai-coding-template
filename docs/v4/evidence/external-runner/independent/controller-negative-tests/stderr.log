@@ -1,0 +1,26 @@
+test_absent_receipt_never_means_success (test_external.ExternalClientTests) ... ok
+test_cancel_is_bound_idempotent_and_does_not_assert_stopped (test_external.ExternalClientTests) ... ok
+test_pid_is_immutable_across_receipts (test_external.ExternalClientTests) ... ok
+test_provisioned_identity_scope_content_and_limits_are_enforced (test_external.ExternalClientTests) ... ok
+test_receipt_binds_job_operation_and_request (test_external.ExternalClientTests) ... ok
+test_receipt_cannot_be_reused_for_another_workspace_capability (test_external.ExternalClientTests) ... ok
+test_receipt_cannot_regress_or_change_same_sequence (test_external.ExternalClientTests) ... ok
+test_receipt_symlink_and_hardlink_are_refused (test_external.ExternalClientTests) ... ok
+test_rejected_cannot_assert_a_spawned_process (test_external.ExternalClientTests) ... ok
+test_request_and_lock_aliases_do_not_overwrite_other_files (test_external.ExternalClientTests) ... ok
+test_request_replay_is_immutable_and_unicode_hash_is_utf8 (test_external.ExternalClientTests) ... ok
+test_terminal_needs_real_exit_and_matching_log_bytes (test_external.ExternalClientTests) ... ok
+test_writable_request_tree_cannot_contain_trusted_storage (test_external.ExternalClientTests) ... ok
+test_cli_requires_both_explicit_launcher_arguments (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_explicit_unknown_receipt_is_not_stop_confirmation (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_invalid_terminal_logs_do_not_release_uncertainty (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_missing_driver_receipt_stays_unknown_and_blocks_reclaim (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_revocation_requests_cancel_without_inventing_stop (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_same_operation_cannot_switch_backend_job_or_config (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_terminal_failure_cli_replay_is_nonzero_and_does_not_submit_again (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_validated_prelaunch_rejection_is_not_success_or_delivery (test_external_lifecycle.ExternalLifecycleTests) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 48.546s
+
+OK

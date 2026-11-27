@@ -1,0 +1,97 @@
+{
+  "review_commit": "e7618b5a535e67aaca6aef7d5dfe30d3eb0b6291",
+  "reviewer_role": "non-author product reviewer; independent rerun with independently hardened and parent-reviewed host coordinator",
+  "scenarios": {
+    "parallel": {
+      "source_commit": "e7618b5a535e67aaca6aef7d5dfe30d3eb0b6291",
+      "source_files_matched_git": 13,
+      "host_verification": "passed",
+      "scenario": "parallel",
+      "canaries": {
+        "trusted_write": true,
+        "trusted_hardlink_alias": true,
+        "repo_write": true,
+        "outside_read": true,
+        "outside_write": true,
+        "candidate_root_unlink": true,
+        "network": true,
+        "credentials_removed": true
+      },
+      "driver_exit_codes": {
+        "candidate": 0,
+        "driver": 0
+      },
+      "accepted": false,
+      "deliveries": 2,
+      "worker_observations": {
+        "worker_clock": "OS CLOCK_MONOTONIC via clock_gettime_ns, not process-relative monotonic_ns",
+        "worker_intervals": [
+          {
+            "pid": 40117,
+            "started_ns": 152471389917000,
+            "finished_ns": 152473398189000
+          },
+          {
+            "pid": 40118,
+            "started_ns": 152471392692000,
+            "finished_ns": 152473398841000
+          }
+        ],
+        "worker_overlap_ns": 2005497000,
+        "driver_observation_intervals": [
+          {
+            "pid": 40117,
+            "started_at": "2026-11-27T16:39:10.490410+00:00",
+            "finished_at": "2026-11-27T16:39:12.639874+00:00"
+          },
+          {
+            "pid": 40118,
+            "started_at": "2026-11-27T16:39:10.494186+00:00",
+            "finished_at": "2026-11-27T16:39:12.640664+00:00"
+          }
+        ]
+      }
+    },
+    "revoke": {
+      "source_commit": "e7618b5a535e67aaca6aef7d5dfe30d3eb0b6291",
+      "source_files_matched_git": 13,
+      "host_verification": "passed",
+      "scenario": "revoke",
+      "canaries": {
+        "trusted_write": true,
+        "trusted_hardlink_alias": true,
+        "repo_write": true,
+        "outside_read": true,
+        "outside_write": true,
+        "candidate_root_unlink": true,
+        "network": true,
+        "credentials_removed": true
+      },
+      "driver_exit_codes": {
+        "candidate": 0,
+        "driver": 0
+      },
+      "accepted": false,
+      "deliveries": 0,
+      "worker_observations": {},
+      "authority_states": {
+        "assignments": [
+          "revoked"
+        ],
+        "workspaces": [
+          "stopped"
+        ],
+        "work_packages": [
+          "paused"
+        ]
+      }
+    }
+  },
+  "limits": [
+    "Fixed synthetic workers only; no real provider/cloud invocation",
+    "Local OS shared-clock observations; no cross-host clock claim",
+    "Controlled delivery remains accepted=false",
+    "Controller-negative tests use explicit synthetic receipts",
+    "Public redacted bytes differ from original evidence; original cryptographic references remain original byte hashes"
+  ]
+}

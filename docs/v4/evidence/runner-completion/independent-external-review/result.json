@@ -1,0 +1,46 @@
+{
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<FIXTURE>/next-sandbox.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/local",
+    "-p",
+    "test_external*.py",
+    "-v"
+  ],
+  "environment": {
+    "HOME": "<FIXTURE>/independent-external-review",
+    "TMPDIR": "<FIXTURE>/independent-external-review",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONPATH": "<WORKSPACE>:<DEPENDENCIES>",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1"
+  },
+  "source_hashes_before": {
+    "framework/local/external.py": "a96f448a659ee95e3718e876738d450cd7a422ffc1a9a0b70483677302f12d74",
+    "tests/local/test_external.py": "13669f1daa675e48b3f827c099c52bfc63e083c6dad4c2302a3c678798d59203",
+    "tests/local/test_external_lifecycle.py": "9577577e6975c68cb8d868d5a6bc6525d5a4b87cda5791b8fc1bc1f403ff2147",
+    "framework/local/store.py": "13ee8c97456c294006bac174a2a3200af773e74aceb186c4efe3980012d09676",
+    "framework/local/runner.py": "d87247853d1266d730e1bea38e780da36bdae08b1c4075bacc2da336404fb497",
+    "scripts/v4_local.py": "1e779f01864c05a4e69b2e36a6903db68d3fdb692d09c237a77edead6bbc562c"
+  },
+  "source_hashes_after": {
+    "framework/local/external.py": "a96f448a659ee95e3718e876738d450cd7a422ffc1a9a0b70483677302f12d74",
+    "tests/local/test_external.py": "13669f1daa675e48b3f827c099c52bfc63e083c6dad4c2302a3c678798d59203",
+    "tests/local/test_external_lifecycle.py": "9577577e6975c68cb8d868d5a6bc6525d5a4b87cda5791b8fc1bc1f403ff2147",
+    "framework/local/store.py": "13ee8c97456c294006bac174a2a3200af773e74aceb186c4efe3980012d09676",
+    "framework/local/runner.py": "d87247853d1266d730e1bea38e780da36bdae08b1c4075bacc2da336404fb497",
+    "scripts/v4_local.py": "1e779f01864c05a4e69b2e36a6903db68d3fdb692d09c237a77edead6bbc562c"
+  },
+  "exit_code": 0,
+  "started_epoch": 1795797160.2779362,
+  "finished_epoch": 1795797209.241767,
+  "scope": "Independent A01 client and real Store lifecycle tests with explicitly synthetic receipts; not actual Worker launch evidence"
+}

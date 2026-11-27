@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "-B",
+    "-S",
+    "<WORKSPACE>/scripts/v4_local.py",
+    "run-external",
+    "--root",
+    "<EXPERIMENT_FAILURE>/candidate/project",
+    "--actor",
+    "principal-implementer",
+    "--input",
+    "<EXPERIMENT_FAILURE>/candidate/commands/external-failure-a.input.json",
+    "--expected-revision",
+    "7",
+    "--operation-id",
+    "external-failure-a",
+    "--launcher-config",
+    "<EXPERIMENT_FAILURE>/trusted/config.json",
+    "--launcher-job-id",
+    "job-a"
+  ],
+  "exit_code": 2,
+  "started_ns": 4724979916,
+  "finished_ns": 5498223750,
+  "stdout": "",
+  "stderr": "{\"error\": \"external run failed or unresolved; no automatic repeat\"}\n"
+}

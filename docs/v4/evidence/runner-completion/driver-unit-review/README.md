@@ -1,0 +1,11 @@
+# Fixed local launcher author unit validation
+
+Candidate implementation: framework/local/launch_driver.py and tests/local/test_launch_driver.py, uncommitted working tree on the runner-completion line. Exact candidate byte hashes are recorded in result.json. These are pure validation/Fake Popen tests, not a successful real Runner/Worker integration or independent acceptance.
+
+Final author run: 2026-11-27T16:23:42.089722+00:00 to 16:23:42.403770+00:00. Exit 0. 24 tests passed, 0 failures/errors/skips. Five real enclosing A01 sandbox probes passed. Candidate inputs unchanged during execution. New driver was never run on the unprotected host and no actual Worker subprocess was launched by these tests.
+
+Coverage: strict bounded JSON, exact config/request identity and UTF-8 hashing, command/env/policy injection refusal, trusted/candidate tree separation, duplicate/nested workspaces, pinned Worker hash, symlink/hardlink/FIFO mailbox rejection, directory-FD mailbox pinning, fixed real-launch argument construction with Fake process, duplicate request replay prevention, config-hash mismatch, failed exit, pre-launch cancellation, observed cancellation/timeout, unconfirmed-stop unknown, restart unknown with no stale-PID signal, lost spawn result, two fixed slots, policy text shape, and non-reading real pipe backpressure with Fake child so deadline remains active.
+
+Previous passing unit iterations are retained as iteration-01/02/03.* (20,21,23 tests respectively), followed by the 24-test final run. None is real sandbox Worker execution evidence. The existing broad outer fixture policy is only used for candidate unit validation; it does not establish the new trusted/candidate deployment separation or stable C anchor. Those require the separately reviewed restricted deployment profile and real canaries before a pinned driver copy is trusted on the host.
+
+The fixed driver hash is cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce. The final test file hash is 815a62c123f68de3d9af282a7c3105a96415e71b957707afe23e3c878609a8a3. Independent boundary review and real integration are separate subsequent activities; these unit results do not authorize a new default sandbox bypass.

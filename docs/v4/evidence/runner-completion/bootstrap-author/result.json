@@ -1,0 +1,86 @@
+{
+  "runs": [
+    {
+      "name": "cross-version",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "<FIXTURE>/bootstrap-021-author/sandbox.sb",
+        "/usr/bin/python3",
+        "-B",
+        "-S",
+        "<FIXTURE>/bootstrap-021-author/cross_version.py"
+      ],
+      "environment": {
+        "HOME": "<FIXTURE>/bootstrap-021-author/home",
+        "TMPDIR": "<FIXTURE>/bootstrap-021-author/tmp",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "PYTHONPATH": "<FIXTURE>/bootstrap-021-author/new-framework:<DEPENDENCIES>",
+        "PYTHONNOUSERSITE": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "V4_OUTER_SEATBELT": "1"
+      },
+      "started_epoch": 1795796008.856477,
+      "finished_epoch": 1795796024.532869,
+      "exit_code": 0,
+      "duration_seconds": 15.676392078399658,
+      "started_utc": "2026-11-27T16:13:28.856477+00:00",
+      "finished_utc": "2026-11-27T16:13:44.532869+00:00"
+    },
+    {
+      "name": "bootstrap-tests",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "<FIXTURE>/bootstrap-021-author/sandbox.sb",
+        "/usr/bin/python3",
+        "-B",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "<FIXTURE>/bootstrap-021-author/new-framework/tests/bootstrap",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "environment": {
+        "HOME": "<FIXTURE>/bootstrap-021-author/home",
+        "TMPDIR": "<FIXTURE>/bootstrap-021-author/tmp",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "PYTHONPATH": "<FIXTURE>/bootstrap-021-author/new-framework:<DEPENDENCIES>",
+        "PYTHONNOUSERSITE": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "V4_OUTER_SEATBELT": "1"
+      },
+      "started_epoch": 1795796024.532934,
+      "finished_epoch": 1795796043.479476,
+      "exit_code": 0,
+      "duration_seconds": 18.946542024612427,
+      "started_utc": "2026-11-27T16:13:44.532934+00:00",
+      "finished_utc": "2026-11-27T16:14:03.479476+00:00"
+    }
+  ],
+  "source_manifest_sha256": "e6c1560435b6848358a9e5fcbbfd65c46525f7c4a0122ae8f83c572ba97ea6df",
+  "harness_sha256": "f8e357d5bfd04fc707911cd2cee2ec282326d4384dfd482c3d82fe2f1dde9198",
+  "sandbox_sha256": "387e27d404ddac92bf797aeef019079334f0af0dc54d66642063b1656bdb856d",
+  "role": "author verification, not independent acceptance",
+  "counts": {
+    "cross_version_commands": 27,
+    "cross_version_assertions_passed": 42,
+    "bootstrap_tests": 22,
+    "bootstrap_passed": 22,
+    "bootstrap_skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "outer_canaries_passed": 7
+  },
+  "workspace_overlay_matches_tested_snapshot": {
+    "templates/project/BOOTSTRAP.md": true,
+    "examples/bootstrap/README.md": true,
+    "framework/local/README.md": true,
+    "framework/local/bootstrap.py": true,
+    "tests/bootstrap/test_cli.py": true
+  }
+}

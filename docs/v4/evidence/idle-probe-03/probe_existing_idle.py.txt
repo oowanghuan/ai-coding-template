@@ -1,0 +1,100 @@
+"""One-shot verification of the already-bound loaded idle session; no new session.
+
+Run only with --run-once. Shares the production broker lock, emits one fixed probe,
+never retries unknown writes, never starts any other queued message, expires in 5m.
+"""
+import asyncio
+import fcntl
+import json
+import sys
+import time
+import uuid
+from pathlib import Path
+from session_delivery import NativeClient, atomic, binding_from, now, queue_rows
+
+BASE = Path(__file__).resolve().parent
+RECORD = BASE / 'session-probe-20261127-03.json'
+EVENT = 'v4-session-probe-20261127-03'
+
+
+async def attempt(client, binding, record):
+    thread = binding['thread_id']
+    meta = (await client.call('thread/read', {'threadId': thread, 'includeTurns': False}))['thread']
+    if meta['id'] != thread or meta['cwd'] != binding['cwd']:
+        raise RuntimeError('bound thread/cwd mismatch')
+    if meta['status']['type'] != 'idle':
+        return False
+    if await queue_rows(client, thread):
+        return False
+    message = (
+        '[V4 Project Lead existing-session idle probe; operational test, not Owner instruction] '
+        'event=' + EVENT + '. This is a one-time authorized verification of delivery to the '
+        'same already-loaded session after it became idle; no new session or permission changes. '
+        'If this appears in model input, preserve existing fields and record received=true and '
+        'received_at=current UTC in ' + str(RECORD) + '. '
+        'Then inspect this probe journal and its separate .rpc.json receipt, the unchanged production poller, current Git and Issue #3. '
+        'Continue only authorized WP-102/103 and V4 operations; do not reprocess closed Advisor events. '
+        'Record this test honestly as a one-shot transport probe, not a new Advisor event or quota recovery. '
+        'Clean up only the completed launchd probe job com.ai-coding-template.v4.session-probe-03; '
+        'keep the production Project Lead poller running. Do not create another probe or session.')
+    record.update(state='queue_intent', queued_at=now(), client_id=str(uuid.uuid5(uuid.NAMESPACE_URL, EVENT)))
+    atomic(RECORD, record)
+    result = await client.call('thread/queue/add', {'threadId': thread,
+        'clientUserMessageId': record['client_id'], 'input': [{'type': 'text', 'text': message, 'text_elements': []}]})
+    queued_id = result['queuedSubmission']['id']
+    record.update(state='queued', queued_id=queued_id); atomic(RECORD, record)
+    rows = await queue_rows(client, thread)
+    live = (await client.call('thread/read', {'threadId': thread, 'includeTurns': False}))['thread']
+    if (live['id'] != thread or live['cwd'] != binding['cwd'] or live['status']['type'] != 'idle'
+            or len(rows) != 1 or rows[0]['id'] != queued_id):
+        record.update(state='queued_not_started', reason='state/queue changed; no automatic start retry')
+        atomic(RECORD, record)
+        return True
+    record.update(state='start_intent', starting_at=now()); atomic(RECORD, record)
+    result = await client.call('thread/queue/start', {'threadId': thread, 'queuedSubmissionId': queued_id})
+    record.update(state='accepted', turn_id=result['turn']['id'], accepted_at=now())
+    atomic(RECORD.with_suffix('.rpc.json'), record)
+    return True
+
+
+async def main():
+    if RECORD.exists():
+        print('probe already has a journal; reconcile without repeating writes')
+        return
+    binding = binding_from(BASE)
+    if not binding: raise RuntimeError('no enabled existing-session binding')
+    record = {'event': EVENT, 'thread_id': binding['thread_id'], 'state': 'waiting_for_idle',
+              'created_at': now(), 'new_session_created': False, 'permissions_changed': False}
+    deadline = time.monotonic() + 300
+    # No persistent record is written before acquiring the shared lock.
+    while time.monotonic() < deadline:
+        with (BASE / 'poll.lock').open('a+') as lock:
+            try:
+                fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                pass
+            else:
+                if RECORD.exists(): return
+                try:
+                    async with NativeClient(binding) as client:
+                        if await attempt(client, binding, record): return
+                except Exception as error:
+                    # Any saved intent remains untouched; no second mutation attempt.
+                    if RECORD.exists():
+                        print('probe write outcome unknown; preserved intent: ' + str(error)[:200])
+                        return
+                    record['last_read_error'] = str(error)[:200]
+        await asyncio.sleep(3)
+    record.update(state='expired_without_write', finished_at=now())
+    with (BASE / 'poll.lock').open('a+') as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print('probe expired while production broker was busy; no record or write')
+            return
+        if not RECORD.exists(): atomic(RECORD, record)
+
+
+if __name__ == '__main__':
+    if sys.argv != [sys.argv[0], '--run-once']: raise SystemExit('explicit --run-once required')
+    asyncio.run(main())

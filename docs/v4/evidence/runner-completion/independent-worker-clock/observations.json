@@ -1,0 +1,71 @@
+{
+  "python": "3.9.6 (default, Apr 30 2025, 02:07:17) \n[Clang 17.0.0 (clang-1700.0.13.5)]",
+  "worker_sha256": "05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d",
+  "clock": "CLOCK_MONOTONIC",
+  "serial_overlap": false,
+  "parallel_overlap": true,
+  "parent_child_clock_bracketing": true,
+  "observations": [
+    {
+      "name": "serial-a",
+      "parent_before": 151995685418000,
+      "parent_after": 151996916729000,
+      "worker": {
+        "path": "serial-a.txt",
+        "result": "synthetic-file-written",
+        "pid": 37157,
+        "clock": "CLOCK_MONOTONIC",
+        "started_ns": 151995907694000,
+        "finished_ns": 151996914205000
+      },
+      "exit_code": 0,
+      "stdout_sha256": "bce12badd1d740cf6fa86925d3f0700d4720de7d60a38a8941fa646403cdec00"
+    },
+    {
+      "name": "serial-b",
+      "parent_before": 151996917668000,
+      "parent_after": 151998172324000,
+      "worker": {
+        "path": "serial-b.txt",
+        "result": "synthetic-file-written",
+        "pid": 37160,
+        "clock": "CLOCK_MONOTONIC",
+        "started_ns": 151997156847000,
+        "finished_ns": 151998164177000
+      },
+      "exit_code": 0,
+      "stdout_sha256": "0f4aa565c95e8e30e4d64e25effa8d13e4d4233ab328ec01aa20d336adbd9e60"
+    },
+    {
+      "name": "parallel-a",
+      "parent_before": 151998173556000,
+      "parent_after": 151999439814000,
+      "worker": {
+        "path": "parallel-a.txt",
+        "result": "synthetic-file-written",
+        "pid": 37164,
+        "clock": "CLOCK_MONOTONIC",
+        "started_ns": 151998424101000,
+        "finished_ns": 151999435918000
+      },
+      "exit_code": 0,
+      "stdout_sha256": "ab1dae103a24e025287163de0630e4ad3bf9aea9709a5aedbf9c6db9d2e5d500"
+    },
+    {
+      "name": "parallel-b",
+      "parent_before": 151998356047000,
+      "parent_after": 151999589817000,
+      "worker": {
+        "path": "parallel-b.txt",
+        "result": "synthetic-file-written",
+        "pid": 37170,
+        "clock": "CLOCK_MONOTONIC",
+        "started_ns": 151998583353000,
+        "finished_ns": 151999586115000
+      },
+      "exit_code": 0,
+      "stdout_sha256": "cd0686569d253e8664408ee7e9741d5d54cd447a52cd08fe3a9d5433541309ea"
+    }
+  ],
+  "scope": "A01 execution of fixed Worker directly as child; clock comparability and real interval control only, not external launcher integration"
+}

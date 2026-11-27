@@ -1,0 +1,61 @@
+{
+  "scenario": "parallel",
+  "root": "<EXPERIMENT_PARALLEL>/candidate/project",
+  "baseline_sha": "d839123352d482ee6a3494f15c34c407d04e8130",
+  "jobs": [
+    {
+      "job_id": "job-a",
+      "operation_id": "external-parallel-a",
+      "workspace": "<EXPERIMENT_PARALLEL>/candidate/project/.ai-org/workspaces/workspace-68fdc29139384c7283ef5467c35a846d",
+      "output": "src/a/result.txt",
+      "content": "synthetic-parallel-a",
+      "credentials": {
+        "assignment_id": "assignment-d4c1c6c8a91440059c1eeb1625bcc7c2",
+        "epoch": 1,
+        "token": 1,
+        "lease_expires_at": "2026-11-27T16:39:56Z",
+        "workspace_id": "workspace-68fdc29139384c7283ef5467c35a846d"
+      },
+      "actor": "principal-implementer",
+      "wp_id": "WP-DEMO",
+      "delay_seconds": 2,
+      "timeout": 25
+    },
+    {
+      "job_id": "job-b",
+      "operation_id": "external-parallel-b",
+      "workspace": "<EXPERIMENT_PARALLEL>/candidate/project/.ai-org/workspaces/workspace-884bf5b65d06435d810b3e0d3b8e0adf",
+      "output": "src/b/result.txt",
+      "content": "synthetic-parallel-b",
+      "credentials": {
+        "assignment_id": "assignment-e92b9200a24d410b884a5cd66e863917",
+        "epoch": 1,
+        "token": 1,
+        "lease_expires_at": "2026-11-27T16:39:59Z",
+        "workspace_id": "workspace-884bf5b65d06435d810b3e0d3b8e0adf"
+      },
+      "actor": "principal-reviewer",
+      "wp_id": "WP-SECOND",
+      "delay_seconds": 2,
+      "timeout": 25
+    }
+  ],
+  "canaries": {
+    "trusted_write": true,
+    "trusted_hardlink_alias": true,
+    "repo_write": true,
+    "outside_read": true,
+    "outside_write": true,
+    "candidate_root_unlink": true,
+    "network": true,
+    "credentials_removed": true
+  },
+  "startup_cleanup": [
+    {
+      "name": "xcrun_db",
+      "bytes": 499,
+      "sha256": "767b97e4e6c44f3e9a7b2496c54bcc1c3901650873f4fc67d811e051bd9f6e8b",
+      "reason": "known macOS Python startup cache in fresh candidate anchor"
+    }
+  ]
+}

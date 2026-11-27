@@ -1,0 +1,19 @@
+{
+  "raw_sha256": {
+    "session-probe-20261127-03.json": "d7cbeac25491296733afc038b42a0682848ffacfbbb29a7e4142c600f3af8cdb",
+    "session-probe-20261127-03-reconciled.json": "f63a0d5e438dc0b757b583a9fb864e1852cafecafd156b21d5c61087f2439194",
+    "session-probe-20261127-03-cleanup.json": "dd5edc83c02c48b2d5bed447fbfc6eaa903f3e0a0ab845235c6e4276c7976b08",
+    "session-probe-20261127-03-launch.json": "073a69d2354586027b80681543bc06013563a7d8e0589dca562181c32be80949",
+    "probe_existing_idle.py": "eb73ba03807824deeb4a765eb5cd9e7640e16b08a21a41dd9bfa6cba105df8d0"
+  },
+  "public_sha256": {
+    "README.md": "1b7d6f4593a9e9fac42864431c0f8e88ddcd0a6187c5a4783c0cca83738fed34",
+    "independent-review.md": "f56a21582af0ce6d0fcce0eff716e2fe592c3659d75173dcafd1def67b594a63",
+    "probe_existing_idle.py.txt": "eb73ba03807824deeb4a765eb5cd9e7640e16b08a21a41dd9bfa6cba105df8d0",
+    "session-probe-20261127-03-cleanup.json": "dd5edc83c02c48b2d5bed447fbfc6eaa903f3e0a0ab845235c6e4276c7976b08",
+    "session-probe-20261127-03-launch.json": "073a69d2354586027b80681543bc06013563a7d8e0589dca562181c32be80949",
+    "session-probe-20261127-03-reconciled.json": "23880d58733a7cd06dddbd43a34651533962e9f92f1f1aa0a9bfb306d56c96c8",
+    "session-probe-20261127-03.json": "865aa6d4d96b125bdb9fa40858e7aea2960a3c8388c6e30a2cd197b43fc98da0"
+  },
+  "status": "sanitized public evidence packaged with runner-completion increment"
+}

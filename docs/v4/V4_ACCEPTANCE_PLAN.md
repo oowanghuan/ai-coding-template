@@ -81,6 +81,9 @@ WP-303 保存实际输入、界面/CLI 交互记录、必填字段与确认次�
 | [本机轮询](evidence/project-lead-poll.json) | 真实 launchd 触发、真实 Codex 唤起；合成 ID/SHA 去重及进程互斥 | 云端 Advisor 启用、真实整改闭环、物理重启/断网恢复 |
 | [Git 基线](evidence/git-baseline.txt) | main、remote、分支、未提交范围的只读核对 | 远端以后不会发生变化 |
 | [设计一致性检查](evidence/design-checks.json) | 七项交付本地引用、输入/日志指纹、工作包引用闭包及旧资产保全；`python3 tests/validate_v4_design.py` | 语义完整性、秘密扫描完备性或独立评审 |
+| [WP-102/103 本轮回归和反例](evidence/runner-completion/README.md) | 代码 `e7618b5a535e67aaca6aef7d5dfe30d3eb0b6291` 对应的 150 项中 147 pass、3 skip；独立跨版本 CLI 27 命令/42 断言；独立负例；保留 README 并行编辑这一输入指纹例外 | 三项 direct 成功路径未测；Fake 进程/合成 receipt 不能算真实运行；不是全体 S01–S12 通过 |
+| [真实 external Runner](evidence/external-runner/README.md) | 固定受信启动器与独立沙盒 Worker；实际单任务、双任务时间重叠、失败回放与撤权后确认停机；绑定权威状态和交付内容 | 仅合作控制器、固定合成任务；不是任意恶意控制器认证、双模型适配、跨机、额度恢复、业务验收或默认 direct 后端补测 |
+| [已加载 idle 会话一次性投递](evidence/idle-probe-03/README.md) | queue/add 的通知真实进入原模型上下文，历史对账匹配，完成后清除一次性 job，生产轮询保持 | 显式 queue/start 分支没有执行；不是新 Advisor 事件、物理重启/离线/额度恢复或产品 Session Adapter 验收 |
 
 P0 的可复跑入口：`python3 tests/p0_audit.py --output <不存在的新目录>`。退出 0 只表示“观测与冻结基线一致”，包括正确复现退出 1 的安装故障。macOS Bash 3.2 为本次环境，其他 Bash/OS 未验收。
 

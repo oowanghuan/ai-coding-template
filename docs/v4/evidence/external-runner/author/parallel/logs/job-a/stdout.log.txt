@@ -1,0 +1,1 @@
+{"path": "src/a/result.txt", "result": "synthetic-file-written", "pid": 39093, "clock": "CLOCK_MONOTONIC", "started_ns": 152266525044000, "finished_ns": 152268525929000}

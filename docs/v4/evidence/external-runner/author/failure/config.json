@@ -1,0 +1,25 @@
+{
+  "format": "v4-launch-config/1",
+  "batch_id": "v4-ext-e2e-gpzrfsxo",
+  "trusted_root": "<EXPERIMENT_FAILURE>/trusted",
+  "candidate_root": "<EXPERIMENT_FAILURE>/candidate",
+  "driver_sha256": "cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce",
+  "python": "/usr/bin/python3",
+  "worker_program": "<EXPERIMENT_FAILURE>/trusted/worker_process.py",
+  "worker_sha256": "05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d",
+  "request_dir": "<EXPERIMENT_FAILURE>/candidate/requests",
+  "receipt_dir": "<EXPERIMENT_FAILURE>/trusted/receipts",
+  "scratch_root": "<EXPERIMENT_FAILURE>/trusted/scratch",
+  "deadline_seconds": 60,
+  "jobs": [
+    {
+      "job_id": "job-a",
+      "operation_id": "external-failure-a",
+      "workspace": "<EXPERIMENT_FAILURE>/candidate/project/.ai-org/workspaces/workspace-c74805ec3bb94dbf8c145965fac0da17",
+      "output": "src/a/result.txt",
+      "content_sha256": "a5efda182d0a26d7fa87b8ad5b0d7b096325da4229d28f0b470ac31b22a168c9",
+      "max_delay_seconds": 2,
+      "max_runtime_seconds": 25
+    }
+  ]
+}

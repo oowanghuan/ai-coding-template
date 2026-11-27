@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "-B",
+    "-S",
+    "<WORKSPACE>/scripts/v4_local.py",
+    "run-external",
+    "--root",
+    "<EXPERIMENT_PARALLEL>/candidate/project",
+    "--actor",
+    "principal-implementer",
+    "--input",
+    "<EXPERIMENT_PARALLEL>/candidate/commands/external-parallel-a.input.json",
+    "--expected-revision",
+    "14",
+    "--operation-id",
+    "external-parallel-a",
+    "--launcher-config",
+    "<EXPERIMENT_PARALLEL>/trusted/config.json",
+    "--launcher-job-id",
+    "job-a"
+  ],
+  "exit_code": 0,
+  "started_ns": 7178132000,
+  "finished_ns": 7944100208,
+  "stdout": "{\n  \"backend\": \"external\",\n  \"content_sha256\": \"14a3cc41f0636769c11124af5d5c5c0b8831ff64e34e5411e6772f778ca4a488\",\n  \"exit_code\": 0,\n  \"job_id\": \"job-a\",\n  \"launcher_config_sha256\": \"a6e296b35e68ca2060ce58d58c6e57ae799f9f924b01e3fc3f87239bfa2921e0\",\n  \"launcher_receipt\": {\n    \"batch_id\": \"v4-ext-e2e-pvv0n0uc\",\n    \"config_sha256\": \"a6e296b35e68ca2060ce58d58c6e57ae799f9f924b01e3fc3f87239bfa2921e0\",\n    \"exit_code\": 0,\n    \"finished_at\": \"2026-11-27T16:35:47.763924+00:00\",\n    \"format\": \"v4-launch-receipt/1\",\n    \"job_id\": \"job-a\",\n    \"operation_id\": \"external-parallel-a\",\n    \"pid\": 39093,\n    \"request_sha256\": \"7424e5186de5e27300d6aaa56550106fea48624f551064cae1486cdb2e38efad\",\n    \"sequence\": 3,\n    \"started_at\": \"2026-11-27T16:35:45.626163+00:00\",\n    \"state\": \"finished\",\n    \"stderr_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n    \"stdout_sha256\": \"b53f494df2b4b2c7bec550879085028d0f937590513022eefaa1ca7a5137e906\"\n  },\n  \"operation_id\": \"external-parallel-a\",\n  \"path\": \"src/a/result.txt\",\n  \"pid\": 39093,\n  \"request_sha256\": \"7424e5186de5e27300d6aaa56550106fea48624f551064cae1486cdb2e38efad\",\n  \"started_at\": \"2026-11-27T16:35:42Z\",\n  \"state\": \"finished\"\n}\n",
+  "stderr": ""
+}

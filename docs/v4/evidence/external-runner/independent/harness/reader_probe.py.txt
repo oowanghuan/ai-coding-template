@@ -1,0 +1,46 @@
+"""Trusted stdlib-only host-reader race probe; harmless disposable files only."""
+import hashlib,importlib.util,json,os,tempfile
+from pathlib import Path
+from unittest.mock import patch
+base=Path(__file__).resolve().parent
+old_path=base.with_name('external-e2e-stage')/'coordinator.py'
+new_path=base/'coordinator.py'
+def load(name,path):
+ spec=importlib.util.spec_from_file_location(name,path);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
+old=load('old_coordinator',old_path);new=load('new_coordinator',new_path)
+checks={}
+with tempfile.TemporaryDirectory(prefix='reader-probe-',dir=base) as temporary:
+ root=Path(temporary);outside=root/'outside';outside.mkdir();(outside/'data').write_bytes(b'harmless outside canary')
+ for label,module in [('old',old),('new',new)]:
+  folder=root/label;folder.mkdir();(folder/'data').write_bytes(b'inside candidate bytes')
+  original_open=os.open;injected=[False]
+  def race(path,flags,*args,**kwargs):
+   if not injected[0]:
+    injected[0]=True;folder.rename(root/(label+'-saved'));folder.symlink_to(outside,target_is_directory=True)
+   return original_open(path,flags,*args,**kwargs)
+  try:
+   with patch.object(module.os,'open',race):result=module.regular(folder/'data')
+   checks[label+'_after_resolve_swap']='read_outside' if result==b'harmless outside canary' else 'read_inside'
+  except (OSError,ValueError):checks[label+'_after_resolve_swap']='rejected'
+ assert checks['old_after_resolve_swap']=='read_outside'
+ assert checks['new_after_resolve_swap']=='rejected'
+ normal=root/'normal';normal.mkdir();(normal/'data').write_bytes(b'pinned bytes')
+ assert new.regular(normal/'data')==b'pinned bytes';checks['ordinary_file']='allowed'
+ original_open=os.open;injected=[False]
+ def late_race(path,flags,*args,**kwargs):
+  if path=='data' and kwargs.get('dir_fd') is not None:
+   injected[0]=True;normal.rename(root/'pinned-saved');normal.symlink_to(outside,target_is_directory=True)
+  return original_open(path,flags,*args,**kwargs)
+ with patch.object(new.os,'open',late_race):assert new.regular(normal/'data')==b'pinned bytes'
+ assert injected[0];checks['after_parent_pin_swap']='read_pinned_original'
+ alias=root/'alias';os.link(outside/'data',alias)
+ try:new.regular(alias)
+ except ValueError:checks['hardlink']='rejected'
+ else:raise AssertionError('hardlink accepted')
+ fifo=root/'fifo';os.mkfifo(fifo)
+ try:new.regular(fifo)
+ except ValueError:checks['fifo']='rejected_without_blocking'
+ else:raise AssertionError('fifo accepted')
+ assert (outside/'data').read_bytes()==b'harmless outside canary';checks['outside_unchanged']=True
+result={'scope':'Trusted host helper only; no candidate product import/launch','checks':checks,'coordinator_sha256':hashlib.sha256(new_path.read_bytes()).hexdigest(),'old_coordinator_sha256':hashlib.sha256(old_path.read_bytes()).hexdigest()}
+(base/'reader-probe-result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))

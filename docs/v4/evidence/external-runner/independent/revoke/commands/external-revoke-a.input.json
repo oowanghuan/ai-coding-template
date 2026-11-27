@@ -1,0 +1,13 @@
+{
+  "credentials": {
+    "assignment_id": "assignment-54c6dc6ee28b4e00bfcbb1ae81ab05ff",
+    "epoch": 1,
+    "token": 1,
+    "lease_expires_at": "2026-11-27T16:43:51Z",
+    "workspace_id": "workspace-efac9e0079d14519bfa190589d851321"
+  },
+  "path": "src/a/result.txt",
+  "content": "synthetic-revoke-a",
+  "delay_seconds": 15,
+  "timeout": 25
+}

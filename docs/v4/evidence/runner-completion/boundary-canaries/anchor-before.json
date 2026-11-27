@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-27T16:20:45.768118+00:00",
+  "exit_code": 0,
+  "observations": {
+    "remove_empty_anchor": "allowed",
+    "replace_anchor_with_symlink": "allowed"
+  },
+  "candidate_directory": false,
+  "stderr": ""
+}

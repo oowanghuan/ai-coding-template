@@ -1,0 +1,50 @@
+{
+  "single": [
+    {
+      "job_id": "job-a",
+      "operation_id": "external-single-a",
+      "initial_cli_exit_code": 0,
+      "replay_cli_exit_code": 0,
+      "successful_result_identical": true,
+      "authority_and_protected_receipt_byte_equality": "asserted by executed, hash-pinned harness before/after replay; no duplicate host execution"
+    }
+  ],
+  "parallel": [
+    {
+      "job_id": "job-a",
+      "operation_id": "external-parallel-a",
+      "initial_cli_exit_code": 0,
+      "replay_cli_exit_code": 0,
+      "successful_result_identical": true,
+      "authority_and_protected_receipt_byte_equality": "asserted by executed, hash-pinned harness before/after replay; no duplicate host execution"
+    },
+    {
+      "job_id": "job-b",
+      "operation_id": "external-parallel-b",
+      "initial_cli_exit_code": 0,
+      "replay_cli_exit_code": 0,
+      "successful_result_identical": true,
+      "authority_and_protected_receipt_byte_equality": "asserted by executed, hash-pinned harness before/after replay; no duplicate host execution"
+    }
+  ],
+  "failure": [
+    {
+      "job_id": "job-a",
+      "operation_id": "external-failure-a",
+      "initial_cli_exit_code": 2,
+      "replay_cli_exit_code": 2,
+      "successful_result_identical": null,
+      "authority_and_protected_receipt_byte_equality": "asserted by executed, hash-pinned harness before/after replay; no duplicate host execution"
+    }
+  ],
+  "revoke": [
+    {
+      "job_id": "job-a",
+      "operation_id": "external-revoke-a",
+      "initial_cli_exit_code": 2,
+      "replay_cli_exit_code": 2,
+      "successful_result_identical": null,
+      "authority_and_protected_receipt_byte_equality": "asserted by executed, hash-pinned harness before/after replay; no duplicate host execution"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "single": {
+    "captured_at": "2026-11-27T16:41:34.159658+00:00",
+    "authority_sha256": "ff062871f533a033ee744d5e88eebf2f38899e0c3061dc2ea654e127e6a947c3",
+    "assignments": {
+      "assignment-16ce9e3be4b146478333e193abb942ee": "active"
+    },
+    "workspaces": {
+      "workspace-6b3d0788e58a46d3b396031020247b74": "finished"
+    },
+    "work_packages": {
+      "WP-DEMO": "in_progress"
+    },
+    "deliveries": 1
+  },
+  "parallel": {
+    "captured_at": "2026-11-27T16:41:34.301495+00:00",
+    "authority_sha256": "9fa8f4ca2ed4de1d835dc6b0e705b51e37a7cfe6975ef0d0e601eb7d92ebd606",
+    "assignments": {
+      "assignment-d4c1c6c8a91440059c1eeb1625bcc7c2": "active",
+      "assignment-e92b9200a24d410b884a5cd66e863917": "active"
+    },
+    "workspaces": {
+      "workspace-68fdc29139384c7283ef5467c35a846d": "finished",
+      "workspace-884bf5b65d06435d810b3e0d3b8e0adf": "finished"
+    },
+    "work_packages": {
+      "WP-DEMO": "in_progress",
+      "WP-SECOND": "in_progress"
+    },
+    "deliveries": 2
+  },
+  "failure": {
+    "captured_at": "2026-11-27T16:41:34.451436+00:00",
+    "authority_sha256": "3571ef0dd39dff25120731ae3e2d41a3edc0236c4ad2b2edd0a3809344a54531",
+    "assignments": {
+      "assignment-e4f1c8df93d1458bb02eb3f5cde80e47": "active"
+    },
+    "workspaces": {
+      "workspace-c74805ec3bb94dbf8c145965fac0da17": "finished"
+    },
+    "work_packages": {
+      "WP-DEMO": "in_progress"
+    },
+    "deliveries": 0
+  },
+  "revoke": {
+    "captured_at": "2026-11-27T16:41:34.599441+00:00",
+    "authority_sha256": "00f67dd154005ec0f644e442e8cec05008cc253a2147ebcc775d1d0daa047f68",
+    "assignments": {
+      "assignment-dfe07b40170b40b5ba7664e2c9b9db6f": "revoked"
+    },
+    "workspaces": {
+      "workspace-126ec0be6d924fc2a7afb5b5396a39aa": "stopped"
+    },
+    "work_packages": {
+      "WP-DEMO": "paused"
+    },
+    "deliveries": 0
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "scope": "static public package check, not candidate execution or authenticity certification",
+  "product_commit": "e7618b5a535e67aaca6aef7d5dfe30d3eb0b6291",
+  "evidence_files": 413,
+  "bytes": 892083,
+  "indexed_public_hashes_verified": 406,
+  "local_links_checked": 109,
+  "errors": []
+}

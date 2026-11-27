@@ -1,0 +1,42 @@
+import hashlib,json,os,subprocess,time,uuid
+from pathlib import Path
+base=Path(__file__).resolve().parent
+experiment=Path('<EXPERIMENT>');trusted=experiment/'trusted';candidate=experiment/'candidate'
+scratch=trusted/'scratch/job-a';policy=scratch/'policy.sb'
+paths={'trusted_config':str(trusted/'config.json'),'trusted_receipt':str(trusted/'receipts/job-a.json'),'authority':str(candidate/'project/.ai-org/state.json'),'checkout':str(Path('<REPOSITORY>/framework/local/external.py'))}
+H=lambda b:hashlib.sha256(b).hexdigest()
+protected=[Path(v) for v in paths.values()]+[scratch/'stdout.log',scratch/'stderr.log',policy]
+before={str(p):H(p.read_bytes()) for p in protected}
+canary=scratch/('independent-inner-canary-'+uuid.uuid4().hex+'.txt')
+probe="""import json,os,socket
+from pathlib import Path
+paths=json.loads(__import__('sys').argv[1]);canary=Path(__import__('sys').argv[2]);result={}
+for name,path in paths.items():
+ for operation in ('read','write'):
+  try:
+   flags=os.O_RDONLY if operation=='read' else os.O_WRONLY
+   fd=os.open(path,flags|os.O_NOFOLLOW)
+   try:
+    if operation=='read':os.read(fd,1)
+   finally:os.close(fd)
+   result[name+'_'+operation]='unexpected_allowed_without_mutation'
+  except PermissionError as error:result[name+'_'+operation]={'denied_errno':error.errno}
+try:
+ with socket.socket() as connection:connection.connect(('127.0.0.1',9))
+ result['network']='unexpected_allowed'
+except PermissionError as error:result['network']={'denied_errno':error.errno}
+with canary.open('x') as stream:stream.write('fixed harmless inner-policy canary')
+result['own_scratch_unique_write']=canary.read_text()=='fixed harmless inner-policy canary'
+result['credentials_absent']=not any(k in os.environ for k in ('GH_TOKEN','GITHUB_TOKEN','OPENAI_API_KEY','ANTHROPIC_API_KEY','SSH_AUTH_SOCK','CODEX_HOME'))
+print(json.dumps(result))
+"""
+command=['/usr/bin/sandbox-exec','-f',str(policy),'/usr/bin/python3','-I','-B','-S','-c',probe,json.dumps(paths),str(canary)]
+env={'HOME':str(scratch),'TMPDIR':str(scratch),'PATH':'/usr/bin:/bin','PYTHONNOUSERSITE':'1','PYTHONDONTWRITEBYTECODE':'1'}
+p=subprocess.run(command,cwd=scratch,env=env,capture_output=True,timeout=15)
+(base/'inner-policy.stdout.log').write_bytes(p.stdout);(base/'inner-policy.stderr.log').write_bytes(p.stderr)
+observed=json.loads(p.stdout);after={str(p):H(p.read_bytes()) for p in protected}
+assert p.returncode==0 and not p.stderr and before==after
+assert observed['own_scratch_unique_write'] and observed['credentials_absent']
+assert all(observed[key]=={'denied_errno':1} for key in [name+'_'+op for name in paths for op in ('read','write')]+['network']),observed
+record={'scope':'Trusted fixed system-Python probe under the exact policy emitted by the reviewed driver; no candidate imports or new Worker/config','policy_sha256':H(policy.read_bytes()),'command':command,'environment':env,'exit_code':p.returncode,'observations':observed,'protected_hashes_before':before,'protected_hashes_after':after,'protected_original_bytes_unchanged':before==after,'unique_scratch_canary':str(canary),'probe_source_sha256':H(probe.encode())}
+(base/'inner-policy-result.json').write_text(json.dumps(record,indent=2)+'\n');print(json.dumps({'exit_code':p.returncode,'observations':observed,'protected_original_bytes_unchanged':before==after,'policy_sha256':record['policy_sha256']}))

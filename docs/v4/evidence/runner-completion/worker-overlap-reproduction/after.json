@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<FIXTURE>/next-sandbox.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "-m",
+    "unittest",
+    "tests.local.test_local.LocalTests.test_two_actual_workers_inherit_outer_sandbox_and_submit"
+  ],
+  "exit_code": 1
+}

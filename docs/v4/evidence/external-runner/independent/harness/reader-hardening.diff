@@ -1,0 +1,49 @@
+--- <LOCAL_EVIDENCE>/external-e2e-stage/coordinator.py	2026-11-27 10:32:36
++++ <LOCAL_EVIDENCE>/external-e2e-independent-stage/coordinator.py	2026-11-27 10:37:15
+@@ -28,16 +28,26 @@
+ def save(path, value): path.write_text(json.dumps(value, indent=2) + '\n')
+ def regular(path):
+     path = Path(path)
+-    if not path.is_absolute() or path.resolve() != path: raise ValueError('noncanonical input path')
+-    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
++    if not path.is_absolute() or '..' in path.parts or path.resolve() != path:
++        raise ValueError('noncanonical input path')
++    # Pin every ancestor, not merely the final leaf. Candidate-side ancestors
++    # may change after resolve(); O_NOFOLLOW directory walks must reject swaps.
++    parent_fd = os.open('/', os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+     try:
+-        info = os.fstat(fd)
+-        if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1 or info.st_size > LIMIT:
+-            raise ValueError('unsafe input file')
+-        data = os.read(fd, LIMIT + 1)
+-        if len(data) > LIMIT: raise ValueError('oversized input')
+-        return data
+-    finally: os.close(fd)
++        for part in path.parts[1:-1]:
++            following = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=parent_fd)
++            os.close(parent_fd); parent_fd = following
++        fd = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=parent_fd)
++        try:
++            info = os.fstat(fd)
++            if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1 or info.st_size > LIMIT:
++                raise ValueError('unsafe input file')
++            data = os.read(fd, LIMIT + 1)
++            if len(data) > LIMIT: raise ValueError('oversized input')
++            return data
++        finally: os.close(fd)
++    finally: os.close(parent_fd)
++
+ def load(path): return json.loads(regular(path))
+ def directory(path):
+     path = Path(path)
+@@ -170,6 +180,10 @@
+             if manifest['scenario'] == 'revoke':
+                 cancel = load(candidate / 'requests' / (job['job_id'] + '.cancel.json'))
+                 assert cancel['request_sha256'] == receipt['request_sha256'] and receipt['state'] == 'stopped'
++                assignment = next(a for a in state['snapshot']['assignments'] if a['id'] == job['credentials']['assignment_id'])
++                workspace = state['workspaces'][job['credentials']['workspace_id']]
++                package = next(w for w in state['snapshot']['work_packages'] if w['id'] == job['wp_id'])
++                assert assignment['state'] == 'revoked' and workspace['state'] == 'stopped' and package['state'] == 'paused'
+         records.append(receipt)
+     observed = {}
+     if manifest['scenario'] == 'parallel':

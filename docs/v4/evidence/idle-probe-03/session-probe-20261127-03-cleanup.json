@@ -1,0 +1,14 @@
+{
+  "cleaned_at": "2026-11-27T15:50:20.554934+00:00",
+  "completed_probe_job_removed": true,
+  "production_poller_loaded": true,
+  "production_hashes_unchanged": true,
+  "sha256": {
+    "poll.py": "f3973914504c719f3f2ce2fdd567510955adc88b7dc4e7ddb6492dbf9115b18e",
+    "session_delivery.py": "6b272a3663488ec38085406ceae88162f0642847f54309314c896665fea329b2",
+    "com.ai-coding-template.v4.project-lead.plist": "d362e0978ace4ca5cd09a88d0af0aa5ea7428ffb92926d15abdacc083d0afab0"
+  },
+  "probe_started_times": 1,
+  "probe_exit_code": 0,
+  "scope": "Removed only completed probe03 launchd job. No new probe or session."
+}
