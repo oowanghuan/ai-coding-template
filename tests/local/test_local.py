@@ -1,3 +1,4 @@
+import base64
 import copy
 import hashlib
 import json
@@ -318,12 +319,16 @@ Path('allowed').write_text('ok')
         with self.assertRaisesRegex(ValueError, 'dependency-not-ready'): self.claim()
 
     @unittest.skipIf(os.environ.get('V4_OUTER_SEATBELT') == '1', 'nested Seatbelt unavailable; not counted as end-to-end runner acceptance')
-    def test_two_isolated_workers_execute_concurrently(self):
+    def test_two_isolated_runners_capture_distinct_deliveries(self):
+        # Concurrent controller calls alone do not prove Worker execution overlap.
+        # The fixed Worker has no start/end handshake; overlap needs separate evidence.
         self.two_tasks()
         a = self.claim()
         b = self.claim(wp='WP-SECOND', worker='worker-b', session='session-b', actor='principal-reviewer')
         self.start(a)
         prepare(self.root, b, 'principal-reviewer', self.state()['revision'], 'start-b')
+        workspaces = self.state()['workspaces']
+        self.assertNotEqual(workspaces[a['workspace_id']]['path'], workspaces[b['workspace_id']]['path'])
         errors = []; outcomes = []
         def launch(c, actor, path, key):
             try:
@@ -339,11 +344,29 @@ Path('allowed').write_text('ok')
                    threading.Thread(target=launch, args=(b, 'principal-reviewer', 'src/b/out', 'run-b'))]
         for thread in threads: thread.start()
         for thread in threads: thread.join(timeout=30)
+        self.assertTrue(all(not thread.is_alive() for thread in threads), 'Runner calls did not terminate')
         self.assertFalse(errors, errors)
         self.assertEqual(len(outcomes), 2)
         self.assertNotEqual(outcomes[0]['pid'], outcomes[1]['pid'])
+        self.assertTrue(all(outcome['exit_code'] == 0 for outcome in outcomes))
+        for c, actor, wp_id, path, content in [
+                (a, ACTOR, 'WP-DEMO', 'src/a/out', b'run-a'),
+                (b, 'principal-reviewer', 'WP-SECOND', 'src/b/out', b'run-b')]:
+            digest = hashlib.sha256(content).hexdigest()
+            result = self.change('submit', dict(c, path=path, sha256=digest), actor)['operation']['result']
+            self.assertEqual(result, dict(delivery_id=wp_id, sha256=digest, accepted=False))
+            delivery = self.state()['deliveries'][wp_id]
+            self.assertEqual(delivery['assignment_id'], c['assignment_id'])
+            self.assertEqual((delivery['epoch'], delivery['token']), (c['epoch'], c['token']))
+            self.assertEqual(delivery['path'], path)
+            self.assertEqual(delivery['baseline_sha'], self.sha)
+            self.assertEqual(delivery['sha256'], digest)
+            self.assertEqual(base64.b64decode(delivery['content_base64']), content)
+            self.assertFalse((self.root / path).exists())
+        self.assertEqual(set(self.state()['deliveries']), {'WP-DEMO', 'WP-SECOND'})
         self.assertEqual(self.store.inspect()['consistency_errors'], [])
-        self.assertFalse((self.root / 'src/a/out').exists())
+        self.assertEqual(git(self.root, 'rev-parse', 'HEAD').decode().strip(), self.sha)
+        self.assertEqual((self.root / 'src/base.txt').read_text(), 'baseline')
 
     def test_no_sandbox_fallback_on_nested_launch_failure(self):
         if os.environ.get('V4_OUTER_SEATBELT') != '1':

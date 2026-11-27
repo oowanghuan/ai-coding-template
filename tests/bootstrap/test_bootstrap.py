@@ -9,7 +9,7 @@ import unittest
 
 from framework.local.bootstrap import apply, inventory, plan, rollback
 from framework.local.storage import atomic_json, fingerprint
-from framework.local.store import Store
+from framework.local.store import Store, envelope, shape
 from framework.local.runner import git
 
 
@@ -138,12 +138,46 @@ class BootstrapTests(unittest.TestCase):
         self.assertTrue(self.install(p)['replayed'])
         self.assertEqual(Store(self.root).inspect()['consistency_errors'], [])
 
-    def test_unknown_execution_blocks_upgrade(self):
+    def test_invalid_execution_state_blocks_upgrade(self):
         self.install()
         path = self.root / '.ai-org/state.json'; state = json.loads(path.read_text())
         state['workspaces']['synthetic'] = dict(state='unknown')
         atomic_json(path, state)
-        with self.assertRaisesRegex(ValueError, 'unknown execution|invalid local state'): self.plan('upgrade')
+        before = inventory(self.root)
+        with self.assertRaisesRegex(ValueError, 'invalid local state'): self.plan('upgrade')
+        self.assertEqual(inventory(self.root), before)
+
+    def test_unknown_execution_blocks_upgrade(self):
+        git(self.root, 'init', '-q')
+        (self.root / 'code.txt').write_text('baseline')
+        git(self.root, 'add', 'code.txt')
+        git(self.root, '-c', 'user.name=Synthetic', '-c', 'user.email=synthetic@example.invalid',
+            'commit', '-qm', 'synthetic baseline')
+        self.install(self.plan('import'))
+        repo = Path(__file__).resolve().parents[2]
+        snapshot = json.loads((repo / 'examples/protocol/in-progress.json').read_text())
+        snapshot['assignments'] = []; snapshot['checkpoints'] = []
+        snapshot['work_packages'][0].update(state='planned', assignment_ref=None, checkpoint_ref=None,
+            baseline_sha=git(self.root, 'rev-parse', 'HEAD').decode().strip())
+        snapshot['workers'][0]['state'] = 'available'
+        store = Store(self.root)
+        # Synthetic fixture import, then real transitions create a schema-valid unresolved workspace.
+        atomic_json(store.path, envelope(snapshot))
+        def change(action, payload, actor):
+            state = store.inspect()['state']
+            return store.change(action, payload, actor, state['revision'], 'unknown-' + action)
+        c = change('claim', dict(wp_id='WP-DEMO', worker_id='worker-a', session_id='session-a',
+            lease_seconds=300), 'principal-implementer')['operation']['result']
+        change('start', c, 'principal-implementer')
+        change('revoke', dict(assignment_id=c['assignment_id'], reason='unknown-workspace probe'), 'principal-owner')
+        state = store.inspect()['state']
+        shape(state)
+        self.assertEqual(state['snapshot']['assignments'][0]['state'], 'revoked')
+        self.assertEqual(state['workspaces'][c['workspace_id']]['state'], 'creating')
+        before = inventory(self.root)
+        with self.assertRaisesRegex(ValueError, '^active or unknown execution blocks migration$'):
+            self.plan('upgrade')
+        self.assertEqual(inventory(self.root), before)
 
     def test_authority_reference_blocks_asset_removal(self):
         self.install()
