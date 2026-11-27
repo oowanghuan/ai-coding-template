@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-11-27T05:55:38.449952+00:00",
+  "command": [
+    "python3",
+    "tests/validate_v4_design.py"
+  ],
+  "validator_sha256": "fafb99fd6e9328946fe8fc5fa778a85b7b3de3153a190ab271085ecef1c83be3",
+  "inputs": {
+    "V4_CHARTER.md": "6388988fa290f59677fd3b0767b4027209868b8a89053b45e610942c54e9c730",
+    "V3_INVENTORY.md": "c422fdb91e575308e548caebfb3f0c1eded98dcaa2e07180fccdec65d7607d0d",
+    "V4_ARCHITECTURE.md": "e3a055d679c5c0f6c1b62a443dd95ae28ea8c8d9e5d852b50241ede7f9f3e7da",
+    "V4_MIGRATION_PLAN.md": "5bbb3bf65e9db5073b060bb68095470b0bff7759af533bb838c951a752492739",
+    "V4_WORK_PACKAGES.md": "43f95257f3d58ec5fc1a7eca8ef1b579f9c00f6461ac6cb005ad3c02373cd6da",
+    "V4_ACCEPTANCE_PLAN.md": "4a37cd99cdf311e4319325f5df80c78362f66bb1af9b2c079d2ef7342fb5d59e",
+    "OWNER_DECISIONS.md": "6d288bee24644e5f81505cfeb5985c94e1259b6c8a5cce7e9638e68ff731e77c"
+  },
+  "passed": 240,
+  "failed": 0,
+  "limits": "Author consistency check only. Does not prove test authenticity, full semantic coverage, secret absence, or independent acceptance.",
+  "execution_source_commit": "6efbc7525416f36963000e45029c6e3ce6403273",
+  "execution_note": "Executed immutable reviewed validator; no candidate validator or provider task executed.",
+  "failed_checks": []
+}
