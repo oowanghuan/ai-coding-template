@@ -1,0 +1,11 @@
+{
+  "deployed_at": "2026-11-27T15:30:23.769904+00:00",
+  "before_poll_sha256": "be171c6f3250d2de4cac1407269af08f868081366873e199372eeed2526ea9ee",
+  "after_sha256": {
+    "poll.py": "f3973914504c719f3f2ce2fdd567510955adc88b7dc4e7ddb6492dbf9115b18e",
+    "session_delivery.py": "6b272a3663488ec38085406ceae88162f0642847f54309314c896665fea329b2"
+  },
+  "tests": "16 fake-RPC tests and 38 restricted checks passed under outer Seatbelt",
+  "scope": "trusted broker only; candidate checkout and launchd schedule unchanged",
+  "binding_public": "fixed existing loaded session; machine-specific binding remains outside repository"
+}

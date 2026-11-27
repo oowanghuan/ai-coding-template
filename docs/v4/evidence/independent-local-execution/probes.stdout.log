@@ -1,0 +1,5 @@
+{"probe": "eight-process-race", "exit_codes": [0, 2, 2, 2, 2, 2, 2, 2], "revision": 1, "assignments": 1}
+{"probe": "expiry-boundary", "old_token": 1, "new_token": 2, "stale_exit": 2, "state_preserved": true}
+{"probe": "upgrade-journal-only-crash", "crash_exit": 23, "rollback_exit": 0, "previous_selection_restored": true, "state_preserved": true, "retry_applied": true}
+{"probe": "valid-unknown-upgrade", "schema_valid": true, "assignment": "revoked", "workspace": "creating", "blocked": true, "inventory_preserved": true}
+{"independent_probes": {"run": 4, "failures": 0, "errors": 0, "skipped": 0}}

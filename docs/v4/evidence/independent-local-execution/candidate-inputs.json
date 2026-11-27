@@ -1,0 +1,30 @@
+{
+  "reviewed_sha": "ed1bbd8b36df42c8a6ec0ea1f0c44ea52fee3ed6",
+  "implementation_sha": "984eb6993ac1f3cb06d652f448c0680845b1bf65",
+  "before_equals_after": true,
+  "sha256": {
+    "framework/core/protocol.py": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+    "framework/local/README.md": "53f524b229b8654de757d42a9b5bc4f77654dcb00ac8b3763ac217a4b66ee7fd",
+    "framework/local/bootstrap.py": "6e1acd7ac2c8cabeb6fb7e58dfa24ed817ff95ec524e2981cb81dfd36d90b41f",
+    "framework/local/runner.py": "d87247853d1266d730e1bea38e780da36bdae08b1c4075bacc2da336404fb497",
+    "framework/local/storage.py": "af2ddd9d5d717d1f3afe71fc8bcf09f1aaca7b514d3a1e1b1d389f0113a37dea",
+    "framework/local/store.py": "13ee8c97456c294006bac174a2a3200af773e74aceb186c4efe3980012d09676",
+    "framework/local/worker_process.py": "62d4f9a63ec66945965e8d874baf7d9f6f3bab5956990be44dcf8c22ba00804c",
+    "tests/bootstrap/test_bootstrap.py": "e014d4d70b8a8eb597fddcf81f80c61ee9f6d51f2ee1944e1d1e11e150b8c40a",
+    "tests/install/test_install.py": "afa7ad929c67b6643bbe0503eb44561a88af61a4d05c3bae1828fe96a0dcc54c",
+    "tests/local/test_local.py": "f01cb9edc02d840fc0b582ae7985083eda4ad398a7084d33c2b1ee1145284261",
+    "tests/p0_audit.py": "ddb078796258c2f2724d627ebb476e214df1519c8f878fafaa472b86b3f32009",
+    "tests/protocol/test_protocol.py": "8daa43d95cd6cea9a43eeec64ef7c3fd3ca860d095d94cc7b66b8e4b544b5c8c",
+    "tests/validate_v4_design.py": "fafb99fd6e9328946fe8fc5fa778a85b7b3de3153a190ab271085ecef1c83be3",
+    "schemas/README.md": "9d1bc355ff88412cfdcbd301641494a71bfbf5c9c04af12373090aed0ef0bd56",
+    "schemas/install-plan.schema.json": "b276d52b899267c431274a11e8d0880d72ffda43a399ba94cf1c2235d8f7ebdb",
+    "schemas/local-state.schema.json": "09575cca244eeee43871b5d4f5ddf355632550bfeefadee2653fb464a5dcd470",
+    "schemas/protocol.schema.json": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+    "scripts/init-claude-tools.sh": "a12ac467c1ca0ec8ff4bfda970b75330acf30a39b231358b7e1ff68ba22a62f8",
+    "scripts/install_claude_tools.py": "db33efd523d66e0bd74f334c262d874a4d347befc84ca2a0db8c4deac979b86d",
+    "scripts/v4_local.py": "22cb868e37b18e7a717df50a76db004b5c3c2dd6c06beebe2f7951cdb77d1a15",
+    "scripts/v4_project.py": "c51af4e9e0fe11b7bfe765500c335278d0db0646e5336aafeb61399d0a7419a3",
+    "scripts/validate_protocol.py": "a4debf2140c2e10c32170009fa64426218cb518e5344f0ec39baa8daad091a75"
+  },
+  "note": "Hashes of candidate inputs recorded by the independent executor; no candidate files were changed by evidence preparation."
+}

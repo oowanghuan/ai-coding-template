@@ -1,0 +1,84 @@
+{
+  "reviewed_sha": "ed1bbd8b36df42c8a6ec0ea1f0c44ea52fee3ed6",
+  "implementation_sha": "984eb6993ac1f3cb06d652f448c0680845b1bf65",
+  "independence": "Non-author execution context; same physical host and OS account. Not external-host certification or Owner acceptance.",
+  "publication_note": "Sanitized evidence copy. Placeholder paths describe the recorded invocation and are not runnable unchanged. No new candidate execution was performed while preparing this copy.",
+  "started_utc": "2026-11-27T15:21:22.937754+00:00",
+  "finished_utc": "2026-11-27T15:21:37.178804+00:00",
+  "duration_seconds": 14.241049766540527,
+  "exit_code": 0,
+  "counts": {
+    "run": 4,
+    "passed": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<ISOLATED_RUN>/outer-profile.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "<ISOLATED_RUN>/independent-probes.py"
+  ],
+  "candidate_inputs_unchanged": true,
+  "records": [
+    {
+      "probe": "eight-process-race",
+      "exit_codes": [
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "revision": 1,
+      "assignments": 1
+    },
+    {
+      "probe": "expiry-boundary",
+      "old_token": 1,
+      "new_token": 2,
+      "stale_exit": 2,
+      "state_preserved": true
+    },
+    {
+      "probe": "upgrade-journal-only-crash",
+      "crash_exit": 23,
+      "rollback_exit": 0,
+      "previous_selection_restored": true,
+      "state_preserved": true,
+      "retry_applied": true
+    },
+    {
+      "probe": "valid-unknown-upgrade",
+      "schema_valid": true,
+      "assignment": "revoked",
+      "workspace": "creating",
+      "blocked": true,
+      "inventory_preserved": true
+    },
+    {
+      "independent_probes": {
+        "run": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "raw_source_metadata_sha256": "58d776eb6f70daa564716f4375c087f611a0e6cba6523265f583896aa714bbd3",
+  "probe_source_sha256": "735cc77fe9bfff9d35edc96c7b7eeb08fa7c2696b62538af44506d61bff5208d",
+  "public_probe_source": {
+    "path": "independent-probes.py.txt",
+    "raw_sha256": "735cc77fe9bfff9d35edc96c7b7eeb08fa7c2696b62538af44506d61bff5208d",
+    "public_sha256": "fd521794f28eb510b37ab56145bfd4d003b5dd38abfde236bdf769b2f79c9e4c",
+    "transformation": "Only the local checkout path was replaced with <REPO>; no executable statements or assertions changed.",
+    "usage": "Review copy; not runnable unchanged. Reproduction requires reviewed isolation, dependencies and an explicit repository path. Synthetic session-a/worker-a identifiers are test fixture values, not real execution context identifiers."
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "runs": [
+    {
+      "suite": "delivery",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "<isolated-run>/next-sandbox.sb",
+        "/usr/bin/python3",
+        "-B",
+        "-S",
+        "<isolated-run>/session-delivery-stage/test_session_delivery.py"
+      ],
+      "environment": {
+        "HOME": "<isolated-run>/broker-independent-review/revised/home",
+        "TMPDIR": "<isolated-run>/broker-independent-review/revised/tmp",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "PYTHONNOUSERSITE": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "V4_OUTER_SEATBELT": "1"
+      },
+      "started_epoch": 1795793367.3582342,
+      "finished_epoch": 1795793367.6778612,
+      "exit_code": 0
+    },
+    {
+      "suite": "restricted",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "<isolated-run>/next-sandbox.sb",
+        "/usr/bin/python3",
+        "-B",
+        "-S",
+        "<isolated-run>/broker-independent-review/revised/legacy/test_restricted.py"
+      ],
+      "environment": {
+        "HOME": "<isolated-run>/broker-independent-review/revised/home",
+        "TMPDIR": "<isolated-run>/broker-independent-review/revised/tmp",
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "PYTHONNOUSERSITE": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "V4_OUTER_SEATBELT": "1"
+      },
+      "started_epoch": 1795793367.677925,
+      "finished_epoch": 1795793367.9260428,
+      "exit_code": 0
+    }
+  ],
+  "sha256": {
+    "session_delivery.py": "6b272a3663488ec38085406ceae88162f0642847f54309314c896665fea329b2",
+    "test_session_delivery.py": "44bf15e770008eafc18951a152e97be6aa21e8bf91229b4b870c591f7e98e041",
+    "test_restricted.py": "c665671fc0b82ce328414a5f1e349d279fd439d8f708990002c237785bfa3ad4",
+    "poll.py": "f3973914504c719f3f2ce2fdd567510955adc88b7dc4e7ddb6492dbf9115b18e"
+  },
+  "boundary": "fake RPC only; NativeClient constructor raises; existing restricted suite subprocess/GitHub calls use stubs; candidate execution outer-sandboxed; no production mutation",
+  "counts": {
+    "delivery": {
+      "run": 16,
+      "passed": 16,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "restricted": {
+      "checks": 38,
+      "failed": 0
+    }
+  },
+  "logs_sha256": {
+    "restricted.stdout.log": "798c79c10a8016b8a3e304be73dfc17e618069b9db594e5a718158853f10d8c4",
+    "delivery.stderr.log": "2db33d3f9c76fd367dec846a796219a584dfd2f0f29eff75e5898f681b4ae4d6",
+    "restricted.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "delivery.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

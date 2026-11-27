@@ -1,0 +1,21 @@
+test_ack_idempotency_and_real_ack_required (__main__.DeliveryTests) ... ok
+test_ack_rejects_other_session_client_and_existing_mismatch (__main__.DeliveryTests) ... ok
+test_active_acceptance_waits_for_ack_and_never_resteers (__main__.DeliveryTests) ... ok
+test_changed_body_requires_foreground_reconciliation (__main__.DeliveryTests) ... ok
+test_identity_and_cwd_mismatch_fail_without_write (__main__.DeliveryTests) ... ok
+test_idle_unique_queue_starts_only_specific_id (__main__.DeliveryTests) ... ok
+test_other_queue_entry_blocks_both_orderings (__main__.DeliveryTests) ... ok
+test_queue_add_unknown_reconciles_without_second_add (__main__.DeliveryTests) ... ok
+test_queue_add_unknown_without_visible_receipt_never_resends (__main__.DeliveryTests) ... ok
+test_queued_input_mismatch_refuses_start (__main__.DeliveryTests) ... ok
+test_steer_unknown_never_resends_and_history_can_confirm (__main__.DeliveryTests) ... ok
+test_unknown_start_absent_queue_never_retries (__main__.DeliveryTests) ... ok
+test_unknown_start_history_still_requires_model_ack (__main__.DeliveryTests) ... ok
+test_unknown_start_model_ack_resolves_without_write (__main__.DeliveryTests) ... ok
+test_unknown_start_visible_queue_never_retries (__main__.DeliveryTests) ... ok
+test_unloaded_session_and_changed_turn_do_not_start (__main__.DeliveryTests) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.034s
+
+OK

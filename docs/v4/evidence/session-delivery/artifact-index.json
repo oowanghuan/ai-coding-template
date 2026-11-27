@@ -1,0 +1,22 @@
+{
+  "public_artifacts": {
+    "README.md": "757cee292c6921f18d4415fbb0bf7a10b98c999539590069a926d7c35c915468",
+    "active-context-probe.json": "92806ad08d06389130818ee18c6224cb50e79aa33982b688015902d595506fa8",
+    "deployment.json": "40a7624f4e0759fea6f4b566e60ac6c7bc2f974723b3a8e54188c6bcc99658a3",
+    "isolated-delivery.stderr.log": "2db33d3f9c76fd367dec846a796219a584dfd2f0f29eff75e5898f681b4ae4d6",
+    "isolated-delivery.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "isolated-restricted.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "isolated-restricted.stdout.log": "798c79c10a8016b8a3e304be73dfc17e618069b9db594e5a718158853f10d8c4",
+    "isolated-result.json": "ac1cc7c7267db81114f9e67f48c5c8e60457d50deb97d825eb719c2099a14a7c",
+    "poll-20261127T153024269284Z.json": "48fd47d317da54470eba3d5269f81a8752a9bab8ccd5dbd5b720d89c2cb5ece6",
+    "poll-20261127T153405314707Z.json": "d0defd8849b1e2c267bc10b2c0f5bc1c589b54e98629375ec25c7dff94de3a2f",
+    "poll.py.txt": "f3973914504c719f3f2ce2fdd567510955adc88b7dc4e7ddb6492dbf9115b18e",
+    "pre-fix-probe.log": "68035010ce5e39ada0a403ac0e433133917b2be5031b89b6f2b440d0e8c91f50",
+    "pre-fix-review.json": "de17423766f057cfe1dd16baf220c695ecc6515d8cad9ec296d515ebdeb95fd2",
+    "session_delivery.py.txt": "6b272a3663488ec38085406ceae88162f0642847f54309314c896665fea329b2",
+    "source-index.json": "7f3d039705caf14202398b61aed514e6a72d5ec960bce69df37f2e119960f66c",
+    "test_restricted.py.txt": "c665671fc0b82ce328414a5f1e349d279fd439d8f708990002c237785bfa3ad4",
+    "test_session_delivery.py.txt": "44bf15e770008eafc18951a152e97be6aa21e8bf91229b4b870c591f7e98e041"
+  },
+  "scope": "Public snapshots only. See source-index for raw source hashes. This index excludes itself."
+}

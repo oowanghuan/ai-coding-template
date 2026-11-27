@@ -1,0 +1,65 @@
+{
+  "reviewed_sha": "ed1bbd8b36df42c8a6ec0ea1f0c44ea52fee3ed6",
+  "implementation_sha": "984eb6993ac1f3cb06d652f448c0680845b1bf65",
+  "independence": "Non-author execution context; same physical host and OS account. Not external-host certification or Owner acceptance.",
+  "publication_note": "Sanitized evidence copy. Placeholder paths describe the recorded invocation and are not runnable unchanged. No new candidate execution was performed while preparing this copy.",
+  "started_utc": "2026-11-27T15:20:08.480507+00:00",
+  "finished_utc": "2026-11-27T15:22:02.007574+00:00",
+  "duration_seconds": 113.52706718444824,
+  "exit_code": 0,
+  "platform": "macOS-15.5-arm64-arm-64bit",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<ISOLATED_RUN>/outer-profile.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "<ISOLATED_RUN>/run_next_tests.py",
+    "<ISOLATED_RUN>/config.json"
+  ],
+  "counts": {
+    "install": {
+      "run": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 23
+    },
+    "protocol": {
+      "run": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 34
+    },
+    "local": {
+      "run": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 3,
+      "passed": 23
+    },
+    "bootstrap": {
+      "run": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 19
+    }
+  },
+  "total": {
+    "run": 102,
+    "passed": 99,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 3
+  },
+  "candidate_inputs_unchanged": true,
+  "raw_source_metadata_sha256": "9fb202fec8d09e435ab9097e499b73b55cb49ea7b4f4bbad9105f62f71910960",
+  "excluded_claims": [
+    "Full direct Runner success chain",
+    "Cross-host or cloud integration",
+    "Engineering or business acceptance"
+  ]
+}
