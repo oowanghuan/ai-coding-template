@@ -1,0 +1,148 @@
+"""Synthetic tests of the trusted broker. No network or candidate execution."""
+import contextlib
+import hashlib
+import importlib.util
+import io
+import json
+import os
+from pathlib import Path
+import tempfile
+import types
+
+HERE = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location('poll', HERE / 'poll.py')
+m = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(m)
+checks = []
+
+def check(name, value):
+    assert value, name
+    checks.append(name)
+
+def rejects(name, fn):
+    try:
+        fn()
+    except RuntimeError:
+        checks.append(name)
+        return
+    raise AssertionError(name)
+
+sha = 'a' * 40
+user = {'login': m.OWNER}
+request = {'id': 100, 'user': user, 'body': '[Project Lead · 请评审] ' + sha}
+advice = {'id': 101, 'user': user, 'body': '[Advisor · 评审] #issuecomment-100 ' + sha + ' GO 无待办'}
+operation = m.key(advice, sha)
+reply = '[Project Lead · 意见处理]\n引用评论 101；受审 SHA：' + sha + '\n状态：已收口（仅该意见，无阶段放行）。\n' + m.marker(operation)
+entry = {'comment_id': 101, 'subject_sha': sha, 'expected_head': sha,
+         'advisor_body_sha256': m.digest(advice['body']), 'prepared_by': 'Project Lead',
+         'disposition': 'closed', 'body': reply, 'body_sha256': m.digest(reply)}
+check('GO request initially pending', len(m.pending([request, advice])) == 1)
+check('exact comment ID boundary', not m.pending([request, dict(advice, body=advice['body'].replace('100', '2100'))]))
+check('unknown account ignored', not m.pending([request, dict(advice, user={'login': 'unrecognized'})]))
+
+with tempfile.TemporaryDirectory(prefix='v4-broker-negative-') as temp:
+    m.BASE = Path(temp)
+    (m.BASE / 'private-denylist.json').write_text('[]')
+    (m.BASE / 'outbox').mkdir()
+    # Would create a sentinel if mistakenly executed. There is no candidate execution path.
+    (m.BASE / 'tests').mkdir()
+    (m.BASE / 'tests/p0_audit.py').write_text("from pathlib import Path\nPath('CANDIDATE_EXECUTED').touch()\n")
+    os.environ['GH_TOKEN'] = 'SYNTHETIC_DO_NOT_PROPAGATE'
+    os.environ['AWS_SECRET_ACCESS_KEY'] = 'SYNTHETIC_DO_NOT_PROPAGATE'
+    check('credential environment not inherited', not {'GH_TOKEN', 'AWS_SECRET_ACCESS_KEY'} & m.safe_environment().keys())
+    del os.environ['GH_TOKEN']
+    del os.environ['AWS_SECRET_ACCESS_KEY']
+    real_subprocess = m.subprocess
+    invoked = []
+    def subprocess_stub(argv, **kw):
+        invoked.append(argv)
+        check('only fixed GH executable', argv[:2] == [m.GH, 'api'])
+        check('working directory is broker directory', kw['cwd'] == m.BASE)
+        check('shell not enabled', not kw.get('shell', False))
+        return types.SimpleNamespace(returncode=0, stdout='{}', stderr='')
+    m.subprocess = types.SimpleNamespace(run=subprocess_stub)
+    real_api = m.api
+    real_api('user')
+    rejects('repository write endpoint rejected', lambda: real_api('repos/' + m.REPO + '/git/refs/heads/main', payload={'body': 'x'}))
+    rejects('other Issue write rejected', lambda: real_api('repos/' + m.REPO + '/issues/99/comments', payload={'body': 'x'}))
+    rejects('non-body publication rejected', lambda: real_api(m.ISSUE_PATH + '/comments', payload={'body': 'x', 'command': 'exec'}))
+    check('closed response has no review request', m.checked_body(entry, advice, sha, sha).startswith('[Project Lead · 意见处理]'))
+    rejects('edited Advisor input rejected', lambda: m.checked_body(entry, dict(advice, body=advice['body'] + ' edited'), sha, sha))
+    rejects('remote change rejected', lambda: m.checked_body(entry, advice, sha, 'b' * 40))
+    rejects('unreviewed body change rejected', lambda: m.checked_body(dict(entry, body=reply + ' changed'), advice, sha, sha))
+    check('explicit followup remains distinct', m.PREFIXES['needs_review'] != m.PREFIXES['closed'])
+    check('Owner outcome does not request Advisor loop', m.PREFIXES['needs_owner'] == '[Project Lead · 意见处理]')
+    rows = [request, advice]
+    posts = []
+    def fake_api(path, payload=None, paginate=False):
+        if payload is not None:
+            assert path == m.ISSUE_PATH + '/comments'
+            posts.append(payload)
+            c = {'id': 102 + len(posts), 'body': payload['body'], 'user': user}
+            rows.append(c)
+            return c
+        if path == 'user': return {'login': m.OWNER}
+        if path == m.ISSUE_PATH: return {'state': 'open'}
+        if path in m.REVIEW_REFS.values(): return {'object': {'sha': sha}}
+        if path.startswith(m.ISSUE_PATH + '/comments'): return [rows]
+        if '/compare/' in path: return {'status': 'ahead'}
+        raise AssertionError(path)
+    m.api = fake_api
+    m.atomic(m.BASE / 'outbox' / ('101-' + sha + '.json'), dict(entry, expected_branch='v4/first-batch'))
+    # Legacy push succeeded before comment: reconcile remote, do not push or rerun anything.
+    journal = m.BASE / ('operation-' + m.digest(operation) + '.json')
+    m.atomic(journal, {'state': 'push_unknown', 'key': operation, 'commit': sha})
+    with contextlib.redirect_stdout(io.StringIO()):
+        m.main()
+    first = json.loads((m.BASE / 'last-run.json').read_text())
+    check('legacy confirmed push resumes reviewed comment only', first['processed'] == 1 and len(posts) == 1)
+    check('candidate sentinel never executes', not (m.BASE / 'CANDIDATE_EXECUTED').exists())
+    check('no child process except fixed GH test', len(invoked) == 1)
+    # Lost comment receipt; remote comment is present. Next full read reconciles without another POST.
+    m.atomic(journal, {'state': 'posting', 'key': operation})
+    with contextlib.redirect_stdout(io.StringIO()):
+        m.main()
+    second = json.loads((m.BASE / 'last-run.json').read_text())
+    check('next run is quiet and deduplicated', second['pending'] == 0 and second['processed'] == 0 and len(posts) == 1)
+    check('lost receipt reconciled from remote comment', json.loads(journal.read_text())['state'] == 'published')
+    check('unknown absent POST remains frozen', m.reconcile({'state': 'posting', 'key': operation}, [], sha, lambda a,b:'ahead')['state'] == 'posting')
+    check('unknown divergent push remains frozen', m.reconcile({'state': 'push_unknown', 'key': operation, 'commit': 'b'*40}, [], sha, lambda a,b:'diverged')['state'] == 'push_unknown')
+
+
+decision = {'id': 200, 'user': user, 'body': '[Advisor \u00b7 Owner \u88c1\u5b9a\u8f6c\u8bb0] ' + sha}
+check('owner decision recognized without review request', m.pending([decision]) == [(decision, sha)])
+unbound = dict(decision, body='[Advisor \u00b7 Owner \u88c1\u5b9a\u8f6c\u8bb0] no SHA')
+check('unbound decision waits for foreground reconciliation', m.pending([unbound]) == [(unbound, 'unbound')])
+check('unknown decision author ignored', not m.pending([dict(decision, user={'login': 'unknown'})]))
+ack = {'id': 201, 'user': user, 'body': '[Project Lead \u00b7 \u88c1\u5b9a\u5df2\u63a5\u6536] 200 ' + sha}
+check('decision receipt deduplicated', not m.pending([decision, ack]))
+
+check('legacy outbox defaults to design ref', m.outbox_ref(entry) == m.REF_PATH)
+check('first-batch outbox reads its own ref', m.outbox_ref(dict(entry, expected_branch='v4/first-batch')) == m.REVIEW_REFS['v4/first-batch'])
+rejects('main review ref rejected', lambda: m.outbox_ref(dict(entry, expected_branch='main')))
+rejects('unknown review ref rejected', lambda: m.outbox_ref(dict(entry, expected_branch='other')))
+
+
+second_sha = 'b' * 40
+labeled = dict(advice, body='[Advisor \u00b7 \u8bc4\u5ba1] request 100; \u53d7\u5ba1 SHA `' + sha + '`; tested ' + second_sha)
+check('explicit reviewed SHA excludes tested SHA', m.pending([request, labeled]) == [(labeled, sha)])
+comparison = dict(labeled, body=labeled['body'] + ' https://github.com/example/repo/compare/' + second_sha + '...' + sha)
+check('comparison URL does not create a second job', m.pending([request, comparison]) == [(comparison, sha)])
+ambiguous = dict(advice, body='[Advisor \u00b7 \u8bc4\u5ba1] request 100; ' + sha + ' ' + second_sha)
+check('ambiguous SHA remains one visible unbound job', m.pending([request, ambiguous]) == [(ambiguous, 'unbound')])
+missing = dict(advice, body='[Advisor \u00b7 \u8bc4\u5ba1] request 100; no object')
+check('missing SHA remains visible for investigation', m.pending([request, missing]) == [(missing, 'unbound')])
+conflicting = dict(advice, body=labeled['body'] + '; \u53d7\u5ba1 SHA ' + second_sha)
+check('conflicting explicit targets are not guessed', m.pending([request, conflicting]) == [(conflicting, 'unbound')])
+real = json.loads((HERE / 'real-input.json').read_text())['comments']
+real_jobs = m.pending(real)
+check('actual GO comment yields exactly one reviewed object', [(c['id'], s) for c, s in real_jobs] == [(7217342565, '673d6baa13283180b342f446bcadc17ad66efaf9')])
+real_ack = {'id': 9999999999, 'user': user, 'body': '[Project Lead \u00b7 \u610f\u89c1\u5904\u7406] 7217342565 673d6baa13283180b342f446bcadc17ad66efaf9 closed'}
+check('one scoped GO acknowledgement leaves no secondary job', not m.pending(real + [real_ack]))
+
+result = {'kind': 'isolated_broker_checks_with_public_event_replay', 'passed': len(checks), 'failed': 0,
+          'input_comment_ids': [c['id'] for c in real],
+          'input_sha256': hashlib.sha256((HERE/'real-input.json').read_bytes()).hexdigest(),
+          'checks': checks, 'runner_sha256': hashlib.sha256((HERE/'poll.py').read_bytes()).hexdigest(),
+          'test_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+print(json.dumps(result, ensure_ascii=False, indent=2))

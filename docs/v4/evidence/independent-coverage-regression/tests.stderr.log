@@ -1,0 +1,123 @@
+test_committed_old_receipt_cannot_delete_later_repair (test_install.Installation) ... ok
+test_conflict_aborts_before_any_write (test_install.Installation) ... ok
+test_cooperative_single_instance (test_install.Installation) ... ok
+test_dry_run_and_repeat_are_non_destructive (test_install.Installation) ... ok
+test_empty_install_copies_exact_declared_assets (test_install.Installation) ... ok
+test_existing_git_dirty_and_untracked_preserved (test_install.Installation) ... ok
+test_incomplete_transaction_blocks_new_install (test_install.Installation) ... ok
+test_legacy_receipt_cannot_delete_new_repair_and_ambiguous_history_stops (test_install.Installation) ... ok
+test_legacy_shell_entry_point (test_install.Installation) ... ok
+test_manifest_coverage_and_preserved_legacy_variants (test_install.Installation) ... ok
+test_manifest_path_escape_and_duplicate_rejected (test_install.Installation) ... ok
+test_missing_dependency_rejected (test_install.Installation) ... ok
+test_missing_or_changed_source_fails_list_and_install (test_install.Installation) ... ok
+test_non_directory_ancestor_refused (test_install.Installation) ... ok
+test_old_rollback_cannot_delete_a_later_install (test_install.Installation) ... ok
+test_rollback_preserves_preexisting_files (test_install.Installation) ... ok
+test_rollback_refuses_edited_file_without_partial_deletion (test_install.Installation) ... ok
+test_selection_includes_declared_dependencies (test_install.Installation) ... ok
+test_single_legacy_receipt_can_still_rollback (test_install.Installation) ... ok
+test_symlink_destination_refused (test_install.Installation) ... ok
+test_symlink_source_refused_even_when_content_matches (test_install.Installation) ... ok
+test_unknown_interrupted_write_preserved (test_install.Installation) ... ok
+test_unknown_later_write_blocks_old_receipt (test_install.Installation) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 17.835s
+
+OK
+test_assignment_identity_and_tokens_cannot_be_reused (test_protocol.Protocol) ... ok
+test_authorization_scope_and_host (test_protocol.Protocol) ... ok
+test_checkpoint_stale_spec_and_cross_assignment (test_protocol.Protocol) ... ok
+test_checkpoint_unknown_operation_blocks_start (test_protocol.Protocol) ... ok
+test_cli_returns_deterministic_json_and_nonzero_for_invalid (test_protocol.Protocol) ... ok
+test_dependency_must_pass_exact_required_revision (test_protocol.Protocol) ... ok
+test_double_assignment_and_capacity (test_protocol.Protocol) ... ok
+test_duplicate_json_keys_rejected (test_protocol.Protocol) ... ok
+test_each_kind_has_distinct_acceptance (test_protocol.Protocol) ... ok
+test_empty_or_wrong_sha_signoff_rejected (test_protocol.Protocol) ... ok
+test_example_valid_and_validation_is_pure_deterministic (test_protocol.Protocol) ... ok
+test_expired_lease_and_epoch (test_protocol.Protocol) ... ok
+test_expired_snapshot_can_be_safely_paused (test_protocol.Protocol) ... ok
+test_external_effect_expansion_invalidates_signatures_at_same_sha (test_protocol.Protocol) ... ok
+test_external_effect_rework_requires_new_signoff_before_acceptance (test_protocol.Protocol) ... ok
+test_external_scope_is_still_required_when_reopening (test_protocol.Protocol) ... ok
+test_high_risk_self_acceptance_rejected_across_models (test_protocol.Protocol) ... ok
+test_invalid_date_and_empty_recovery_location (test_protocol.Protocol) ... ok
+test_merged_is_not_engineering_or_business_acceptance (test_protocol.Protocol) ... ok
+test_missing_and_duplicate_identifiers (test_protocol.Protocol) ... ok
+test_pause_budget_and_unknown_quota_are_not_permission (test_protocol.Protocol) ... ok
+test_proposed_revoked_missing_and_expired_authorization (test_protocol.Protocol) ... ok
+test_provider_session_binding (test_protocol.Protocol) ... ok
+test_required_field_and_unknown_parallel_state_rejected (test_protocol.Protocol) ... ok
+test_required_milestone_cannot_be_not_applicable (test_protocol.Protocol) ... ok
+test_revision_and_deletion_cannot_silently_overwrite (test_protocol.Protocol) ... ok
+test_revoked_signoff_cannot_be_erased_or_reset_to_pending (test_protocol.Protocol) ... ok
+test_satisfied_dependency_requires_the_exact_artifact (test_protocol.Protocol) ... ok
+test_scope_conflict_and_forbidden_scope (test_protocol.Protocol) ... ok
+test_self_and_two_node_dependency_cycles (test_protocol.Protocol) ... ok
+test_signed_contract_change_requires_rework_and_invalidation (test_protocol.Protocol) ... ok
+test_transition_legal_submission_and_illegal_close (test_protocol.Protocol) ... ok
+test_unsafe_scope_paths (test_protocol.Protocol) ... ok
+test_unstarted_task_cannot_also_be_complete (test_protocol.Protocol) ... ok
+
+----------------------------------------------------------------------
+Ran 34 tests in 6.018s
+
+OK
+test_authorization_budget_quota_and_pause_block_claim (test_local.LocalTests) ... ok
+test_before_commit_preserves_authority (test_local.LocalTests) ... ok
+test_cli_failed_run_replay_stays_failed_and_does_not_launch (test_local.LocalTests) ... ok
+test_cli_success_receipt_replay_preserves_result (test_local.LocalTests) ... ok
+test_commit_crash_replay_and_payload_mismatch (test_local.LocalTests) ... ok
+test_created_worktree_can_reconcile_without_duplicate (test_local.LocalTests) ... ok
+test_expired_reservation_reclaims_with_new_token (test_local.LocalTests) ... ok
+test_launch_intent_is_not_retried (test_local.LocalTests) ... ok
+test_no_sandbox_fallback_on_nested_launch_failure (test_local.LocalTests) ... ok
+test_partial_worktree_cannot_be_reconciled_as_complete (test_local.LocalTests) ... ok
+test_path_escape_symlink_and_hardlink_refused (test_local.LocalTests) ... ok
+test_process_started_failure_is_stopped_not_accepted (test_local.LocalTests) ... ok
+test_protocol_01_stays_strict_and_02_requires_known_execution_baseline (test_local.LocalTests) ... ok
+test_real_crash_after_atomic_write_reconciles_on_restart (test_local.LocalTests) ... ok
+test_real_process_race_has_one_winner (test_local.LocalTests) ... ok
+test_reserved_start_and_controlled_delivery (test_local.LocalTests) ... skipped 'nested Seatbelt unavailable; full runner integration requires independent isolated host'
+test_revoke_fences_old_delivery_and_preserves_workspace (test_local.LocalTests) ... ok
+test_sandbox_denies_network_host_read_write_and_credentials (test_local.LocalTests) ... skipped 'nested Seatbelt unavailable; policy/worker is separately tested by trusted outer harness'
+test_scope_conflict_and_capacity (test_local.LocalTests) ... ok
+test_two_actual_workers_inherit_outer_sandbox_and_submit (test_local.LocalTests) ... ok
+test_two_isolated_runners_capture_distinct_deliveries (test_local.LocalTests) ... skipped 'nested Seatbelt unavailable; not counted as end-to-end runner acceptance'
+test_unauthorized_actor_cannot_claim_or_revoke (test_local.LocalTests) ... ok
+test_unknown_worktree_intent_blocks_reassignment (test_local.LocalTests) ... ok
+test_unmet_dependency (test_local.LocalTests) ... ok
+test_worker_registration_owner_only_and_immutable (test_local.LocalTests) ... ok
+test_wrong_epoch_token_and_expired_lease (test_local.LocalTests) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 78.879s
+
+OK (skipped=3)
+test_authority_reference_blocks_asset_removal (test_bootstrap.BootstrapTests) ... ok
+test_committed_receipt_can_reconcile_lost_final_response (test_bootstrap.BootstrapTests) ... ok
+test_custom_bootstrap_conflict (test_bootstrap.BootstrapTests) ... ok
+test_dirty_import_preserves_git_files_and_custom_rules (test_bootstrap.BootstrapTests) ... ok
+test_dry_run_writes_nothing_and_initial_state_is_honest (test_bootstrap.BootstrapTests) ... ok
+test_edited_file_blocks_rollback_before_any_deletion (test_bootstrap.BootstrapTests) ... ok
+test_fault_after_unrecorded_write_preserves_unknown_and_blocks_store (test_bootstrap.BootstrapTests) ... ok
+test_invalid_execution_state_blocks_upgrade (test_bootstrap.BootstrapTests) ... ok
+test_journal_only_crash_recovers_via_new_process_cli (test_bootstrap.BootstrapTests) ... ok
+test_journal_only_recovery_preserves_unknown_file (test_bootstrap.BootstrapTests) ... ok
+test_old_receipt_cannot_delete_new_installation (test_bootstrap.BootstrapTests) ... ok
+test_plan_cannot_select_arbitrary_files (test_bootstrap.BootstrapTests) ... ok
+test_reinstall_after_rollback_preserves_newer_ownership (test_bootstrap.BootstrapTests) ... ok
+test_repeat_apply_and_rollback_are_safe (test_bootstrap.BootstrapTests) ... ok
+test_rollback_lost_response_can_reconcile (test_bootstrap.BootstrapTests) ... ok
+test_stale_plan_and_wrong_hash_rejected (test_bootstrap.BootstrapTests) ... ok
+test_state_progress_is_not_rewound_by_rollback (test_bootstrap.BootstrapTests) ... ok
+test_symlink_destination_refused (test_bootstrap.BootstrapTests) ... ok
+test_unknown_execution_blocks_upgrade (test_bootstrap.BootstrapTests) ... ok
+test_upgrade_and_rollback_preserve_task_authority (test_bootstrap.BootstrapTests) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 13.078s
+
+OK

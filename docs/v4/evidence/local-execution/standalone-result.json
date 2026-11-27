@@ -1,0 +1,12 @@
+{
+  "subject_sha": "e56449e0b05fab06a34453792f4cca2d9323f1b1",
+  "at": "2026-11-27T13:40:16.573516+00:00",
+  "probe_exit": 0,
+  "worker_exit": 0,
+  "artifact_sha256": "91db8d2ff4e4f7c33475a487096bb3ca2c3e2100609db93b4ba314e7c120b344",
+  "expected_artifact": true,
+  "policy_raw_sha256": "4555a704b9bbdd7673608e7571b474e39c1a1694043f0a6b1d51924d7ee92076",
+  "worker_source_sha256": "62d4f9a63ec66945965e8d874baf7d9f6f3bab5956990be44dcf8c22ba00804c",
+  "runner_source_sha256": "f4b1203316e7e612fc95c1e935ac12a91c26eb192b316ca27b7753d90b3df500",
+  "scope": "standalone worker and sandbox only; full controller launch chain unverified"
+}

@@ -1,0 +1,29 @@
+{
+  "public_artifacts": {
+    "README.md": "d7a53b93750640941462b8accae63aae23aa79ab201bd10fdd2ad61552f69cc6",
+    "active-context-probe.json": "92806ad08d06389130818ee18c6224cb50e79aa33982b688015902d595506fa8",
+    "deployment.json": "40a7624f4e0759fea6f4b566e60ac6c7bc2f974723b3a8e54188c6bcc99658a3",
+    "event-7222308870-ack.json": "b85b071201165a9e31da9343abb25222af4530cee13ec45f79961bc9a786e936",
+    "event-7222308870-chain.json": "814e7db8022588e4f16cd303a4b249d3f09a4c35ed02b77fcebd7e26192983fa",
+    "event-7222308870-delivery.json": "de5cd7d65fe2272a1a1cc340b4442aacae9a494d39d7b5d2de92f8236d7fa3fa",
+    "event-7222308870-operation.json": "8c0100eb76160ed50bb922ec19e4661176a1a378be08d08834ab8330e9b13167",
+    "isolated-delivery.stderr.log": "2db33d3f9c76fd367dec846a796219a584dfd2f0f29eff75e5898f681b4ae4d6",
+    "isolated-delivery.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "isolated-restricted.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "isolated-restricted.stdout.log": "798c79c10a8016b8a3e304be73dfc17e618069b9db594e5a718158853f10d8c4",
+    "isolated-result.json": "ac1cc7c7267db81114f9e67f48c5c8e60457d50deb97d825eb719c2099a14a7c",
+    "poll-20261127T153024269284Z.json": "48fd47d317da54470eba3d5269f81a8752a9bab8ccd5dbd5b720d89c2cb5ece6",
+    "poll-20261127T153405314707Z.json": "d0defd8849b1e2c267bc10b2c0f5bc1c589b54e98629375ec25c7dff94de3a2f",
+    "poll-20261127T154006046944Z.json": "9faf6dec805c280ffa8170d4a60cf90505c9105d04ca22a139366f2559555a6e",
+    "poll-20261127T154145101336Z.json": "c14b718c1f5ac815bb623b4517296e3bc304b88747e31d2abb96ea1f331c176c",
+    "poll-20261127T154218203726Z.json": "22adc0d1966e0929a859ca81903b527c272a762fb6f8140532c5b8d14492ce9e",
+    "poll.py.txt": "f3973914504c719f3f2ce2fdd567510955adc88b7dc4e7ddb6492dbf9115b18e",
+    "pre-fix-probe.log": "68035010ce5e39ada0a403ac0e433133917b2be5031b89b6f2b440d0e8c91f50",
+    "pre-fix-review.json": "de17423766f057cfe1dd16baf220c695ecc6515d8cad9ec296d515ebdeb95fd2",
+    "session_delivery.py.txt": "6b272a3663488ec38085406ceae88162f0642847f54309314c896665fea329b2",
+    "source-index.json": "7404262bc7a03d8692968b923450016cdacc1f2a6d8ff7a968f2c43ae9d1581e",
+    "test_restricted.py.txt": "c665671fc0b82ce328414a5f1e349d279fd439d8f708990002c237785bfa3ad4",
+    "test_session_delivery.py.txt": "44bf15e770008eafc18951a152e97be6aa21e8bf91229b4b870c591f7e98e041"
+  },
+  "scope": "Public snapshots only. See source-index for raw source hashes. This index excludes itself."
+}

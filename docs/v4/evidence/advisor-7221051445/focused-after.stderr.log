@@ -1,0 +1,9 @@
+test_cli_failed_run_replay_stays_failed_and_does_not_launch (test_local.LocalTests) ... ok
+test_cli_success_receipt_replay_preserves_result (test_local.LocalTests) ... ok
+test_journal_only_crash_recovers_via_new_process_cli (test_bootstrap.BootstrapTests) ... ok
+test_journal_only_recovery_preserves_unknown_file (test_bootstrap.BootstrapTests) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 13.989s
+
+OK

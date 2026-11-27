@@ -1,0 +1,29 @@
+{
+  "sanitization": "Only absolute workspace, dependency, fixture and harmless canary paths replaced; no test result edits. Raw records remain outside repository.",
+  "files": [
+    {
+      "raw_name": "result.json",
+      "public_name": "test-result.json",
+      "raw_sha256": "69854d3ad0794a61192ae05ec88e0c06369d459446fe352169d196625818b3c2",
+      "public_sha256": "d7131a57bf1176f1d40ad1bcf6ac1ae8a9af1efa6b9475b361da8c27143a5e8c"
+    },
+    {
+      "raw_name": "stdout.log",
+      "public_name": "tests.stdout.log",
+      "raw_sha256": "daa49cde89fffa069bd2895abc6467fbf60526fc8c8d9f039623e8b4ec40164e",
+      "public_sha256": "daa49cde89fffa069bd2895abc6467fbf60526fc8c8d9f039623e8b4ec40164e"
+    },
+    {
+      "raw_name": "stderr.log",
+      "public_name": "tests.stderr.log",
+      "raw_sha256": "0b5e7c3e9d7710f09753578a23757e5f25a2d3dd9a0f61ff3cc70b43536a82aa",
+      "public_sha256": "0b5e7c3e9d7710f09753578a23757e5f25a2d3dd9a0f61ff3cc70b43536a82aa"
+    },
+    {
+      "raw_name": "commit-input-verification.json",
+      "public_name": "commit-input-verification.json",
+      "raw_sha256": "8ef0863ad8ce0cf720126c3fab2e3f5f5ac09835355df15ed09e9cacc2ce6e54",
+      "public_sha256": "8ef0863ad8ce0cf720126c3fab2e3f5f5ac09835355df15ed09e9cacc2ce6e54"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+import sys,os,json,unittest,subprocess,hashlib,copy
+from pathlib import Path
+repo=Path('<REPO>')
+sys.path.insert(0,str(repo/'tests/local'))
+from test_local import LocalTests,fixture,ACTOR,OWNER
+from framework.local.store import Store,envelope,shape
+from framework.local.storage import atomic_json
+from framework.local.bootstrap import plan,apply,rollback,inventory
+class IndependentProbes(LocalTests):
+ def test_independent_eight_process_race(self):
+  self.init()
+  code="""import sys,json
+from framework.local.store import Store
+sys.stdin.readline()
+try:
+ r=Store(sys.argv[1]).change('claim',dict(wp_id='WP-DEMO',worker_id='worker-a',session_id='session-a',lease_seconds=300),'principal-implementer',0,sys.argv[2]);print(json.dumps(r))
+except ValueError as e: print(str(e));sys.exit(2)
+"""
+  ps=[subprocess.Popen([sys.executable,'-B','-S','-c',code,str(self.root),'race-'+str(i)],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE) for i in range(8)]
+  for p in ps:p.stdin.write(b'go\n');p.stdin.flush()
+  outs=[p.communicate(timeout=30) for p in ps]
+  self.assertEqual(sorted(p.returncode for p in ps),[0]+[2]*7)
+  for p,out in zip(ps,outs):
+   if p.returncode:self.assertEqual(out[0].strip(),b'revision conflict')
+  state=self.state();self.assertEqual(len(state['snapshot']['assignments']),1);self.assertEqual(state['revision'],1);self.assertEqual(len(state['operations']),1)
+  print(json.dumps({'probe':'eight-process-race','exit_codes':[p.returncode for p in ps],'revision':state['revision'],'assignments':len(state['snapshot']['assignments'])}),flush=True)
+ def test_independent_expiry_boundary_new_process_stale_credentials(self):
+  self.init();old=self.claim(at='2026-11-27T00:00:00Z');new=self.claim(at=old['lease_expires_at'])
+  self.assertGreater(new['token'],old['token']);before=self.store.path.read_bytes()
+  code="""import sys,json
+from framework.local.store import Store
+s=Store(sys.argv[1]);p=json.loads(sys.argv[2]);p['lease_seconds']=30
+try:s.change('heartbeat',p,'principal-implementer',2,'old-heartbeat',at=sys.argv[3])
+except ValueError as e:print(str(e));sys.exit(2)
+"""
+  p=subprocess.run([sys.executable,'-B','-S','-c',code,str(self.root),json.dumps(old),old['lease_expires_at']],capture_output=True,timeout=30)
+  self.assertEqual(p.returncode,2);self.assertIn(b'fenced',p.stdout);self.assertEqual(self.store.path.read_bytes(),before)
+  print(json.dumps({'probe':'expiry-boundary','old_token':old['token'],'new_token':new['token'],'stale_exit':p.returncode,'state_preserved':True}),flush=True)
+ def test_independent_valid_unknown_workspace_blocks_upgrade(self):
+  p=plan(self.root,'import','demo',OWNER);apply(self.root,p,p['plan_sha256'])
+  atomic_json(self.store.path,envelope(fixture(self.sha)))
+  c=self.claim();self.change('start',c);self.change('revoke',dict(assignment_id=c['assignment_id'],reason='independent probe'),OWNER)
+  state=self.state();shape(state)
+  self.assertEqual(state['snapshot']['assignments'][0]['state'],'revoked');self.assertEqual(state['workspaces'][c['workspace_id']]['state'],'creating')
+  before=inventory(self.root)
+  with self.assertRaisesRegex(ValueError,'active or unknown execution'):plan(self.root,'upgrade')
+  self.assertEqual(inventory(self.root),before)
+  print(json.dumps({'probe':'valid-unknown-upgrade','schema_valid':True,'assignment':'revoked','workspace':'creating','blocked':True,'inventory_preserved':True}),flush=True)
+ def test_independent_upgrade_journal_only_crash_restores_previous(self):
+  p=plan(self.root,'import','demo',OWNER);apply(self.root,p,p['plan_sha256']);journal=self.root/'.ai-org/install-journal.json';prior=journal.read_bytes();state=self.store.path.read_bytes()
+  upgrade=plan(self.root,'upgrade',version='independent-next',guide_bytes=b'new guide');pp=self.root/'upgrade-plan.json';pp.write_text(json.dumps(upgrade))
+  # Plan input is outside target inventory; remove and pass through stdin instead.
+  pp.unlink()
+  code="""import os,json,sys
+from framework.local import bootstrap as b
+orig=b.atomic_json
+def crash(path,value):
+ orig(path,value)
+ if path.name=='install-journal.json' and value['state']=='preparing':os._exit(23)
+b.atomic_json=crash
+p=json.load(sys.stdin);b.apply(sys.argv[1],p,p['plan_sha256'])
+"""
+  crash=subprocess.run([sys.executable,'-B','-S','-c',code,str(self.root)],input=json.dumps(upgrade).encode(),capture_output=True,timeout=30);self.assertEqual(crash.returncode,23,crash.stderr)
+  out=subprocess.run([sys.executable,'-B','-S',str(repo/'scripts/v4_project.py'),'rollback','--root',str(self.root),'--operation-id',upgrade['operation_id']],capture_output=True,timeout=30)
+  self.assertEqual(out.returncode,0,out.stderr);self.assertEqual(journal.read_bytes(),prior);self.assertEqual(self.store.path.read_bytes(),state);self.assertFalse((self.root/upgrade['guide']).exists())
+  self.assertEqual(Store(self.root).inspect()['consistency_errors'],[])
+  retry=plan(self.root,'upgrade',version='independent-next',guide_bytes=b'new guide');apply(self.root,retry,retry['plan_sha256']);self.assertEqual(self.store.path.read_bytes(),state)
+  print(json.dumps({'probe':'upgrade-journal-only-crash','crash_exit':23,'rollback_exit':0,'previous_selection_restored':True,'state_preserved':True,'retry_applied':True}),flush=True)
+if __name__=='__main__':
+ suite=unittest.TestSuite(IndependentProbes(name) for name in sorted(dir(IndependentProbes)) if name.startswith('test_independent_'))
+ r=unittest.TextTestRunner(verbosity=2).run(suite)
+ print(json.dumps({'independent_probes':{'run':r.testsRun,'failures':len(r.failures),'errors':len(r.errors),'skipped':len(r.skipped)}}),flush=True)
+ sys.exit(0 if r.wasSuccessful() else 1)

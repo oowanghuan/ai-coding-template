@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-27T15:18:54.844838+00:00",
+  "platform": "macOS 15.5 / 24F74",
+  "candidate_executed": false,
+  "profiles_deny_default": true,
+  "runs": [
+    {
+      "label": "single",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "<SYSTEM_PROBE>/outer.sb",
+        "/usr/bin/true"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "nested",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "<SYSTEM_PROBE>/outer.sb",
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "<SYSTEM_PROBE>/inner.sb",
+        "/usr/bin/true"
+      ],
+      "exit_code": 71,
+      "stderr": "sandbox-exec: sandbox_apply: Operation not permitted\n",
+      "stderr_sha256": "d34a4e4359a4dc36526cf5b363da32f7b7594a3a09eea17cbdfd6425b052d93e"
+    }
+  ],
+  "raw_source_metadata_sha256": "94bab9c54dc7b43c9ee325462c4baa70385f80794d95b389ed4f885de16df7cf",
+  "interpretation": "System-binary-only reproduction of this host nesting failure; not a candidate integration success, and not a universal assertion about all OS versions. Actual profiles remain in private evidence storage."
+}

@@ -1,0 +1,13 @@
+{
+  "event": "v4-session-probe-20261127-02",
+  "rpc": "turn/steer",
+  "transport": "existing local native daemon Unix socket",
+  "bound_existing_context": true,
+  "rpc_accepted_at": "2026-11-27T15:19:06.647542+00:00",
+  "received": true,
+  "received_at": "2026-11-27T15:19:17.007952+00:00",
+  "last_received_at": "2026-11-27T15:27:23.806887+00:00",
+  "thread_fingerprint": "5d4c3da9cb5984c3a6d78dd154cbbb627eab517076b244a1892bcc2c3cd31278",
+  "receipt_source": "actual notification appeared as input in the bound existing model context",
+  "limits": "Foreground transport probe actually reached the bound active model context. Not a launchd Advisor event, idle wake, quota recovery, or new session test. Internal thread/turn/client identifiers are omitted."
+}

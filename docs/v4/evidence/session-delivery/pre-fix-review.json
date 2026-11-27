@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-11-27T15:26:35.796938+00:00",
+  "mode": "static review + fake RPC only in outer Seatbelt",
+  "real_native_client": "replaced with constructor that raises",
+  "exit_code": 0,
+  "finding": "unknown start_intent may cause second queue/start while prior write outcome remains unknown",
+  "limits": "fake proves duplicate client attempts, not duplicate server consumption; no real native calls, no GitHub writes; earlier WP evidence untouched",
+  "artifacts": {
+    "reviewed_session_delivery.py": "24133f15f5ebfdc45effa063293847b372c80e3f477e06599778cb2192bfe2fa",
+    "probe.py": "230fdda6e2f66f64700b0e52b1b4dfabbfd6c3f6b3261bfb851039264468f52d",
+    "probe.stdout.log": "68035010ce5e39ada0a403ac0e433133917b2be5031b89b6f2b440d0e8c91f50",
+    "probe.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

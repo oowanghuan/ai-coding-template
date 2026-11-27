@@ -1,0 +1,1 @@
+{"outside_read": true, "outside_write": true, "checkout_write": true, "unassigned_output": true, "network": true, "credential_env_absent": true}

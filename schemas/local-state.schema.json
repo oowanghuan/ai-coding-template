@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai-coding-template:local-state:1",
+  "type": "object",
+  "required": [
+    "format",
+    "store_id",
+    "revision",
+    "snapshot",
+    "operations",
+    "workspaces",
+    "tokens",
+    "deliveries"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "format": {
+      "const": "local-state/1"
+    },
+    "store_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "snapshot": {
+      "$ref": "urn:ai-coding-template:protocol:0.2"
+    },
+    "operations": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "intent",
+          "action",
+          "actor",
+          "at",
+          "status",
+          "result",
+          "revision"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "intent": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "action": {
+            "type": "string",
+            "minLength": 1
+          },
+          "actor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "at": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "const": "committed"
+          },
+          "result": {
+            "type": "object"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "workspaces": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "id",
+          "wp_id",
+          "assignment_id",
+          "path",
+          "baseline_sha",
+          "state",
+          "run"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "wp_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assignment_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "baseline_sha": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "state": {
+            "enum": [
+              "planned",
+              "creating",
+              "prepared",
+              "launching",
+              "running",
+              "finished",
+              "stopped",
+              "unknown"
+            ]
+          },
+          "run": {
+            "type": [
+              "object",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "tokens": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    "deliveries": {
+      "type": "object"
+    }
+  }
+}

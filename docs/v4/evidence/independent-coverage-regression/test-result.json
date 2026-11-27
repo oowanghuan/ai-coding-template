@@ -1,0 +1,120 @@
+{
+  "review_head": "0ef5434bb71d714ae1068c31786fbb8058cb050c",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<FIXTURE>/next-sandbox.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "<FIXTURE>/run_next_tests.py",
+    "<FIXTURE>/config.json"
+  ],
+  "environment": {
+    "HOME": "<FIXTURE>/independent-checks-0ef5434/home",
+    "TMPDIR": "<FIXTURE>/independent-checks-0ef5434/tmp",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONPATH": "<WORKSPACE>:<DEPENDENCIES>",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "V4_OUTER_SEATBELT": "1"
+  },
+  "started_epoch": 1795793723.635196,
+  "finished_epoch": 1795793839.8461068,
+  "exit_code": 0,
+  "platform": "macOS-15.5-arm64-arm-64bit",
+  "candidate_hashes_before": {
+    "framework/core/protocol.py": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+    "framework/local/README.md": "53f524b229b8654de757d42a9b5bc4f77654dcb00ac8b3763ac217a4b66ee7fd",
+    "framework/local/bootstrap.py": "6e1acd7ac2c8cabeb6fb7e58dfa24ed817ff95ec524e2981cb81dfd36d90b41f",
+    "framework/local/runner.py": "d87247853d1266d730e1bea38e780da36bdae08b1c4075bacc2da336404fb497",
+    "framework/local/storage.py": "af2ddd9d5d717d1f3afe71fc8bcf09f1aaca7b514d3a1e1b1d389f0113a37dea",
+    "framework/local/store.py": "13ee8c97456c294006bac174a2a3200af773e74aceb186c4efe3980012d09676",
+    "framework/local/worker_process.py": "62d4f9a63ec66945965e8d874baf7d9f6f3bab5956990be44dcf8c22ba00804c",
+    "tests/bootstrap/test_bootstrap.py": "5c18377ef768a6d2bffdfe1ceb9b6068000b37ef08043d700732bccf9253492e",
+    "tests/install/test_install.py": "afa7ad929c67b6643bbe0503eb44561a88af61a4d05c3bae1828fe96a0dcc54c",
+    "tests/local/test_local.py": "bc8154d3f8745ea22002316f724b26c4abb824cadc318a84810c1657f8154082",
+    "tests/p0_audit.py": "ddb078796258c2f2724d627ebb476e214df1519c8f878fafaa472b86b3f32009",
+    "tests/protocol/test_protocol.py": "8daa43d95cd6cea9a43eeec64ef7c3fd3ca860d095d94cc7b66b8e4b544b5c8c",
+    "tests/validate_v4_design.py": "fafb99fd6e9328946fe8fc5fa778a85b7b3de3153a190ab271085ecef1c83be3",
+    "schemas/README.md": "9d1bc355ff88412cfdcbd301641494a71bfbf5c9c04af12373090aed0ef0bd56",
+    "schemas/install-plan.schema.json": "b276d52b899267c431274a11e8d0880d72ffda43a399ba94cf1c2235d8f7ebdb",
+    "schemas/local-state.schema.json": "09575cca244eeee43871b5d4f5ddf355632550bfeefadee2653fb464a5dcd470",
+    "schemas/protocol.schema.json": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+    "scripts/init-claude-tools.sh": "a12ac467c1ca0ec8ff4bfda970b75330acf30a39b231358b7e1ff68ba22a62f8",
+    "scripts/install_claude_tools.py": "db33efd523d66e0bd74f334c262d874a4d347befc84ca2a0db8c4deac979b86d",
+    "scripts/v4_local.py": "22cb868e37b18e7a717df50a76db004b5c3c2dd6c06beebe2f7951cdb77d1a15",
+    "scripts/v4_project.py": "c51af4e9e0fe11b7bfe765500c335278d0db0646e5336aafeb61399d0a7419a3",
+    "scripts/validate_protocol.py": "a4debf2140c2e10c32170009fa64426218cb518e5344f0ec39baa8daad091a75"
+  },
+  "candidate_hashes_after": {
+    "framework/core/protocol.py": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+    "framework/local/README.md": "53f524b229b8654de757d42a9b5bc4f77654dcb00ac8b3763ac217a4b66ee7fd",
+    "framework/local/bootstrap.py": "6e1acd7ac2c8cabeb6fb7e58dfa24ed817ff95ec524e2981cb81dfd36d90b41f",
+    "framework/local/runner.py": "d87247853d1266d730e1bea38e780da36bdae08b1c4075bacc2da336404fb497",
+    "framework/local/storage.py": "af2ddd9d5d717d1f3afe71fc8bcf09f1aaca7b514d3a1e1b1d389f0113a37dea",
+    "framework/local/store.py": "13ee8c97456c294006bac174a2a3200af773e74aceb186c4efe3980012d09676",
+    "framework/local/worker_process.py": "62d4f9a63ec66945965e8d874baf7d9f6f3bab5956990be44dcf8c22ba00804c",
+    "tests/bootstrap/test_bootstrap.py": "5c18377ef768a6d2bffdfe1ceb9b6068000b37ef08043d700732bccf9253492e",
+    "tests/install/test_install.py": "afa7ad929c67b6643bbe0503eb44561a88af61a4d05c3bae1828fe96a0dcc54c",
+    "tests/local/test_local.py": "bc8154d3f8745ea22002316f724b26c4abb824cadc318a84810c1657f8154082",
+    "tests/p0_audit.py": "ddb078796258c2f2724d627ebb476e214df1519c8f878fafaa472b86b3f32009",
+    "tests/protocol/test_protocol.py": "8daa43d95cd6cea9a43eeec64ef7c3fd3ca860d095d94cc7b66b8e4b544b5c8c",
+    "tests/validate_v4_design.py": "fafb99fd6e9328946fe8fc5fa778a85b7b3de3153a190ab271085ecef1c83be3",
+    "schemas/README.md": "9d1bc355ff88412cfdcbd301641494a71bfbf5c9c04af12373090aed0ef0bd56",
+    "schemas/install-plan.schema.json": "b276d52b899267c431274a11e8d0880d72ffda43a399ba94cf1c2235d8f7ebdb",
+    "schemas/local-state.schema.json": "09575cca244eeee43871b5d4f5ddf355632550bfeefadee2653fb464a5dcd470",
+    "schemas/protocol.schema.json": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+    "scripts/init-claude-tools.sh": "a12ac467c1ca0ec8ff4bfda970b75330acf30a39b231358b7e1ff68ba22a62f8",
+    "scripts/install_claude_tools.py": "db33efd523d66e0bd74f334c262d874a4d347befc84ca2a0db8c4deac979b86d",
+    "scripts/v4_local.py": "22cb868e37b18e7a717df50a76db004b5c3c2dd6c06beebe2f7951cdb77d1a15",
+    "scripts/v4_project.py": "c51af4e9e0fe11b7bfe765500c335278d0db0646e5336aafeb61399d0a7419a3",
+    "scripts/validate_protocol.py": "a4debf2140c2e10c32170009fa64426218cb518e5344f0ec39baa8daad091a75"
+  },
+  "unchanged": true,
+  "independence": "non-author agent, separate execution context, same host and OS account; not Owner acceptance",
+  "harness_sha256": "a30a2d087f5f6afac6edb94ad481a4f606e2f8bd63ad017a63c8f21cef2c0f8d",
+  "sandbox_sha256": "fa9d026b83170ff714b215d86a4712955889bf6c34a8bb791175cfa1917644a3",
+  "tests": {
+    "install": {
+      "run": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 23
+    },
+    "protocol": {
+      "run": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 34
+    },
+    "local": {
+      "run": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 3,
+      "passed": 23
+    },
+    "bootstrap": {
+      "run": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 20
+    }
+  },
+  "implementation_sha": "984eb6993ac1f3cb06d652f448c0680845b1bf65",
+  "duration_seconds": 116.21091079711914,
+  "started_utc": "2026-11-27T15:35:23.635196+00:00",
+  "finished_utc": "2026-11-27T15:37:19.846107+00:00",
+  "counts": {
+    "run": 103,
+    "passed": 100,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 3
+  },
+  "independent_probe_scope": "This run is the full repository suite only; four additional independent probes were executed on the earlier ed1bbd8 commit and are not counted again."
+}

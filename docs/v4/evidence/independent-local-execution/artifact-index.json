@@ -1,0 +1,37 @@
+{
+  "reviewed_sha": "ed1bbd8b36df42c8a6ec0ea1f0c44ea52fee3ed6",
+  "implementation_sha": "984eb6993ac1f3cb06d652f448c0680845b1bf65",
+  "hash_algorithm": "sha256",
+  "public_artifacts": {
+    "candidate-inputs.json": "f68bc368bd0d5bd3b13b1fae23cb45037d407a655534338b5568390b3838a729",
+    "counts.json": "3fcb325008b8fe712937f039b6a9ed42705a36fab029900ab6529088e643f5d0",
+    "independent-probes.py.txt": "fd521794f28eb510b37ab56145bfd4d003b5dd38abfde236bdf769b2f79c9e4c",
+    "nested-seatbelt.json": "87f00f6acdc472639949bddb0b7685214524baf89c8a67d0a7c06e12274315da",
+    "nested.stderr.log": "d34a4e4359a4dc36526cf5b363da32f7b7594a3a09eea17cbdfd6425b052d93e",
+    "nested.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "probes.json": "4a56cec3fde3c0fcdb3b3014270ca2c9d8029b40435578573dad2962b2494c6c",
+    "probes.stderr.log": "e13f11d6df9ac162cc08331665c9adbbd2b5a69571d2dc2428dabdae5b916959",
+    "probes.stdout.log": "0620594ad96bd02d4d18f2fd91f54fc6d5324d5b360c90e4534d775139f82327",
+    "regression.stderr.log": "22c3038ae18a7d59feda24625928d32aa41ca7eb08d948ce4eed4c591243e194",
+    "regression.stdout.log": "9f4d46438c52c8719f47db701f31f75a8bed0a2d33ec4bc41fa8a3dc9b37b09b",
+    "review.md": "6b3e9d813ffcc907ecc09f2d1599cf27014a7fad8d1c20b74b2c4cba911c20d6",
+    "single.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "single.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "private_source_fingerprints": {
+    "regression_metadata": "9fb202fec8d09e435ab9097e499b73b55cb49ea7b4f4bbad9105f62f71910960",
+    "probe_metadata": "58d776eb6f70daa564716f4375c087f611a0e6cba6523265f583896aa714bbd3",
+    "independent_review": "11ecbe45313d0634ba1199426ccfcf348e7a59b8a6c0cfa19b25369293d39ae9",
+    "system_probe_metadata": "94bab9c54dc7b43c9ee325462c4baa70385f80794d95b389ed4f885de16df7cf",
+    "independent_probe_source": "735cc77fe9bfff9d35edc96c7b7eeb08fa7c2696b62538af44506d61bff5208d"
+  },
+  "scope": "Public artifact digests cover the sanitized copies. Private-source fingerprints refer to retained originals, not to sanitized copies. This index excludes its own digest.",
+  "sanitized_source_provenance": {
+    "independent-probes.py.txt": {
+      "raw_sha256": "735cc77fe9bfff9d35edc96c7b7eeb08fa7c2696b62538af44506d61bff5208d",
+      "public_sha256": "fd521794f28eb510b37ab56145bfd4d003b5dd38abfde236bdf769b2f79c9e4c",
+      "transformation": "Only the local checkout path was replaced with <REPO>; no executable statements or assertions changed.",
+      "usage": "Review copy; not runnable unchanged. Reproduction requires reviewed isolation, dependencies and an explicit repository path. Synthetic session-a/worker-a identifiers are test fixture values, not real execution context identifiers."
+    }
+  }
+}

@@ -1,10 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:ai-coding-template:protocol:0.1",
+  "$id": "urn:ai-coding-template:protocol:0.2",
   "type": "object",
   "properties": {
     "schema_version": {
-      "const": "0.1"
+      "enum": [
+        "0.1",
+        "0.2"
+      ]
     },
     "project": {
       "type": "object",
@@ -82,7 +85,7 @@
       "items": {
         "$ref": "#/$defs/provider"
       },
-      "minItems": 1,
+      "minItems": 0,
       "uniqueItems": true
     },
     "hosts": {
@@ -90,7 +93,7 @@
       "items": {
         "$ref": "#/$defs/host"
       },
-      "minItems": 1,
+      "minItems": 0,
       "uniqueItems": true
     },
     "workers": {
@@ -703,8 +706,15 @@
           ]
         },
         "baseline_sha": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{40}$"
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "spec_refs": {
           "type": "array",
@@ -1016,6 +1026,7 @@
         },
         "state": {
           "enum": [
+            "reserved",
             "active",
             "released",
             "expired",
@@ -1253,5 +1264,46 @@
       ],
       "additionalProperties": false
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": "0.1"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "providers": {
+            "minItems": 1
+          },
+          "hosts": {
+            "minItems": 1
+          },
+          "work_packages": {
+            "items": {
+              "properties": {
+                "baseline_sha": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "assignments": {
+            "items": {
+              "properties": {
+                "state": {
+                  "not": {
+                    "const": "reserved"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }

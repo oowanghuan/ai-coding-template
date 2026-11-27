@@ -1,0 +1,36 @@
+test_cli_failed_run_replay_stays_failed_and_does_not_launch (test_local.LocalTests) ... FAIL
+test_cli_success_receipt_replay_preserves_result (test_local.LocalTests) ... ok
+test_journal_only_crash_recovers_via_new_process_cli (test_bootstrap.BootstrapTests) ... FAIL
+test_journal_only_recovery_preserves_unknown_file (test_bootstrap.BootstrapTests) ... ok
+
+======================================================================
+FAIL: test_cli_failed_run_replay_stays_failed_and_does_not_launch (test_local.LocalTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>/tests/local/test_local.py", line 376, in test_cli_failed_run_replay_stays_failed_and_does_not_launch
+    self.assertNotEqual(second.returncode, 0, second.stdout.decode())
+AssertionError: 0 == 0 : {
+  "content_sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+  "exit_code": 71,
+  "operation_id": "cli-failure",
+  "path": "src/out.txt",
+  "pid": 13706,
+  "started_at": "2026-11-27T15:03:13Z",
+  "state": "finished",
+  "stderr_sha256": "d34a4e4359a4dc36526cf5b363da32f7b7594a3a09eea17cbdfd6425b052d93e",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
+
+
+======================================================================
+FAIL: test_journal_only_crash_recovers_via_new_process_cli (test_bootstrap.BootstrapTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>/tests/bootstrap/test_bootstrap.py", line 207, in test_journal_only_crash_recovers_via_new_process_cli
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 2 != 0 : b'{"error": "unknown installation"}\n'
+
+----------------------------------------------------------------------
+Ran 4 tests in 13.589s
+
+FAILED (failures=2)

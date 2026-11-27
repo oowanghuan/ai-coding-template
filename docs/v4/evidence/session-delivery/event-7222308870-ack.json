@@ -1,0 +1,8 @@
+{
+  "event": "v4-pl:7222308870:unbound",
+  "client_id_sha256": "b08857189de9637a5eeba86544c6f7f5437ec22189f94d9b0829ba284840ebff",
+  "body_sha256": "8a8b310f1484c2f4a75017570c79d4016dc007b08c32cc6549acffadc6b32d60",
+  "thread_id_sha256": "5d4c3da9cb5984c3a6d78dd154cbbb627eab517076b244a1892bcc2c3cd31278",
+  "received_at": "2026-11-27T15:40:20.703970+00:00",
+  "source": "bound existing model context"
+}
