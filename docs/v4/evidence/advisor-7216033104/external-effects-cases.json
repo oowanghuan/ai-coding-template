@@ -1,0 +1,2031 @@
+{
+  "snapshots": {
+    "75fdd6a692dd7023e7c3bfeddc6224077f448c808a242029dab1d774c6b464bf": {
+      "assignments": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "authority_epoch": 1,
+          "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "fencing_token": 1,
+          "heartbeat_at": "2026-11-27T09:00:00Z",
+          "id": "assignment-demo",
+          "last_checkpoint": "checkpoint-demo",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "revocation_reason": null,
+          "role_ref": "role-developer",
+          "session_ref": "session-a",
+          "state": "released",
+          "worker_ref": "worker-a",
+          "workspace_id": "synthetic-worktree-a",
+          "wp_ref": "WP-DEMO"
+        }
+      ],
+      "authorizations": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "decision_ref": "synthetic-decision",
+          "environment_refs": [
+            "host-local"
+          ],
+          "expires_at": "2030-01-01T00:00:00Z",
+          "external_effects": [],
+          "id": "auth-demo",
+          "issuer": "principal-owner",
+          "role_refs": [
+            "role-developer"
+          ],
+          "state": "granted",
+          "wp_refs": [
+            "WP-DEMO"
+          ]
+        }
+      ],
+      "checkpoints": [
+        {
+          "assignment_ref": "assignment-demo",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blockers": [],
+          "completed": [
+            "Design"
+          ],
+          "created_at": "2026-11-27T09:00:00Z",
+          "decision_refs": [
+            "synthetic-decision"
+          ],
+          "evidence_refs": [],
+          "id": "checkpoint-demo",
+          "last_valid_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "next_actions": [
+            "Verify actual checkout before resuming"
+          ],
+          "remaining": [
+            "Implementation"
+          ],
+          "role_ref": "role-developer",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "uncommitted": [
+            {
+              "location": "synthetic-archive/diff.patch",
+              "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ],
+          "unknown_operations": [],
+          "wp_ref": "WP-DEMO",
+          "wp_revision": 1
+        }
+      ],
+      "hosts": [
+        {
+          "environment": "synthetic-isolated",
+          "id": "host-local"
+        }
+      ],
+      "project": {
+        "authority_epoch": 1,
+        "budget": "available",
+        "id": "demo",
+        "owner_principals": [
+          "principal-owner"
+        ],
+        "paused": false,
+        "policy_revision": "1",
+        "profile": "lite",
+        "revision": 1,
+        "state_backend": "local_git"
+      },
+      "providers": [
+        {
+          "adapter": "synthetic",
+          "id": "provider-a"
+        },
+        {
+          "adapter": "synthetic",
+          "id": "provider-b"
+        }
+      ],
+      "roles": [
+        {
+          "asset_refs": [],
+          "id": "role-developer",
+          "permissions": [
+            "edit-assigned-scope"
+          ],
+          "responsibilities": [
+            "Implementation"
+          ]
+        },
+        {
+          "asset_refs": [],
+          "id": "role-reviewer",
+          "permissions": [
+            "read"
+          ],
+          "responsibilities": [
+            "Independent review"
+          ]
+        }
+      ],
+      "schema_version": "0.1",
+      "sessions": [
+        {
+          "context_ref": "synthetic-context",
+          "host_ref": "host-local",
+          "id": "session-a",
+          "provider_ref": "provider-a",
+          "worker_ref": "worker-a"
+        }
+      ],
+      "work_packages": [
+        {
+          "acceptor": "principal-reviewer",
+          "accountable_role": "role-developer",
+          "allowed_paths": [
+            "src/"
+          ],
+          "assignment_ref": "assignment-demo",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blocking_conditions": [],
+          "change_reason": null,
+          "checkpoint_ref": "checkpoint-demo",
+          "deliverables": [
+            "Synthetic patch"
+          ],
+          "dependencies": [],
+          "evidence_refs": [
+            "synthetic-evidence"
+          ],
+          "external_effects": [],
+          "forbidden_paths": [
+            "secrets/"
+          ],
+          "goal_refs": [
+            "GOAL-DEMO"
+          ],
+          "handoff_refs": [],
+          "id": "WP-DEMO",
+          "implementer": "principal-implementer",
+          "inputs": [],
+          "kind": "code",
+          "merger": "principal-owner",
+          "milestones": {
+            "engineering_accepted": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "passed",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "merged": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-owner",
+              "status": "passed",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "review_passed": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "passed",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            }
+          },
+          "negative_criteria": [
+            "Reject invalid input"
+          ],
+          "objective": "Validate protocol consistency",
+          "positive_criteria": [
+            "Expected output"
+          ],
+          "project_id": "demo",
+          "required_milestones": [
+            "engineering_accepted",
+            "merged",
+            "review_passed"
+          ],
+          "requirement_refs": [
+            "REQ-DEMO"
+          ],
+          "review_refs": [
+            "synthetic-review"
+          ],
+          "reviewer": "principal-reviewer",
+          "revision": 1,
+          "risk": "medium",
+          "rollback": "Preserve worktree; revert reviewed commit",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "state": "accepted",
+          "submitted_sha": "dddddddddddddddddddddddddddddddddddddddd",
+          "test_strategy": "Synthetic unit checks",
+          "title": "Synthetic local change"
+        }
+      ],
+      "workers": [
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "code"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-a",
+          "principal": "principal-implementer",
+          "provider_ref": "provider-a",
+          "quota": "available",
+          "role_refs": [
+            "role-developer"
+          ],
+          "slots": 1,
+          "state": "busy"
+        },
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "review"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-b",
+          "principal": "principal-reviewer",
+          "provider_ref": "provider-b",
+          "quota": "unknown",
+          "role_refs": [
+            "role-reviewer"
+          ],
+          "slots": 1,
+          "state": "available"
+        }
+      ]
+    },
+    "87b79f2f23ecfc43d9cb14f1d74b27f77b9bf420fc453918deb5e432f893beaa": {
+      "assignments": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "authority_epoch": 1,
+          "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "fencing_token": 1,
+          "heartbeat_at": "2026-11-27T09:00:00Z",
+          "id": "assignment-demo",
+          "last_checkpoint": "checkpoint-demo",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "revocation_reason": null,
+          "role_ref": "role-developer",
+          "session_ref": "session-a",
+          "state": "released",
+          "worker_ref": "worker-a",
+          "workspace_id": "synthetic-worktree-a",
+          "wp_ref": "WP-DEMO"
+        }
+      ],
+      "authorizations": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "decision_ref": "synthetic-decision",
+          "environment_refs": [
+            "host-local"
+          ],
+          "expires_at": "2030-01-01T00:00:00Z",
+          "external_effects": [],
+          "id": "auth-demo",
+          "issuer": "principal-owner",
+          "role_refs": [
+            "role-developer"
+          ],
+          "state": "granted",
+          "wp_refs": [
+            "WP-DEMO"
+          ]
+        }
+      ],
+      "checkpoints": [
+        {
+          "assignment_ref": "assignment-demo",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blockers": [],
+          "completed": [
+            "Design"
+          ],
+          "created_at": "2026-11-27T09:00:00Z",
+          "decision_refs": [
+            "synthetic-decision"
+          ],
+          "evidence_refs": [],
+          "id": "checkpoint-demo",
+          "last_valid_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "next_actions": [
+            "Verify actual checkout before resuming"
+          ],
+          "remaining": [
+            "Implementation"
+          ],
+          "role_ref": "role-developer",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "uncommitted": [
+            {
+              "location": "synthetic-archive/diff.patch",
+              "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ],
+          "unknown_operations": [],
+          "wp_ref": "WP-DEMO",
+          "wp_revision": 1
+        }
+      ],
+      "hosts": [
+        {
+          "environment": "synthetic-isolated",
+          "id": "host-local"
+        }
+      ],
+      "project": {
+        "authority_epoch": 1,
+        "budget": "available",
+        "id": "demo",
+        "owner_principals": [
+          "principal-owner"
+        ],
+        "paused": false,
+        "policy_revision": "1",
+        "profile": "lite",
+        "revision": 2,
+        "state_backend": "local_git"
+      },
+      "providers": [
+        {
+          "adapter": "synthetic",
+          "id": "provider-a"
+        },
+        {
+          "adapter": "synthetic",
+          "id": "provider-b"
+        }
+      ],
+      "roles": [
+        {
+          "asset_refs": [],
+          "id": "role-developer",
+          "permissions": [
+            "edit-assigned-scope"
+          ],
+          "responsibilities": [
+            "Implementation"
+          ]
+        },
+        {
+          "asset_refs": [],
+          "id": "role-reviewer",
+          "permissions": [
+            "read"
+          ],
+          "responsibilities": [
+            "Independent review"
+          ]
+        }
+      ],
+      "schema_version": "0.1",
+      "sessions": [
+        {
+          "context_ref": "synthetic-context",
+          "host_ref": "host-local",
+          "id": "session-a",
+          "provider_ref": "provider-a",
+          "worker_ref": "worker-a"
+        }
+      ],
+      "work_packages": [
+        {
+          "acceptor": "principal-reviewer",
+          "accountable_role": "role-developer",
+          "allowed_paths": [
+            "src/"
+          ],
+          "assignment_ref": "assignment-demo",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blocking_conditions": [],
+          "change_reason": null,
+          "checkpoint_ref": "checkpoint-demo",
+          "deliverables": [
+            "Synthetic patch"
+          ],
+          "dependencies": [],
+          "evidence_refs": [
+            "synthetic-evidence"
+          ],
+          "external_effects": [
+            "publish-synthetic-artifact"
+          ],
+          "forbidden_paths": [
+            "secrets/"
+          ],
+          "goal_refs": [
+            "GOAL-DEMO"
+          ],
+          "handoff_refs": [],
+          "id": "WP-DEMO",
+          "implementer": "principal-implementer",
+          "inputs": [],
+          "kind": "code",
+          "merger": "principal-owner",
+          "milestones": {
+            "engineering_accepted": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "passed",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "merged": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-owner",
+              "status": "passed",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "review_passed": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "passed",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            }
+          },
+          "negative_criteria": [
+            "Reject invalid input"
+          ],
+          "objective": "Validate protocol consistency",
+          "positive_criteria": [
+            "Expected output"
+          ],
+          "project_id": "demo",
+          "required_milestones": [
+            "engineering_accepted",
+            "merged",
+            "review_passed"
+          ],
+          "requirement_refs": [
+            "REQ-DEMO"
+          ],
+          "review_refs": [
+            "synthetic-review"
+          ],
+          "reviewer": "principal-reviewer",
+          "revision": 2,
+          "risk": "medium",
+          "rollback": "Preserve worktree; revert reviewed commit",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "state": "accepted",
+          "submitted_sha": "dddddddddddddddddddddddddddddddddddddddd",
+          "test_strategy": "Synthetic unit checks",
+          "title": "Synthetic local change"
+        }
+      ],
+      "workers": [
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "code"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-a",
+          "principal": "principal-implementer",
+          "provider_ref": "provider-a",
+          "quota": "available",
+          "role_refs": [
+            "role-developer"
+          ],
+          "slots": 1,
+          "state": "busy"
+        },
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "review"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-b",
+          "principal": "principal-reviewer",
+          "provider_ref": "provider-b",
+          "quota": "unknown",
+          "role_refs": [
+            "role-reviewer"
+          ],
+          "slots": 1,
+          "state": "available"
+        }
+      ]
+    },
+    "790a6dde1ef6fa8010d59b6720fe1b0668d68f8022d309cd6d4c3e7b9f30cd05": {
+      "assignments": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "authority_epoch": 1,
+          "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "fencing_token": 2,
+          "heartbeat_at": "2026-11-27T09:00:00Z",
+          "id": "assignment-rework",
+          "last_checkpoint": "checkpoint-demo",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "revocation_reason": null,
+          "role_ref": "role-developer",
+          "session_ref": "session-a",
+          "state": "active",
+          "worker_ref": "worker-a",
+          "workspace_id": "synthetic-worktree-a",
+          "wp_ref": "WP-DEMO"
+        }
+      ],
+      "authorizations": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "decision_ref": "synthetic-expanded-scope-decision",
+          "environment_refs": [
+            "host-local"
+          ],
+          "expires_at": "2030-01-01T00:00:00Z",
+          "external_effects": [
+            "publish-synthetic-artifact"
+          ],
+          "id": "auth-demo",
+          "issuer": "principal-owner",
+          "role_refs": [
+            "role-developer"
+          ],
+          "state": "granted",
+          "wp_refs": [
+            "WP-DEMO"
+          ]
+        }
+      ],
+      "checkpoints": [
+        {
+          "assignment_ref": "assignment-rework",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blockers": [],
+          "completed": [
+            "Design"
+          ],
+          "created_at": "2026-11-27T09:00:00Z",
+          "decision_refs": [
+            "synthetic-decision"
+          ],
+          "evidence_refs": [],
+          "id": "checkpoint-demo",
+          "last_valid_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "next_actions": [
+            "Verify actual checkout before resuming"
+          ],
+          "remaining": [
+            "Implementation"
+          ],
+          "role_ref": "role-developer",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "uncommitted": [
+            {
+              "location": "synthetic-archive/diff.patch",
+              "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ],
+          "unknown_operations": [],
+          "wp_ref": "WP-DEMO",
+          "wp_revision": 1
+        }
+      ],
+      "hosts": [
+        {
+          "environment": "synthetic-isolated",
+          "id": "host-local"
+        }
+      ],
+      "project": {
+        "authority_epoch": 1,
+        "budget": "available",
+        "id": "demo",
+        "owner_principals": [
+          "principal-owner"
+        ],
+        "paused": false,
+        "policy_revision": "1",
+        "profile": "lite",
+        "revision": 2,
+        "state_backend": "local_git"
+      },
+      "providers": [
+        {
+          "adapter": "synthetic",
+          "id": "provider-a"
+        },
+        {
+          "adapter": "synthetic",
+          "id": "provider-b"
+        }
+      ],
+      "roles": [
+        {
+          "asset_refs": [],
+          "id": "role-developer",
+          "permissions": [
+            "edit-assigned-scope"
+          ],
+          "responsibilities": [
+            "Implementation"
+          ]
+        },
+        {
+          "asset_refs": [],
+          "id": "role-reviewer",
+          "permissions": [
+            "read"
+          ],
+          "responsibilities": [
+            "Independent review"
+          ]
+        }
+      ],
+      "schema_version": "0.1",
+      "sessions": [
+        {
+          "context_ref": "synthetic-context",
+          "host_ref": "host-local",
+          "id": "session-a",
+          "provider_ref": "provider-a",
+          "worker_ref": "worker-a"
+        }
+      ],
+      "work_packages": [
+        {
+          "acceptor": "principal-reviewer",
+          "accountable_role": "role-developer",
+          "allowed_paths": [
+            "src/"
+          ],
+          "assignment_ref": "assignment-rework",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blocking_conditions": [],
+          "change_reason": "Explicitly reauthorize and review external scope",
+          "checkpoint_ref": "checkpoint-demo",
+          "deliverables": [
+            "Synthetic patch"
+          ],
+          "dependencies": [],
+          "evidence_refs": [
+            "synthetic-evidence"
+          ],
+          "external_effects": [
+            "publish-synthetic-artifact"
+          ],
+          "forbidden_paths": [
+            "secrets/"
+          ],
+          "goal_refs": [
+            "GOAL-DEMO"
+          ],
+          "handoff_refs": [],
+          "id": "WP-DEMO",
+          "implementer": "principal-implementer",
+          "inputs": [],
+          "kind": "code",
+          "merger": "principal-owner",
+          "milestones": {
+            "engineering_accepted": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "invalidated",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "merged": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-owner",
+              "status": "invalidated",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "review_passed": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "invalidated",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            }
+          },
+          "negative_criteria": [
+            "Reject invalid input"
+          ],
+          "objective": "Validate protocol consistency",
+          "positive_criteria": [
+            "Expected output"
+          ],
+          "project_id": "demo",
+          "required_milestones": [
+            "engineering_accepted",
+            "merged",
+            "review_passed"
+          ],
+          "requirement_refs": [
+            "REQ-DEMO"
+          ],
+          "review_refs": [
+            "synthetic-review"
+          ],
+          "reviewer": "principal-reviewer",
+          "revision": 2,
+          "risk": "medium",
+          "rollback": "Preserve worktree; revert reviewed commit",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "state": "in_progress",
+          "submitted_sha": "dddddddddddddddddddddddddddddddddddddddd",
+          "test_strategy": "Synthetic unit checks",
+          "title": "Synthetic local change"
+        }
+      ],
+      "workers": [
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "code"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-a",
+          "principal": "principal-implementer",
+          "provider_ref": "provider-a",
+          "quota": "available",
+          "role_refs": [
+            "role-developer"
+          ],
+          "slots": 1,
+          "state": "busy"
+        },
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "review"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-b",
+          "principal": "principal-reviewer",
+          "provider_ref": "provider-b",
+          "quota": "unknown",
+          "role_refs": [
+            "role-reviewer"
+          ],
+          "slots": 1,
+          "state": "available"
+        }
+      ]
+    },
+    "96e5158d97a1d325847cdb2003e2e614ea441e8a7f65b11e47f6fffb102548ea": {
+      "assignments": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "authority_epoch": 1,
+          "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "fencing_token": 2,
+          "heartbeat_at": "2026-11-27T09:00:00Z",
+          "id": "assignment-rework",
+          "last_checkpoint": "checkpoint-demo",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "revocation_reason": null,
+          "role_ref": "role-developer",
+          "session_ref": "session-a",
+          "state": "released",
+          "worker_ref": "worker-a",
+          "workspace_id": "synthetic-worktree-a",
+          "wp_ref": "WP-DEMO"
+        }
+      ],
+      "authorizations": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "decision_ref": "synthetic-expanded-scope-decision",
+          "environment_refs": [
+            "host-local"
+          ],
+          "expires_at": "2030-01-01T00:00:00Z",
+          "external_effects": [
+            "publish-synthetic-artifact"
+          ],
+          "id": "auth-demo",
+          "issuer": "principal-owner",
+          "role_refs": [
+            "role-developer"
+          ],
+          "state": "granted",
+          "wp_refs": [
+            "WP-DEMO"
+          ]
+        }
+      ],
+      "checkpoints": [
+        {
+          "assignment_ref": "assignment-rework",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blockers": [],
+          "completed": [
+            "Design"
+          ],
+          "created_at": "2026-11-27T09:00:00Z",
+          "decision_refs": [
+            "synthetic-decision"
+          ],
+          "evidence_refs": [],
+          "id": "checkpoint-demo",
+          "last_valid_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "next_actions": [
+            "Verify actual checkout before resuming"
+          ],
+          "remaining": [
+            "Implementation"
+          ],
+          "role_ref": "role-developer",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "uncommitted": [
+            {
+              "location": "synthetic-archive/diff.patch",
+              "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ],
+          "unknown_operations": [],
+          "wp_ref": "WP-DEMO",
+          "wp_revision": 1
+        }
+      ],
+      "hosts": [
+        {
+          "environment": "synthetic-isolated",
+          "id": "host-local"
+        }
+      ],
+      "project": {
+        "authority_epoch": 1,
+        "budget": "available",
+        "id": "demo",
+        "owner_principals": [
+          "principal-owner"
+        ],
+        "paused": false,
+        "policy_revision": "1",
+        "profile": "lite",
+        "revision": 3,
+        "state_backend": "local_git"
+      },
+      "providers": [
+        {
+          "adapter": "synthetic",
+          "id": "provider-a"
+        },
+        {
+          "adapter": "synthetic",
+          "id": "provider-b"
+        }
+      ],
+      "roles": [
+        {
+          "asset_refs": [],
+          "id": "role-developer",
+          "permissions": [
+            "edit-assigned-scope"
+          ],
+          "responsibilities": [
+            "Implementation"
+          ]
+        },
+        {
+          "asset_refs": [],
+          "id": "role-reviewer",
+          "permissions": [
+            "read"
+          ],
+          "responsibilities": [
+            "Independent review"
+          ]
+        }
+      ],
+      "schema_version": "0.1",
+      "sessions": [
+        {
+          "context_ref": "synthetic-context",
+          "host_ref": "host-local",
+          "id": "session-a",
+          "provider_ref": "provider-a",
+          "worker_ref": "worker-a"
+        }
+      ],
+      "work_packages": [
+        {
+          "acceptor": "principal-reviewer",
+          "accountable_role": "role-developer",
+          "allowed_paths": [
+            "src/"
+          ],
+          "assignment_ref": "assignment-rework",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blocking_conditions": [],
+          "change_reason": "Explicitly reauthorize and review external scope",
+          "checkpoint_ref": "checkpoint-demo",
+          "deliverables": [
+            "Synthetic patch"
+          ],
+          "dependencies": [],
+          "evidence_refs": [
+            "synthetic-evidence"
+          ],
+          "external_effects": [
+            "publish-synthetic-artifact"
+          ],
+          "forbidden_paths": [
+            "secrets/"
+          ],
+          "goal_refs": [
+            "GOAL-DEMO"
+          ],
+          "handoff_refs": [],
+          "id": "WP-DEMO",
+          "implementer": "principal-implementer",
+          "inputs": [],
+          "kind": "code",
+          "merger": "principal-owner",
+          "milestones": {
+            "engineering_accepted": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "invalidated",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "merged": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-owner",
+              "status": "invalidated",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "review_passed": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "invalidated",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            }
+          },
+          "negative_criteria": [
+            "Reject invalid input"
+          ],
+          "objective": "Validate protocol consistency",
+          "positive_criteria": [
+            "Expected output"
+          ],
+          "project_id": "demo",
+          "required_milestones": [
+            "engineering_accepted",
+            "merged",
+            "review_passed"
+          ],
+          "requirement_refs": [
+            "REQ-DEMO"
+          ],
+          "review_refs": [
+            "synthetic-review"
+          ],
+          "reviewer": "principal-reviewer",
+          "revision": 3,
+          "risk": "medium",
+          "rollback": "Preserve worktree; revert reviewed commit",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "state": "submitted",
+          "submitted_sha": "dddddddddddddddddddddddddddddddddddddddd",
+          "test_strategy": "Synthetic unit checks",
+          "title": "Synthetic local change"
+        }
+      ],
+      "workers": [
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "code"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-a",
+          "principal": "principal-implementer",
+          "provider_ref": "provider-a",
+          "quota": "available",
+          "role_refs": [
+            "role-developer"
+          ],
+          "slots": 1,
+          "state": "busy"
+        },
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "review"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-b",
+          "principal": "principal-reviewer",
+          "provider_ref": "provider-b",
+          "quota": "unknown",
+          "role_refs": [
+            "role-reviewer"
+          ],
+          "slots": 1,
+          "state": "available"
+        }
+      ]
+    },
+    "eeb6e11cae00136f343942ea6291a54852433148cc3e6338b6abf72e8de8a5f8": {
+      "assignments": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "authority_epoch": 1,
+          "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "fencing_token": 2,
+          "heartbeat_at": "2026-11-27T09:00:00Z",
+          "id": "assignment-rework",
+          "last_checkpoint": "checkpoint-demo",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "revocation_reason": null,
+          "role_ref": "role-developer",
+          "session_ref": "session-a",
+          "state": "released",
+          "worker_ref": "worker-a",
+          "workspace_id": "synthetic-worktree-a",
+          "wp_ref": "WP-DEMO"
+        }
+      ],
+      "authorizations": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "decision_ref": "synthetic-expanded-scope-decision",
+          "environment_refs": [
+            "host-local"
+          ],
+          "expires_at": "2030-01-01T00:00:00Z",
+          "external_effects": [
+            "publish-synthetic-artifact"
+          ],
+          "id": "auth-demo",
+          "issuer": "principal-owner",
+          "role_refs": [
+            "role-developer"
+          ],
+          "state": "granted",
+          "wp_refs": [
+            "WP-DEMO"
+          ]
+        }
+      ],
+      "checkpoints": [
+        {
+          "assignment_ref": "assignment-rework",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blockers": [],
+          "completed": [
+            "Design"
+          ],
+          "created_at": "2026-11-27T09:00:00Z",
+          "decision_refs": [
+            "synthetic-decision"
+          ],
+          "evidence_refs": [],
+          "id": "checkpoint-demo",
+          "last_valid_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "next_actions": [
+            "Verify actual checkout before resuming"
+          ],
+          "remaining": [
+            "Implementation"
+          ],
+          "role_ref": "role-developer",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "uncommitted": [
+            {
+              "location": "synthetic-archive/diff.patch",
+              "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ],
+          "unknown_operations": [],
+          "wp_ref": "WP-DEMO",
+          "wp_revision": 1
+        }
+      ],
+      "hosts": [
+        {
+          "environment": "synthetic-isolated",
+          "id": "host-local"
+        }
+      ],
+      "project": {
+        "authority_epoch": 1,
+        "budget": "available",
+        "id": "demo",
+        "owner_principals": [
+          "principal-owner"
+        ],
+        "paused": false,
+        "policy_revision": "1",
+        "profile": "lite",
+        "revision": 4,
+        "state_backend": "local_git"
+      },
+      "providers": [
+        {
+          "adapter": "synthetic",
+          "id": "provider-a"
+        },
+        {
+          "adapter": "synthetic",
+          "id": "provider-b"
+        }
+      ],
+      "roles": [
+        {
+          "asset_refs": [],
+          "id": "role-developer",
+          "permissions": [
+            "edit-assigned-scope"
+          ],
+          "responsibilities": [
+            "Implementation"
+          ]
+        },
+        {
+          "asset_refs": [],
+          "id": "role-reviewer",
+          "permissions": [
+            "read"
+          ],
+          "responsibilities": [
+            "Independent review"
+          ]
+        }
+      ],
+      "schema_version": "0.1",
+      "sessions": [
+        {
+          "context_ref": "synthetic-context",
+          "host_ref": "host-local",
+          "id": "session-a",
+          "provider_ref": "provider-a",
+          "worker_ref": "worker-a"
+        }
+      ],
+      "work_packages": [
+        {
+          "acceptor": "principal-reviewer",
+          "accountable_role": "role-developer",
+          "allowed_paths": [
+            "src/"
+          ],
+          "assignment_ref": "assignment-rework",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blocking_conditions": [],
+          "change_reason": "Explicitly reauthorize and review external scope",
+          "checkpoint_ref": "checkpoint-demo",
+          "deliverables": [
+            "Synthetic patch"
+          ],
+          "dependencies": [],
+          "evidence_refs": [
+            "synthetic-evidence"
+          ],
+          "external_effects": [
+            "publish-synthetic-artifact"
+          ],
+          "forbidden_paths": [
+            "secrets/"
+          ],
+          "goal_refs": [
+            "GOAL-DEMO"
+          ],
+          "handoff_refs": [],
+          "id": "WP-DEMO",
+          "implementer": "principal-implementer",
+          "inputs": [],
+          "kind": "code",
+          "merger": "principal-owner",
+          "milestones": {
+            "engineering_accepted": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "invalidated",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "merged": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-owner",
+              "status": "invalidated",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "review_passed": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "invalidated",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            }
+          },
+          "negative_criteria": [
+            "Reject invalid input"
+          ],
+          "objective": "Validate protocol consistency",
+          "positive_criteria": [
+            "Expected output"
+          ],
+          "project_id": "demo",
+          "required_milestones": [
+            "engineering_accepted",
+            "merged",
+            "review_passed"
+          ],
+          "requirement_refs": [
+            "REQ-DEMO"
+          ],
+          "review_refs": [
+            "synthetic-review"
+          ],
+          "reviewer": "principal-reviewer",
+          "revision": 4,
+          "risk": "medium",
+          "rollback": "Preserve worktree; revert reviewed commit",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "state": "in_review",
+          "submitted_sha": "dddddddddddddddddddddddddddddddddddddddd",
+          "test_strategy": "Synthetic unit checks",
+          "title": "Synthetic local change"
+        }
+      ],
+      "workers": [
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "code"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-a",
+          "principal": "principal-implementer",
+          "provider_ref": "provider-a",
+          "quota": "available",
+          "role_refs": [
+            "role-developer"
+          ],
+          "slots": 1,
+          "state": "busy"
+        },
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "review"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-b",
+          "principal": "principal-reviewer",
+          "provider_ref": "provider-b",
+          "quota": "unknown",
+          "role_refs": [
+            "role-reviewer"
+          ],
+          "slots": 1,
+          "state": "available"
+        }
+      ]
+    },
+    "7237ee2a4fde056b1ff653a9db29dc7194c94475c5e7805df6385b3369e3a0c8": {
+      "assignments": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "authority_epoch": 1,
+          "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "fencing_token": 2,
+          "heartbeat_at": "2026-11-27T09:00:00Z",
+          "id": "assignment-rework",
+          "last_checkpoint": "checkpoint-demo",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "revocation_reason": null,
+          "role_ref": "role-developer",
+          "session_ref": "session-a",
+          "state": "released",
+          "worker_ref": "worker-a",
+          "workspace_id": "synthetic-worktree-a",
+          "wp_ref": "WP-DEMO"
+        }
+      ],
+      "authorizations": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "decision_ref": "synthetic-expanded-scope-decision",
+          "environment_refs": [
+            "host-local"
+          ],
+          "expires_at": "2030-01-01T00:00:00Z",
+          "external_effects": [
+            "publish-synthetic-artifact"
+          ],
+          "id": "auth-demo",
+          "issuer": "principal-owner",
+          "role_refs": [
+            "role-developer"
+          ],
+          "state": "granted",
+          "wp_refs": [
+            "WP-DEMO"
+          ]
+        }
+      ],
+      "checkpoints": [
+        {
+          "assignment_ref": "assignment-rework",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blockers": [],
+          "completed": [
+            "Design"
+          ],
+          "created_at": "2026-11-27T09:00:00Z",
+          "decision_refs": [
+            "synthetic-decision"
+          ],
+          "evidence_refs": [],
+          "id": "checkpoint-demo",
+          "last_valid_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "next_actions": [
+            "Verify actual checkout before resuming"
+          ],
+          "remaining": [
+            "Implementation"
+          ],
+          "role_ref": "role-developer",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "uncommitted": [
+            {
+              "location": "synthetic-archive/diff.patch",
+              "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ],
+          "unknown_operations": [],
+          "wp_ref": "WP-DEMO",
+          "wp_revision": 1
+        }
+      ],
+      "hosts": [
+        {
+          "environment": "synthetic-isolated",
+          "id": "host-local"
+        }
+      ],
+      "project": {
+        "authority_epoch": 1,
+        "budget": "available",
+        "id": "demo",
+        "owner_principals": [
+          "principal-owner"
+        ],
+        "paused": false,
+        "policy_revision": "1",
+        "profile": "lite",
+        "revision": 5,
+        "state_backend": "local_git"
+      },
+      "providers": [
+        {
+          "adapter": "synthetic",
+          "id": "provider-a"
+        },
+        {
+          "adapter": "synthetic",
+          "id": "provider-b"
+        }
+      ],
+      "roles": [
+        {
+          "asset_refs": [],
+          "id": "role-developer",
+          "permissions": [
+            "edit-assigned-scope"
+          ],
+          "responsibilities": [
+            "Implementation"
+          ]
+        },
+        {
+          "asset_refs": [],
+          "id": "role-reviewer",
+          "permissions": [
+            "read"
+          ],
+          "responsibilities": [
+            "Independent review"
+          ]
+        }
+      ],
+      "schema_version": "0.1",
+      "sessions": [
+        {
+          "context_ref": "synthetic-context",
+          "host_ref": "host-local",
+          "id": "session-a",
+          "provider_ref": "provider-a",
+          "worker_ref": "worker-a"
+        }
+      ],
+      "work_packages": [
+        {
+          "acceptor": "principal-reviewer",
+          "accountable_role": "role-developer",
+          "allowed_paths": [
+            "src/"
+          ],
+          "assignment_ref": "assignment-rework",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blocking_conditions": [],
+          "change_reason": "Explicitly reauthorize and review external scope",
+          "checkpoint_ref": "checkpoint-demo",
+          "deliverables": [
+            "Synthetic patch"
+          ],
+          "dependencies": [],
+          "evidence_refs": [
+            "synthetic-evidence"
+          ],
+          "external_effects": [
+            "publish-synthetic-artifact"
+          ],
+          "forbidden_paths": [
+            "secrets/"
+          ],
+          "goal_refs": [
+            "GOAL-DEMO"
+          ],
+          "handoff_refs": [],
+          "id": "WP-DEMO",
+          "implementer": "principal-implementer",
+          "inputs": [],
+          "kind": "code",
+          "merger": "principal-owner",
+          "milestones": {
+            "engineering_accepted": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "passed",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "merged": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-owner",
+              "status": "passed",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "review_passed": {
+              "evidence_refs": [
+                "synthetic-evidence"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "passed",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            }
+          },
+          "negative_criteria": [
+            "Reject invalid input"
+          ],
+          "objective": "Validate protocol consistency",
+          "positive_criteria": [
+            "Expected output"
+          ],
+          "project_id": "demo",
+          "required_milestones": [
+            "engineering_accepted",
+            "merged",
+            "review_passed"
+          ],
+          "requirement_refs": [
+            "REQ-DEMO"
+          ],
+          "review_refs": [
+            "synthetic-review"
+          ],
+          "reviewer": "principal-reviewer",
+          "revision": 5,
+          "risk": "medium",
+          "rollback": "Preserve worktree; revert reviewed commit",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "state": "accepted",
+          "submitted_sha": "dddddddddddddddddddddddddddddddddddddddd",
+          "test_strategy": "Synthetic unit checks",
+          "title": "Synthetic local change"
+        }
+      ],
+      "workers": [
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "code"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-a",
+          "principal": "principal-implementer",
+          "provider_ref": "provider-a",
+          "quota": "available",
+          "role_refs": [
+            "role-developer"
+          ],
+          "slots": 1,
+          "state": "busy"
+        },
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "review"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-b",
+          "principal": "principal-reviewer",
+          "provider_ref": "provider-b",
+          "quota": "unknown",
+          "role_refs": [
+            "role-reviewer"
+          ],
+          "slots": 1,
+          "state": "available"
+        }
+      ]
+    },
+    "4860f55e3551c87443975c049b0a34dfc3409d48727dcb89c7a7a10f17ab07c6": {
+      "assignments": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "authority_epoch": 1,
+          "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "fencing_token": 2,
+          "heartbeat_at": "2026-11-27T09:00:00Z",
+          "id": "assignment-rework",
+          "last_checkpoint": "checkpoint-demo",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "revocation_reason": null,
+          "role_ref": "role-developer",
+          "session_ref": "session-a",
+          "state": "released",
+          "worker_ref": "worker-a",
+          "workspace_id": "synthetic-worktree-a",
+          "wp_ref": "WP-DEMO"
+        }
+      ],
+      "authorizations": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "decision_ref": "synthetic-expanded-scope-decision",
+          "environment_refs": [
+            "host-local"
+          ],
+          "expires_at": "2030-01-01T00:00:00Z",
+          "external_effects": [
+            "publish-synthetic-artifact"
+          ],
+          "id": "auth-demo",
+          "issuer": "principal-owner",
+          "role_refs": [
+            "role-developer"
+          ],
+          "state": "granted",
+          "wp_refs": [
+            "WP-DEMO"
+          ]
+        }
+      ],
+      "checkpoints": [
+        {
+          "assignment_ref": "assignment-rework",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blockers": [],
+          "completed": [
+            "Design"
+          ],
+          "created_at": "2026-11-27T09:00:00Z",
+          "decision_refs": [
+            "synthetic-decision"
+          ],
+          "evidence_refs": [],
+          "id": "checkpoint-demo",
+          "last_valid_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "lease_expires_at": "2026-11-28T00:00:00Z",
+          "next_actions": [
+            "Verify actual checkout before resuming"
+          ],
+          "remaining": [
+            "Implementation"
+          ],
+          "role_ref": "role-developer",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "uncommitted": [
+            {
+              "location": "synthetic-archive/diff.patch",
+              "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ],
+          "unknown_operations": [],
+          "wp_ref": "WP-DEMO",
+          "wp_revision": 1
+        }
+      ],
+      "hosts": [
+        {
+          "environment": "synthetic-isolated",
+          "id": "host-local"
+        }
+      ],
+      "project": {
+        "authority_epoch": 1,
+        "budget": "available",
+        "id": "demo",
+        "owner_principals": [
+          "principal-owner"
+        ],
+        "paused": false,
+        "policy_revision": "1",
+        "profile": "lite",
+        "revision": 5,
+        "state_backend": "local_git"
+      },
+      "providers": [
+        {
+          "adapter": "synthetic",
+          "id": "provider-a"
+        },
+        {
+          "adapter": "synthetic",
+          "id": "provider-b"
+        }
+      ],
+      "roles": [
+        {
+          "asset_refs": [],
+          "id": "role-developer",
+          "permissions": [
+            "edit-assigned-scope"
+          ],
+          "responsibilities": [
+            "Implementation"
+          ]
+        },
+        {
+          "asset_refs": [],
+          "id": "role-reviewer",
+          "permissions": [
+            "read"
+          ],
+          "responsibilities": [
+            "Independent review"
+          ]
+        }
+      ],
+      "schema_version": "0.1",
+      "sessions": [
+        {
+          "context_ref": "synthetic-context",
+          "host_ref": "host-local",
+          "id": "session-a",
+          "provider_ref": "provider-a",
+          "worker_ref": "worker-a"
+        }
+      ],
+      "work_packages": [
+        {
+          "acceptor": "principal-reviewer",
+          "accountable_role": "role-developer",
+          "allowed_paths": [
+            "src/"
+          ],
+          "assignment_ref": "assignment-rework",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "blocking_conditions": [],
+          "change_reason": "Explicitly reauthorize and review external scope",
+          "checkpoint_ref": "checkpoint-demo",
+          "deliverables": [
+            "Synthetic patch"
+          ],
+          "dependencies": [],
+          "evidence_refs": [
+            "synthetic-evidence"
+          ],
+          "external_effects": [
+            "publish-synthetic-artifact"
+          ],
+          "forbidden_paths": [
+            "secrets/"
+          ],
+          "goal_refs": [
+            "GOAL-DEMO"
+          ],
+          "handoff_refs": [],
+          "id": "WP-DEMO",
+          "implementer": "principal-implementer",
+          "inputs": [],
+          "kind": "code",
+          "merger": "principal-owner",
+          "milestones": {
+            "engineering_accepted": {
+              "evidence_refs": [
+                "synthetic-new-scope-evidence-engineering_accepted"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "passed",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "merged": {
+              "evidence_refs": [
+                "synthetic-new-scope-evidence-merged"
+              ],
+              "reason": null,
+              "signer": "principal-owner",
+              "status": "passed",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            },
+            "review_passed": {
+              "evidence_refs": [
+                "synthetic-new-scope-evidence-review_passed"
+              ],
+              "reason": null,
+              "signer": "principal-reviewer",
+              "status": "passed",
+              "subject_sha": "dddddddddddddddddddddddddddddddddddddddd"
+            }
+          },
+          "negative_criteria": [
+            "Reject invalid input"
+          ],
+          "objective": "Validate protocol consistency",
+          "positive_criteria": [
+            "Expected output"
+          ],
+          "project_id": "demo",
+          "required_milestones": [
+            "engineering_accepted",
+            "merged",
+            "review_passed"
+          ],
+          "requirement_refs": [
+            "REQ-DEMO"
+          ],
+          "review_refs": [
+            "synthetic-review",
+            "synthetic-new-scope-review"
+          ],
+          "reviewer": "principal-reviewer",
+          "revision": 5,
+          "risk": "medium",
+          "rollback": "Preserve worktree; revert reviewed commit",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "state": "accepted",
+          "submitted_sha": "dddddddddddddddddddddddddddddddddddddddd",
+          "test_strategy": "Synthetic unit checks",
+          "title": "Synthetic local change"
+        }
+      ],
+      "workers": [
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "code"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-a",
+          "principal": "principal-implementer",
+          "provider_ref": "provider-a",
+          "quota": "available",
+          "role_refs": [
+            "role-developer"
+          ],
+          "slots": 1,
+          "state": "busy"
+        },
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "review"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-b",
+          "principal": "principal-reviewer",
+          "provider_ref": "provider-b",
+          "quota": "unknown",
+          "role_refs": [
+            "role-reviewer"
+          ],
+          "slots": 1,
+          "state": "available"
+        }
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "before": "75fdd6a692dd7023e7c3bfeddc6224077f448c808a242029dab1d774c6b464bf",
+      "after": "87b79f2f23ecfc43d9cb14f1d74b27f77b9bf420fc453918deb5e432f893beaa",
+      "at": "2026-11-27T10:00:00Z",
+      "errors": [
+        "signature-invalidation-required:WP-DEMO"
+      ]
+    },
+    {
+      "before": "75fdd6a692dd7023e7c3bfeddc6224077f448c808a242029dab1d774c6b464bf",
+      "after": "790a6dde1ef6fa8010d59b6720fe1b0668d68f8022d309cd6d4c3e7b9f30cd05",
+      "at": "2026-11-27T10:00:00Z",
+      "errors": []
+    },
+    {
+      "before": "790a6dde1ef6fa8010d59b6720fe1b0668d68f8022d309cd6d4c3e7b9f30cd05",
+      "after": "96e5158d97a1d325847cdb2003e2e614ea441e8a7f65b11e47f6fffb102548ea",
+      "at": "2026-11-27T10:00:00Z",
+      "errors": []
+    },
+    {
+      "before": "96e5158d97a1d325847cdb2003e2e614ea441e8a7f65b11e47f6fffb102548ea",
+      "after": "eeb6e11cae00136f343942ea6291a54852433148cc3e6338b6abf72e8de8a5f8",
+      "at": "2026-11-27T10:00:00Z",
+      "errors": []
+    },
+    {
+      "before": "eeb6e11cae00136f343942ea6291a54852433148cc3e6338b6abf72e8de8a5f8",
+      "after": "7237ee2a4fde056b1ff653a9db29dc7194c94475c5e7805df6385b3369e3a0c8",
+      "at": "2026-11-27T10:00:00Z",
+      "errors": [
+        "fresh-signoff-required:WP-DEMO:engineering_accepted",
+        "fresh-signoff-required:WP-DEMO:merged",
+        "fresh-signoff-required:WP-DEMO:review_passed"
+      ]
+    },
+    {
+      "before": "eeb6e11cae00136f343942ea6291a54852433148cc3e6338b6abf72e8de8a5f8",
+      "after": "4860f55e3551c87443975c049b0a34dfc3409d48727dcb89c7a7a10f17ab07c6",
+      "at": "2026-11-27T10:00:00Z",
+      "errors": []
+    }
+  ]
+}

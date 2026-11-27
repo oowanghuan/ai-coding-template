@@ -1,0 +1,8 @@
+test_committed_old_receipt_cannot_delete_later_repair (install_cases.Installation) ... ok
+test_external_effect_expansion_invalidates_signatures_at_same_sha (protocol_cases.Protocol) ... ok
+test_external_effect_rework_requires_new_signoff_before_acceptance (protocol_cases.Protocol) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 3.037s
+
+OK

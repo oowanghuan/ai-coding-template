@@ -1,0 +1,32 @@
+import hashlib,importlib.util,json,sys,unittest
+from pathlib import Path
+repo=Path(sys.argv[1]);out=Path(sys.argv[2]);out.mkdir(exist_ok=True)
+def module(name,path):
+ spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+protocol=module('protocol_cases',repo/'tests/protocol/test_protocol.py')
+original=protocol.validate_transition
+snapshots={};transitions=[]
+def capture(before,after,at):
+ errors=original(before,after,at)
+ ids=[]
+ for snapshot in [before,after]:
+  text=json.dumps(snapshot,sort_keys=True);key=hashlib.sha256(text.encode()).hexdigest();snapshots[key]=json.loads(text);ids.append(key)
+ transitions.append(dict(before=ids[0],after=ids[1],at=at,errors=errors))
+ return errors
+protocol.validate_transition=capture
+install=module('install_cases',repo/'tests/install/test_install.py')
+run=install.Installation.run_installer;operations=[]
+def record(self,*args,**kw):
+ before=install.tree(self.target);result=run(self,*args,**kw);after=install.tree(self.target)
+ operations.append(dict(arguments=list(args),expected_exit=kw.get('expected',0),result=result,tree_before_sha256=hashlib.sha256(json.dumps(before,sort_keys=True).encode()).hexdigest(),tree_after_sha256=hashlib.sha256(json.dumps(after,sort_keys=True).encode()).hexdigest(),victim_before_sha256=before.get('.claude/commands/ai-pm.md'),victim_after_sha256=after.get('.claude/commands/ai-pm.md'),changed_path_count=sum(before.get(k)!=after.get(k) for k in before.keys()|after.keys())))
+ return result
+install.Installation.run_installer=record
+suite=unittest.TestSuite([
+ install.Installation('test_committed_old_receipt_cannot_delete_later_repair'),
+ protocol.Protocol('test_external_effect_expansion_invalidates_signatures_at_same_sha'),
+ protocol.Protocol('test_external_effect_rework_requires_new_signoff_before_acceptance')])
+r=unittest.TextTestRunner(verbosity=2).run(suite)
+(out/'external-effects-cases.json').write_text(json.dumps(dict(snapshots=snapshots,transitions=transitions),indent=2)+'\n')
+(out/'installation-cases.json').write_text(json.dumps(operations,indent=2)+'\n')
+print(json.dumps(dict(run=r.testsRun,failures=len(r.failures),errors=len(r.errors),skipped=len(r.skipped))))
+sys.exit(0 if r.wasSuccessful() else 1)

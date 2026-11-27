@@ -1,0 +1,93 @@
+[
+  {
+    "arguments": [],
+    "expected_exit": 0,
+    "result": {
+      "state": "committed",
+      "transaction_id": "422f4b9dd7984c20ba1bf4f5a521575a",
+      "created": 150
+    },
+    "tree_before_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "tree_after_sha256": "f90eb444fa6381bc4caa0d79cba224ce6ba9c568d8a483d02aaba27e5b868c38",
+    "victim_before_sha256": null,
+    "victim_after_sha256": "190c0069a972b6092b352579c065968a96cb4a1d73aeffdebfaa9aafb5416dfd",
+    "changed_path_count": 152
+  },
+  {
+    "arguments": [],
+    "expected_exit": 0,
+    "result": {
+      "state": "committed",
+      "transaction_id": "875c7c353bb344228825cd3830fec8f6",
+      "created": 1
+    },
+    "tree_before_sha256": "2002ed9bb8bf4d6a6f67eb700614ffbb28b22b3f7e99d3d392d7c87337754844",
+    "tree_after_sha256": "6f35fad31aecc37a9d0b589eabe695bbdc6002732d5bf11069e7d203eff9efcd",
+    "victim_before_sha256": null,
+    "victim_after_sha256": "190c0069a972b6092b352579c065968a96cb4a1d73aeffdebfaa9aafb5416dfd",
+    "changed_path_count": 2
+  },
+  {
+    "arguments": [
+      "--rollback",
+      "422f4b9dd7984c20ba1bf4f5a521575a"
+    ],
+    "expected_exit": 2,
+    "result": {
+      "error": "Rollback ownership superseded or ambiguous: .claude/commands/ai-pm.md"
+    },
+    "tree_before_sha256": "6f35fad31aecc37a9d0b589eabe695bbdc6002732d5bf11069e7d203eff9efcd",
+    "tree_after_sha256": "6f35fad31aecc37a9d0b589eabe695bbdc6002732d5bf11069e7d203eff9efcd",
+    "victim_before_sha256": "190c0069a972b6092b352579c065968a96cb4a1d73aeffdebfaa9aafb5416dfd",
+    "victim_after_sha256": "190c0069a972b6092b352579c065968a96cb4a1d73aeffdebfaa9aafb5416dfd",
+    "changed_path_count": 0
+  },
+  {
+    "arguments": [
+      "--rollback",
+      "875c7c353bb344228825cd3830fec8f6"
+    ],
+    "expected_exit": 0,
+    "result": {
+      "transaction_id": "875c7c353bb344228825cd3830fec8f6",
+      "state": "rolled_back"
+    },
+    "tree_before_sha256": "6f35fad31aecc37a9d0b589eabe695bbdc6002732d5bf11069e7d203eff9efcd",
+    "tree_after_sha256": "364460d489b5637239c62a4ec2454388527e6f7cfd3972810396081448d233fb",
+    "victim_before_sha256": "190c0069a972b6092b352579c065968a96cb4a1d73aeffdebfaa9aafb5416dfd",
+    "victim_after_sha256": null,
+    "changed_path_count": 2
+  },
+  {
+    "arguments": [
+      "--rollback",
+      "422f4b9dd7984c20ba1bf4f5a521575a"
+    ],
+    "expected_exit": 0,
+    "result": {
+      "transaction_id": "422f4b9dd7984c20ba1bf4f5a521575a",
+      "state": "rolled_back"
+    },
+    "tree_before_sha256": "364460d489b5637239c62a4ec2454388527e6f7cfd3972810396081448d233fb",
+    "tree_after_sha256": "fe5059411e145860236e489bca3049ff2f3016b919cea6d2227908f29779abb4",
+    "victim_before_sha256": null,
+    "victim_after_sha256": null,
+    "changed_path_count": 150
+  },
+  {
+    "arguments": [
+      "--rollback",
+      "422f4b9dd7984c20ba1bf4f5a521575a"
+    ],
+    "expected_exit": 0,
+    "result": {
+      "transaction_id": "422f4b9dd7984c20ba1bf4f5a521575a",
+      "state": "rolled_back"
+    },
+    "tree_before_sha256": "fe5059411e145860236e489bca3049ff2f3016b919cea6d2227908f29779abb4",
+    "tree_after_sha256": "fe5059411e145860236e489bca3049ff2f3016b919cea6d2227908f29779abb4",
+    "victim_before_sha256": null,
+    "victim_after_sha256": null,
+    "changed_path_count": 0
+  }
+]

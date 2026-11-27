@@ -1,0 +1,20 @@
+{
+  "README.md": "48feb797428cf305c74be6c4d6e1240820ad7dd531aa63a7f17f9f786f66b913",
+  "broker-tests.json": "604fd992d4936a9b44c607a63f09a468846ca43f2067c9218ab0d27b0bd5e587",
+  "capture_cases.py.txt": "89ad81e86a019202f1c4907f18a4b7817e834d2e982248c36837697432385835",
+  "cases.stderr": "18fded7b87cd4f4f5e44fec9c2a03e1467190099b4955a40bdf296520160cd0e",
+  "cases.stdout": "869c91f8cb7a8be23ecbffee31859ae8308d0f6b219ca0a25a54526deb493ffd",
+  "external-effects-cases.json": "7306554a3be1ccea675729c2d9017a028a058b20e5926b12efd9a013b6e6be6d",
+  "installation-cases.json": "eef72c679584f747561415e9cfc8e24fc7f83cb86e2cd6c21e679080bc89707c",
+  "natural-detection.json": "eed5f664cc35926add319384722e3ef82f885e64b807e19345440a9e9f5a6602",
+  "poll.py.txt": "42a86dbee3db17b8730f716102149b76618593566e7ace9ea8c4228e712925ec",
+  "reproduction-test_install.py.txt": "9e1cf56308cbeda51e92318c5d56cae1407ee3cede91024975ffc41867fe4866",
+  "reproduction-test_protocol.py.txt": "fc2043b665478d4da1bcad22f2fa2f3a10aff1f85e24550bd89084efff2e4a38",
+  "reproduction.json": "d1bdd62e56b9aaea43f6784b4719f447b20b11597ca8ccdbb2c096d7b9282a23",
+  "reproduction.stderr": "4325171ae7cc7c10e0061f697dca259f4bbc4176414eb5c420779b7017ececd5",
+  "reproduction.stdout": "50540ee309256f9881a42a47fcac455f777ff9894922b92e73dd0d8cf6c11f89",
+  "results.json": "6a5647dad132b2bd419bafe4a226aeeb1b9dd368fd5d5ef6a91a4ff9d161d12c",
+  "test_poll.py.txt": "4849def854e4d4a50406d6dd64a0e2c95b83ec061f4234e0aab5a5092228bdf6",
+  "tests.stderr": "670e7c45810d392b07e313b6b7e8c15437ccffc20dc4df2a1a64ba5ef15a8347",
+  "tests.stdout": "81a4e28acd21e3d14719013ef5662a1d8d3ae7b97a080eff9d55cc57163389d2"
+}

@@ -1,0 +1,2 @@
+{"sandbox_canaries": {"outside_file_read": true, "outside_file_write": true, "checkout_write": true, "network_connect": true, "credentials_removed": true}}
+{"tests": {"install": {"run": 20, "failures": 1, "errors": 0, "skipped": 0, "passed": 19}, "protocol": {"run": 31, "failures": 1, "errors": 0, "skipped": 0, "passed": 30}}}

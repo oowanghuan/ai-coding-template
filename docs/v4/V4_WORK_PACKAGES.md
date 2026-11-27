@@ -56,7 +56,7 @@ WP-004 正向验收：读取 Issue 正文、核对 Owner 账号、真实运行�
 
 WP-001 独占 `tests/install/`、`manifests/`、安装脚本及明确列出的四个源命令；被修改的五份旧文件保全于 `legacy/v3.3.0/`。WP-101 独占 `tests/protocol/`、`schemas/`、`framework/core/`、协议 CLI 和 `examples/protocol/`。共享依赖及文档由当前 Project Lead 统一集成。两包可以独立推进，但本次没有虚构第二名执行者或独立实施 Session。其后 WP-102/103 须另获放行。
 
-更新：Owner 已通过评论 7214229053 批准上述两个包。当前执行者为 Project Lead 会话，两个包为 `submitted`（作者组件自测通过，独立验收 pending）；设计基线 `1fbe382a2ffce858f15ba1769e3068054e589f96`，实现分支 `v4/first-batch`，测试代码提交 `ee262fdb46b9aa0e6888bb761d1a9624110b545b`。安装 19 项、协议 30 项通过，见 [实际证据](evidence/first-batch/README.md)。独立 Reviewer 为 #3 Advisor 上下文，待准确交付 SHA 复核；合入责任仍待 Owner 指定。本机后台继续只读核查/已核查文字回复，不执行候选代码。其他包不因本次放行自动开工。
+更新：Owner 已通过评论 7214229053 批准上述两个包。当前执行者为 Project Lead 会话，两个包为 `submitted`（评审修订自测通过，独立验收 pending）；设计基线 `1fbe382a2ffce858f15ba1769e3068054e589f96`，实现分支 `v4/first-batch`、Draft PR #5。Advisor [7216033104](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7216033104) 提出的旧回执误删补装成果、外部操作扩权未失效签认均已实际复现并修复。新测试代码提交 `ea89d0c91a48e71f600f6da2bcaae5a29104e1a9`，安装 23 项、协议 34 项通过，见 [修订证据](evidence/advisor-7216033104/README.md)；[首批历史证据](evidence/first-batch/README.md) 保留。独立 Reviewer 为 #3 Advisor 上下文，待新交付 SHA 复核；合入责任仍待 Owner 指定。本机后台继续只读核查/已核查文字回复，不执行候选代码。其他包不因本次放行自动开工。
 
 ## 5. 可恢复检查点
 
