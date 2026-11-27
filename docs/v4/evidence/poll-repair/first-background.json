@@ -1,0 +1,60 @@
+{
+  "run_id": "20261127T050459692503Z",
+  "started_at": "2026-11-27T05:04:59.693427+00:00",
+  "trigger": "com.ai-coding-template.v4.project-lead",
+  "status": "success",
+  "mode": "read_only_and_reviewed_reply",
+  "runner_sha256": "e02468ddcdbd037bd14f597308339da088f34644ddfcecfa434eed7aa50a6fd5",
+  "processed": 1,
+  "waiting": [],
+  "steps": [
+    {
+      "step": "identity_verified",
+      "at": "2026-11-27T05:05:01.024530+00:00"
+    },
+    {
+      "step": "issue_read",
+      "at": "2026-11-27T05:05:02.892365+00:00"
+    },
+    {
+      "step": "pending_selected",
+      "at": "2026-11-27T05:05:04.484592+00:00"
+    },
+    {
+      "step": "remote_head_verified",
+      "at": "2026-11-27T05:05:05.919256+00:00"
+    },
+    {
+      "step": "journals_reconciled",
+      "at": "2026-11-27T05:05:05.924321+00:00"
+    },
+    {
+      "step": "outbox_verified",
+      "at": "2026-11-27T05:05:06.027289+00:00"
+    },
+    {
+      "step": "post_intent_saved",
+      "at": "2026-11-27T05:05:09.199079+00:00"
+    },
+    {
+      "step": "comment_posted",
+      "at": "2026-11-27T05:05:11.090689+00:00"
+    },
+    {
+      "step": "comment_readback_verified",
+      "at": "2026-11-27T05:05:12.495997+00:00"
+    },
+    {
+      "step": "complete",
+      "at": "2026-11-27T05:05:12.498423+00:00"
+    }
+  ],
+  "last_successful_step": "complete",
+  "comments_read": 3,
+  "pending": 1,
+  "remote_head": "6efbc7525416f36963000e45029c6e3ce6403273",
+  "published_comment_ids": [
+    7210336111
+  ],
+  "finished_at": "2026-11-27T05:05:12.499733+00:00"
+}

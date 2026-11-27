@@ -1,0 +1,19 @@
+
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;36m[1m  Claude Code 可安装工具列表[0m
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+[1m📌 Slash Commands (→ .claude/commands/)[0m
+
+[0;31m✗[0m     目录不存在: /private<fixture>/original/_templates/CC_COLLABORATION/05_TOOLS/slash-commands
+
+[1m🔧 Skills (→ .claude/skills/)[0m
+
+[0;31m✗[0m     目录不存在: /private<fixture>/original/_templates/CC_COLLABORATION/05_TOOLS/skills
+
+[1m🤖 Subagents (→ .claude/subagents/)[0m
+
+[0;31m✗[0m     目录不存在: /private<fixture>/original/_templates/CC_COLLABORATION/05_TOOLS/subagents
+
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+

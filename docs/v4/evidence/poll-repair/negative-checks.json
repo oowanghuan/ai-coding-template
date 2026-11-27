@@ -1,0 +1,32 @@
+{
+  "kind": "synthetic_negative_checks_no_network",
+  "passed": 23,
+  "failed": 0,
+  "checks": [
+    "GO request initially pending",
+    "exact comment ID boundary",
+    "unknown account ignored",
+    "credential environment not inherited",
+    "only fixed GH executable",
+    "working directory is broker directory",
+    "shell not enabled",
+    "repository write endpoint rejected",
+    "other Issue write rejected",
+    "non-body publication rejected",
+    "closed response has no review request",
+    "edited Advisor input rejected",
+    "remote change rejected",
+    "unreviewed body change rejected",
+    "explicit followup remains distinct",
+    "Owner outcome does not request Advisor loop",
+    "legacy confirmed push resumes reviewed comment only",
+    "candidate sentinel never executes",
+    "no child process except fixed GH test",
+    "next run is quiet and deduplicated",
+    "lost receipt reconciled from remote comment",
+    "unknown absent POST remains frozen",
+    "unknown divergent push remains frozen"
+  ],
+  "runner_sha256": "e02468ddcdbd037bd14f597308339da088f34644ddfcecfa434eed7aa50a6fd5",
+  "test_sha256": "6630ce26feccadcff26efc1707bcce0f5907082ce8269592c37f2ffbfbd0ce6d"
+}

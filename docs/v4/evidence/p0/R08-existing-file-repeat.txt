@@ -1,0 +1,76 @@
+
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;36m[1m  Claude Code 工具安装器[0m
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+[0;34mℹ[0m 目标项目: /private<fixture>/path-only
+
+[1m📌 安装 Slash Commands...[0m
+    新安装: 0 个，跳过: 26 个
+
+[1m🔧 安装 Skills...[0m
+    新安装: 0 个，跳过: 6 个
+
+[1m🤖 安装 Subagents...[0m
+    新安装: 0 个，跳过: 5 个
+
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+[0;32m✓[0m 安装完成！
+
+    总计安装: 0 个
+    总计跳过: 37 个
+
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+[1m已安装的工具:[0m
+
+  Slash Commands:
+    /ai-pm
+    /approve-gate
+    /check-gate
+    /check-progress
+    /daily-summary
+    /doc-design-validation
+    /end-day
+    /expert-review
+    /gen-demo
+    /gui-cleanup
+    /gui-connect
+    /gui-disconnect
+    /init-project
+    /integrate-project
+    /iresume
+    /new-feature
+    /next-phase
+    /plan-features
+    /project-pm
+    /release
+    /reverse-api
+    /reverse-schema
+    /run-tests
+    /scan-project
+    /start-day
+    /sync-docs
+
+  Skills:
+    ai_pm_state_manager
+    design_from_demo
+    doc_generator
+    mock_api_generator
+    review_alignment
+    ui_demo
+
+  Subagents:
+    expert_reviewer
+    progress_tracker
+    release_summarizer
+    spec_writer
+    test_plan_writer
+
+[1m下一步:[0m
+
+  1. 进入项目目录: cd /private<fixture>/path-only
+  2. 启动 Claude Code
+  3. 使用 /new-feature <name> 创建第一个功能模块
+

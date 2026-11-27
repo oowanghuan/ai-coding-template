@@ -1,0 +1,13 @@
+{
+  "state": "published",
+  "key": "v4-pl:7203311332:6efbc7525416f36963000e45029c6e3ce6403273",
+  "subject_sha": "6efbc7525416f36963000e45029c6e3ce6403273",
+  "remote_head": "6efbc7525416f36963000e45029c6e3ce6403273",
+  "body_sha256": "07f2a7595c15dfe879c04d7e24a2c11568af41687a1e1c79ab30e51068b8f0e1",
+  "disposition": "result",
+  "run_id": "20261127T050459692503Z",
+  "created_at": "2026-11-27T05:05:09.194139+00:00",
+  "comment_id": 7210336111,
+  "published_at": "2026-11-27T05:05:11.083172+00:00",
+  "reconciled_at": "2026-11-27T05:05:46.340783+00:00"
+}

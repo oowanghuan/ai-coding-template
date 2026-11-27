@@ -1,0 +1,9 @@
+
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;36m[1m  Claude Code 工具安装器[0m
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+[0;34mℹ[0m 目标项目: /private<fixture>/original
+
+[1m📌 安装 Slash Commands...[0m
+[0;31m✗[0m Slash Commands 源目录不存在: /private<fixture>/original/_templates/CC_COLLABORATION/05_TOOLS/slash-commands

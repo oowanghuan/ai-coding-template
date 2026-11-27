@@ -1,0 +1,113 @@
+
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;36m[1m  Claude Code 工具安装器[0m
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+[0;34mℹ[0m 目标项目: /private<fixture>/path-only
+
+[1m📌 安装 Slash Commands...[0m
+[0;32m✓[0m 安装: /ai-pm
+[0;32m✓[0m 安装: /approve-gate
+[0;32m✓[0m 安装: /check-gate
+[0;32m✓[0m 安装: /check-progress
+[0;32m✓[0m 安装: /daily-summary
+[0;32m✓[0m 安装: /doc-design-validation
+[0;32m✓[0m 安装: /end-day
+[0;32m✓[0m 安装: /expert-review
+[0;32m✓[0m 安装: /gen-demo
+[0;32m✓[0m 安装: /gui-cleanup
+[0;32m✓[0m 安装: /gui-connect
+[0;32m✓[0m 安装: /gui-disconnect
+[0;32m✓[0m 安装: /init-project
+[0;32m✓[0m 安装: /integrate-project
+[0;32m✓[0m 安装: /iresume
+[0;32m✓[0m 安装: /new-feature
+[0;32m✓[0m 安装: /next-phase
+[0;32m✓[0m 安装: /plan-features
+[0;32m✓[0m 安装: /project-pm
+[0;32m✓[0m 安装: /release
+[0;32m✓[0m 安装: /reverse-api
+[0;32m✓[0m 安装: /reverse-schema
+[0;32m✓[0m 安装: /run-tests
+[0;32m✓[0m 安装: /scan-project
+[0;32m✓[0m 安装: /start-day
+[0;32m✓[0m 安装: /sync-docs
+    新安装: 26 个，跳过: 0 个
+
+[1m🔧 安装 Skills...[0m
+[0;32m✓[0m 安装: ai_pm_state_manager
+[0;32m✓[0m 安装: design_from_demo
+[0;32m✓[0m 安装: doc_generator
+[0;32m✓[0m 安装: mock_api_generator
+[0;32m✓[0m 安装: review_alignment
+[0;32m✓[0m 安装: ui_demo
+    新安装: 6 个，跳过: 0 个
+
+[1m🤖 安装 Subagents...[0m
+[0;32m✓[0m 安装: expert_reviewer
+[0;32m✓[0m 安装: progress_tracker
+[0;32m✓[0m 安装: release_summarizer
+[0;32m✓[0m 安装: spec_writer
+[0;32m✓[0m 安装: test_plan_writer
+    新安装: 5 个，跳过: 0 个
+
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+[0;32m✓[0m 安装完成！
+
+    总计安装: 37 个
+    总计跳过: 0 个
+
+[0;36m[1m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+[1m已安装的工具:[0m
+
+  Slash Commands:
+    /ai-pm
+    /approve-gate
+    /check-gate
+    /check-progress
+    /daily-summary
+    /doc-design-validation
+    /end-day
+    /expert-review
+    /gen-demo
+    /gui-cleanup
+    /gui-connect
+    /gui-disconnect
+    /init-project
+    /integrate-project
+    /iresume
+    /new-feature
+    /next-phase
+    /plan-features
+    /project-pm
+    /release
+    /reverse-api
+    /reverse-schema
+    /run-tests
+    /scan-project
+    /start-day
+    /sync-docs
+
+  Skills:
+    ai_pm_state_manager
+    design_from_demo
+    doc_generator
+    mock_api_generator
+    review_alignment
+    ui_demo
+
+  Subagents:
+    expert_reviewer
+    progress_tracker
+    release_summarizer
+    spec_writer
+    test_plan_writer
+
+[1m下一步:[0m
+
+  1. 进入项目目录: cd /private<fixture>/path-only
+  2. 启动 Claude Code
+  3. 使用 /new-feature <name> 创建第一个功能模块
+

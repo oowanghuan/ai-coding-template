@@ -1,0 +1,970 @@
+{
+  "recorded_at": "2026-11-26T20:48:48.096897+00:00",
+  "command": [
+    "python3",
+    "tests/validate_v4_design.py"
+  ],
+  "validator_sha256": "fafb99fd6e9328946fe8fc5fa778a85b7b3de3153a190ab271085ecef1c83be3",
+  "inputs": {
+    "V4_CHARTER.md": "6388988fa290f59677fd3b0767b4027209868b8a89053b45e610942c54e9c730",
+    "V3_INVENTORY.md": "c422fdb91e575308e548caebfb3f0c1eded98dcaa2e07180fccdec65d7607d0d",
+    "V4_ARCHITECTURE.md": "6fda227397d170ac9308c4cebe508c831d18374dea5f3b79f8c88f7b4d2f311f",
+    "V4_MIGRATION_PLAN.md": "5bbb3bf65e9db5073b060bb68095470b0bff7759af533bb838c951a752492739",
+    "V4_WORK_PACKAGES.md": "86afae34001f42eb5e08eceeb87bb015610fc46edba85d265fcfc5da9ece9138",
+    "V4_ACCEPTANCE_PLAN.md": "37ad1e2123c5e687dc9bbaeb489741898fc03b5d708799e2e8fae1648d85f4d7",
+    "OWNER_DECISIONS.md": "24cac81c2a5056afb05a136390d4945fc5c27130b29b61cacc34d03b774220a7"
+  },
+  "checks": [
+    {
+      "check": "seven formal deliverables exist",
+      "passed": true
+    },
+    {
+      "check": "V4_CHARTER.md local link V3_INVENTORY.md",
+      "passed": true
+    },
+    {
+      "check": "V4_CHARTER.md local link V4_ARCHITECTURE.md",
+      "passed": true
+    },
+    {
+      "check": "V4_CHARTER.md local link V4_MIGRATION_PLAN.md",
+      "passed": true
+    },
+    {
+      "check": "V4_CHARTER.md local link V4_WORK_PACKAGES.md",
+      "passed": true
+    },
+    {
+      "check": "V4_CHARTER.md local link V4_ACCEPTANCE_PLAN.md",
+      "passed": true
+    },
+    {
+      "check": "V4_CHARTER.md local link OWNER_DECISIONS.md",
+      "passed": true
+    },
+    {
+      "check": "V4_CHARTER.md local link V4_ACCEPTANCE_PLAN.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link evidence/git-baseline.txt",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link evidence/p0/source-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../README.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/01_workflow/02_FRAMEWORK_OVERVIEW.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/03_templates/00_foundation/00_FOUNDATION_GATE.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/05_tools/slash-commands/project-pm.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/05_tools/slash-commands/ai-pm.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/05_tools/skills/ai_pm_state_manager.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/03_templates/00_foundation/PROJECT_TRACKER_TEMPLATE.yaml",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/03_templates/_shared/PHASE_GATE_TEMPLATE.yaml",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../.claude/skills/gate_checker.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/05_tools/slash-commands/expert-review.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/03_templates/_shared/REVIEW_ACTIONS_TEMPLATE.yaml",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../.claude/skills/contract_resolver.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/03_templates/_shared/90_PROGRESS_LOG_TEMPLATE.yaml",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/01_workflow/recipes/CONTEXT_RECOVERY.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/05_tools/slash-commands/iresume.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/05_tools/README.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/_gui_config/README.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../.claude/hooks/check-gui-cmd.py",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/08_legacy_integration/README.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/03_templates/README.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link ../../CC_COLLABORATION/01_workflow/04_REFERENCE.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link V4_ARCHITECTURE.md",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link evidence/p0/results.json",
+      "passed": true
+    },
+    {
+      "check": "V3_INVENTORY.md local link V4_WORK_PACKAGES.md",
+      "passed": true
+    },
+    {
+      "check": "V4_ARCHITECTURE.md local link V3_INVENTORY.md",
+      "passed": true
+    },
+    {
+      "check": "V4_ARCHITECTURE.md local link OWNER_DECISIONS.md",
+      "passed": true
+    },
+    {
+      "check": "V4_MIGRATION_PLAN.md local link V4_ARCHITECTURE.md",
+      "passed": true
+    },
+    {
+      "check": "V4_MIGRATION_PLAN.md local link V4_ACCEPTANCE_PLAN.md",
+      "passed": true
+    },
+    {
+      "check": "V4_WORK_PACKAGES.md local link evidence/project-lead-poll.json",
+      "passed": true
+    },
+    {
+      "check": "V4_WORK_PACKAGES.md local link OWNER_DECISIONS.md",
+      "passed": true
+    },
+    {
+      "check": "V4_ACCEPTANCE_PLAN.md local link V4_ARCHITECTURE.md",
+      "passed": true
+    },
+    {
+      "check": "V4_ACCEPTANCE_PLAN.md local link evidence/p0/results.json",
+      "passed": true
+    },
+    {
+      "check": "V4_ACCEPTANCE_PLAN.md local link evidence/p0/source-manifest.json",
+      "passed": true
+    },
+    {
+      "check": "V4_ACCEPTANCE_PLAN.md local link evidence/project-lead-poll.json",
+      "passed": true
+    },
+    {
+      "check": "V4_ACCEPTANCE_PLAN.md local link evidence/git-baseline.txt",
+      "passed": true
+    },
+    {
+      "check": "V4_ACCEPTANCE_PLAN.md local link evidence/design-checks.json",
+      "passed": true
+    },
+    {
+      "check": "OWNER_DECISIONS.md local link V4_WORK_PACKAGES.md",
+      "passed": true
+    },
+    {
+      "check": "OWNER_DECISIONS.md local link V4_ARCHITECTURE.md",
+      "passed": true
+    },
+    {
+      "check": "P0 harness fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R01-pristine-install log fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R01-pristine-install observation matched",
+      "passed": true
+    },
+    {
+      "check": "R02-list-missing-source log fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R02-list-missing-source observation matched",
+      "passed": true
+    },
+    {
+      "check": "R03-dry-run-unsupported log fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R03-dry-run-unsupported observation matched",
+      "passed": true
+    },
+    {
+      "check": "R04-shell-syntax log fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R04-shell-syntax observation matched",
+      "passed": true
+    },
+    {
+      "check": "R05-path-only-install log fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R05-path-only-install observation matched",
+      "passed": true
+    },
+    {
+      "check": "R06-path-only-repeat log fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R06-path-only-repeat observation matched",
+      "passed": true
+    },
+    {
+      "check": "R07-two-fixes-install log fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R07-two-fixes-install observation matched",
+      "passed": true
+    },
+    {
+      "check": "R08-existing-file-repeat log fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R08-existing-file-repeat observation matched",
+      "passed": true
+    },
+    {
+      "check": "R09-ready-example log fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R09-ready-example observation matched",
+      "passed": true
+    },
+    {
+      "check": "R12-ready-with-helpers log fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R12-ready-with-helpers observation matched",
+      "passed": true
+    },
+    {
+      "check": "R10-hook-receipt log fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R10-hook-receipt observation matched",
+      "passed": true
+    },
+    {
+      "check": "R11-hook-repeat log fingerprint",
+      "passed": true
+    },
+    {
+      "check": "R11-hook-repeat observation matched",
+      "passed": true
+    },
+    {
+      "check": "156 baseline inputs",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/README.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/ai-pm.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/approve-gate.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/check-gate.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/check-progress.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/daily-summary.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/doc-design-validation.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/end-day.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/expert-review.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/gen-demo.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/gui-cleanup.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/gui-connect.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/gui-disconnect.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/init-project.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/integrate-project.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/iresume.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/new-feature.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/next-phase.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/plan-features.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/release.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/reverse-api.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/reverse-schema.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/run-tests.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/scan-project.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/start-day.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/commands/sync-docs.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/hooks/check-gui-cmd.py",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/settings.json",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/README.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/ai_pm_state_manager.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/api_scanner.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/changelog_updater.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/context_writer.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/contract_resolver.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/design_from_demo.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/doc_generator.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/gate_checker.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/mock_api_generator.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/module_scanner.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/openai_expert_review.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/progress_updater.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/review_alignment.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/schema_generator.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/schema_scanner.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/spec_validator.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/system_scaffolder.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/tech_stack_detector.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/test_report_generator.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/test_runner.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/skills/ui_demo.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/subagents/expert_reviewer.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/subagents/progress_tracker.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/subagents/release_summarizer.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/subagents/spec_writer.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input .claude/subagents/test_plan_writer.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input AUDIT_REPORT.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input AUDIT_RESPONSE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/01_workflow/01_QUICKSTART.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/01_workflow/02_FRAMEWORK_OVERVIEW.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/01_workflow/03_DAILY_OPERATIONS.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/01_workflow/04_REFERENCE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/01_workflow/05_PM_DRIVER_WORKFLOW.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/01_workflow/README.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/01_workflow/recipes/CONTEXT_RECOVERY.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/01_workflow/recipes/END_OF_DAY.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/01_workflow/recipes/PARALLEL_DEVELOPMENT.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/01_workflow/recipes/START_NEW_FEATURE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/01_workflow/recipes/UI_DEMO.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/00_FOUNDATION_GATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/PROJECT_ACTIVITY_LOG_TEMPLATE.yaml",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/PROJECT_PM_STATE_TEMPLATE.yaml",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/PROJECT_TRACKER_TEMPLATE.yaml",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_api_system/00_REST_CONVENTIONS.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_api_system/01_COMMAND_CONVENTIONS.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_api_system/02_YAML_SCHEMA_CONVENTIONS.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_api_system/03_EXTERNAL_API_CONVENTIONS.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_db_system/00_DB_CONVENTIONS.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_planning/01_USER_JOURNEY.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_planning/02_ARCHITECTURE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_planning/03_MODULE_DECOMPOSITION.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_planning/04_ROADMAP.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_planning/05_TECH_DECISIONS.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_ui_system/00_UI_TOKENS.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_ui_system/01_COMPONENT_LIBRARY.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_ui_system/02_LAYOUT_RULES.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_ui_system/03_INTERACTION_RULES.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_ui_system/04_PAGES_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/00_foundation/_ui_system/05_WORKFLOWS_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/01_kickoff/10_CONTEXT_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/02_spec/20_API_SPEC_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/02_spec/21_UI_FLOW_SPEC_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/03_demo/30_DEMO_REVIEW_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/04_design/40_DESIGN_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/05_code/50_DEV_PLAN_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/06_test/60_TEST_PLAN_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/06_test/61_TEST_REPORT_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/07_deploy/70_RELEASE_NOTE_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/07_deploy/71_CHANGELOG_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/README.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/_shared/01_PROJECT_PROFILE_TEMPLATE.yaml",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/_shared/90_PROGRESS_LOG_TEMPLATE.yaml",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/_shared/91_DAILY_SUMMARY_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/_shared/PHASE_GATE_STATUS_TEMPLATE.yaml",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/_shared/PHASE_GATE_TEMPLATE.yaml",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/_shared/REVIEW_ACTIONS_TEMPLATE.yaml",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/03_templates/_shared/REVIEW_REPORT_TEMPLATE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/README.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/skills/README.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/skills/ai_pm_state_manager.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/skills/design_from_demo.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/skills/doc_generator.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/skills/mock_api_generator.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/skills/review_alignment.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/skills/ui_demo.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/README.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/ai-pm.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/approve-gate.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/check-gate.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/check-progress.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/daily-summary.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/doc-design-validation.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/end-day.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/expert-review.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/gen-demo.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/gui-cleanup.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/gui-connect.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/gui-disconnect.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/init-project.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/integrate-project.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/iresume.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/new-feature.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/next-phase.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/plan-features.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/project-pm.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/release.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/reverse-api.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/reverse-schema.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/run-tests.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/scan-project.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/start-day.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/slash-commands/sync-docs.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/subagents/README.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/subagents/expert_reviewer.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/subagents/progress_tracker.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/subagents/release_summarizer.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/subagents/spec_writer.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/05_tools/subagents/test_plan_writer.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/07_phase_gate/README.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/08_legacy_integration/README.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/_project_context/COLLABORATION_GUIDE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/_project_context/FRAMEWORK_PRINCIPLES.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CC_COLLABORATION/_project_context/ROLES_GUIDE.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CHANGELOG.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input CLAUDE_INIT.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input README.md",
+      "passed": true
+    },
+    {
+      "check": "baseline input scripts/init-claude-tools.sh",
+      "passed": true
+    },
+    {
+      "check": "poller public snapshot fingerprint",
+      "passed": true
+    },
+    {
+      "check": "real model probe exists",
+      "passed": true
+    },
+    {
+      "check": "real scheduled invocation exists",
+      "passed": true
+    },
+    {
+      "check": "all 12 product scenarios remain explicitly not_run",
+      "passed": true
+    },
+    {
+      "check": "all explicit work-package IDs defined",
+      "passed": true
+    },
+    {
+      "check": "no tracked V3 asset modified",
+      "passed": true
+    },
+    {
+      "check": "no whitespace errors (raw evidence EOF blank lines allowed)",
+      "passed": true
+    }
+  ],
+  "passed": 237,
+  "failed": 0,
+  "limits": "Author consistency check only. Does not prove test authenticity, full semantic coverage, secret absence, or independent acceptance."
+}
