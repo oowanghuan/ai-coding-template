@@ -25,7 +25,7 @@
   "explicit_queue_start": "not observed; no start_intent in delivery record",
   "native_internal_consumption": "unknown; merged queue reason does not prove another item existed",
   "engineering_result": "scoped synthetic document artifact Gate integration implemented and independently checked; not whole-WP engineering acceptance",
-  "subsequent_poll_deduplication": "not established: next natural run timed out before identity read",
+  "subsequent_poll_deduplication": "09:25 identity read failed (retained);09:40 natural normal follow-up skipped completed first item and delivered next ready WP301, each item one activation and ACK; see followup-poll.json",
   "raw_sha256": {
     "result.json": "9528ee50b3b0e5dd247e9a432f85f3697593bd89862f84d8637ca5a0e50944ea",
     "d8fe544e6eb383016a5f09ae7b59cef502700e37bf0ea73c8cdf744131d6ccb9.json": "ec61f34034025ac72cc01b5b8145243dddd8a56abb152eb8ef4341acefe18c13",

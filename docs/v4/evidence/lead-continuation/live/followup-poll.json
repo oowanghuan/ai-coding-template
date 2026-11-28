@@ -1,0 +1,38 @@
+{
+  "format": "continuation-live-followup/1",
+  "run_id": "20261128T094011265679Z",
+  "trigger": "original scheduled Project Lead job; no manual kick",
+  "started_at": "2026-11-28T09:40:11.266907+00:00",
+  "finished_at": "2026-11-28T09:40:51.799000+00:00",
+  "comments_read": 56,
+  "pending_advisor": 0,
+  "previous_read_comments_exact_match": true,
+  "head_sha": "d151b5367ed3a1ee65a2a046ad303688ab4dc97c",
+  "document_sha256": "61371080aa7ce994655c0c9ad2a0ecab5ab1d3a3485832c00c8823cd55704acc",
+  "document_matches_git_blob": true,
+  "selected_item": "native-execution-boundary",
+  "ack_at": "2026-11-28T09:41:01.244986+00:00",
+  "identity_match": true,
+  "delivery_state": "queued",
+  "poll_reason": "thread busy after add; no start",
+  "explicit_queue_start": "not observed",
+  "activation_count_by_item": {
+    "native-execution-boundary": 1,
+    "first-task-to-gate": 1
+  },
+  "first_item_status_at_selected_sha": "done",
+  "new_item_status_at_selected_sha": "ready",
+  "deduplication_scope": "normal scheduled follow-up skipped completed first-task-to-gate and selected next ready item; no second first-task activation",
+  "not_proven": [
+    "restart recovery",
+    "atomic idle enqueue",
+    "unknown external write exactly-once",
+    "quota recovery"
+  ],
+  "raw_sha256": {
+    "result.json": "e70b819cd23e17594f040e4b6562dc9e4967e5b9238041acb4424f4366af8458",
+    "input.json": "479edeb490cb2bd84bb847b22671ee6fdb9e34d937546617dc927318e2f08982",
+    "2ff9c98d911aa9528f2ca379b9d8e86805f9f26f7fced2b3640f1fef408c913b.json": "b44672aeb0e79aa7340c5883b900c19e9e246be460fe9ce73a14fa1ceafaaf95",
+    "2ff9c98d911aa9528f2ca379b9d8e86805f9f26f7fced2b3640f1fef408c913b.ack.json": "f0a8c7683770c642b410adba3d9087ff34184e98b4f0a140c826579ed6f3b396"
+  }
+}

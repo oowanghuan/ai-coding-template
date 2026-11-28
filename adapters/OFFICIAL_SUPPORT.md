@@ -12,3 +12,26 @@ Official documentation is a separate source from local runtime compatibility:
 - Claude built-in tool restrictions alone do not disable MCP. Safe-mode retains managed policy; restricted mode and configuration flags are version-dependent. Codex read-only restricts writes and is not a no-tools boundary. Generated argv is therefore only a disabled planning template pending exact installed-version validation. [Claude CLI reference](https://code.claude.com/docs/en/cli-reference), [Codex command reference](https://learn.chatgpt.com/docs/developer-commands?surface=cli).
 
 The online references may evolve independently of the installed binaries. Fixtures encode the explicitly documented shapes and remain labelled synthetic. Missing signals return conservative error, and missing reset time stays null. This work does not claim live provider authentication, quota recovery, paid access or cloud compatibility.
+
+## Bounded follow-up — 2026-11-28
+
+The installed Codex version remains 0.169.0. Its actual sandbox help uses the
+flat command form; the public manual's `sandbox macos --help` example attempted
+to execute the literal `macos` and failed with execvp/exit 71. This metadata
+failure is separate from the earlier nested-sandbox `sandbox_apply` failure.
+No unchanged failed isolation experiment was rerun.
+
+Version-matched public source review found separate registration and enforcement
+paths for command, patch, image, MCP, extension and other tools. Disabling shell
+alone does not establish a closed tool surface; this is not evidence that the
+remaining file tools bypass their permission policies. Effective configuration
+and runtime admission remain unverified. Matching a release tag name to a
+version string is not installed-binary build attestation.
+
+The exact restricted Claude 2.1.332 auth-status invocation again returned
+`loggedIn=false` (exit 1), without login, token copying or inference. This does
+not imply the account has no subscription or that every other environment lacks
+authentication. See the [native admission report](../docs/v4/evidence/native-admission/README.md)
+for safe metadata, independently reviewed source findings and concrete unblock
+conditions. Native live admission remains blocked; approved synthetic recovery
+work can proceed independently.

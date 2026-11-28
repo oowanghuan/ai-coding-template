@@ -446,9 +446,9 @@ Team 权威后端取舍仍 proposed，不阻塞本地工作。当前 WP 文档�
 | 具体动作 | 当前状态 / 责任 | 下一项产物与边界 |
 |---|---|---|
 | WP-301 探测完成事件严格准入 | 实现与独立回归完成，限定技术 GO；Adapter 作者/非作者 Reviewer | 代码 `8901f4602b6588177a6ddc9e61520a10b838b8c5`，作者/独立24项各通过；不是原生响应认证 |
-| WP-301 原生执行边界 | 可继续研究和固定系统探针；Lead/独立边界 Reviewer | 核实既有 CLI 的实际工具面/隔离组合，形成能运行的受控启动入口或精确失败证据；不扩大权限、不新增调用费用 |
+| WP-301 原生执行边界 | 有限核查完成，native live 准入 blocked；Lead/独立边界 Reviewer | Codex同层进程隔离与完整有效工具面未证，Claude准确受限环境auth=false；[证据及解除条件](evidence/native-admission/README.md)，不重跑无变化失败配置、不新开模型会话 |
 | WP-303 首任务至 Gate 集成 | 本批固定文本成果接线已实测并独立复核；真实 CLI / 完整 Alpha 待验 | 代码 `7ca3622908937339e6e064fd8e6e49fff8c914a5`；独立14项边界测试及4个真实正反例，固定演示、真实collector/Gate串联；不将本条done视为整个WP-303 completed |
-| WP-004 无新评论时的续做 | 已自然投递、模型ACK并产生上述实际代码；运维作者/独立 Reviewer | 保留四次上限；09:25后继轮身份查询超时，未进入判断，后续去重仍待自然实证；不把读取失败算通过 |
+| WP-004 无新评论时的续做 | 已自然投递、ACK、实际交付并在正常后继轮跳过done条目；运维作者/独立 Reviewer | 09:25失败保留；09:40读取恢复、选WP301，两条各一投递/ACK。仅本机正常有限路径，重启/撤权/额度恢复另验，四次上限不变 |
 | Team Issue主账本试点 | 方案待共同确定；Owner/Lead/Advisor | OD-02选定后单列实施，不先部署控制分支、第二台机器或新服务 |
 
 三条评审已核对：
@@ -480,8 +480,24 @@ Team 权威后端取舍仍 proposed，不阻塞本地工作。当前 WP 文档�
 [自然续做](evidence/lead-continuation/live/README.md)。
 有限条目 `first-task-to-gate` 的 `done` 只表示这项合成文本接线交付，不改变
 WP-303 整体未验收、真实供应商未完成的事实。09:25 下一轮身份查询超时，
-后继去重尚未验证；前台只读诊断已恢复，但不作为自然任务验收。下一 ready 条目
-继续 WP-301 原生执行边界，不刷新已有预算，也不重派已完成接线。
+随后09:40自然轮读取恢复并跳过done首项，选WP-301；本机正常后继去重已有实证，
+不将失败轮改写为通过。WP-301本轮静态及元数据核查已收口为native live blocked。
+
+本轮原生核查区分官方元数据、准确 tag 静态源码与历史真实探针；关闭 shell
+不会自动关闭其他工具，但也未据此断言文件工具权限旁路。产品代码未改，真实
+CLI准入仍缺有效隔离/工具闭包及同环境认证。解除条件见上述证据，不重新审批
+已批准OD-09，也不为维持轮询制造进度。
+
+为避免一个资源前提阻塞整个研发，按既有OD-09把本节原已登记的WP-302未启动
+任务恢复缺口纳入下一有限ready条目，**本轮尚未实施**。输入为当前Store的
+`run-begin`持久意图、`prepared/launching/unknown`区分及handoff真实停止证明；
+范围为`framework/local/`恢复接口、必要`framework/recovery/`和对应测试。目标是
+给“尚未启动且可证明无执行者”的已准备工作区提供保全、撤销旧执行权及安全接管，
+不能只凭无PID或self-report释放。须先审查所有启动路径，再用真实隔离文件/进程
+和独立反例证明：已登记或结果未知的launch不可接管，目录/规范/授权变更不可
+绕过，重复事件不重复交付。若无法建立可信未启动证明，保持阻塞而不降低门禁。
+该工作不依赖原生认证或新模型会话，不扩展为多机/新调度平台。预算仍最多四次，
+已用两次不充值；当前只登记后继，实际执行由下一次有效投递接手。
 
 <!-- v4-continuation-ready:v1 -->
 ```json
@@ -510,13 +526,28 @@ WP-303 整体未验收、真实供应商未完成的事实。09:25 下一轮身�
     {
       "id": "native-execution-boundary",
       "wp_id": "WP-301",
+      "status": "blocked",
+      "depends_on": [],
+      "progress": {
+        "checkpoint": "d151b5367ed3a1ee65a2a046ad303688ab4dc97c",
+        "milestone": "finite installed-version metadata and independent official-tool-surface audit completed; native live admission blocked on effective isolation/tool closure and same-environment authentication",
+        "evidence_refs": [
+          "docs/v4/evidence/native-admission/README.md"
+        ]
+      }
+    },
+    {
+      "id": "prepared-workspace-recovery",
+      "wp_id": "WP-302",
       "status": "ready",
       "depends_on": [],
       "progress": {
-        "checkpoint": "1552a59b2e908535f9ed6938217b1fd0c8c6cf39",
-        "milestone": "native-boundary-unresolved; safe research and fixed probes remain actionable",
+        "checkpoint": "7ca3622908937339e6e064fd8e6e49fff8c914a5",
+        "milestone": "existing OD09 no-writer gap: prepared workspace lacks owned-stop proof; audit launch-intent paths and implement only provable safe recovery with unknown outcomes fail-closed; not started",
         "evidence_refs": [
-          "docs/v4/evidence/worker-lifecycle/independent/README.md"
+          "framework/local/store.py",
+          "framework/local/handoff.py",
+          "tests/lifecycle/test_handoff.py"
         ]
       }
     }

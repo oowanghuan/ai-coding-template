@@ -1,0 +1,21 @@
+{
+  "run_id": "20261128T095506151869Z",
+  "trigger": "original scheduled Project Lead job",
+  "started_at": "2026-11-28T09:55:06.153779+00:00",
+  "finished_at": "2026-11-28T09:55:37.580966+00:00",
+  "comments_read": 56,
+  "pending_advisor": 0,
+  "continuation": {
+    "state": "deferred",
+    "reason": "existing thread active; no queue writes"
+  },
+  "activation_records_after": 2,
+  "new_activation_records": 0,
+  "scope": "active bound session observed; no continuation queue writes in this scheduled run",
+  "not_proven": [
+    "revocation",
+    "atomic native idle precondition",
+    "restart"
+  ],
+  "raw_sha256": "4339e61922556260a39a8af8d270a9a6a5f1b08b04b8ab03fb9be14823f607ab"
+}

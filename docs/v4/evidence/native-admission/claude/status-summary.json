@@ -1,0 +1,20 @@
+{
+  "scope": "official read-only auth status; original HOME with cleared credential environment and safe/restricted/empty setting sources; no login, credential copying or model invocation",
+  "version": "2.1.332",
+  "exit_code": 1,
+  "loggedIn": false,
+  "started_at": "2026-11-28T09:46:06.562421+00:00",
+  "finished_at": "2026-11-28T09:46:06.688818+00:00",
+  "argv": [
+    "<installed-claude>",
+    "--safe-mode",
+    "--restricted",
+    "--setting-sources",
+    "",
+    "auth",
+    "status"
+  ],
+  "stdout_sha256": "341032062b0b5a86ce89dc95f6a9086d0b470c70c12083a1a18013bd0587bb83",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "raw_output": "outside-repository private logs; do not publish"
+}
