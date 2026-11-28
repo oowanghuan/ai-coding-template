@@ -81,9 +81,9 @@ blocked. Do not create an empty reservation root to bypass historical uncertaint
 No migration or production deployment is performed by this component.
 
 `tests/adapters/test_invocation.py` runs real fixed Python processes through this
-interface. It does not start Claude, Codex, or another model. The factory wiring
-for real providers, full Store result/reconciliation integration, credential/health probes,
-continuous supervisor restart and real provider execution remain separate
+interface. It does not start Claude, Codex, or another model. The fixed factory
+below assembles reviewed application inputs; actual credential/health probes,
+complete Store recovery, continuous supervisor restart and real provider execution remain separate
 integration work. The lifecycle journal contains execution observations and
 cannot grant or replace the project's authoritative Assignment.
 
@@ -147,7 +147,44 @@ Store availability returns without restarting work.
 Only the owned main process is killed. Descendant/outside writer termination,
 final checkpoint validation, safe handoff and real-provider side effects remain
 separate deployment gates. `writer_stop_confirmed=false` remains unchanged; no
-automatic recovery/release is granted by this monitor. There is no native CLI
-factory or installed continuous host service in this module.
+automatic recovery/release is granted by this monitor. The fixed CLI factory
+below is not an installed continuous host service or a live admission proof.
 `tests/adapters/test_store_binding.py` covers real local Store/Git plus fixed
 Python processes under A01, with synthetic authentication/quota observations.
+
+## Fixed application factory
+
+`factory.bind_store_adapter(registry, descriptor, ...)` binds one prepared
+workspace and resource selection to the Store bridge and fixed process transport.
+The reviewed application supplies planner/classifier callables, fixed argv and
+environment, pinned binary/config files, protected shared reservation and journal
+roots, actor/authority/cwd, and a mandatory trusted `boundary_check` callable.
+Nothing is discovered from project configuration, PATH, model output or entry
+points. Construction and registration never start a process or write task state.
+
+The boundary checker receives a detached manifest containing execution binding
+hash, Store/authority/contract/scope, selection, argv, fixed roots and file pins.
+Environment values are hashed, not returned in that manifest. Do not put secrets
+in argv or config metadata; credential references are opaque identities only.
+This is not a credential manager or proof that a supplied callback is trustworthy.
+
+The checker must verify the actual immutable deployment and effective isolation,
+tool/configuration closure, credential/network and spending boundaries. A boolean
+from candidate JSON is not such a check. Missing, unknown, false or throwing
+checks fail closed; the same checker runs at launch and under the runtime watch.
+An accepted boundary does not override Store permission, quota, budget or lease.
+No always-allow production checker is provided. Applications must not deploy
+this candidate factory merely because synthetic tests pass.
+
+`bind_native_store_adapter(..., tool=..., binary=..., ...)` provides the first two
+concrete recipes (`codex`, `claude-code`), reusing `runspec.py` without extra flags
+or session-resume input. It verifies the declared Agent Tool and derives the
+model flag from the same descriptor used by the Store. It does not infer the
+Model Provider from the tool. A third reviewed tool uses `bind_store_adapter`
+without changing the Scheduler, state machine or Recovery Protocol.
+
+Capabilities are promoted only for the implemented invocation operations;
+validation level, native resume, authentication and recovery are not promoted.
+The default registry remains nonexecuting. The first two native recipes have
+assembly-only tests; the common factory is exercised with real fixed Python
+processes and synthetic state, separately from still-pending real CLI admission.
