@@ -93,7 +93,7 @@ def bind_store_adapter(registry, adapter, *, planner, classifier, argv, environm
     if not bridge.boundary_valid(): raise ValueError('execution boundary not admitted')
     # Factory claims only the implemented invocation operations; it never
     # promotes validation_level or asserts authentication/native recovery.
-    for name in ('start', 'status', 'stop', 'result'):
+    for name in ('start', 'status', 'stop', 'result', 'checkpoint'):
         adapter['capabilities'][name] = 'supported'
     registry.register(adapter, planner=planner, classifier=classifier, executor=executor)
     return executor

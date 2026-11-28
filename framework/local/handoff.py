@@ -54,38 +54,49 @@ def checkpoint(root, credentials, actor, *, completed=(), remaining=(), evidence
     store = Store(root)
     with authority_lock(store.root):
         state = store._read()
-        assignment, worker, wp, workspace = assigned(state, credentials, actor)
-        source = safe_path(store.root, workspace['path'])
-        verify_workspace(store.root, workspace)
-        baseline = {path: {'sha256': hashlib.sha256(git(store.root, 'cat-file', 'blob', blob)).hexdigest(),
-                           'mode': mode} for mode, blob, path in workspace_entries(store.root, assignment['base_sha'])}
-        cp_id = 'checkpoint-' + uuid.uuid4().hex
-        context = dict(wp_ref=wp['id'], assignment_ref=assignment['id'],
-            authority_epoch=assignment['authority_epoch'], fencing_token=assignment['fencing_token'],
-            baseline_sha=assignment['base_sha'], last_valid_commit=git(source, 'rev-parse', 'HEAD').decode().strip(),
-            completed=list(completed), remaining=list(remaining),
-            unknown_operations=copy.deepcopy((workspace['run'] or {}).get('unknown_operations', [])),
-            spec_refs=wp['spec_refs'], authorization_ref=wp['authorization_ref'],
-            role_ref=assignment['role_ref'], evidence_refs=list(evidence_refs),
-            lease_expires_at=assignment['lease_expires_at'], binding=binding(wp))
-        parent = safe_path(store.root, '.ai-org/checkpoints')
-        parent.mkdir(mode=0o700, exist_ok=True)
-        receipt = create_snapshot(source, parent / cp_id, context, baseline)
-        record = dict(path='.ai-org/checkpoints/' + cp_id, manifest_sha256=receipt['manifest_sha256'],
-                      binding=binding(wp), unknown_digest=fingerprint(context['unknown_operations']))
-        workspace['checkpoint'] = record
-        cp = dict(id=cp_id, wp_ref=wp['id'], wp_revision=wp['revision'], role_ref=assignment['role_ref'],
-            authorization_ref=wp['authorization_ref'], assignment_ref=assignment['id'],
-            lease_expires_at=assignment['lease_expires_at'], created_at=now(), spec_refs=wp['spec_refs'],
-            baseline_sha=assignment['base_sha'], last_valid_commit=context['last_valid_commit'],
-            uncommitted=[{'location': record['path'], 'sha256': record['manifest_sha256']}],
-            completed=list(completed), remaining=list(remaining), evidence_refs=list(evidence_refs),
-            decision_refs=[], blockers=[], unknown_operations=context['unknown_operations'],
-            next_actions=['Reconcile exact current authority and stopped writer before handoff'])
-        state['snapshot']['checkpoints'].append(cp)
-        assignment['last_checkpoint'] = cp_id
-        wp['checkpoint_ref'] = cp_id
-        return commit(store, state, 'checkpoint', dict(checkpoint_id=cp_id, **record))
+        receipt = capture_checkpoint_state(store, state, credentials, actor, completed=completed,
+                                           remaining=remaining, evidence_refs=evidence_refs)
+        return commit(store, state, 'checkpoint', receipt)
+
+
+def capture_checkpoint_state(store, state, credentials, actor, *, completed=(), remaining=(), evidence_refs=()):
+    """Internal transaction helper: caller holds Store lock and commits state.
+
+    Published snapshot artifacts may survive a failed state commit; never delete
+    or overwrite them on retry. A snapshot is not stopped-writer proof.
+    """
+    assignment, worker, wp, workspace = assigned(state, credentials, actor)
+    source = safe_path(store.root, workspace['path'])
+    verify_workspace(store.root, workspace)
+    baseline = {path: {'sha256': hashlib.sha256(git(store.root, 'cat-file', 'blob', blob)).hexdigest(),
+                       'mode': mode} for mode, blob, path in workspace_entries(store.root, assignment['base_sha'])}
+    cp_id = 'checkpoint-' + uuid.uuid4().hex
+    context = dict(wp_ref=wp['id'], assignment_ref=assignment['id'],
+        authority_epoch=assignment['authority_epoch'], fencing_token=assignment['fencing_token'],
+        baseline_sha=assignment['base_sha'], last_valid_commit=git(source, 'rev-parse', 'HEAD').decode().strip(),
+        completed=list(completed), remaining=list(remaining),
+        unknown_operations=copy.deepcopy((workspace['run'] or {}).get('unknown_operations', [])),
+        spec_refs=wp['spec_refs'], authorization_ref=wp['authorization_ref'],
+        role_ref=assignment['role_ref'], evidence_refs=list(evidence_refs),
+        lease_expires_at=assignment['lease_expires_at'], binding=binding(wp))
+    parent = safe_path(store.root, '.ai-org/checkpoints')
+    parent.mkdir(mode=0o700, exist_ok=True)
+    receipt = create_snapshot(source, parent / cp_id, context, baseline)
+    record = dict(path='.ai-org/checkpoints/' + cp_id, manifest_sha256=receipt['manifest_sha256'],
+                  binding=binding(wp), unknown_digest=fingerprint(context['unknown_operations']))
+    workspace['checkpoint'] = record
+    cp = dict(id=cp_id, wp_ref=wp['id'], wp_revision=wp['revision'], role_ref=assignment['role_ref'],
+        authorization_ref=wp['authorization_ref'], assignment_ref=assignment['id'],
+        lease_expires_at=assignment['lease_expires_at'], created_at=now(), spec_refs=wp['spec_refs'],
+        baseline_sha=assignment['base_sha'], last_valid_commit=context['last_valid_commit'],
+        uncommitted=[{'location': record['path'], 'sha256': record['manifest_sha256']}],
+        completed=list(completed), remaining=list(remaining), evidence_refs=list(evidence_refs),
+        decision_refs=[], blockers=[], unknown_operations=context['unknown_operations'],
+        next_actions=['Reconcile exact current authority and stopped writer before handoff'])
+    state['snapshot']['checkpoints'].append(cp)
+    assignment['last_checkpoint'] = cp_id
+    wp['checkpoint_ref'] = cp_id
+    return dict(checkpoint_id=cp_id, **record)
 
 
 def confirm_stopped(root, credentials, actor, process):

@@ -31,6 +31,10 @@ process. Poll for its actual exit; do not interpret this return as stopped.
   in the Store. A failed/lost Store write can be reconciled by reading the result
   again; it never restarts the process. Early stop may leave output uncaptured;
   these hashes bind captured bytes, not a claim of complete provider output.
+- `registry.checkpoint(adapter_id, invocation_id, operation_id=..., completed=...,
+  remaining=..., evidence_refs=...)`: for Store-bound factories, preserve a
+  terminal/unknown invocation and its actual workspace. It is provisional data
+  preservation, never native session resume or writer-stop confirmation.
 
 The **shared launch reservation root** spans all adapters and controller
 instances of the resource pool, including replacement controllers. It must be
@@ -189,8 +193,41 @@ model flag from the same descriptor used by the Store. It does not infer the
 Model Provider from the tool. A third reviewed tool uses `bind_store_adapter`
 without changing the Scheduler, state machine or Recovery Protocol.
 
-Capabilities are promoted only for the implemented invocation operations;
+Capabilities are promoted only for the implemented invocation operations and
+provisional checkpoint preservation;
 validation level, native resume, authentication and recovery are not promoted.
 The default registry remains nonexecuting. The first two native recipes have
 assembly-only tests; the common factory is exercised with real fixed Python
 processes and synthetic state, separately from still-pending real CLI admission.
+
+## Invocation checkpoint preservation
+
+`preservation.py` reads the protected invocation journal, validates available
+captured outputs through `result`, and binds preservation to the exact Store
+launch/selection/authority/contract. Supervision failure may have no complete
+output; this is preserved as unknown, without fabricated output evidence.
+Running invocations are rejected by this terminal integration. A restored
+controller's unknown invocation may still have live writers: snapshots remain
+provisional even if the filesystem was stable during capture.
+
+It reuses the existing checkpoint scanner, bounded copy and manifest pin. The
+Store atomically records the checkpoint pin, an unresolved provider/writer
+operation, and an idempotent preservation receipt. Preserving an unresolved
+terminal invocation also revokes that Assignment and pauses its work package in
+the same transaction; it never leaves unknown operations on an in-progress task.
+Other Assignments and quota groups are unchanged. This is fencing, not proof of
+stopped writers or a new execution grant. Same operation and narrative
+replay verifies the manifest and current workspace bytes without creating another
+snapshot or state revision. A lost state-write response can be read back; late
+workspace changes require a new operation/snapshot, preserving the old artifact.
+An artifact published before a failed Store commit may remain orphaned; retry
+does not overwrite or delete it, and it grants no authority.
+
+The unresolved operation is retained in both checkpoint context and original run.
+Existing checked-checkpoint admission rejects it. `recovery_ready=false`,
+`writer_stop_confirmed=false` and `engineering_accepted=false` are mandatory.
+Even all writer-stop evidence would still require explicit reconciliation of
+unknown external effects. No API in this component clears those markers, reuses
+the old workspace, releases a lease, restores into an active Worker, or accepts
+delivery. Restoring a snapshot to a verification directory proves artifact bytes
+only. The complete native takeover path remains separate work.

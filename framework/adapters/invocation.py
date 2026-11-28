@@ -372,3 +372,8 @@ class ProcessExecutor:
             # restarting the process. Raw provider output cannot choose actions.
             record['store_observation'] = self.terminal_observer(copy.deepcopy(record))
         return record
+
+    def checkpoint(self, *, invocation_id, operation_id, completed=(), remaining=(), evidence_refs=()):
+        from .preservation import preserve_invocation
+        return preserve_invocation(self, invocation_id, operation_id=operation_id,
+            completed=completed, remaining=remaining, evidence_refs=evidence_refs)

@@ -51,6 +51,8 @@ class AdapterRegistry:
                 raise ValueError('executor selection mismatch')
             if not all(callable(getattr(executor, k, None)) for k in (*execution, 'result')):
                 raise ValueError('complete invocation executor required')
+            if descriptor['capabilities']['checkpoint'] == 'supported' and not callable(getattr(executor, 'checkpoint', None)):
+                raise ValueError('checkpoint capability requires implementation')
             domain = getattr(executor, 'launch_domain', None)
             if not isinstance(domain, str) or not domain:
                 raise ValueError('shared launch domain required')
@@ -118,6 +120,18 @@ class AdapterRegistry:
 
     def result(self, identity, invocation_id):
         return self._invoke(identity, 'result', invocation_id=invocation_id)
+
+    def checkpoint(self, identity, invocation_id, *, operation_id, completed=(), remaining=(), evidence_refs=()):
+        descriptor, _, _, executor = self._entry(identity)
+        if executor is None or descriptor['capabilities']['checkpoint'] != 'supported':
+            raise ValueError('checkpoint capability unavailable')
+        result = executor.checkpoint(invocation_id=invocation_id, operation_id=operation_id,
+            completed=completed, remaining=remaining, evidence_refs=evidence_refs)
+        if (result.get('format') != 'provider-preservation/1' or
+                result.get('selection') != {k: descriptor[k] for k in SELECTION_FIELDS} or
+                any(result.get(k) is not False for k in ('writer_stop_confirmed','recovery_ready','engineering_accepted'))):
+            raise ValueError('preservation result contract')
+        return copy.deepcopy(result)
 
 
 def synthetic_plan(**request):
