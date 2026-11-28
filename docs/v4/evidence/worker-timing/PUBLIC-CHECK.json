@@ -1,0 +1,9 @@
+{
+  "checked_at": "2026-11-28T07:52:40.130834+00:00",
+  "public_sha_records_verified": 61,
+  "json_parsed": 26,
+  "relative_links_verified": 12,
+  "private_path_and_common_token_scan_hits": 0,
+  "scope": "new worker-timing public evidence only; no candidate execution",
+  "code_binding": "COMMIT-BINDING.json"
+}

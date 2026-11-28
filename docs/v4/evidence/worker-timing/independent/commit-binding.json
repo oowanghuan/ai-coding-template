@@ -1,0 +1,198 @@
+{
+  "commit": "03e7eaaf14b62a3b48b970df0ed877d3b3aab33f",
+  "files": [
+    {
+      "path": "examples/protocol/in-progress.json",
+      "executed_sha256": "7cf2fad959882203f00b74d8f15a79e4a6f1a8c524dfb7eaf5468a81e061013e",
+      "git_blob_sha256": "7cf2fad959882203f00b74d8f15a79e4a6f1a8c524dfb7eaf5468a81e061013e",
+      "match": true
+    },
+    {
+      "path": "framework/adapters/__init__.py",
+      "executed_sha256": "83132090586a39c702aa93886e6e59f7e895d2e3fcb96e3f17bec1cf34e75c06",
+      "git_blob_sha256": "83132090586a39c702aa93886e6e59f7e895d2e3fcb96e3f17bec1cf34e75c06",
+      "match": true
+    },
+    {
+      "path": "framework/adapters/entries.py",
+      "executed_sha256": "3dd40fc0261568c798a0ce6f2fb65a03c84e5fdd99ea25e39e36a8409856e855",
+      "git_blob_sha256": "3dd40fc0261568c798a0ce6f2fb65a03c84e5fdd99ea25e39e36a8409856e855",
+      "match": true
+    },
+    {
+      "path": "framework/adapters/registry.py",
+      "executed_sha256": "35b28f37600a29715431705064f6e5afcae22a152e3dfc22bf4bc3066460b84a",
+      "git_blob_sha256": "35b28f37600a29715431705064f6e5afcae22a152e3dfc22bf4bc3066460b84a",
+      "match": true
+    },
+    {
+      "path": "framework/adapters/results.py",
+      "executed_sha256": "8c9bf0774369c187a5d02ca53d7764760f9a067cb61599088293b7bc9805f534",
+      "git_blob_sha256": "8c9bf0774369c187a5d02ca53d7764760f9a067cb61599088293b7bc9805f534",
+      "match": true
+    },
+    {
+      "path": "framework/adapters/runspec.py",
+      "executed_sha256": "5e799b9601d12b4a57f038b9afaae71a9fc44ac51394e1417c13bdbe130c5a96",
+      "git_blob_sha256": "5e799b9601d12b4a57f038b9afaae71a9fc44ac51394e1417c13bdbe130c5a96",
+      "match": true
+    },
+    {
+      "path": "framework/core/protocol.py",
+      "executed_sha256": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+      "git_blob_sha256": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+      "match": true
+    },
+    {
+      "path": "framework/governance/core.py",
+      "executed_sha256": "615991140e0fa38d8309daba17dc307b035ff0eb6420202cb055d57d38862b32",
+      "git_blob_sha256": "615991140e0fa38d8309daba17dc307b035ff0eb6420202cb055d57d38862b32",
+      "match": true
+    },
+    {
+      "path": "framework/governance/evaluate.py",
+      "executed_sha256": "119fe4e2e36d8e1a4f994f72252ea8947f84d84e683ab7a778f386d8564ef25a",
+      "git_blob_sha256": "119fe4e2e36d8e1a4f994f72252ea8947f84d84e683ab7a778f386d8564ef25a",
+      "match": true
+    },
+    {
+      "path": "framework/local/bootstrap.py",
+      "executed_sha256": "05d4810f9a748d9785a76598ea2bbd91a3b414d16cec43b71bff506b1c58afa8",
+      "git_blob_sha256": "05d4810f9a748d9785a76598ea2bbd91a3b414d16cec43b71bff506b1c58afa8",
+      "match": true
+    },
+    {
+      "path": "framework/local/external.py",
+      "executed_sha256": "a96f448a659ee95e3718e876738d450cd7a422ffc1a9a0b70483677302f12d74",
+      "git_blob_sha256": "a96f448a659ee95e3718e876738d450cd7a422ffc1a9a0b70483677302f12d74",
+      "match": true
+    },
+    {
+      "path": "framework/local/handoff.py",
+      "executed_sha256": "0e0133fb4f386f540e6168d561fe8258d2fdfb9c27abe45ca030a41cf262d98c",
+      "git_blob_sha256": "0e0133fb4f386f540e6168d561fe8258d2fdfb9c27abe45ca030a41cf262d98c",
+      "match": true
+    },
+    {
+      "path": "framework/local/launch_driver.py",
+      "executed_sha256": "cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce",
+      "git_blob_sha256": "cfb917f6b039ec3de24bcc2c6c41fba314cb3945d4cb01387b311e0f1f2db2ce",
+      "match": true
+    },
+    {
+      "path": "framework/local/lifecycle.py",
+      "executed_sha256": "6eec3315d202f890c220fc0357967e8d18eacb38e40183f06fa6767f100ed057",
+      "git_blob_sha256": "6eec3315d202f890c220fc0357967e8d18eacb38e40183f06fa6767f100ed057",
+      "match": true
+    },
+    {
+      "path": "framework/local/runner.py",
+      "executed_sha256": "c6b06a0fd06f543f25d576cd583df9a22c06b070f501368d7eb9a522aefb74df",
+      "git_blob_sha256": "c6b06a0fd06f543f25d576cd583df9a22c06b070f501368d7eb9a522aefb74df",
+      "match": true
+    },
+    {
+      "path": "framework/local/storage.py",
+      "executed_sha256": "af2ddd9d5d717d1f3afe71fc8bcf09f1aaca7b514d3a1e1b1d389f0113a37dea",
+      "git_blob_sha256": "af2ddd9d5d717d1f3afe71fc8bcf09f1aaca7b514d3a1e1b1d389f0113a37dea",
+      "match": true
+    },
+    {
+      "path": "framework/local/store.py",
+      "executed_sha256": "5b64a57eb47a2883e2ccf13be8e5c70eed5c50a731cc1b935867ede2af1852d6",
+      "git_blob_sha256": "5b64a57eb47a2883e2ccf13be8e5c70eed5c50a731cc1b935867ede2af1852d6",
+      "match": true
+    },
+    {
+      "path": "framework/local/worker_process.py",
+      "executed_sha256": "05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d",
+      "git_blob_sha256": "05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d",
+      "match": true
+    },
+    {
+      "path": "framework/quality/collector.py",
+      "executed_sha256": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+      "git_blob_sha256": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+      "match": true
+    },
+    {
+      "path": "framework/quality/gate.py",
+      "executed_sha256": "1e445d0b8407a68bce5d01615e2705528894d700f6ebd3432e4dae59e21cc398",
+      "git_blob_sha256": "1e445d0b8407a68bce5d01615e2705528894d700f6ebd3432e4dae59e21cc398",
+      "match": true
+    },
+    {
+      "path": "framework/recovery/admission.py",
+      "executed_sha256": "94724a7317d649550bfd5e0076c6ad2712bd0834411898e19b44206019a8dddb",
+      "git_blob_sha256": "94724a7317d649550bfd5e0076c6ad2712bd0834411898e19b44206019a8dddb",
+      "match": true
+    },
+    {
+      "path": "framework/recovery/checkpoint.py",
+      "executed_sha256": "587d77708c6c3b237684f5390ba8f9b7ddbf9170d9a6fba6c3ce3f67d288b844",
+      "git_blob_sha256": "587d77708c6c3b237684f5390ba8f9b7ddbf9170d9a6fba6c3ce3f67d288b844",
+      "match": true
+    },
+    {
+      "path": "schemas/evidence.schema.json",
+      "executed_sha256": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+      "git_blob_sha256": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+      "match": true
+    },
+    {
+      "path": "schemas/governance.schema.json",
+      "executed_sha256": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+      "git_blob_sha256": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+      "match": true
+    },
+    {
+      "path": "schemas/install-plan.schema.json",
+      "executed_sha256": "b276d52b899267c431274a11e8d0880d72ffda43a399ba94cf1c2235d8f7ebdb",
+      "git_blob_sha256": "b276d52b899267c431274a11e8d0880d72ffda43a399ba94cf1c2235d8f7ebdb",
+      "match": true
+    },
+    {
+      "path": "schemas/local-state.schema.json",
+      "executed_sha256": "aae186335a1817c572e381c28982ebcdb701184606668774c91b5c74cc4789c9",
+      "git_blob_sha256": "aae186335a1817c572e381c28982ebcdb701184606668774c91b5c74cc4789c9",
+      "match": true
+    },
+    {
+      "path": "schemas/protocol.schema.json",
+      "executed_sha256": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+      "git_blob_sha256": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+      "match": true
+    },
+    {
+      "path": "scripts/v4_worker_demo.py",
+      "executed_sha256": "e2c1525e256279317deb6347a8fb7e00ff93aa3642812069003025daba2a52f8",
+      "git_blob_sha256": "e2c1525e256279317deb6347a8fb7e00ff93aa3642812069003025daba2a52f8",
+      "match": true
+    },
+    {
+      "path": "tests/lifecycle/test_handoff.py",
+      "executed_sha256": "fe42d95f3b6be59758216678bd97c38a6f1e8e1680ab0bf35ef92e46b6816014",
+      "git_blob_sha256": "fe42d95f3b6be59758216678bd97c38a6f1e8e1680ab0bf35ef92e46b6816014",
+      "match": true
+    },
+    {
+      "path": "tests/lifecycle/test_lifecycle.py",
+      "executed_sha256": "fd243e046f753f5f210713ac0bf8ae62f59c35ec41263c0e1cbcbfafc6ecf647",
+      "git_blob_sha256": "fd243e046f753f5f210713ac0bf8ae62f59c35ec41263c0e1cbcbfafc6ecf647",
+      "match": true
+    },
+    {
+      "path": "tests/worker_demo/test_completed_recovery.py",
+      "executed_sha256": "bea33bd6d36eec6e5d40192ffcdd03ff503db6e34e3cdead3027002d42ae4d29",
+      "git_blob_sha256": "bea33bd6d36eec6e5d40192ffcdd03ff503db6e34e3cdead3027002d42ae4d29",
+      "match": true
+    },
+    {
+      "path": "tests/worker_demo/test_demo.py",
+      "executed_sha256": "c95066e9aa60c194a0ae2a6b804c238f76dd7e88bac488736c8dc5d2e64e1296",
+      "git_blob_sha256": "c95066e9aa60c194a0ae2a6b804c238f76dd7e88bac488736c8dc5d2e64e1296",
+      "match": true
+    }
+  ],
+  "all_match": true
+}

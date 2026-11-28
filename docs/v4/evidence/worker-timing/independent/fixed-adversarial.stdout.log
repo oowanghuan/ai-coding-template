@@ -1,0 +1,87 @@
+{
+  "scope": "independent fixed-version timing verification, real local fixed writer, injected quota observations, no provider calls",
+  "quota": {
+    "old_probe": {
+      "group": "Q1",
+      "probe_id": "probe:Q1:1:1"
+    },
+    "new_limit": {
+      "attempts": 1,
+      "generation": 2,
+      "limited": true,
+      "next_probe_at": "2026-11-28T12:01:40Z",
+      "pending_probe": "probe:Q1:1:1",
+      "reason": "quota_limited",
+      "retry_at": "2026-11-28T12:01:40Z"
+    },
+    "unknown_probe_tick": {
+      "probes": [],
+      "model_calls": 0
+    },
+    "stale_success_receipt": {
+      "worker_id": "worker-a",
+      "status": "quota_limited",
+      "group": {
+        "attempts": 1,
+        "generation": 2,
+        "limited": true,
+        "next_probe_at": "2026-11-28T12:01:40Z",
+        "pending_probe": null,
+        "reason": "quota_limited",
+        "retry_at": "2026-11-28T12:01:40Z"
+      },
+      "stale_probe_result": true
+    },
+    "after_old_success": {
+      "attempts": 1,
+      "generation": 2,
+      "limited": true,
+      "next_probe_at": "2026-11-28T12:01:40Z",
+      "pending_probe": null,
+      "reason": "quota_limited",
+      "retry_at": "2026-11-28T12:01:40Z"
+    },
+    "new_probe": {
+      "group": "Q1",
+      "probe_id": "probe:Q1:2:2"
+    },
+    "after_new_success": {
+      "attempts": 2,
+      "generation": 2,
+      "limited": false,
+      "next_probe_at": null,
+      "pending_probe": null,
+      "reason": null,
+      "retry_at": null
+    },
+    "old_success_cannot_clear_new_limit": true,
+    "unknown_probe_blocks_new_launch": true,
+    "only_current_generation_recovers": true
+  },
+  "snapshot": {
+    "actual_writer_pid": 93079,
+    "actual_writer_exit": 0,
+    "initial_checkpoint": {
+      "checkpoint_id": "checkpoint-35a005ee68504a239b895f936791bd26",
+      "path": ".ai-org/checkpoints/checkpoint-35a005ee68504a239b895f936791bd26",
+      "manifest_sha256": "f8179dab41924dbd112aae8201e14a6261cec8bf406985a3997738e9fe85ed2f",
+      "binding": "e443ecdc3b2df3fab0b262c420500166b3d9a84ba95e2286ec778a9e2936ffa1",
+      "unknown_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "final_checkpoint": {
+      "checkpoint_id": "checkpoint-721eb0f636314af99124346af0ff12c1",
+      "path": ".ai-org/checkpoints/checkpoint-721eb0f636314af99124346af0ff12c1",
+      "manifest_sha256": "17601e4d62a3619bff8469caea11a14b6d4c02e830ced4d448fa5ff150c9e6e0",
+      "binding": "e443ecdc3b2df3fab0b262c420500166b3d9a84ba95e2286ec778a9e2936ffa1",
+      "unknown_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "snapshot_bytes": "dirty checkpoint result\n",
+    "final_old_bytes": "FINAL-WRITER-BYTES\n",
+    "restored_bytes": "FINAL-WRITER-BYTES\n",
+    "stale_stop_error": "workspace differs from checkpoint; preserve and create final checkpoint after stop",
+    "stale_claim_error": "unknown workspace/process outcome; reconcile before reassignment",
+    "failed_stop_preserved_authority": true,
+    "final_bytes_restored": true
+  },
+  "passed": true
+}

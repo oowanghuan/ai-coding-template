@@ -429,3 +429,5 @@ Lead/独立 Reviewer 负责核实安全可用的工具执行边界。二者均�
 
 对应反例为 S06-Late-Probe、S06-Final-Checkpoint。真实 CLI 认证/执行边界和正常
 首任务到工程 Gate 的路径仍是产品关键路径；本次纠错不新增阶段审批。
+修正代码为 `03e7eaaf14b62a3b48b970df0ed877d3b3aab33f`，原缺陷复现、作者回归与
+冻结版本独立验证分列于 [时序修正证据](evidence/worker-timing/README.md)。

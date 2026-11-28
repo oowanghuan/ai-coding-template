@@ -11,6 +11,11 @@ trusted observations, bounded scheduler ticks and capability-based dispatch.
 probe intents and task reservations; it does not yet execute provider probes or
 models. A lost probe response remains pending for reconciliation, never a blind
 second model request. The reviewed observer must resolve it from actual evidence.
+The observer must emit `probe-result` only for a known completed request with an
+explicit boolean `available`. This low-level trusted-controller API does not yet
+strictly reject a missing/non-boolean value (it follows the unavailable branch);
+unknown or malformed provider output must not be translated into this event.
+Strict response admission remains required before wiring a native observer.
 No scheduler service is installed by importing or running `inspect`.
 
 Worker runtime separates its eight lifecycle states from work-package state and

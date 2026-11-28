@@ -1,0 +1,14 @@
+test_final_writer_mutation_requires_post_stop_snapshot_before_takeover (test_handoff.HandoffTests) ... FAIL
+
+======================================================================
+FAIL: test_final_writer_mutation_requires_post_stop_snapshot_before_takeover (test_handoff.HandoffTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_handoff.py", line 108, in test_final_writer_mutation_requires_post_stop_snapshot_before_takeover
+    handoff.confirm_stopped(self.root,self.old,'principal-a',self.process)
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 8.281s
+
+FAILED (failures=1)

@@ -1,0 +1,19 @@
+"""Host stdlib orchestration only; all candidate execution is outer A01 sandboxed."""
+import hashlib,json,subprocess,datetime,sys
+from pathlib import Path
+base=Path(__file__).resolve().parent;repo=Path('<REPO>')
+files=sorted([repo/name for name in ('framework/local/store.py','framework/local/lifecycle.py','framework/local/handoff.py','framework/local/runner.py','framework/recovery/checkpoint.py','framework/recovery/admission.py','framework/core/protocol.py','schemas/local-state.schema.json','schemas/protocol.schema.json','examples/protocol/in-progress.json')]+list(repo.joinpath('tests/lifecycle').glob('*.py')))
+sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
+original={str(p.relative_to(repo)):sha(p) for p in files if p.is_file()}
+env={'HOME':str(base/'home'),'TMPDIR':str(base/'tmp'),'PATH':'/usr/bin:/bin:/usr/sbin:/sbin','PYTHONPATH':str(repo)+':<DEPENDENCIES>','PYTHONNOUSERSITE':'1','PYTHONDONTWRITEBYTECODE':'1','V4_OUTER_SEATBELT':'1'}
+argv=['/usr/bin/sandbox-exec','-f',str(base/'profile.sb'),'/usr/bin/python3','-B','-S','-m','unittest','discover','-s','tests/lifecycle','-v']
+if len(sys.argv)>1:argv.extend(['-p',sys.argv[1]])
+if len(sys.argv)>2:argv.extend(['-k',sys.argv[2]])
+number=len(list(base.glob('result-*.json')))+1
+now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+start=now();run=subprocess.run(argv,cwd=repo,env=env,capture_output=True)
+(base/('stdout-%02d.log'%number)).write_bytes(run.stdout);(base/('stderr-%02d.log'%number)).write_bytes(run.stderr)
+after={str(p.relative_to(repo)):sha(p) for p in files if p.is_file()}
+result={'argv':argv,'environment':env,'started_at':start,'finished_at':now(),'exit_code':run.returncode,'before':original,'after':after,'source_unchanged':original==after,'profile_sha256':sha(base/'profile.sb'),'note':'Non-author lifecycle/Store tests; real temporary Git/state, trusted synthetic worker observations; product may still be under author development, before/after hashes retained.'}
+(base/('result-%02d.json'%number)).write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+print(json.dumps({'exit_code':run.returncode,'source_unchanged':original==after,'result':str(base/('result-%02d.json'%number))}));raise SystemExit(run.returncode)

@@ -1,0 +1,724 @@
+[
+  {
+    "data": {
+      "operation": {
+        "action": "enable-lifecycle",
+        "actor": "principal-owner",
+        "at": "2026-11-28T07:50:34Z",
+        "intent": "a747f26d2afa193a55e9d5cf4b9ccfec7bb67cee626e49828d2b39d234e4c3df",
+        "result": {
+          "execution_started": false,
+          "registered": [
+            "worker-a",
+            "worker-b",
+            "worker-c"
+          ]
+        },
+        "revision": 1,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 1
+    },
+    "kind": "enable-lifecycle",
+    "observed_ns": 207155601137000,
+    "sequence": 1
+  },
+  {
+    "data": {
+      "adapter_id": "synthetic-fixture",
+      "agent_tool": "synthetic-executor",
+      "capabilities": {
+        "auth": "unknown",
+        "availability": "unknown",
+        "checkpoint": "unsupported",
+        "evidence": "unsupported",
+        "logs": "unknown",
+        "native_resume": "unsupported",
+        "quota": "unknown",
+        "recovery": "unknown",
+        "result": "supported",
+        "start": "unsupported",
+        "status": "unknown",
+        "stop": "unknown"
+      },
+      "credential_ref": null,
+      "format": "adapter-descriptor/1",
+      "model": null,
+      "model_provider": "synthetic",
+      "quota_group": "fixture-quota",
+      "validation_level": "synthetic_fixture"
+    },
+    "kind": "adapter",
+    "observed_ns": 207155601487000,
+    "sequence": 2
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "dispatch-next",
+        "actor": "principal-owner",
+        "at": "2026-11-28T07:50:34Z",
+        "intent": "1b38e406e64ed23952381e2130ce9cfdcd6b0cef06c3c31f6ba1c6134a60183e",
+        "result": {
+          "assignment_id": "assignment-7923041a53b04209bac87651bc0c941a",
+          "epoch": 1,
+          "lease_expires_at": "2026-11-28T07:55:34Z",
+          "model_calls": 0,
+          "session_id": "session-824f53cb5980410886c073b4b01c864d",
+          "token": 1,
+          "worker_id": "worker-a",
+          "workspace_id": "workspace-affe87c0356f4b708dad61bc8d244283",
+          "wp_id": "WP-A"
+        },
+        "revision": 2,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 2
+    },
+    "kind": "dispatch-next",
+    "observed_ns": 207155970391000,
+    "sequence": 3
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "dispatch-next",
+        "actor": "principal-owner",
+        "at": "2026-11-28T07:50:35Z",
+        "intent": "1b38e406e64ed23952381e2130ce9cfdcd6b0cef06c3c31f6ba1c6134a60183e",
+        "result": {
+          "assignment_id": "assignment-f0e33d135883441cb3ad90783fbb68e0",
+          "epoch": 1,
+          "lease_expires_at": "2026-11-28T07:55:35Z",
+          "model_calls": 0,
+          "session_id": "session-e8c26f692a8e4750a64d04f81e94c8fc",
+          "token": 1,
+          "worker_id": "worker-b",
+          "workspace_id": "workspace-a79dd02637404adfade40d2eb27608dc",
+          "wp_id": "WP-B"
+        },
+        "revision": 3,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 3
+    },
+    "kind": "dispatch-next",
+    "observed_ns": 207156397908000,
+    "sequence": 4
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "run-begin",
+        "actor": "principal-worker-a",
+        "at": "2026-11-28T07:50:41Z",
+        "intent": "62a39a093ab26219c980f2fcd2dfcb32c8bb2e3822879b253c8d58f7581bed80",
+        "result": {
+          "workspace_id": "workspace-affe87c0356f4b708dad61bc8d244283"
+        },
+        "revision": 8,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 8
+    },
+    "kind": "run-begin",
+    "observed_ns": 207162904980000,
+    "sequence": 5
+  },
+  {
+    "data": {
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-I",
+        "-B",
+        "-S",
+        "<runs>/v4-timing-independent-sjuali1q/T/fixed/scripts/v4_worker_demo.py",
+        "--fixture-worker",
+        "a"
+      ],
+      "credentials": {
+        "assignment_id": "assignment-7923041a53b04209bac87651bc0c941a",
+        "epoch": 1,
+        "lease_expires_at": "2026-11-28T07:55:34Z",
+        "model_calls": 0,
+        "session_id": "session-824f53cb5980410886c073b4b01c864d",
+        "token": 1,
+        "worker_id": "worker-a",
+        "workspace_id": "workspace-affe87c0356f4b708dad61bc8d244283",
+        "wp_id": "WP-A"
+      },
+      "pid": 2479,
+      "workspace": "<runs>/v4-timing-independent-sjuali1q/C/tmp/completed-recovery-dcv3181n/project/.ai-org/workspaces/workspace-affe87c0356f4b708dad61bc8d244283"
+    },
+    "kind": "process-launched",
+    "observed_ns": 207163261628000,
+    "sequence": 6
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "run-begin",
+        "actor": "principal-worker-b",
+        "at": "2026-11-28T07:50:42Z",
+        "intent": "f761a7a8abadf5d5419c9d77c96b43cc161192dac206c274e9cb048d397bb71f",
+        "result": {
+          "workspace_id": "workspace-a79dd02637404adfade40d2eb27608dc"
+        },
+        "revision": 10,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 10
+    },
+    "kind": "run-begin",
+    "observed_ns": 207163566905000,
+    "sequence": 7
+  },
+  {
+    "data": {
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-I",
+        "-B",
+        "-S",
+        "<runs>/v4-timing-independent-sjuali1q/T/fixed/scripts/v4_worker_demo.py",
+        "--fixture-worker",
+        "b"
+      ],
+      "credentials": {
+        "assignment_id": "assignment-f0e33d135883441cb3ad90783fbb68e0",
+        "epoch": 1,
+        "lease_expires_at": "2026-11-28T07:55:35Z",
+        "model_calls": 0,
+        "session_id": "session-e8c26f692a8e4750a64d04f81e94c8fc",
+        "token": 1,
+        "worker_id": "worker-b",
+        "workspace_id": "workspace-a79dd02637404adfade40d2eb27608dc",
+        "wp_id": "WP-B"
+      },
+      "pid": 2511,
+      "workspace": "<runs>/v4-timing-independent-sjuali1q/C/tmp/completed-recovery-dcv3181n/project/.ai-org/workspaces/workspace-a79dd02637404adfade40d2eb27608dc"
+    },
+    "kind": "process-launched",
+    "observed_ns": 207163923561000,
+    "sequence": 8
+  },
+  {
+    "data": {
+      "cwd": "<runs>/v4-timing-independent-sjuali1q/C/tmp/completed-recovery-dcv3181n/project/.ai-org/workspaces/workspace-affe87c0356f4b708dad61bc8d244283",
+      "evidence_level": "synthetic_fixture",
+      "mode": "a",
+      "phase": "ready",
+      "pid": 2479,
+      "process_group": 2479,
+      "started_ns": 207163332151000
+    },
+    "kind": "process-ready",
+    "observed_ns": 207163924125000,
+    "sequence": 9
+  },
+  {
+    "data": {
+      "cwd": "<runs>/v4-timing-independent-sjuali1q/C/tmp/completed-recovery-dcv3181n/project/.ai-org/workspaces/workspace-a79dd02637404adfade40d2eb27608dc",
+      "evidence_level": "synthetic_fixture",
+      "mode": "b",
+      "phase": "ready",
+      "pid": 2511,
+      "process_group": 2511,
+      "started_ns": 207163982983000
+    },
+    "kind": "process-ready",
+    "observed_ns": 207163983824000,
+    "sequence": 10
+  },
+  {
+    "data": {
+      "a_pid": 2479,
+      "b_pid": 2511,
+      "independent_directories": true,
+      "observed": true
+    },
+    "kind": "simultaneous-live-processes",
+    "observed_ns": 207163984168000,
+    "sequence": 11
+  },
+  {
+    "data": {
+      "evidence_level": "synthetic_fixture",
+      "kind": "quota_limited",
+      "observed": {
+        "at": "2026-11-28T07:50:42Z",
+        "exit_code": null,
+        "process_exited": false,
+        "selection": {
+          "adapter_id": "synthetic-fixture",
+          "agent_tool": "synthetic-executor",
+          "credential_ref": null,
+          "model": null,
+          "model_provider": "synthetic",
+          "quota_group": "fixture-quota"
+        },
+        "signal": "explicit-synthetic-scenario",
+        "stdout_sha256": "cb7d7ae3966cfa63a0a1d4e5d46391a643cb57d5b6407e783902fb723fee2dc9"
+      },
+      "provider": "synthetic",
+      "retry_at": null
+    },
+    "kind": "classified-synthetic-quota",
+    "observed_ns": 207163984707000,
+    "sequence": 12
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "worker-event",
+        "actor": "principal-owner",
+        "at": "2026-11-28T07:50:43Z",
+        "intent": "d9b8ae7f40a09011ab1a49e9544b0725c8529d2671f32c1e4cb4eaa7eb258c4d",
+        "result": {
+          "group": {
+            "attempts": 0,
+            "generation": 1,
+            "limited": true,
+            "next_probe_at": "2026-11-28T07:50:44Z",
+            "pending_probe": null,
+            "reason": "quota_limited",
+            "retry_at": null
+          },
+          "status": "quota_limited",
+          "worker_id": "worker-a"
+        },
+        "revision": 12,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 12
+    },
+    "kind": "worker-event",
+    "observed_ns": 207164295771000,
+    "sequence": 13
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "dispatch-next",
+        "actor": "principal-owner",
+        "at": "2026-11-28T07:50:43Z",
+        "intent": "1b38e406e64ed23952381e2130ce9cfdcd6b0cef06c3c31f6ba1c6134a60183e",
+        "result": {
+          "assignment_id": null,
+          "model_calls": 0,
+          "rejected": [
+            {
+              "reason": "worker lifecycle blocks new work",
+              "worker_id": "worker-a",
+              "wp_id": "WP-A"
+            },
+            {
+              "reason": "unknown workspace/process outcome; reconcile before reassignment",
+              "worker_id": "worker-b",
+              "wp_id": "WP-A"
+            },
+            {
+              "reason": "unknown workspace/process outcome; reconcile before reassignment",
+              "worker_id": "worker-c",
+              "wp_id": "WP-A"
+            },
+            {
+              "reason": "worker lifecycle blocks new work",
+              "worker_id": "worker-a",
+              "wp_id": "WP-B"
+            },
+            {
+              "reason": "task is not claimable",
+              "worker_id": "worker-b",
+              "wp_id": "WP-B"
+            },
+            {
+              "reason": "task is not claimable",
+              "worker_id": "worker-c",
+              "wp_id": "WP-B"
+            }
+          ]
+        },
+        "revision": 13,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 13
+    },
+    "kind": "dispatch-next",
+    "observed_ns": 207164728061000,
+    "sequence": 14
+  },
+  {
+    "data": {
+      "exit_code": -15,
+      "pid": 2479,
+      "process_group": 2479
+    },
+    "kind": "actual-wait",
+    "observed_ns": 207164729800000,
+    "sequence": 15
+  },
+  {
+    "data": {
+      "binding": "612df2d581d46f5a2c41e2a7ed5eda07389136eca22c2f3c63dbe97a0c633161",
+      "checkpoint_id": "checkpoint-72ccce2042004356a2288b51e05b8b9a",
+      "manifest_sha256": "a1ba3cc11c61f682f4424560dcdfa8825a30720a1964f1b62dc51867b3c368cf",
+      "path": ".ai-org/checkpoints/checkpoint-72ccce2042004356a2288b51e05b8b9a",
+      "unknown_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "kind": "checkpoint",
+    "observed_ns": 207166007841000,
+    "sequence": 16
+  },
+  {
+    "data": {
+      "assignment_id": "assignment-7923041a53b04209bac87651bc0c941a",
+      "exit_code": -15
+    },
+    "kind": "confirmed-stop",
+    "observed_ns": 207167276112000,
+    "sequence": 17
+  },
+  {
+    "data": {
+      "exit_code": 0,
+      "pid": 2511,
+      "worker_result": {
+        "evidence_level": "synthetic_fixture",
+        "finished_ns": 207167277028000,
+        "mode": "b",
+        "phase": "finished",
+        "pid": 2511
+      }
+    },
+    "kind": "actual-wait",
+    "observed_ns": 207167280917000,
+    "sequence": 18
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "submit",
+        "actor": "principal-worker-b",
+        "at": "2026-11-28T07:50:46Z",
+        "intent": "6df6f82cdaf0edeecb0ec2cbac6090028bf017289e132d828029e5c35807cfe7",
+        "result": {
+          "accepted": false,
+          "delivery_id": "WP-B",
+          "sha256": "28f17b97909760e33a1eed3acdfd6348a9a70c91fb81772a2c9ac4f2027fe07b"
+        },
+        "revision": 17,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 17
+    },
+    "kind": "submit",
+    "observed_ns": 207167653801000,
+    "sequence": 19
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "release",
+        "actor": "principal-worker-b",
+        "at": "2026-11-28T07:50:46Z",
+        "intent": "13beea4adf3278ca85ee7d832e1f891fee8450fb36d88e8881c0319732da4482",
+        "result": {
+          "state": "released"
+        },
+        "revision": 18,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 18
+    },
+    "kind": "release",
+    "observed_ns": 207167961094000,
+    "sequence": 20
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "dispatch-next",
+        "actor": "principal-owner",
+        "at": "2026-11-28T07:50:47Z",
+        "intent": "1b38e406e64ed23952381e2130ce9cfdcd6b0cef06c3c31f6ba1c6134a60183e",
+        "result": {
+          "assignment_id": "assignment-eacd96711a8b411f83eee045242060c3",
+          "epoch": 1,
+          "lease_expires_at": "2026-11-28T07:55:47Z",
+          "model_calls": 0,
+          "session_id": "session-2e83f88fc73d41848ffce4c5ecda7cb8",
+          "token": 2,
+          "worker_id": "worker-b",
+          "workspace_id": "workspace-e4ae38b12a704aa0ac1c0fa0f9dd5c31",
+          "wp_id": "WP-A"
+        },
+        "revision": 19,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 19
+    },
+    "kind": "dispatch-next",
+    "observed_ns": 207169412979000,
+    "sequence": 21
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "run-begin",
+        "actor": "principal-worker-b",
+        "at": "2026-11-28T07:50:56Z",
+        "intent": "81ad6f02304e11c282f0c25ff63c0d2dccf710509516d19cf275166b994f3322",
+        "result": {
+          "workspace_id": "workspace-e4ae38b12a704aa0ac1c0fa0f9dd5c31"
+        },
+        "revision": 24,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 24
+    },
+    "kind": "run-begin",
+    "observed_ns": 207178056017000,
+    "sequence": 22
+  },
+  {
+    "data": {
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-I",
+        "-B",
+        "-S",
+        "<runs>/v4-timing-independent-sjuali1q/T/fixed/scripts/v4_worker_demo.py",
+        "--fixture-worker",
+        "takeover"
+      ],
+      "credentials": {
+        "assignment_id": "assignment-eacd96711a8b411f83eee045242060c3",
+        "epoch": 1,
+        "lease_expires_at": "2026-11-28T07:55:47Z",
+        "model_calls": 0,
+        "session_id": "session-2e83f88fc73d41848ffce4c5ecda7cb8",
+        "token": 2,
+        "worker_id": "worker-b",
+        "workspace_id": "workspace-e4ae38b12a704aa0ac1c0fa0f9dd5c31",
+        "wp_id": "WP-A"
+      },
+      "pid": 3032,
+      "workspace": "<runs>/v4-timing-independent-sjuali1q/C/tmp/completed-recovery-dcv3181n/project/.ai-org/workspaces/workspace-e4ae38b12a704aa0ac1c0fa0f9dd5c31"
+    },
+    "kind": "process-launched",
+    "observed_ns": 207178417435000,
+    "sequence": 23
+  },
+  {
+    "data": {
+      "cwd": "<runs>/v4-timing-independent-sjuali1q/C/tmp/completed-recovery-dcv3181n/project/.ai-org/workspaces/workspace-e4ae38b12a704aa0ac1c0fa0f9dd5c31",
+      "evidence_level": "synthetic_fixture",
+      "mode": "takeover",
+      "phase": "ready",
+      "pid": 3032,
+      "process_group": 3032,
+      "started_ns": 207178491191000
+    },
+    "kind": "process-ready",
+    "observed_ns": 207178492088000,
+    "sequence": 24
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "scheduler-tick",
+        "actor": "principal-owner",
+        "at": "2026-11-28T07:50:59Z",
+        "intent": "08209cf1d461899498fd4c6d09c1d24a4d847399107b1cecd394afb6d624396a",
+        "result": {
+          "model_calls": 0,
+          "probes": [
+            {
+              "group": "quota-a",
+              "probe_id": "probe:quota-a:1:1"
+            }
+          ]
+        },
+        "revision": 26,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 26
+    },
+    "kind": "scheduler-tick",
+    "observed_ns": 207178813637000,
+    "sequence": 25
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "worker-event",
+        "actor": "principal-owner",
+        "at": "2026-11-28T07:50:59Z",
+        "intent": "150f0621b19b9cdfc9f83dbc1e8f18bf0b0628456f14f1366d10a196d49c8be0",
+        "result": {
+          "group": {
+            "attempts": 1,
+            "generation": 1,
+            "limited": false,
+            "next_probe_at": null,
+            "pending_probe": null,
+            "reason": null,
+            "retry_at": null
+          },
+          "stale_probe_result": false,
+          "status": "available",
+          "worker_id": "worker-a"
+        },
+        "revision": 27,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 27
+    },
+    "kind": "worker-event",
+    "observed_ns": 207179130830000,
+    "sequence": 26
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "dispatch-next",
+        "actor": "principal-owner",
+        "at": "2026-11-28T07:50:58Z",
+        "intent": "1b38e406e64ed23952381e2130ce9cfdcd6b0cef06c3c31f6ba1c6134a60183e",
+        "result": {
+          "assignment_id": null,
+          "model_calls": 0,
+          "rejected": [
+            {
+              "reason": "task is not claimable",
+              "worker_id": "worker-a",
+              "wp_id": "WP-A"
+            },
+            {
+              "reason": "task is not claimable",
+              "worker_id": "worker-b",
+              "wp_id": "WP-A"
+            },
+            {
+              "reason": "task is not claimable",
+              "worker_id": "worker-c",
+              "wp_id": "WP-A"
+            },
+            {
+              "reason": "logical delivery already recorded; no re-execution",
+              "worker_id": "worker-a",
+              "wp_id": "WP-B"
+            },
+            {
+              "reason": "logical delivery already recorded; no re-execution",
+              "worker_id": "worker-b",
+              "wp_id": "WP-B"
+            },
+            {
+              "reason": "logical delivery already recorded; no re-execution",
+              "worker_id": "worker-c",
+              "wp_id": "WP-B"
+            }
+          ]
+        },
+        "revision": 28,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 28
+    },
+    "kind": "dispatch-next",
+    "observed_ns": 207179571778000,
+    "sequence": 27
+  },
+  {
+    "data": {
+      "assignment_id": "assignment-7923041a53b04209bac87651bc0c941a",
+      "error": "fenced or expired assignment"
+    },
+    "kind": "old-fence-rejected",
+    "observed_ns": 207179763027000,
+    "sequence": 28
+  },
+  {
+    "data": {
+      "exit_code": 0,
+      "pid": 3032,
+      "worker_result": {
+        "evidence_level": "synthetic_fixture",
+        "finished_ns": 207179764506000,
+        "mode": "takeover",
+        "phase": "finished",
+        "pid": 3032
+      }
+    },
+    "kind": "actual-wait",
+    "observed_ns": 207179768744000,
+    "sequence": 29
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "submit",
+        "actor": "principal-worker-b",
+        "at": "2026-11-28T07:50:58Z",
+        "intent": "35496c41a6ccb327fe6011ca21641da45c0a1d1b31baf59e47d297fad66cfcfb",
+        "result": {
+          "accepted": false,
+          "delivery_id": "WP-A",
+          "sha256": "3875e6bc84299a47cf13f3f7ecd4bc9aa45fc3f5c94154a3373086871cb6f9bf"
+        },
+        "revision": 30,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 30
+    },
+    "kind": "submit",
+    "observed_ns": 207180148081000,
+    "sequence": 30
+  },
+  {
+    "data": {
+      "assignment_id": "assignment-eacd96711a8b411f83eee045242060c3",
+      "error": "delivery already exists"
+    },
+    "kind": "duplicate-delivery-rejected",
+    "observed_ns": 207180469234000,
+    "sequence": 31
+  },
+  {
+    "data": {
+      "operation": {
+        "action": "release",
+        "actor": "principal-worker-b",
+        "at": "2026-11-28T07:50:59Z",
+        "intent": "96da751598bd0c0a0f7a4d2bf102ad3810611cfede83581fedbdc893fcbf6b7e",
+        "result": {
+          "state": "released"
+        },
+        "revision": 31,
+        "status": "committed"
+      },
+      "replayed": false,
+      "revision": 31
+    },
+    "kind": "release",
+    "observed_ns": 207180914876000,
+    "sequence": 32
+  }
+]
