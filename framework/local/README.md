@@ -62,6 +62,12 @@ from a remote applicant. No credential content is stored. Unknown/unverified
 authentication or authorization admits an unschedulable member; task-specific
 authorization, host, capability, scope, budget and capacity checks still apply
 when claiming. Registration neither starts a process nor verifies a real login.
+Hot admission rejects a new Worker reported as `busy`, even with multiple slots:
+there is no pool Assignment accounting for its existing occupancy, so available
+capacity is unknown. The rejection commits nothing and does not stop or alter
+existing work. Retry admission only after the trusted controller actually
+observes the resource as idle (`available`); login or authorization checks alone
+are not an idle observation. This path does not discover or import outside tasks.
 The resource references do not prescribe a tool/provider one-to-one mapping.
 
 Existing identities cannot be reconfigured through this path. Reuse the original

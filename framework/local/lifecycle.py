@@ -117,6 +117,10 @@ def admit(state, config, identity, at):
     if mode not in ('dedicated', 'elastic', 'restricted'):
         raise ValueError('invalid contribution mode')
     worker = row(state['snapshot']['workers'], identity)
+    # A new identity has no pool Assignment accounting for existing occupancy.
+    # Neither verified login nor configured slots proves spare capacity.
+    if worker['state'] == 'busy':
+        raise ValueError('busy new worker requires a trusted idle observation before admission')
     group_id = config['quota_group']
     group = runtime['groups'].get(group_id)
     # An admission cannot report a new shared-group restriction and silently

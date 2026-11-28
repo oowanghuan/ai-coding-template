@@ -3,6 +3,7 @@
 No provider authentication is inferred from these fixtures.
 """
 import copy
+import json
 import threading
 import unittest
 
@@ -160,6 +161,38 @@ class MembershipTests(unittest.TestCase):
         self.assertCountEqual(results, ['committed', 'revision conflict'])
         state = self.state(); self.assertEqual(len(state['worker_runtime']['workers']), 4)
         self.assertEqual(len(state['snapshot']['workers']), 4)
+
+    def test_busy_new_member_rejected_until_trusted_idle_without_mutation(self):
+        self.boot(); existing = self.claim('c')
+        self.result('start', existing, actor='principal-c')
+        self.event('a', 'quota_limited', retry_at=fixtures.later(5))
+        self.result('scheduler-tick', {}, at=fixtures.later(5))
+        work = self.root / 'existing-uncommitted-work.txt'
+        work.write_bytes(b'existing synthetic work must survive admission\n')
+        before = self.store.path.read_bytes()
+        for slots in (1, 2):
+            payload = self.member(); payload['worker'].update(state='busy', slots=slots)
+            # Login/authorization are verified, but external occupancy is unknown.
+            try:
+                admitted = self.result('register-worker', payload, at=fixtures.later(6))
+            except ValueError as error:
+                self.assertIn('busy', str(error))
+            else:
+                claimed = self.claim('d', wp='WP-B', at=fixtures.later(6))
+                print(json.dumps(dict(counterexample='busy-new-member',
+                    reported_state='busy', projected_status=admitted['status'],
+                    new_assignment_granted=True, token=claimed['token'])), flush=True)
+                self.fail('busy new Worker admitted and granted task authority')
+            self.assertEqual(before, self.store.path.read_bytes())
+            self.assertEqual(work.read_bytes(), b'existing synthetic work must survive admission\n')
+        # A subsequent trusted idle observation permits a fresh admission; the
+        # controller does not manufacture this observation from login or slots.
+        idle = self.member()
+        self.assertEqual(self.result('register-worker', idle, at=fixtures.later(6))['status'], 'available')
+        self.assertEqual(self.claim('d', wp='WP-B', at=fixtures.later(6))['token'], 1)
+        print(json.dumps(dict(busy_admission_rejected_for_slots=[1, 2],
+            state_and_uncommitted_work_preserved=True,
+            subsequent_trusted_idle_admission_and_claim=True)), flush=True)
 
     def test_commit_fault_reconciliation_and_legacy_registration(self):
         self.initial(); payload = self.member(); del payload['runtime']
