@@ -78,7 +78,44 @@ No migration or production deployment is performed by this component.
 
 `tests/adapters/test_invocation.py` runs real fixed Python processes through this
 interface. It does not start Claude, Codex, or another model. The factory wiring
-for real providers, Store authorization integration, credential/health probes,
+for real providers, full Store result/reconciliation integration, credential/health probes,
 continuous supervisor restart and real provider execution remain separate
 integration work. The lifecycle journal contains execution observations and
 cannot grant or replace the project's authoritative Assignment.
+
+## Local Store binding
+
+`StoreBinding` in `store_binding.py` connects the existing local authority to
+this transport. Construct it with the project root, shared protected reservation
+root, actor, exact Assignment/epoch/token/workspace, selection, and fixed cwd.
+Use the **same object** for `ProcessExecutor(launch_reservations=bridge,
+authorize=bridge.authorize, ...)`. Registration or construction does not launch
+anything. The default registry still has no automatically enabled real executor.
+
+At each authorization check it reads the Store under its existing lock and
+checks active ownership/lease, project budget/pause, current authorization and
+contract fingerprints, dependency consistency, current Worker health/auth/host
+and shared quota status, registered resource selection, restored checkpoint,
+registered Git worktree and actual baseline. The bridge exposes a frozen `scope`
+for trusted factory wiring; checking it does not itself restrict filesystem
+writes. The reviewed execution boundary must enforce those paths before any
+real CLI is admitted.
+
+Before spawn, the bridge atomically records `provider-run-begin` and the
+workspace's `launching` intent in the **same Store**, marks writer stop unproven,
+then reserves the shared launch fence. Failure after either write remains
+unresolved; it never rolls back an uncertain launch or issues a replacement
+permission. A second authorization check observes changes before spawn. The
+original bound object can recognize its own committed intent; a replacement
+controller cannot treat a persisted intent as a new start permission.
+
+Transport exit/result stays an observation. This bridge intentionally leaves
+Store execution unresolved until the existing trusted reconciliation/handoff
+protocol obtains sufficient writer-stop evidence. It does not auto-submit,
+accept, release or mark a workspace finished based only on a parent exit code.
+There is no continuous monitor or native provider factory in this module.
+Revocation after `Popen` needs the existing supervisor's owned-process stop and
+checkpoint loop; these prelaunch checks do not continuously enforce a lease or
+prove that a running writer has stopped. This remains a real-deployment gate.
+`tests/adapters/test_store_binding.py` covers real local Store/Git plus fixed
+Python processes under A01, with synthetic authentication/quota observations.
