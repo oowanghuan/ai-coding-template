@@ -729,6 +729,26 @@ unknown并阻止重新启动/释放；9项隔离检查通过、39份输入绑定
 1/4；下一就绪项仍为WP-302运行终态与检查点集成，不因等待本轮复核停掉其他
 已授权工作，也不以GO自动新增执行授权。
 
+### 16.11 运行结果与检查点保全
+
+19:55 UTC自然轮询投递WP-302有限项，19:55:31 UTC实际ACK；累计第6次、
+当前批第2次，未追加预算。原监督器修复仍按其请审SHA待复核，不重复处理旧意见。
+
+实现 `e49125008a6d3ef2cea683f25bc4fa784b7c057d` 提供Registry检查点入口，读取受保护调用记录、
+核对可用输出，并在原Store事务中暂停工作包、撤销当前Assignment，保存实际
+文件快照、未知操作和幂等回执。复用原扫描与内容指纹；unknown不清除，不能按
+主进程退出或快照保存授予接管权，其他Worker继续执行无关任务。
+
+[证据](evidence/invocation-preservation/README.md)：首轮125中118过/7异常，
+原协议拒绝将未知操作挂在in_progress任务；修正为同事务暂停/撤权，没有放宽
+协议。最终125全过（11新+原114），9项隔离检查通过、41份输入绑定；真实快照
+产物和manifest指纹保留。dirty/untracked恢复至验证目录、旧执行权拒绝、独立
+任务实际退出0、回执丢失/晚到字节/篡改等反例均实测。作者运行，独立复核待补。
+
+有限项runtime-checkpoint-integration标done仅代表运行观察→保全→接管阻断
+已交付。完整写者停止、未知外部效果对账、真正重新分配与恢复至一次交付、真实
+CLI及整个WP-302仍待验。下一ready项为WP-303本地控制入口，不需要重复开工审批。
+
 <!-- v4-continuation-ready:v1 -->
 ```json
 {
@@ -756,14 +776,14 @@ unknown并阻止重新启动/释放；9项隔离检查通过、39份输入绑定
     {
       "id": "runtime-checkpoint-integration",
       "wp_id": "WP-302",
-      "status": "ready",
+      "status": "done",
       "depends_on": [],
       "progress": {
-        "checkpoint": "d740ee44158f3e12e9ddbc7f4e5ca5be5956992f",
-        "milestone": "Connect terminal observations to preservation/recovery; test dirty/untracked and unknown-writer cases in isolated fixed processes. Missing complete writer-stop proof must block handoff. Do not claim real native recovery or touch live task directories.",
+        "checkpoint": "e49125008a6d3ef2cea683f25bc4fa784b7c057d",
+        "milestone": "Provisional invocation checkpoint integrated with exact Store launch identity, atomic assignment fencing/task pause, pinned artifacts and idempotent receipts. Author final125=11new+114,9canaries,41inputs; initial7 consistency errors retained. Unknown writer/effects block handoff; full native takeover and independent review pending.",
         "evidence_refs": [
-          "docs/v4/evidence/runtime-control/README.md",
-          "framework/adapters/README.md"
+          "docs/v4/evidence/invocation-preservation/README.md",
+          "framework/adapters/preservation.py"
         ]
       }
     },

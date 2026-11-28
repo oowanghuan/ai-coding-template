@@ -1,0 +1,21 @@
+{
+  "trigger": "natural_launchd_poll",
+  "run_id": "20261128T195506003577Z",
+  "comments_read": 80,
+  "pending": 0,
+  "continuation": {
+    "state": "queued",
+    "event": "v4-continue:96a8886a29bb91a4b65f04107be2ff298200dab14051b2d56d008fad2e1569a0",
+    "reason": "thread busy after add; no start"
+  },
+  "event": "v4-continue:96a8886a29bb91a4b65f04107be2ff298200dab14051b2d56d008fad2e1569a0",
+  "received_at": "2026-11-28T19:55:31.860709+00:00",
+  "received": true,
+  "ack_is_completion": false,
+  "item": "runtime-checkpoint-integration",
+  "raw_sha256": {
+    "poll.json": "4291f12b2a016b051d699c027fb42d90d10da5686f88ab32be41dcb08a57f663",
+    "delivery.json": "eb0b1d2db7f64313c7eab70a3851a1551a39f518703beee0f3dafaf434b0a56b",
+    "ack.json": "7ed86a24b9760ad1e58a1f5866d269b56583c9e136fd155f970e72af23c65159"
+  }
+}
