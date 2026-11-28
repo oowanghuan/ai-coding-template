@@ -517,8 +517,39 @@ fixture等同真实供应商。准确输入、日志及限定范围见上述证�
 
 10:25自然轮观察当前会话active后未写队列；三项各一投递，累计3/4次，没有充值。
 本有限条目标为done，WP-302整体、真实CLI、自然额度恢复和完整Alpha仍待验。
-本批已无ready条目，原生准入blocked保留具体解除条件；不能为继续唤起凭空新增
-工作或伪造进度。生产轮询保持运行，新增有效Advisor事件按原机制处理。
+上一轮收口时本批无ready条目，原生准入blocked保留具体解除条件；本轮针对代码
+实际缺口新增的后继定义见§16.3，不能为继续唤起凭空新增工作或伪造进度。
+生产轮询保持运行，新增有效Advisor事件按原机制处理。
+
+### 16.3 资源池差距的解决顺序（Owner 本轮追问后的具体执行切片）
+
+本节沿用 OD-09，不重建总体规划。输入是当前代码中的三个可定位缺口：
+`AdapterRegistry` 仅装配 planner/classifier；`dispatch-next` 按 ID 顺序选择合格资源；
+`register-worker` 在生命周期启用后拒绝登记。此前有限批次“无 ready”是当时清单
+收口状态，不表示后续已授权产品工作只能等待真实 CLI 阻塞解除。
+
+以下是并行工作划分，不声称已经启动新的执行上下文或完成实现。首个下一切片
+为 B1，进入同一有限续做清单；A/C 的设计准备可以同时进行，集成在接口明确后汇合。
+现有会话、执行权限、费用、第二台机器和发布限制均保持。四次唤起上限、原期限不变，
+此前已使用三次；达到上限时明确报告，不通过换批次或制造成果充值。
+
+| 线 / 原工作包 | 具体交付 | 可复核退出条件 |
+|---|---|---|
+| A / WP-301 | 将非执行 proposal 与真实 invocation 生命周期分开；受信装配提供 auth/probe/start/poll/stop/result 能力，unknown/unsupported 不能启动。认证只读对比合法原环境与准确受限环境，定位配置/身份访问差异，不能从受限 false 推断 Owner 未登录。执行边界独立核查，不重跑无变化的嵌套沙盒失败 | 同一通用调用协议驱动第三合成执行器，并保留可信 invocation/结果未知/停止证据；每家真实 CLI 单独完成一个受控任务后才标 provider_live。当前不启动新模型会话、复制凭证、放宽隔离；若新环境或权限确属必要，先提交准确方案和裁定项 |
+| B1 / WP-302 + Lead 共享状态集成 | 生命周期已启用时，通过单一原子登记动作加入一个新 Worker，补齐运行时记录、Host/工具/模型/额度组引用。只允许新成员加入，不在本切片迁移活跃 Worker 的身份/额度组，不建多机服务 | 无需重建整池；旧 Assignment/执行权及其他 Worker 保持；重复 operation 幂等；同身份冲突/陈旧 revision 拒绝；未验证认证授权或共享组受限时不能接单；合格新 Worker 可通过既有能力/范围/并发检查认领一个未占用任务。真实 Git/状态反例在 A01 下独立验证 |
+| B2 / WP-302 | 在通用 invocation 接口可用后接入持续检查点、真实健康/恢复观察器及有界周期控制；分开 Worker 状态与任务状态 | PMO 模型不可用时控制循环仍能工作；探测失败不等于恢复；旧写者未知不接管；恢复后的 Worker 不夺回已被接管任务。后台部署、真实调用和重启验收分别记录，现有 Lead 通知轮询不冒充产品 Worker 服务 |
+| C / WP-303 | 正常用户初始化后创建任务、登记资源、选择已有授权范围、领取、执行及取证的最小入口；先支持一个小型标准库项目。基础调度采用硬性资格过滤、明确任务优先级、负载及稳定平局规则 | 不要求手改权威 JSON；缺授权/认证/能力明确拒绝；两家真实 Worker 执行不同任务，再做一次中断与接管，最终一份有效逻辑交付并通过相应质量 Gate。只有固定文本检查时不能冒充代码工程验收 |
+
+调度实施先过滤能力、环境、权限、独立性、额度组和并发，再按项目显式优先级及
+当前负载选择。历史质量和成本没有可靠输入时保持 unknown，不能编造打分；首批
+只执行明确预算上限，不为建立质量/计费平台延迟本机闭环。后续拓扑关键路径和质量/
+成本优化单列真实评测，不把按 ID 选择说成已经实现。
+
+B1 的输入为 `framework/local/store.py`、`lifecycle.py`、现有 Worker/Host/Session
+Schema 和 `tests/lifecycle/`。共享状态/schema由Lead单一集成，恢复/Adapter接口
+不维护另一份资源权威。候选变更限于必要本地登记协议及测试，任何未知授权/预算/
+外部操作继续默认拒绝。验收证据需区分故障注入、真实固定进程、真实供应商；本节
+是可执行任务定义，尚无 B1 新产品通过声明。
 
 <!-- v4-continuation-ready:v1 -->
 ```json
@@ -568,6 +599,21 @@ fixture等同真实供应商。准确输入、日志及限定范围见上述证�
         "evidence_refs": [
           "docs/v4/evidence/prepared-recovery/README.md",
           "docs/v4/evidence/lead-continuation/live/README.md"
+        ]
+      }
+    },
+    {
+      "id": "live-worker-membership",
+      "wp_id": "WP-302",
+      "status": "ready",
+      "depends_on": [],
+      "progress": {
+        "checkpoint": "e4c97761543a4c5d23f7fb582d875d0963e5cd7f",
+        "milestone": "Owner-requested resource-pool remediation: bounded B1 atomic new-worker admission into an enabled lifecycle; preserve existing rights, shared quota and explicit verified authorization; plan ready, implementation not started",
+        "evidence_refs": [
+          "docs/v4/V4_WORK_PACKAGES.md",
+          "framework/local/store.py",
+          "framework/local/lifecycle.py"
         ]
       }
     }
