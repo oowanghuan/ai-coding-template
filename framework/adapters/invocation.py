@@ -16,7 +16,7 @@ import subprocess
 import threading
 import time
 
-from framework.local.launch_driver import atomic, canonical_sha, no_links, read_file
+from framework.local.launch_driver import atomic, canonical_sha, no_links, read_file, DIRECT_WORKSPACE_PREFIX
 from .runspec import ID, bounded_run_request
 
 TERMINAL = {'exited', 'stopped', 'timed_out', 'output_limited', 'outcome_unknown'}
@@ -45,9 +45,17 @@ class ProcessExecutor:
         self.argv = tuple(argv); self.environment = dict(environment)
         self.pins = dict(pinned_files); self.selection = copy.deepcopy(selection)
         self.authorize = authorize; self._live = {}; self._mutex = threading.RLock()
+        self._check_namespace()
         self._verify_pins()
         self.binding = canonical_sha(dict(argv=self.argv, cwd=str(self.cwd),
             environment=self.environment, pins=self.pins, selection=self.selection))
+
+    def _check_namespace(self):
+        # Preserve the previously reviewed never-launched recovery boundary.
+        if (any(part.casefold().startswith(DIRECT_WORKSPACE_PREFIX)
+                for path in (self.root, self.cwd) for part in path.parts) or
+                any(DIRECT_WORKSPACE_PREFIX in arg.casefold() for arg in self.argv)):
+            raise ValueError('external invocation cannot authorize direct-local-only namespace')
 
     def _verify_pins(self):
         for name, expected in self.pins.items():
@@ -116,6 +124,12 @@ class ProcessExecutor:
                 record = self._read(identity)
                 if record['intent_sha256'] != intent: raise ValueError('operation reused for different intent')
                 return self._view(record)
+            for prior_path in self.root.glob('inv-*.json'):
+                prior = self._read(prior_path.stem)
+                if (prior['authority'] == authority or
+                        prior['authority']['workspace_id'] == authority['workspace_id']):
+                    raise ValueError('execution authority/workspace already bound; reconcile original invocation')
+            self._check_namespace()
             self._verify_pins()
             if self.authorize(copy.deepcopy(authority), copy.deepcopy(proposal)) is not True:
                 raise ValueError('current execution authority not verified')
@@ -135,6 +149,7 @@ class ProcessExecutor:
                 atomic(path, record); return self._view(record)
             self._verify_pins()
             no_links(self.cwd, directory=True)
+            self._check_namespace()
             try:
                 with stdin.open('rb') as stream:
                     proc = subprocess.Popen(self.argv, cwd=self.cwd, env=self.environment,

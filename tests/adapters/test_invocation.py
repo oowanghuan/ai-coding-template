@@ -169,5 +169,26 @@ class InvocationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'pin changed'):self.launch(r)
         self.assertEqual(list(self.journal.glob('inv-*.json')),[])
 
+    def test_new_operation_cannot_repeat_same_authority_or_workspace(self):
+        r,e,d=self.configured();v=self.launch(r);self.finished(r,v['invocation_id'])
+        with self.assertRaisesRegex(ValueError,'already bound'):self.launch(r,operation='different-key')
+        self.authority['token']=2
+        with self.assertRaisesRegex(ValueError,'already bound'):self.launch(r,operation='new-token-same-workspace')
+
+    def test_unknown_launch_cannot_be_retried_with_new_operation_id(self):
+        r,e,d=self.configured();calls=[]
+        def deny_second(a,p):calls.append(1);return len(calls)==1
+        e.authorize=deny_second;v=self.launch(r);self.assertEqual(v['state'],'outcome_unknown')
+        e.authorize=lambda a,p:True
+        with patch('subprocess.Popen',side_effect=AssertionError('unknown result must not repeat')):
+            with self.assertRaisesRegex(ValueError,'already bound'):self.launch(r,operation='replacement-key')
+
+    def test_direct_only_namespace_cannot_gain_an_external_launch_path(self):
+        parent=self.root/'V4-DIRECT-LOCAL-fixture';parent.mkdir();self.work=parent/'nested';self.work.mkdir()
+        with self.assertRaisesRegex(ValueError,'direct-local-only'):self.configured()
+        self.work=self.root/'work'
+        with self.assertRaisesRegex(ValueError,'direct-local-only'):
+            self.configured("print('/tmp/v4-direct-local-output')")
+
 
 if __name__ == '__main__': unittest.main()

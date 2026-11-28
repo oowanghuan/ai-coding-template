@@ -29,8 +29,12 @@ same selection. Operations are:
 
 The protected journal records intent before spawn. Same operation and intent
 returns the previous invocation; different intent is rejected. A crash/unknown
-launch is never silently retried. Thread supervision drains both pipes with a
-combined size cap and a deadline; no parent environment is inherited implicitly.
+launch is never silently retried. A different operation ID cannot repeat an
+already-bound authority/workspace, even after exit; higher fencing tokens do not
+authorize reuse of that workspace. The direct-local-only recovery namespace is
+rejected in cwd, journal paths and fixed argv, including case variants.
+Thread supervision drains both pipes with a combined size cap and a deadline;
+no parent environment is inherited implicitly.
 Output is untrusted_stdout and engineering_accepted=false. All records retain
 writer_stop_confirmed=false: observed exit of one owned process does not prove
 that every descendant or outside writer has stopped. Existing handoff proofs
