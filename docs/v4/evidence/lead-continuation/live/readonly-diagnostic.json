@@ -1,0 +1,13 @@
+{
+  "started_at": "2026-11-28T09:28:03.134430+00:00",
+  "kind": "foreground_readonly_identity_diagnostic_not_poll",
+  "timeout_seconds": 20,
+  "writes": 0,
+  "exit_code": 0,
+  "stdout": "oowanghuan",
+  "stderr": "",
+  "elapsed_seconds": 1.434,
+  "finished_at": "2026-11-28T09:28:04.568205+00:00",
+  "raw_sha256": "867d22d5b778179f25906b4ba794ec71487f19be689991d41d2905de0e593325",
+  "acceptance_scope": "foreground read only; not scheduled continuation or deduplication proof"
+}

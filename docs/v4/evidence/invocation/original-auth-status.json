@@ -1,0 +1,148 @@
+{
+  "scope": "read-only installed CLI status; no identity values or credential material",
+  "configuration_changed": false,
+  "credential_content_published": false,
+  "provider_task_execution": false,
+  "observations": [
+    {
+      "tool": "claude",
+      "started_at": "2026-11-28T14:23:09.573516+00:00",
+      "exit_code": 0,
+      "model_calls": 0,
+      "logged_in": true,
+      "auth_method": "claude.ai"
+    },
+    {
+      "tool": "codex",
+      "started_at": "2026-11-28T14:23:09.751793+00:00",
+      "exit_code": 0,
+      "model_calls": 0,
+      "login_status": "logged_in"
+    },
+    {
+      "probe": "identity-env",
+      "restored_environment_keys": [
+        "LOGNAME",
+        "SHELL",
+        "USER"
+      ],
+      "logged_in": true,
+      "exit_code": 0,
+      "observed_at": "2026-11-28T14:35:05.456640+00:00",
+      "configuration_changed": false,
+      "model_calls": 0
+    },
+    {
+      "probe": "same-flags-minimal-environment",
+      "environment_keys": [
+        "HOME",
+        "LANG",
+        "LC_ALL",
+        "PATH"
+      ],
+      "logged_in": false,
+      "auth_method": "none",
+      "exit_code": 1,
+      "observed_at": "2026-11-28T14:34:43.525334+00:00",
+      "model_calls": 0,
+      "configuration_changed": false
+    },
+    {
+      "probe": "original-path-only",
+      "restored_environment_keys": [
+        "PATH"
+      ],
+      "logged_in": false,
+      "exit_code": 1,
+      "observed_at": "2026-11-28T14:35:05.712323+00:00",
+      "configuration_changed": false,
+      "model_calls": 0
+    },
+    {
+      "probe": "os-session-env",
+      "restored_environment_keys": [
+        "SECURITYSESSIONID",
+        "XPC_SERVICE_NAME",
+        "__CFBundleIdentifier",
+        "__CF_USER_TEXT_ENCODING"
+      ],
+      "logged_in": false,
+      "exit_code": 1,
+      "observed_at": "2026-11-28T14:35:05.571806+00:00",
+      "configuration_changed": false,
+      "model_calls": 0
+    },
+    {
+      "probe": "restricted-only-original-environment",
+      "flags": [
+        "--restricted"
+      ],
+      "logged_in": true,
+      "auth_method": "claude.ai",
+      "exit_code": 0,
+      "observed_at": "2026-11-28T14:34:05.585507+00:00",
+      "model_calls": 0,
+      "configuration_changed": false
+    },
+    {
+      "probe": "restricted-original-environment",
+      "flags": [
+        "--safe-mode",
+        "--restricted",
+        "--setting-sources",
+        ""
+      ],
+      "logged_in": true,
+      "auth_method": "claude.ai",
+      "exit_code": 0,
+      "observed_at": "2026-11-28T14:34:05.298047+00:00",
+      "model_calls": 0,
+      "configuration_changed": false
+    },
+    {
+      "probe": "safe-only-original-environment",
+      "flags": [
+        "--safe-mode"
+      ],
+      "logged_in": true,
+      "auth_method": "claude.ai",
+      "exit_code": 0,
+      "observed_at": "2026-11-28T14:34:05.444524+00:00",
+      "model_calls": 0,
+      "configuration_changed": false
+    },
+    {
+      "probe": "single-logname",
+      "restored_environment_keys": [
+        "LOGNAME"
+      ],
+      "logged_in": false,
+      "exit_code": 1,
+      "observed_at": "2026-11-28T14:35:17.710937+00:00",
+      "configuration_changed": false,
+      "model_calls": 0
+    },
+    {
+      "probe": "single-shell",
+      "restored_environment_keys": [
+        "SHELL"
+      ],
+      "logged_in": false,
+      "exit_code": 1,
+      "observed_at": "2026-11-28T14:35:17.858826+00:00",
+      "configuration_changed": false,
+      "model_calls": 0
+    },
+    {
+      "probe": "single-user",
+      "restored_environment_keys": [
+        "USER"
+      ],
+      "logged_in": true,
+      "exit_code": 0,
+      "observed_at": "2026-11-28T14:35:17.585888+00:00",
+      "configuration_changed": false,
+      "model_calls": 0
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+{"sandbox_canaries": {"empty_candidate_anchor": true, "candidate_anchor_unlink": true, "trusted_write": true, "source_write": true, "trusted_hardlink": true, "outside_read": true, "outside_write": true, "network": true, "credentials_absent": true}}
+{"busy_admission_rejected_for_slots": [1, 2], "state_and_uncommitted_work_preserved": true, "subsequent_trusted_idle_admission_and_claim": true}
+{"run": 14, "failures": 0, "errors": 0, "skipped": 0}

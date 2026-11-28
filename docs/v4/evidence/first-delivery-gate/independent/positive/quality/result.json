@@ -1,0 +1,104 @@
+{
+  "artifact_kind": "document",
+  "authority_sha256": "078d3e6a51dbfd5af7146ab89b0750cb59633cbf5ec776946ef30c44cf2656bb",
+  "authority_unchanged": true,
+  "collection": {
+    "argv": [
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-S",
+      "<independent-positive-fixture>/T/quality/collector.py",
+      "--plan",
+      "<independent-positive-fixture>/T/quality/plan.json",
+      "--plan-sha256",
+      "67c140557007aaeb1f3feea3766a2d01d2cecb885d242961c23c23f8d4ddfbd2"
+    ],
+    "exit_code": 0,
+    "finished_at": "2026-11-28T09:28:12.796359+00:00",
+    "outcome": "observed_exit",
+    "pid": 84179,
+    "started_at": "2026-11-28T09:28:12.480019+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "1e9d41aa03b1e1ed0ad678267f888822810d6b9f942ee837eb465044585f7d84"
+  },
+  "delivery_binding": {
+    "artifact_sha256": "28f17b97909760e33a1eed3acdfd6348a9a70c91fb81772a2c9ac4f2027fe07b",
+    "assignment_id": "assignment-f867bfccea774e98af5ab1d8539cde4d",
+    "authority_sha256": "078d3e6a51dbfd5af7146ab89b0750cb59633cbf5ec776946ef30c44cf2656bb",
+    "baseline_sha": "bb3d3188c1715ab91b52b7efac03529f5641dd25",
+    "epoch": 1,
+    "format": "worker-delivery-binding/1",
+    "path": "src/b/output.txt",
+    "provenance": "synthetic_fixture",
+    "scope": "document-artifact",
+    "submit_operation_id": "demo-submit-16",
+    "submit_revision": 17,
+    "token": 1,
+    "worker_id": "worker-b",
+    "workspace_id": "workspace-9817b9986b934e56ac3e85c49383a4b5",
+    "wp_id": "WP-B",
+    "wp_revision": 4
+  },
+  "engineering_accepted": false,
+  "evidence_level": "synthetic_fixture",
+  "format": "first-delivery-quality/1",
+  "gate": {
+    "evidence_id": "first-delivery",
+    "evidence_sha256": "d476395f58ff2138bdfc6350da181651f531f3012e5f2576c078a224c15fa483",
+    "format": "quality-gate/1",
+    "gate_id": "df8918c404b6953dceebb13d5ea3c200d92bd495a9cae50565354676a7849004",
+    "plan_sha256": "67c140557007aaeb1f3feea3766a2d01d2cecb885d242961c23c23f8d4ddfbd2",
+    "reasons": [],
+    "status": "passed",
+    "subject": {
+      "commit": "7e1ddbed3a91e9a8f8a266751af194e57a59d04a",
+      "manifest_sha256": "c140c06a53d69dcf8d3b9411650733d741b35e288353ac4047cbdaf293eca1bb",
+      "tree": "b78bef32006c6945057d145e673dee4dd93cbd6f"
+    },
+    "trust_sha256": "9b79ab298429a4498e4e0d04e6cf7cfe1d195ae1e193fda61ecb63b48b8fd6c4",
+    "wp_id": "WP-B",
+    "wp_revision": 4
+  },
+  "gate_process": {
+    "argv": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "<independent-positive-fixture>/T/gate-sandbox.sb",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-S",
+      "<independent-positive-fixture>/T/gate-wrapper.py",
+      "<independent-positive-fixture>/T/gate-config.json"
+    ],
+    "exit_code": 0,
+    "finished_at": "2026-11-28T09:28:13.283778+00:00",
+    "outcome": "observed_exit",
+    "pid": 84199,
+    "started_at": "2026-11-28T09:28:12.797971+00:00",
+    "stderr_sha256": "7b913b1b901ff674eac99fe88938302e8d3dc7b1bd6d27094e8c3a4ba3e9cc7f",
+    "stdout_sha256": "e96ad8dd4e3b00249f642ba0f8350b26e8e47dc8714c5437d6c43e3378588d73"
+  },
+  "inputs_unchanged": true,
+  "passed": true,
+  "pinned_inputs": {
+    "collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+    "plan.json": "67c140557007aaeb1f3feea3766a2d01d2cecb885d242961c23c23f8d4ddfbd2",
+    "subject/artifact.txt": "28f17b97909760e33a1eed3acdfd6348a9a70c91fb81772a2c9ac4f2027fe07b",
+    "subject/check.py": "31fe5496ec802a3028197f41574455172b354f142f85da099bba0d273d0cb4c0",
+    "subject/delivery-binding.json": "aa76327050268557fdb1d2b7bda8764a8189922a1953ba207d47180e4b9aadce",
+    "trust.json": "9b79ab298429a4498e4e0d04e6cf7cfe1d195ae1e193fda61ecb63b48b8fd6c4"
+  },
+  "plan_sha256": "67c140557007aaeb1f3feea3766a2d01d2cecb885d242961c23c23f8d4ddfbd2",
+  "provider_live": false,
+  "run_id": "first-delivery",
+  "status": "passed",
+  "subject": {
+    "commit": "7e1ddbed3a91e9a8f8a266751af194e57a59d04a",
+    "manifest_sha256": "c140c06a53d69dcf8d3b9411650733d741b35e288353ac4047cbdaf293eca1bb",
+    "tree": "b78bef32006c6945057d145e673dee4dd93cbd6f"
+  },
+  "subject_scope": "verification capsule, not Worker code commit",
+  "trust_sha256": "9b79ab298429a4498e4e0d04e6cf7cfe1d195ae1e193fda61ecb63b48b8fd6c4"
+}

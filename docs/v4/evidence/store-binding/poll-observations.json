@@ -1,0 +1,33 @@
+{
+  "scope": "observed scheduled reads, not proof of sleep-time execution or new autonomous development",
+  "runs": [
+    {
+      "run_id": "20261128T155509122535Z",
+      "raw_sha256": "37977a4f38033910937024d4440d40f0c4a6faed2626933908d9e56db752ef7d",
+      "started_at": "2026-11-28T15:55:09.125397+00:00",
+      "finished_at": "2026-11-28T15:55:29.630171+00:00",
+      "comments_read": 70,
+      "pending": 0,
+      "status": "waiting",
+      "last_successful_step": "complete",
+      "continuation": {
+        "state": "blocked",
+        "reason": "batch activation budget exhausted"
+      }
+    },
+    {
+      "run_id": "20261128T161006513233Z",
+      "raw_sha256": "9fa38cbe98e8f1a4355d188c7eb7598b4af212f00c124acd11645f48f8ace62f",
+      "started_at": "2026-11-28T16:10:06.515254+00:00",
+      "finished_at": "2026-11-28T16:10:25.372596+00:00",
+      "comments_read": 70,
+      "pending": 0,
+      "status": "waiting",
+      "last_successful_step": "complete",
+      "continuation": {
+        "state": "deferred",
+        "reason": "existing thread active; no queue writes"
+      }
+    }
+  ]
+}

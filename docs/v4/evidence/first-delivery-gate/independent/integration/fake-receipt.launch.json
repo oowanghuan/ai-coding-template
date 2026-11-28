@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<independent-positive-fixture>/T/fake-gate.sb",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<independent-positive-fixture>/T/fake-gate-wrapper.py",
+    "<independent-positive-fixture>/T",
+    "<independent-positive-fixture>/V-fake",
+    "3ee98d983b63827455c33325f4ec132e5c3925405487e5d7f4c9af0e2b43e813"
+  ],
+  "exit_code": null,
+  "outcome": "unknown",
+  "pid": 85380,
+  "started_at": "2026-11-28T09:28:43.120489+00:00"
+}

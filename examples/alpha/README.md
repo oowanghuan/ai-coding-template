@@ -57,13 +57,76 @@ fixture does not need an online PMO model. Delivery capture still reports
 acceptance. The third fixture's process launch is the explicitly fixed demo
 supervisor, not a general native `Adapter.start` implementation.
 
+## Verify the first delivered artifact
+
+After independent review of the exact updated launch-helper bytes, opt in to a
+real fixed-Python evidence run for the first completed delivery:
+
+```sh
+/usr/bin/python3 -I -S scripts/run_worker_demo.py \
+  --source "$PWD" \
+  --dependencies /absolute/path/to/existing/site-packages \
+  --verify-first-delivery
+```
+
+The first completed delivery is WP-B's `src/b/output.txt`. The helper compares
+the actual worktree file with the captured delivery bytes and hash, then freezes
+those bytes with a fixed Python checker and a provenance record. A new temporary
+Git repository produces a **verification capsule commit** for that exact file
+set. Its SHA is separate from the development baseline; it is not a claim that
+the Worker committed new code. The original project and its task state remain
+unchanged by collection and verification.
+
+The independently reviewed, hash-pinned collector runs the checker in its own
+Seatbelt sandbox. The expected bytes are fixed by the example specification,
+independently of the captured output. The public quality CLI then verifies the
+protected receipt, logs, policy, source, plan and trust pin in a separate sandbox.
+No framework module is imported on the host. The collector is launched outside
+the original candidate sandbox, so this path does not depend on nested Seatbelt.
+
+Inspect `T/quality/result.json`, `T/quality/plan.json`, `T/quality/trust.json`,
+`T/quality/capsule.commit`, `T/quality/evidence.json`, `T/quality/logs/`,
+`T/quality/gate.stdout.log` and the recorded process launch/results. The main
+`T/result.json` includes the quality result. The actual checker's stderr and the
+Gate stderr record their isolation probes. A successful collection process can
+still contain a failed check: only the separate Gate result decides whether
+this artifact check passed.
+
+This mode checks a **document artifact**. The demo's Work Package still has its
+original code-task metadata; a text check does not satisfy code engineering
+acceptance. `engineering_accepted=false` and `provider_live=false` remain true
+limitations even when the artifact Gate passes. The Gate binds the frozen
+snapshot, not continuing immutability of the original live workspace. The
+helper checks source/authority stability around collection and preserves any
+failure, but makes no hostile same-OS-user authentication claim.
+
+An unknown demo process outcome prevents collection. An unknown collection
+prevents Gate execution and automatic retry; the exclusive collector intent and
+all partial evidence are retained. Never reuse that evidence directory to rerun
+unknown work. The flag adds no provider call, paid service or background task.
+
 Existing-project onboarding, general task authoring, native provider launch/
 monitor/cancel, unattended live probes, operating-system service installation,
 real quota recovery and a second machine remain separate implementation or
 verification items. Dedicated/elastic/restricted mode names are metadata in this
-increment, not fully enforced contribution policies. Prepared-but-never-launched
-tasks are preserved and block automatic handoff until a trusted no-writer
-reconciliation path exists; the positive demo covers a running owned process.
+increment, not fully enforced contribution policies. The positive demo covers a
+running owned process. Prepared-but-never-launched recovery has a separate,
+limited controller API: explicitly claim with
+`execution_domain="direct-local-only"`, prepare, save a final `checkpoint`, then
+call `framework.local.handoff.recover_prepared` with the current revision and a
+unique operation ID before another worker claims and calls `prepare_handoff`.
+Run these operations inside the reviewed execution boundary; they are not a new
+host CLI or an automatic deployment of a trusted launcher.
+
+The direct-only workspace namespace is fixed at claim time. The reviewed
+external client and standalone launch driver reject that namespace, including
+output paths and case aliases. Use newly pinned controller/launcher copies with
+no outstanding old external launch capabilities; installing source does not
+cancel an already running old driver. Default/legacy workspaces cannot opt into
+this recovery after preparation. A committed launch intent, unknown result,
+changed authorization or changed final checkpoint blocks this path. A successful
+receipt says `never_launched` and `process_stop_observed=false`; it does not invent
+a process exit. Real-provider recovery and the full Alpha remain unverified.
 
 Use `scripts/v4_worker.py inspect --root <the-generated-project>` **inside the
 same reviewed execution boundary** to inspect state. Its `cycle` operation can

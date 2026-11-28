@@ -1,0 +1,7 @@
+{
+  "status": "not_executed",
+  "rejected_harness_sha256": "413a8774969ffb1b632c6a84ec278752647fa59ee68649f7bcaf4c9a390eca48",
+  "profile_sha256": "782a2296f133c870984acfc8f56573eee0e5fd24041fa8e9f38525e93e8d2537",
+  "reason": "Independent boundary preflight rejected broad shared evidence-root write access and capture_output timeout evidence loss. Require fresh T/C, C-only write, protected host logs, canaries and owned-process timeout handling.",
+  "product_test_result": "not_run"
+}

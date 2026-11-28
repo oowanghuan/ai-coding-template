@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<author-fixture>/T/gate-sandbox.sb",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<author-fixture>/T/gate-wrapper.py",
+    "<author-fixture>/T/gate-config.json"
+  ],
+  "exit_code": null,
+  "outcome": "unknown",
+  "pid": 73230,
+  "started_at": "2026-11-28T09:21:44.849653+00:00"
+}

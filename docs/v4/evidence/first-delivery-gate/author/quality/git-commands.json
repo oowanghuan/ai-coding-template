@@ -1,0 +1,127 @@
+[
+  {
+    "argv": [
+      "/usr/bin/git",
+      "-c",
+      "core.hooksPath=/dev/null",
+      "-c",
+      "core.fsmonitor=false",
+      "-c",
+      "core.untrackedCache=false",
+      "-c",
+      "commit.gpgsign=false",
+      "-c",
+      "init.templateDir=",
+      "init",
+      "-q"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  {
+    "argv": [
+      "/usr/bin/git",
+      "-c",
+      "core.hooksPath=/dev/null",
+      "-c",
+      "core.fsmonitor=false",
+      "-c",
+      "core.untrackedCache=false",
+      "-c",
+      "commit.gpgsign=false",
+      "-c",
+      "init.templateDir=",
+      "add",
+      "--",
+      "artifact.txt",
+      "check.py",
+      "delivery-binding.json"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  {
+    "argv": [
+      "/usr/bin/git",
+      "-c",
+      "core.hooksPath=/dev/null",
+      "-c",
+      "core.fsmonitor=false",
+      "-c",
+      "core.untrackedCache=false",
+      "-c",
+      "commit.gpgsign=false",
+      "-c",
+      "init.templateDir=",
+      "commit",
+      "-qm",
+      "Synthetic document verification capsule; not a Worker code commit"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  {
+    "argv": [
+      "/usr/bin/git",
+      "-c",
+      "core.hooksPath=/dev/null",
+      "-c",
+      "core.fsmonitor=false",
+      "-c",
+      "core.untrackedCache=false",
+      "-c",
+      "commit.gpgsign=false",
+      "-c",
+      "init.templateDir=",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "bfc6540219eb4351460d444784797965bf744ca2\n"
+  },
+  {
+    "argv": [
+      "/usr/bin/git",
+      "-c",
+      "core.hooksPath=/dev/null",
+      "-c",
+      "core.fsmonitor=false",
+      "-c",
+      "core.untrackedCache=false",
+      "-c",
+      "commit.gpgsign=false",
+      "-c",
+      "init.templateDir=",
+      "rev-parse",
+      "HEAD^{tree}"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "5f5b517fd1c8c3469e627f15c534de0dcde746de\n"
+  },
+  {
+    "argv": [
+      "/usr/bin/git",
+      "-c",
+      "core.hooksPath=/dev/null",
+      "-c",
+      "core.fsmonitor=false",
+      "-c",
+      "core.untrackedCache=false",
+      "-c",
+      "commit.gpgsign=false",
+      "-c",
+      "init.templateDir=",
+      "cat-file",
+      "commit",
+      "bfc6540219eb4351460d444784797965bf744ca2"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "tree 5f5b517fd1c8c3469e627f15c534de0dcde746de\nauthor Synthetic Delivery Capsule <fixture@example.invalid> 1795857704 -0600\ncommitter Synthetic Delivery Capsule <fixture@example.invalid> 1795857704 -0600\n\nSynthetic document verification capsule; not a Worker code commit\n"
+  }
+]

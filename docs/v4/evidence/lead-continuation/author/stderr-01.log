@@ -1,0 +1,24 @@
+test_ack_wrong_session_client_or_content_refused (test_continuation.PulseTests) ... ok
+test_active_never_steers_or_queues (test_continuation.PulseTests) ... ok
+test_advisor_or_unknown_broker_operation_has_priority (test_continuation.PulseTests) ... ok
+test_branch_advance_before_delivery_refuses (test_continuation.PulseTests) ... ok
+test_done_all_no_ready_and_blocked_dependency (test_continuation.PulseTests) ... ok
+test_git_sha_alone_does_not_reset_stall (test_continuation.PulseTests) ... ok
+test_idle_ready_add_start_and_model_ack_is_not_done (test_continuation.PulseTests) ... ok
+test_idle_to_active_race_keeps_queue_without_start (test_continuation.PulseTests) ... ok
+test_known_queued_race_can_start_once_when_idle_without_second_add (test_continuation.PulseTests) ... ok
+test_out_of_scope_or_unbounded_authority_rejected (test_continuation.PulseTests) ... ok
+test_owner_pause_public_pause_expiry_and_disabled_stop (test_continuation.PulseTests) ... ok
+test_persistent_cooldown_and_restart (test_continuation.PulseTests) ... ok
+test_public_progress_resets_slots_but_total_budget_caps (test_continuation.PulseTests) ... ok
+test_two_acknowledged_pulses_without_progress_then_stalled (test_continuation.PulseTests) ... ok
+test_unacked_acceptance_never_requeues (test_continuation.PulseTests) ... ok
+test_unknown_add_and_start_never_repeat_even_new_progress (test_continuation.PulseTests) ... ok
+test_unloaded_never_creates_or_resumes (test_continuation.PulseTests) ... ok
+test_user_queue_takes_precedence (test_continuation.PulseTests) ... ok
+test_wrong_thread_cwd_rejected (test_continuation.PulseTests) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.203s
+
+OK

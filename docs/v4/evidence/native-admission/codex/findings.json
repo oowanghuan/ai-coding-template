@@ -1,0 +1,27 @@
+{
+  "scope": "WP301 finite native-execution-boundary investigation",
+  "status": "blocked",
+  "investigation_completed": true,
+  "provider_live": false,
+  "model_calls": 0,
+  "new_or_resumed_model_sessions": 0,
+  "product_changes": false,
+  "permission_relaxation": false,
+  "installed_codex_version": "0.169.0",
+  "installed_binary_sha256": "739cda86e15d30a6e2b40cf8dcbbfb988aaf48b305b27065573bb8e9fd41d002",
+  "official_source_tag": "rust-v0.169.0",
+  "source_binary_build_attested": false,
+  "known_limit": "previous owned synthetic procargs marker remained readable; nested native sandbox failed closed",
+  "text_only_effective_toolset_verified": false,
+  "claude_auth_status": {
+    "version": "2.1.332",
+    "exit_code": 1,
+    "loggedIn": false,
+    "scope": "exact tested safe/restricted invocation only"
+  },
+  "report_sha256": "4b54c43973332256074456054d99c200cc016e080a58148130dc3337bc84cf44",
+  "official_saved_source_index_sha256": "575c1dd0f27faea23ec74a735391784d9aac43482853db843b2099ca6c916678",
+  "repeat_unchanged_failed_probe": false,
+  "public_source_copies_required": false,
+  "raw_auth_output_public": false
+}

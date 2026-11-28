@@ -1,0 +1,11 @@
+{
+  "public_hash_records_verified": 26,
+  "relative_links_verified": 16,
+  "sensitive_pattern_hits": 0,
+  "reviewed_generic_denylist_literal_exceptions": [
+    "author/candidate/poll.py.txt"
+  ],
+  "production_deployed": false,
+  "live_native_or_provider_calls": 0,
+  "candidate_validation": "author and non-author Fake tests only"
+}

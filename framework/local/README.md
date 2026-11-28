@@ -34,6 +34,62 @@ Changing live task definitions or authorizations needs a reviewed migration, not
 hand edits to the aggregate. Full PMO/task editing and provider adapters are later
 packages. An installed bootstrap project is therefore not automatically runnable.
 
+## Add a Worker to an enabled pool
+
+`register-worker` now accepts a **new** Worker after `enable-lifecycle`, in the
+same locked transaction as its provider, host, session and runtime membership.
+Supply `worker`, `provider`, `host`, `session` as before, plus `runtime`:
+
+```json
+{
+  "worker_id": "worker-new",
+  "quota_group": "shared-subscription-group",
+  "auth_identity": "authorized-identity-ref",
+  "mode": "elastic",
+  "authenticated": true,
+  "authorized": true,
+  "resource": {
+    "agent_tool": "tool-ref",
+    "model_provider": "provider-ref",
+    "model": null,
+    "credential_ref": "credential-ref-only"
+  }
+}
+```
+
+These are observations from the trusted Owner controller, not self-attestation
+from a remote applicant. No credential content is stored. Unknown/unverified
+authentication or authorization admits an unschedulable member; task-specific
+authorization, host, capability, scope, budget and capacity checks still apply
+when claiming. Registration neither starts a process nor verifies a real login.
+Hot admission rejects a new Worker reported as `busy`, even with multiple slots:
+there is no pool Assignment accounting for its existing occupancy, so available
+capacity is unknown. The rejection commits nothing and does not stop or alter
+existing work. Retry admission only after the trusted controller actually
+observes the resource as idle (`available`); login or authorization checks alone
+are not an idle observation. This path does not discover or import outside tasks.
+The resource references do not prescribe a tool/provider one-to-one mapping.
+
+Existing identities cannot be reconfigured through this path. Reuse the original
+operation ID and identical intent to reconcile an unknown response, even after
+the new Worker has claimed work. A new operation against an existing runtime
+Worker, identity conflict or stale revision is rejected without a partial write.
+Expired leases still follow the ordinary Store expiration policy.
+
+Joining a shared quota group preserves its restrictions, retry time, generation,
+pending probe and retry count. A new member cannot replenish shared quota. If it
+reports a restriction inconsistent with an unrestricted existing group, admission
+is rejected: record that group observation through `worker-event` first, which
+applies the existing fencing rules to all affected members. Existing valid
+assignments are otherwise preserved. A new group with unknown quota starts
+limited. The controller is responsible for correct shared-group/identity mapping;
+this API does not discover vendor subscription relationships.
+
+This is local cooperative membership, not cross-machine authentication, a live
+CLI daemon, or an upgrade of an existing Worker's identity/permissions. See
+`tests/lifecycle/test_worker_membership.py` for bounded synthetic admission and
+reconciliation scenarios.
+
 ## Execution and recovery
 
 The only runnable adapter is a bounded synthetic writer (no arbitrary command,

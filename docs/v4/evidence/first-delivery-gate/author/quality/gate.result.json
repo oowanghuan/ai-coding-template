@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<author-fixture>/T/gate-sandbox.sb",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<author-fixture>/T/gate-wrapper.py",
+    "<author-fixture>/T/gate-config.json"
+  ],
+  "exit_code": 0,
+  "finished_at": "2026-11-28T09:21:45.301913+00:00",
+  "outcome": "observed_exit",
+  "pid": 73230,
+  "started_at": "2026-11-28T09:21:44.849653+00:00",
+  "stderr_sha256": "7b913b1b901ff674eac99fe88938302e8d3dc7b1bd6d27094e8c3a4ba3e9cc7f",
+  "stdout_sha256": "2998376c45135076424a03be2871bff09228e89a3c1e18743b5b0b8001f1b6d8"
+}

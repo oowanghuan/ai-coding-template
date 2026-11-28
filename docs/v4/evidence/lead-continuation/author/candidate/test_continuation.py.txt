@@ -1,0 +1,195 @@
+"""Fake RPC and public GitHub fixtures ONLY; never instantiate NativeClient."""
+import asyncio
+import base64
+import copy
+from datetime import datetime, timedelta, timezone
+import json
+import os
+from pathlib import Path
+import tempfile
+import unittest
+from unittest.mock import patch
+import continuation as c
+
+AT=datetime(2026,11,28,12,tzinfo=timezone.utc)
+THREAD='00000000-0000-0000-0000-000000000001'
+HEAD='a'*40
+
+class Fake:
+    def __init__(self):
+        self.status='idle';self.rows=[];self.history=[];self.calls=[];self.fail=None;self.after_add=None
+    async def call(self,method,params):
+        self.calls.append((method,copy.deepcopy(params)))
+        if method=='thread/read':return {'thread':{'id':THREAD,'cwd':'/synthetic/public-project','status':{'type':self.status}}}
+        if method=='thread/queue/list':return {'data':copy.deepcopy(self.rows),'nextCursor':None}
+        if method=='thread/items/list':return {'data':copy.deepcopy(self.history),'nextCursor':None}
+        if method=='thread/queue/add':
+            row={'id':'queue-'+str(len(self.rows)), 'clientUserMessageId':params['clientUserMessageId'],'input':params['input']};self.rows.append(row)
+            if self.after_add:self.after_add()
+            if self.fail=='add':raise TimeoutError('unknown queue add')
+            return {'queuedSubmission':copy.deepcopy(row)}
+        if method=='thread/queue/start':
+            row=next(r for r in self.rows if r['id']==params['queuedSubmissionId'])
+            if self.fail=='start':raise TimeoutError('unknown queue start')
+            self.rows.remove(row);self.history.append({'turnId':'turn-1','item':{'type':'userMessage','clientId':row['clientUserMessageId'],'id':'item-1'}})
+            return {'turn':{'id':'turn-1'}}
+        raise AssertionError('forbidden real/API method '+method)
+    def writes(self):return [m for m,_ in self.calls if m in ('thread/queue/add','thread/queue/start','turn/steer')]
+
+class PulseTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.base=Path(self.tmp.name)
+        self.binding={'enabled':True,'thread_id':THREAD,'cwd':'/synthetic/public-project','socket_path':'unused fake'}
+        c.atomic(self.base/'session-binding.json',self.binding)
+        self.cfg=dict(enabled=True,branch='v4/worker-onboarding',owner_paused=False,blocked_reason='',expires_at='2026-12-01T00:00:00Z',max_activations=8,cooldown_seconds=60,owner_ledger_sha256=c.owner_ledger_fingerprint([]))
+        c.atomic(self.base/'continuation-config.json',self.cfg)
+        self.plan=dict(version=1,batch_id='fixture-1',scope_ref='OD-09',control='running',expires_at='2026-12-01T00:00:00Z',activation_budget=8,items=[dict(id='step-1',wp_id='WP-303',status='ready',depends_on=[],progress=dict(checkpoint='cp-1',milestone='authorized fixture checkpoint',evidence_refs=['docs/v4/evidence/fixture/report.json']))])
+        self.ledger=[];self.head=HEAD;self.gets=[];self.client=Fake();self.time=AT
+        guard=patch('continuation.NativeClient',side_effect=AssertionError('NativeClient must never be used in candidate tests'));guard.start();self.addCleanup(guard.stop)
+    def api(self,path,paginate=False):
+        self.gets.append(path)
+        if '/issues/3/comments?' in path:
+            self.assertTrue(paginate);return [self.ledger]
+        if '/git/ref/heads/' in path:return {'object':{'sha':self.head}}
+        if '/contents/docs/v4/V4_WORK_PACKAGES.md?ref=' in path:
+            self.assertTrue(path.endswith(self.head))
+            text='<!-- v4-continuation-ready:v1 -->\n```json\n'+json.dumps(self.plan)+'\n```\n<!-- /v4-continuation-ready -->'
+            return dict(type='file',encoding='base64',content=base64.b64encode(text.encode()).decode())
+        raise AssertionError('non-read-only or unauthorized GitHub endpoint')
+    def run_pulse(self):return asyncio.run(c.pulse(self.base,self.api,self.client,self.binding,self.time))
+    def ack(self,result):
+        record=c.read(self.base/'continuations'/(result['event'].split(':')[1]+'.json'))
+        with patch.dict(os.environ,{'CODEX_THREAD_ID':THREAD}):return c.acknowledge(self.base,result['event'],record['client_id'])
+    def advance(self):self.time+=timedelta(seconds=61)
+    def test_idle_ready_add_start_and_model_ack_is_not_done(self):
+        r=self.run_pulse();self.assertEqual(r['state'],'awaiting_ack');self.assertFalse(r['completed'])
+        self.assertEqual(self.client.writes(),['thread/queue/add','thread/queue/start'])
+        a=self.ack(r);self.assertFalse(a['completed']);self.assertEqual(self.plan['items'][0]['status'],'ready')
+        self.assertEqual(self.ack(r),a)
+    def test_active_never_steers_or_queues(self):
+        self.client.status='active';self.assertEqual(self.run_pulse()['state'],'deferred');self.assertEqual(self.client.writes(),[])
+    def test_unloaded_never_creates_or_resumes(self):
+        self.client.status='notLoaded';self.assertEqual(self.run_pulse()['state'],'deferred');self.assertEqual(self.client.writes(),[])
+    def test_user_queue_takes_precedence(self):
+        self.client.rows=[{'id':'user','clientUserMessageId':'other','input':[]}]
+        self.assertEqual(self.run_pulse()['state'],'deferred');self.assertEqual(self.client.writes(),[])
+    def test_unacked_acceptance_never_requeues(self):
+        self.run_pulse();self.advance();self.assertEqual(self.run_pulse()['state'],'awaiting_ack')
+        self.assertEqual(self.client.writes(),['thread/queue/add','thread/queue/start'])
+    def test_two_acknowledged_pulses_without_progress_then_stalled(self):
+        first=self.run_pulse();self.ack(first);self.advance();second=self.run_pulse();self.ack(second);self.advance()
+        self.assertNotEqual(first['event'],second['event'])
+        r=self.run_pulse();self.assertEqual(r['state'],'stalled');self.assertIn('two activations',r['waiting'][0]['reason'])
+        self.assertEqual(len(self.client.writes()),4)
+    def test_git_sha_alone_does_not_reset_stall(self):
+        for _ in range(2):self.ack(self.run_pulse());self.advance()
+        self.head='b'*40
+        self.assertEqual(self.run_pulse()['state'],'stalled')
+    def test_public_progress_resets_slots_but_total_budget_caps(self):
+        self.cfg['max_activations']=3;c.atomic(self.base/'continuation-config.json',self.cfg)
+        for _ in range(2):self.ack(self.run_pulse());self.advance()
+        self.plan['items'][0]['progress']['checkpoint']='cp-2'
+        third=self.run_pulse();self.ack(third);self.advance();self.plan['items'][0]['progress']['checkpoint']='cp-3'
+        self.assertIn('budget',self.run_pulse()['reason']);self.assertEqual(len(self.client.writes()),6)
+    def test_new_batch_cannot_recharge_same_progress_or_local_total_budget(self):
+        for _ in range(2):self.ack(self.run_pulse());self.advance()
+        self.plan['batch_id']='fixture-2'
+        self.assertEqual(self.run_pulse()['state'],'stalled')
+        self.cfg['max_activations']=2;c.atomic(self.base/'continuation-config.json',self.cfg)
+        self.plan['items'][0]['progress']['checkpoint']='new-real-checkpoint'
+        self.assertIn('budget',self.run_pulse()['reason']);self.assertEqual(len(self.client.writes()),4)
+    def test_nonstandard_owner_comment_add_edit_delete_requires_foreground_read_cache(self):
+        self.ledger=[{'id':1,'user':{'login':'oowanghuan'},'body':'Plain Owner pause without a standardized prefix'}]
+        self.assertEqual(self.run_pulse()['state'],'blocked');self.assertEqual(self.client.writes(),[])
+        self.cfg['owner_ledger_sha256']=c.owner_ledger_fingerprint(self.ledger);c.atomic(self.base/'continuation-config.json',self.cfg)
+        self.ledger[0]['body']='edited Owner restriction'
+        self.assertEqual(self.run_pulse()['state'],'blocked')
+        self.cfg['owner_ledger_sha256']=c.owner_ledger_fingerprint(self.ledger);c.atomic(self.base/'continuation-config.json',self.cfg)
+        self.ledger=[];self.assertEqual(self.run_pulse()['state'],'blocked');self.assertEqual(self.client.writes(),[])
+
+    def test_done_all_no_ready_and_blocked_dependency(self):
+        self.plan['items'][0]['status']='done';self.assertEqual(self.run_pulse()['state'],'no_ready_work')
+        item=copy.deepcopy(self.plan['items'][0]);item.update(id='step-2',status='ready',depends_on=['step-1']);self.plan['items'].append(item)
+        self.plan['items'][0]['status']='blocked';self.assertEqual(self.run_pulse()['state'],'stalled');self.assertEqual(self.client.writes(),[])
+        self.plan['items'][0]['status']='done';self.assertEqual(self.run_pulse()['state'],'awaiting_ack')
+    def test_owner_pause_public_pause_expiry_and_disabled_stop(self):
+        for field,value in [('owner_paused',True),('blocked_reason','needs Owner choice'),('expires_at','2026-01-01T00:00:00Z')]:
+            cfg=dict(self.cfg,**{field:value});c.atomic(self.base/'continuation-config.json',cfg)
+            self.assertEqual(self.run_pulse()['state'],'blocked')
+        c.atomic(self.base/'continuation-config.json',self.cfg)
+        self.plan['control']='paused';self.assertEqual(self.run_pulse()['state'],'blocked')
+        self.cfg['enabled']=False;c.atomic(self.base/'continuation-config.json',self.cfg);self.assertEqual(self.run_pulse()['state'],'disabled');self.assertEqual(self.client.writes(),[])
+    def test_unknown_add_and_start_never_repeat_even_new_progress(self):
+        for fail in ('add','start'):
+            with self.subTest(fail=fail):
+                # Independent local receipts for each fault, never erase a live intent.
+                target=self.base/fail;target.mkdir();c.atomic(target/'continuation-config.json',self.cfg)
+                fake=Fake();fake.fail=fail
+                with self.assertRaises(TimeoutError):asyncio.run(c.pulse(target,self.api,fake,self.binding,self.time))
+                writes=list(fake.writes());self.plan['items'][0]['progress']['checkpoint']+='-changed'
+                r=asyncio.run(c.pulse(target,self.api,fake,self.binding,self.time+timedelta(seconds=61)))
+                self.assertEqual(r['state'],'unknown_or_queued');self.assertEqual(fake.writes(),writes)
+    def test_idle_to_active_race_keeps_queue_without_start(self):
+        self.client.after_add=lambda:setattr(self.client,'status','active')
+        r=self.run_pulse();self.assertEqual(r['state'],'queued');self.assertEqual(self.client.writes(),['thread/queue/add']);self.assertEqual(len(self.client.rows),1)
+    def test_known_queued_race_can_start_once_when_idle_without_second_add(self):
+        self.client.after_add=lambda:setattr(self.client,'status','active')
+        r=self.run_pulse();self.assertEqual(r['state'],'queued')
+        self.client.status='idle';self.client.after_add=None
+        self.assertEqual(self.run_pulse()['state'],'awaiting_ack')
+        self.assertEqual(self.client.writes(),['thread/queue/add','thread/queue/start'])
+        self.assertEqual(self.run_pulse()['state'],'awaiting_ack')
+        self.assertEqual(self.client.writes(),['thread/queue/add','thread/queue/start'])
+
+    def test_branch_advance_before_delivery_refuses(self):
+        original=self.api;calls=[0]
+        def moving(path,**kwargs):
+            if '/git/ref/heads/' in path:
+                calls[0]+=1
+                if calls[0]==3:self.head='b'*40
+            return original(path,**kwargs)
+        self.api=moving;self.assertEqual(self.run_pulse()['state'],'blocked');self.assertEqual(self.client.writes(),[])
+    def test_wrong_thread_cwd_rejected(self):
+        self.binding['cwd']='/different'
+        with self.assertRaisesRegex(ValueError,'workspace mismatch'):self.run_pulse()
+        self.assertEqual(self.client.writes(),[])
+    def test_ack_wrong_session_client_or_content_refused(self):
+        r=self.run_pulse()
+        with patch.dict(os.environ,{'CODEX_THREAD_ID':'wrong'}),self.assertRaises(ValueError):c.acknowledge(self.base,r['event'],'wrong')
+        with patch.dict(os.environ,{'CODEX_THREAD_ID':THREAD}),self.assertRaises(ValueError):c.acknowledge(self.base,r['event'],'wrong')
+        self.ack(r);path=self.base/'continuations'/(r['event'].split(':')[1]+'.ack.json');ack=c.read(path);ack['input_sha256']='0'*64;c.atomic(path,ack)
+        with self.assertRaisesRegex(ValueError,'ACK identity'):self.run_pulse()
+    def test_duplicate_public_authority_keys_never_dispatch(self):
+        original=self.api
+        for old,new in [('"control": "running"','"control": "paused", "control": "running"'),
+                        ('"checkpoint": "cp-1"','"checkpoint": "old", "checkpoint": "cp-1"')]:
+            with self.subTest(duplicate=old):
+                def duplicate(path,**kwargs):
+                    result=original(path,**kwargs)
+                    if 'content' in result:
+                        raw=base64.b64decode(result['content']).decode().replace(old,new)
+                        result=dict(result,content=base64.b64encode(raw.encode()).decode())
+                    return result
+                self.api=duplicate
+                with self.assertRaisesRegex(ValueError,'duplicate public ready JSON key'):self.run_pulse()
+                self.assertEqual(self.client.writes(),[])
+        self.api=original
+
+    def test_out_of_scope_or_unbounded_authority_rejected(self):
+        for key,value in [('activation_budget',9),('scope_ref','new-unauthorized-stage')]:
+            original=self.plan[key];self.plan[key]=value
+            with self.assertRaises(ValueError):self.run_pulse()
+            self.plan[key]=original
+        self.plan['items'][0]['wp_id']='WP-999'
+        with self.assertRaises(ValueError):self.run_pulse()
+        self.assertEqual(self.client.writes(),[])
+    def test_persistent_cooldown_and_restart(self):
+        r=self.run_pulse();self.ack(r)
+        self.assertEqual(self.run_pulse()['reason'],'persistent activation cooldown')
+        self.advance();self.assertEqual(self.run_pulse()['state'],'awaiting_ack')
+    def test_advisor_or_unknown_broker_operation_has_priority(self):
+        self.assertEqual(c.notify_continuation(self.base,self.api,pending_advisor=True)['state'],'deferred')
+        self.assertEqual(c.notify_continuation(self.base,self.api,unresolved_operations=True)['state'],'blocked')
+        self.assertEqual(self.client.calls,[])
+
+if __name__=='__main__':unittest.main()

@@ -1,0 +1,255 @@
+"""Trusted notification-only bridge to one pre-bound, already-loaded Codex thread.
+
+No candidate imports, thread creation/resume, model or permission selection, shell,
+network endpoint, Git writes, or publication APIs. Native IPC calls are allowlisted.
+"""
+import argparse
+import asyncio
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import uuid
+
+METHODS = {'initialize', 'thread/read', 'thread/turns/list', 'thread/items/list',
+           'thread/queue/list', 'thread/queue/add', 'thread/queue/start', 'turn/steer'}
+EVENT = re.compile(r'v4-pl:[0-9]+:(?:[0-9a-f]{40}|unbound)\Z')
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def digest(value):
+    return hashlib.sha256(value.encode()).hexdigest()
+
+
+def atomic(path, value):
+    if path.is_symlink(): raise RuntimeError('symlink notification record')
+    temporary = path.with_name('.write-' + uuid.uuid4().hex)
+    with temporary.open('x') as stream:
+        json.dump(value, stream, ensure_ascii=False, indent=2)
+        stream.write('\n'); stream.flush(); os.fsync(stream.fileno())
+    os.replace(temporary, path)
+    fd = os.open(path.parent, os.O_RDONLY)
+    try: os.fsync(fd)
+    finally: os.close(fd)
+
+
+class NativeClient:
+    def __init__(self, binding):
+        self.binding = binding
+        self.sequence = 0
+
+    async def __aenter__(self):
+        import websockets
+        expected = str(Path.home() / '.codex/app-server-control/app-server-control.sock')
+        if self.binding['socket_path'] != expected:
+            raise RuntimeError('only the existing local daemon socket is allowed')
+        self.ws = await websockets.unix_connect(expected, uri='ws://localhost', open_timeout=5,
+                                               close_timeout=2, max_size=4*1024*1024)
+        await self.call('initialize', {'clientInfo': {'name': 'v4_project_lead_notifications', 'version': '1'},
+                                      'capabilities': {'experimentalApi': True}})
+        await self.ws.send(json.dumps({'method': 'initialized'}))
+        return self
+
+    async def __aexit__(self, *args):
+        await self.ws.close()
+
+    async def call(self, method, params):
+        if method not in METHODS:
+            raise RuntimeError('native method outside notification boundary')
+        if method != 'initialize' and params.get('threadId') != self.binding['thread_id']:
+            raise RuntimeError('notification target mismatch')
+        self.sequence += 1
+        identity = self.sequence
+        await self.ws.send(json.dumps({'id': identity, 'method': method, 'params': params}))
+        async def receive():
+            while True:
+                result = json.loads(await self.ws.recv())
+                if result.get('id') == identity:
+                    if 'error' in result:
+                        raise RuntimeError('native request rejected: ' + str(result['error']))
+                    return result['result']
+        return await asyncio.wait_for(receive(), 10)
+
+
+def binding_from(base):
+    path = base / 'session-binding.json'
+    if not path.exists(): return None
+    if path.is_symlink(): raise RuntimeError('symlink binding refused')
+    value = json.loads(path.read_text())
+    if value.get('enabled') is not True: return None
+    if not re.fullmatch(r'[0-9a-f-]{36}', value['thread_id']): raise RuntimeError('invalid bound thread')
+    if not Path(value['cwd']).is_absolute(): raise RuntimeError('invalid bound workspace')
+    return value
+
+
+async def queue_rows(client, thread):
+    rows, cursor = [], None
+    for _ in range(10):
+        page = await client.call('thread/queue/list', {'threadId': thread, 'limit': 100, 'cursor': cursor})
+        rows.extend(page['data'])
+        cursor = page.get('nextCursor')
+        if cursor is None: return rows
+    raise RuntimeError('queue pagination limit; preserve pending event')
+
+
+async def history_receipt(client, thread, client_id):
+    cursor = None
+    for _ in range(8):
+        page = await client.call('thread/items/list', {'threadId': thread, 'limit': 100,
+                                                       'sortDirection': 'desc', 'cursor': cursor})
+        for row in page['data']:
+            item = row['item']
+            if item.get('type') == 'userMessage' and item.get('clientId') == client_id:
+                return {'turn_id': row['turnId'], 'item_id': item['id']}
+        cursor = page.get('nextCursor')
+        if cursor is None: break
+    return None  # Absence is never permission to retry an unknown write.
+
+
+def awaiting_model_ack(record):
+    return {'state': 'awaiting_model_ack', 'delivery_state': record['state'],
+            'client_id': record['client_id'],
+            'reason': 'native acceptance/history is not model acknowledgement'}
+
+
+async def deliver(base, binding, comment, sha, client):
+    event = 'v4-pl:%s:%s' % (comment['id'], sha)
+    if not EVENT.fullmatch(event) or type(comment['id']) is not int:
+        raise RuntimeError('invalid notification event')
+    body_hash = digest(comment['body'])
+    directory = base / 'notifications'
+    if directory.is_symlink(): raise RuntimeError('symlink notification directory')
+    directory.mkdir(mode=0o700, exist_ok=True)
+    path = directory / (digest(event) + '.json')
+    ack_path = directory / (digest(event) + '.ack.json')
+    record = json.loads(path.read_text()) if path.exists() else None
+    if record and (record['event'] != event or record['body_sha256'] != body_hash or
+                   record['thread_id'] != binding['thread_id']):
+        return {'state': 'changed_input', 'reason': 'event/binding changed; foreground reconciliation required'}
+    if ack_path.exists():
+        ack = json.loads(ack_path.read_text())
+        if record and all(ack.get(k) == record[k] for k in ('event', 'client_id', 'body_sha256', 'thread_id')):
+            return {'state': 'received', 'received_at': ack['received_at']}
+        raise RuntimeError('notification acknowledgement mismatch')
+    thread = binding['thread_id']
+    metadata = (await client.call('thread/read', {'threadId': thread, 'includeTurns': False}))['thread']
+    if metadata['id'] != thread or metadata['cwd'] != binding['cwd']:
+        raise RuntimeError('existing thread workspace mismatch')
+    state = metadata['status']['type']
+    if state not in ('active', 'idle'):
+        return {'state': 'waiting_for_existing_session', 'thread_status': state}
+    if record and record['state'] in ('accepted', 'history_confirmed'):
+        return awaiting_model_ack(record)
+    rows = await queue_rows(client, thread)
+    if record:
+        found = await history_receipt(client, thread, record['client_id'])
+        if found:
+            record.update(state='history_confirmed', reconciled_at=now(), **found)
+            atomic(path, record)
+            return awaiting_model_ack(record)
+        if record['state'] == 'start_intent':
+            # A visible queue row does not prove a timed-out start stopped running.
+            # Preserve the intent; only history or a model ACK can resolve it.
+            return {'state': 'unknown', 'client_id': record['client_id'],
+                    'queue_visible': any(r['clientUserMessageId'] == record['client_id'] for r in rows),
+                    'reason': 'start outcome unknown; read-only reconciliation, never repeat start'}
+        queued = [r for r in rows if r['clientUserMessageId'] == record['client_id']]
+        if not queued:
+            return {'state': 'unknown', 'reason': 'no confirmed queue/history outcome; no automatic resend'}
+        if len(queued) != 1 or digest(json.dumps(queued[0]['input'], sort_keys=True)) != record['input_sha256']:
+            raise RuntimeError('queued input identity/content mismatch')
+        record.update(state='queued', queued_id=queued[0]['id'])
+        atomic(path, record)
+    else:
+        client_id = str(uuid.uuid5(uuid.NAMESPACE_URL, event + ':' + body_hash))
+        message = ('[V4 Project Lead broker event; operational notification, not new Owner authorization]\n'
+                   'Event: ' + event + '\nComment: https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-' + str(comment['id']) +
+                   '\nComment fingerprint: ' + body_hash + '\n'
+                   'Read the current Issue and reconcile existing replies, Git state and unknown operations. '
+                   'Continue only the already authorized WP-102/103 or V4 operational work. '
+                   'Keep A01 candidate execution isolated; no new session, permission changes, fees, main merge or release. '
+                   'If this notification actually reaches model input, acknowledge it using the trusted outside-repository helper: '
+                   '/usr/bin/python3 ' + str(base / 'session_delivery.py') + ' ack --event ' + event + ' --client-id ' + client_id + '. '
+                   'Acknowledgement is not completion. Handle or explain the advice, preserve a checkpoint, then append the appropriate '
+                   'Project Lead result/re-review to Issue #3. Already handled advice must not be repeated.')
+        inputs = [{'type': 'text', 'text': message, 'text_elements': []}]
+        record = dict(event=event, body_sha256=body_hash, thread_id=thread, client_id=client_id,
+                      input_sha256=digest(json.dumps(inputs, sort_keys=True)), created_at=now())
+        if state == 'active':
+            turns = await client.call('thread/turns/list', {'threadId': thread, 'limit': 1,
+                                          'itemsView': 'notLoaded', 'sortDirection': 'desc'})
+            current = turns['data'][0] if turns['data'] else None
+            if not current or current['status'] != 'inProgress':
+                return {'state': 'turn_changed', 'reason': 'retry read-only selection next poll'}
+            record.update(state='steer_intent', expected_turn=current['id'])
+            atomic(path, record)
+            result = await client.call('turn/steer', {'threadId': thread, 'expectedTurnId': current['id'],
+                                                     'clientUserMessageId': client_id, 'input': inputs})
+            record.update(state='accepted', turn_id=result['turnId'], accepted_at=now())
+            atomic(path, record)
+            return awaiting_model_ack(record)
+        record['state'] = 'queue_intent'; atomic(path, record)
+        result = await client.call('thread/queue/add', {'threadId': thread, 'clientUserMessageId': client_id, 'input': inputs})
+        queued = result['queuedSubmission']
+        record.update(state='queued', queued_id=queued['id']); atomic(path, record)
+        rows = await queue_rows(client, thread)
+    # Only a loaded, idle instance of the same thread may consume its specific queued event.
+    # Never resume/create a session or start other user queue entries.
+    live = (await client.call('thread/read', {'threadId': thread, 'includeTurns': False}))['thread']
+    if live['cwd'] != binding['cwd'] or live['status']['type'] != 'idle':
+        return {'state': 'queued', 'reason': 'existing session busy or unloaded'}
+    if len(rows) != 1 or rows[0]['id'] != record['queued_id']:
+        return {'state': 'queued', 'reason': 'only this event may be queued; other entries take precedence'}
+    record['state'] = 'start_intent'; atomic(path, record)
+    result = await client.call('thread/queue/start', {'threadId': thread, 'queuedSubmissionId': record['queued_id']})
+    record.update(state='accepted', turn_id=result['turn']['id'], accepted_at=now())
+    atomic(path, record)
+    return awaiting_model_ack(record)
+
+
+def notify(base, comment, sha):
+    binding = binding_from(base)
+    if binding is None: return {'state': 'disabled'}
+    async def execute():
+        async with NativeClient(binding) as client:
+            return await deliver(base, binding, comment, sha, client)
+    try:
+        return asyncio.run(execute())
+    except Exception as error:
+        # A saved intent is preserved. A timeout/error can never cause blind retry.
+        return {'state': 'error_or_unknown', 'reason': str(error)[:500]}
+
+
+def acknowledge(base, event, client_id):
+    if not EVENT.fullmatch(event): raise RuntimeError('invalid event')
+    binding = binding_from(base)
+    if not binding or os.environ.get('CODEX_THREAD_ID') != binding['thread_id']:
+        raise RuntimeError('acknowledge only from the bound existing session')
+    directory = base / 'notifications'
+    record = json.loads((directory / (digest(event) + '.json')).read_text())
+    if record['event'] != event or record['client_id'] != client_id or record['thread_id'] != binding['thread_id']:
+        raise RuntimeError('acknowledgement identity mismatch')
+    ack = {k: record[k] for k in ('event', 'client_id', 'body_sha256', 'thread_id')}
+    ack.update(received_at=now(), source='bound existing model context')
+    path = directory / (digest(event) + '.ack.json')
+    if path.exists():
+        prior = json.loads(path.read_text())
+        if not all(prior.get(k) == record[k] for k in ('event', 'client_id', 'body_sha256', 'thread_id')):
+            raise RuntimeError('notification acknowledgement mismatch')
+        return prior
+    atomic(path, ack)
+    return ack
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('action', choices=['ack'])
+    parser.add_argument('--event', required=True)
+    parser.add_argument('--client-id', required=True)
+    args = parser.parse_args()
+    print(json.dumps(acknowledge(Path(__file__).resolve().parent, args.event, args.client_id)))

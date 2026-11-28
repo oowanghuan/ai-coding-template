@@ -1,0 +1,61 @@
+{
+  "implementation_commit": "d815cf4a542316d14524d3cbc2891e9fb8b2b0a7",
+  "run_by": "author",
+  "independent_review": "pending",
+  "provider_model_calls": 0,
+  "engineering_accepted": false,
+  "runs": {
+    "initial": {
+      "counts": {
+        "run": 65,
+        "failures": 0,
+        "errors": 13,
+        "skipped": 0
+      },
+      "exit_code": 1,
+      "started_at": "2026-11-28T14:27:29.111290+00:00",
+      "finished_at": "2026-11-28T14:27:29.563609+00:00",
+      "canaries_passed": 9,
+      "inputs_unchanged": true
+    },
+    "intermediate": {
+      "counts": {
+        "run": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "started_at": "2026-11-28T14:28:11.902027+00:00",
+      "finished_at": "2026-11-28T14:28:16.093365+00:00",
+      "canaries_passed": 9,
+      "inputs_unchanged": true
+    },
+    "pre-boundary-refinement": {
+      "counts": {
+        "run": 68,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "started_at": "2026-11-28T14:29:38.525626+00:00",
+      "finished_at": "2026-11-28T14:29:43.551468+00:00",
+      "canaries_passed": 9,
+      "inputs_unchanged": true
+    },
+    "final": {
+      "counts": {
+        "run": 71,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "started_at": "2026-11-28T14:37:21.303845+00:00",
+      "finished_at": "2026-11-28T14:37:26.263202+00:00",
+      "canaries_passed": 9,
+      "inputs_unchanged": true
+    }
+  }
+}

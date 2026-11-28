@@ -1,0 +1,280 @@
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+python3: error: couldn't create cache file '/tmp/xcrun_db-vyERH53n' (errno=Operation not permitted)
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+python3: error: couldn't create cache file '/tmp/xcrun_db-WIpI2szv' (errno=Operation not permitted)
+test_claude_authentication_and_ambiguous_cloud_error (test_adapters.ClassificationTests) ... ok
+test_claude_budget_is_not_provider_quota (test_adapters.ClassificationTests) ... ok
+test_claude_credits_required_is_quota_without_reset_promise (test_adapters.ClassificationTests) ... ok
+test_claude_rate_reset_is_explicit_future_integer_only (test_adapters.ClassificationTests) ... ok
+test_claude_warning_is_not_a_stop (test_adapters.ClassificationTests) ... ok
+test_codex_exec_prose_cannot_become_quota (test_adapters.ClassificationTests) ... ok
+test_codex_network_requires_explicit_no_http_response (test_adapters.ClassificationTests) ... ok
+test_codex_typed_causes_are_distinct (test_adapters.ClassificationTests) ... ok
+test_codex_unknown_code_does_not_guess (test_adapters.ClassificationTests) ... ok
+test_conflicting_reset_times_do_not_guess (test_adapters.ClassificationTests) ... ok
+test_contradictory_causes_fail_conservatively (test_adapters.ClassificationTests) ... ok
+test_default_stdout_is_untrusted_even_terminal_success (test_adapters.ClassificationTests) ... ok
+test_duplicate_nonfinite_and_nonobject_events_are_error (test_adapters.ClassificationTests) ... ok
+test_explicit_timestamp_and_observed_exit_types (test_adapters.ClassificationTests) ... ok
+test_invocation_turn_limit_is_not_project_budget (test_adapters.ClassificationTests) ... ok
+test_missing_retry_status_is_not_treated_as_final (test_adapters.ClassificationTests) ... ok
+test_nested_agent_text_is_not_a_protocol_event (test_adapters.ClassificationTests) ... ok
+test_observed_signal_is_interruption_not_success (test_adapters.ClassificationTests) ... ok
+test_result_does_not_reflect_private_text_or_claim_acceptance (test_adapters.ClassificationTests) ... ok
+test_retry_in_progress_does_not_release_worker (test_adapters.ClassificationTests) ... ok
+test_specific_credit_signal_refines_generic_rate_error (test_adapters.ClassificationTests) ... ok
+test_stdout_may_not_promote_its_own_provenance (test_adapters.ClassificationTests) ... ok
+test_success_needs_terminal_event_and_observed_zero_exit (test_adapters.ClassificationTests) ... ok
+test_supervisor_can_report_local_budget_without_provider_claim (test_adapters.ClassificationTests) ... ok
+test_unbounded_event_stream_is_rejected (test_adapters.ClassificationTests) ... ok
+test_baseline_scope_and_old_hash_conflicts_rejected (test_adapters.RunAndProposalTests) ... ok
+test_checked_in_thin_entries_match_the_single_rules_source (test_adapters.RunAndProposalTests) ... ERROR
+test_duplicate_paths_and_empty_proposals_rejected (test_adapters.RunAndProposalTests) ... ok
+test_file_content_and_total_size_are_bounded (test_adapters.RunAndProposalTests) ... ok
+test_input_cannot_inject_flags (test_adapters.RunAndProposalTests) ... ok
+test_new_file_requires_explicit_null_old_hash (test_adapters.RunAndProposalTests) ... ok
+test_run_bounds_and_strict_types (test_adapters.RunAndProposalTests) ... ok
+test_same_source_entries_have_identical_rules_and_no_install_side_effect (test_adapters.RunAndProposalTests) ... ok
+test_specs_are_proposals_without_execution_or_extra_permissions (test_adapters.RunAndProposalTests) ... ok
+test_traversal_aliases_and_control_characters_rejected (test_adapters.RunAndProposalTests) ... ok
+test_unknown_fields_cannot_smuggle_commands (test_adapters.RunAndProposalTests) ... ok
+test_valid_proposal_returns_data_only (test_adapters.RunAndProposalTests) ... ok
+test_denied_authority_or_boolean_token_does_not_launch (test_invocation.InvocationTests) ... ERROR
+test_failure_exit_is_observed_not_promoted_to_success (test_invocation.InvocationTests) ... ERROR
+test_n_adapters_execute_through_same_interface_without_provider_branches (test_invocation.InvocationTests) ... ERROR
+test_output_tampering_and_binding_change_are_rejected (test_invocation.InvocationTests) ... ERROR
+test_proposal_argv_cannot_select_program_or_environment (test_invocation.InvocationTests) ... ERROR
+test_real_process_input_output_exit_and_no_engineering_acceptance (test_invocation.InvocationTests) ... ERROR
+test_replay_after_lost_response_does_not_launch_twice (test_invocation.InvocationTests) ... ERROR
+test_restarted_controller_cannot_treat_running_record_as_stopped_or_restart (test_invocation.InvocationTests) ... ERROR
+test_stop_is_request_then_owned_exit_not_claimed_descendant_stop (test_invocation.InvocationTests) ... ERROR
+test_timeout_and_output_bound_are_distinct_and_never_accepted (test_invocation.InvocationTests) ... ERROR
+test_unknown_capability_and_unbound_executor_cannot_start (test_invocation.InvocationTests) ... ERROR
+test_unknown_launch_intent_never_replays_and_does_not_kill_by_pid (test_invocation.InvocationTests) ... ERROR
+test_absent_result_capability_fails_closed (test_registry.RegistryTests) ... ok
+test_caller_cannot_silently_change_registered_model (test_registry.RegistryTests) ... ok
+test_describe_and_registration_are_defensive_copies (test_registry.RegistryTests) ... ok
+test_duplicate_adapter_rejected (test_registry.RegistryTests) ... ok
+test_json_module_paths_cannot_register_handlers (test_registry.RegistryTests) ... ok
+test_missing_or_boolean_capability_rejected (test_registry.RegistryTests) ... ok
+test_nth_adapter_registration_needs_no_core_provider_branch (test_registry.RegistryTests) ... ok
+test_opaque_credential_reference_is_not_path_or_environment (test_registry.RegistryTests) ... ok
+test_registry_rejects_malicious_handler_contract (test_registry.RegistryTests) ... ok
+test_selection_axes_are_independent (test_registry.RegistryTests) ... ok
+test_synthetic_adapter_cannot_claim_provider_protocol_or_live (test_registry.RegistryTests) ... ok
+test_synthetic_quota_has_no_implicit_reset (test_registry.RegistryTests) ... ok
+test_synthetic_wrong_exit_no_success_or_implicit_stop (test_registry.RegistryTests) ... ok
+test_third_adapter_uses_identical_plan_and_result_interface (test_registry.RegistryTests) ... ok
+test_three_builtin_adapters_and_generic_capabilities (test_registry.RegistryTests) ... ok
+test_unknown_adapter_is_rejected (test_registry.RegistryTests) ... ok
+
+======================================================================
+ERROR: test_checked_in_thin_entries_match_the_single_rules_source (test_adapters.RunAndProposalTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_adapters.py", line 206, in test_checked_in_thin_entries_match_the_single_rules_source
+    entries=render_entries('adapters/PROTOCOL.md',hashlib.sha256(rules.read_bytes()).hexdigest())
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1249, in read_bytes
+    with self.open(mode='rb') as f:
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1242, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1110, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '<RUN_ROOT>/T/source/adapters/PROTOCOL.md'
+
+======================================================================
+ERROR: test_denied_authority_or_boolean_token_does_not_launch (test_invocation.InvocationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 121, in test_denied_authority_or_boolean_token_does_not_launch
+    r,e,d=self.configured(authorize=lambda a,p:False)
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 39, in configured
+    executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 47, in __init__
+    self._verify_pins()
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 53, in _verify_pins
+    path = no_links(name)
+  File "<RUN_ROOT>/T/source/framework/local/launch_driver.py", line 73, in no_links
+    raise ValueError('single-link regular file required')
+ValueError: single-link regular file required
+
+======================================================================
+ERROR: test_failure_exit_is_observed_not_promoted_to_success (test_invocation.InvocationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 141, in test_failure_exit_is_observed_not_promoted_to_success
+    r,e,d=self.configured('import sys;sys.exit(7)');v=self.launch(r)
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 39, in configured
+    executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 47, in __init__
+    self._verify_pins()
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 53, in _verify_pins
+    path = no_links(name)
+  File "<RUN_ROOT>/T/source/framework/local/launch_driver.py", line 73, in no_links
+    raise ValueError('single-link regular file required')
+ValueError: single-link regular file required
+
+======================================================================
+ERROR: test_n_adapters_execute_through_same_interface_without_provider_branches (test_invocation.InvocationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 71, in test_n_adapters_execute_through_same_interface_without_provider_branches
+    r, e, d = self.configured(name=name, journal=journal)
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 39, in configured
+    executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 47, in __init__
+    self._verify_pins()
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 53, in _verify_pins
+    path = no_links(name)
+  File "<RUN_ROOT>/T/source/framework/local/launch_driver.py", line 73, in no_links
+    raise ValueError('single-link regular file required')
+ValueError: single-link regular file required
+
+======================================================================
+ERROR: test_output_tampering_and_binding_change_are_rejected (test_invocation.InvocationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 128, in test_output_tampering_and_binding_change_are_rejected
+    r,e,d=self.configured();v=self.launch(r);self.finished(r,v['invocation_id'])
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 39, in configured
+    executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 47, in __init__
+    self._verify_pins()
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 53, in _verify_pins
+    path = no_links(name)
+  File "<RUN_ROOT>/T/source/framework/local/launch_driver.py", line 73, in no_links
+    raise ValueError('single-link regular file required')
+ValueError: single-link regular file required
+
+======================================================================
+ERROR: test_proposal_argv_cannot_select_program_or_environment (test_invocation.InvocationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 76, in test_proposal_argv_cannot_select_program_or_environment
+    r,e,d = self.configured("import os;print(os.environ.get('INHERITED_SECRET','absent'))")
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 39, in configured
+    executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 47, in __init__
+    self._verify_pins()
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 53, in _verify_pins
+    path = no_links(name)
+  File "<RUN_ROOT>/T/source/framework/local/launch_driver.py", line 73, in no_links
+    raise ValueError('single-link regular file required')
+ValueError: single-link regular file required
+
+======================================================================
+ERROR: test_real_process_input_output_exit_and_no_engineering_acceptance (test_invocation.InvocationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 61, in test_real_process_input_output_exit_and_no_engineering_acceptance
+    r, e, d = self.configured(); value = self.launch(r); done = self.finished(r, value['invocation_id'])
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 39, in configured
+    executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 47, in __init__
+    self._verify_pins()
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 53, in _verify_pins
+    path = no_links(name)
+  File "<RUN_ROOT>/T/source/framework/local/launch_driver.py", line 73, in no_links
+    raise ValueError('single-link regular file required')
+ValueError: single-link regular file required
+
+======================================================================
+ERROR: test_replay_after_lost_response_does_not_launch_twice (test_invocation.InvocationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 83, in test_replay_after_lost_response_does_not_launch_twice
+    r,e,d=self.configured("from pathlib import Path;p=Path('count');p.write_text(p.read_text()+'x' if p.exists() else 'x')")
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 39, in configured
+    executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 47, in __init__
+    self._verify_pins()
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 53, in _verify_pins
+    path = no_links(name)
+  File "<RUN_ROOT>/T/source/framework/local/launch_driver.py", line 73, in no_links
+    raise ValueError('single-link regular file required')
+ValueError: single-link regular file required
+
+======================================================================
+ERROR: test_restarted_controller_cannot_treat_running_record_as_stopped_or_restart (test_invocation.InvocationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 99, in test_restarted_controller_cannot_treat_running_record_as_stopped_or_restart
+    program='import time;time.sleep(2)';r,e,d=self.configured(program);v=self.launch(r)
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 39, in configured
+    executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 47, in __init__
+    self._verify_pins()
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 53, in _verify_pins
+    path = no_links(name)
+  File "<RUN_ROOT>/T/source/framework/local/launch_driver.py", line 73, in no_links
+    raise ValueError('single-link regular file required')
+ValueError: single-link regular file required
+
+======================================================================
+ERROR: test_stop_is_request_then_owned_exit_not_claimed_descendant_stop (test_invocation.InvocationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 115, in test_stop_is_request_then_owned_exit_not_claimed_descendant_stop
+    r,e,d=self.configured('import time;time.sleep(5)');v=self.launch(r)
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 39, in configured
+    executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 47, in __init__
+    self._verify_pins()
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 53, in _verify_pins
+    path = no_links(name)
+  File "<RUN_ROOT>/T/source/framework/local/launch_driver.py", line 73, in no_links
+    raise ValueError('single-link regular file required')
+ValueError: single-link regular file required
+
+======================================================================
+ERROR: test_timeout_and_output_bound_are_distinct_and_never_accepted (test_invocation.InvocationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 109, in test_timeout_and_output_bound_are_distinct_and_never_accepted
+    journal=self.root/expected;journal.mkdir();r,e,d=self.configured(program,journal=journal)
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 39, in configured
+    executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 47, in __init__
+    self._verify_pins()
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 53, in _verify_pins
+    path = no_links(name)
+  File "<RUN_ROOT>/T/source/framework/local/launch_driver.py", line 73, in no_links
+    raise ValueError('single-link regular file required')
+ValueError: single-link regular file required
+
+======================================================================
+ERROR: test_unknown_capability_and_unbound_executor_cannot_start (test_invocation.InvocationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 135, in test_unknown_capability_and_unbound_executor_cannot_start
+    r,e,d=self.configured();d['adapter_id']='unbound'
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 39, in configured
+    executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 47, in __init__
+    self._verify_pins()
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 53, in _verify_pins
+    path = no_links(name)
+  File "<RUN_ROOT>/T/source/framework/local/launch_driver.py", line 73, in no_links
+    raise ValueError('single-link regular file required')
+ValueError: single-link regular file required
+
+======================================================================
+ERROR: test_unknown_launch_intent_never_replays_and_does_not_kill_by_pid (test_invocation.InvocationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 89, in test_unknown_launch_intent_never_replays_and_does_not_kill_by_pid
+    r,e,d=self.configured();p=r.plan('tool-x',**self.request)
+  File "<RUN_ROOT>/T/source/tests/adapters/test_invocation.py", line 39, in configured
+    executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 47, in __init__
+    self._verify_pins()
+  File "<RUN_ROOT>/T/source/framework/adapters/invocation.py", line 53, in _verify_pins
+    path = no_links(name)
+  File "<RUN_ROOT>/T/source/framework/local/launch_driver.py", line 73, in no_links
+    raise ValueError('single-link regular file required')
+ValueError: single-link regular file required
+
+----------------------------------------------------------------------
+Ran 65 tests in 0.041s
+
+FAILED (errors=13)

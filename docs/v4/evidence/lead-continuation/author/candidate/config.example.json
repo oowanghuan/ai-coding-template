@@ -1,0 +1,10 @@
+{
+  "enabled": false,
+  "branch": "v4/worker-onboarding",
+  "owner_paused": true,
+  "blocked_reason": "Review-stage prototype: no deployment or live activation authorized by this example",
+  "expires_at": "2026-12-01T00:00:00Z",
+  "max_activations": 8,
+  "cooldown_seconds": 900,
+  "owner_ledger_sha256": "REPLACE_WITH_FOREGROUND_READ_CACHE_NOT_AN_AUTHORIZATION"
+}

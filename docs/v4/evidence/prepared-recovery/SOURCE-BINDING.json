@@ -1,0 +1,21 @@
+{
+  "implementation_commit": "f31e751826ec68b0d4e6eb2868cc9ae21f8e1a04",
+  "runs": [
+    {
+      "run": "initial",
+      "implementation_commit": "f31e751826ec68b0d4e6eb2868cc9ae21f8e1a04",
+      "repository_inputs_matching_commit": 22,
+      "test_input_sha256": "9dba904e06c1fd50409e6debcecad204a0581a88504065494c54b7c9f1526d39",
+      "test_input_is_separate_frozen_file": true
+    },
+    {
+      "run": "targeted",
+      "implementation_commit": "f31e751826ec68b0d4e6eb2868cc9ae21f8e1a04",
+      "repository_inputs_matching_commit": 22,
+      "test_input_sha256": "afd69de6118adbbf48afda54684002b9465037b60b0afd2be14ae71437a63782",
+      "test_input_is_separate_frozen_file": true
+    }
+  ],
+  "final_test_sha256": "afd69de6118adbbf48afda54684002b9465037b60b0afd2be14ae71437a63782",
+  "note": "Initial red run retained; final test differs only by corrected hook/bounded waits and one new targeted contract-change case."
+}

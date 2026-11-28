@@ -17,6 +17,8 @@ from framework.local import lifecycle
 ROOT = Path(__file__).resolve().parents[2]
 LIVE = ('reserved', 'active')
 UNKNOWN = ('creating', 'launching', 'running', 'unknown')
+LAUNCH_PROTOCOL = 'persist-before-spawn/1'
+DIRECT_WORKSPACE_PREFIX = 'v4-direct-local-'
 
 
 def now():
@@ -182,6 +184,10 @@ class Store:
 
     def _apply(self, state, action, payload, actor, at):
         snapshot = state['snapshot']
+        if action in ('claim', 'dispatch-next'):
+            domain = payload.get('execution_domain', 'general')
+            if type(domain) is not str or domain not in ('general', 'direct-local-only'):
+                raise ValueError('unsupported execution domain')
         if action in ('enable-lifecycle', 'worker-event', 'scheduler-tick', 'dispatch-next'):
             self._owner(state, actor)
             if action == 'enable-lifecycle':
@@ -203,7 +209,8 @@ class Store:
                     trial['snapshot']['sessions'].append(session)
                     try:
                         result = self._apply(trial, 'claim', dict(wp_id=wp['id'], worker_id=worker['id'],
-                            session_id=session['id'], lease_seconds=payload.get('lease_seconds', 300)), worker['principal'], at)
+                            session_id=session['id'], lease_seconds=payload.get('lease_seconds', 300),
+                            execution_domain=domain), worker['principal'], at)
                         errors = validate(trial['snapshot'], at)
                         if errors:
                             raise ValueError('; '.join(errors))
@@ -217,9 +224,16 @@ class Store:
             return {'assignment_id': None, 'rejected': rejected, 'model_calls': 0}
         if action == 'register-worker':
             self._owner(state, actor)
-            if 'worker_runtime' in state:
-                raise ValueError('runtime membership change requires explicit reviewed migration')
             worker = payload['worker']
+            enabled = 'worker_runtime' in state
+            if enabled and any(w['id'] == worker['id'] for w in snapshot['workers']):
+                raise ValueError('runtime identity is immutable; replay the original operation')
+            if (worker['provider_ref'] != payload['provider']['id'] or
+                    worker['host_ref'] != payload['host']['id'] or
+                    payload['session']['worker_ref'] != worker['id'] or
+                    payload['session']['provider_ref'] != worker['provider_ref'] or
+                    payload['session']['host_ref'] != worker['host_ref']):
+                raise ValueError('registration identity binding mismatch')
             if any(a['worker_ref'] == worker['id'] and a['state'] in LIVE for a in snapshot['assignments']):
                 raise ValueError('cannot reconfigure an assigned worker')
             for group, field in [('providers', 'provider'), ('hosts', 'host'), ('workers', 'worker'), ('sessions', 'session')]:
@@ -229,6 +243,9 @@ class Store:
                     raise ValueError('registered identity is immutable; register a new identity')
                 if not existing:
                     snapshot[group].append(copy.deepcopy(row))
+            if enabled:
+                status = lifecycle.admit(state, payload.get('runtime'), worker['id'], at)
+                return {'worker_id': worker['id'], 'status': status, 'execution_started': False}
             return {'worker_id': worker['id']}
         if action == 'claim':
             wp = find(snapshot['work_packages'], payload['wp_id'])
@@ -269,7 +286,7 @@ class Store:
             counter = state['tokens'].get(wp['id'], 0) + 1
             state['tokens'][wp['id']] = counter
             identity = 'assignment-' + uuid.uuid4().hex
-            workspace = 'workspace-' + uuid.uuid4().hex
+            workspace = (DIRECT_WORKSPACE_PREFIX if domain == 'direct-local-only' else 'workspace-') + uuid.uuid4().hex
             lease = (timestamp(at) + timedelta(seconds=seconds)).strftime('%Y-%m-%dT%H:%M:%SZ')
             assignment = dict(id=identity, wp_ref=wp['id'], worker_ref=worker['id'], session_ref=session['id'],
                               role_ref=wp['accountable_role'], authority_epoch=snapshot['project']['authority_epoch'],
@@ -311,6 +328,9 @@ class Store:
             verify_workspace(self.root, workspace, pristine=True)
             workspace['state'] = 'prepared'
             return {'workspace_id': workspace['id'], 'state': 'prepared'}
+        if action == 'recover-prepared':
+            from framework.local.handoff import recover_prepared_state
+            return recover_prepared_state(self.root, state, payload, actor, at)
         assignment, wp, worker = self._credential(state, payload, actor, at)
         if action in ('start', 'run-begin', 'submit'):
             lifecycle.claimable(state, worker['id'], at)
@@ -338,7 +358,18 @@ class Store:
             assignment['state'] = 'active'
             wp.update(state='in_progress', revision=wp['revision'] + 1)
             workspace['state'] = 'creating'
-            return {'workspace_id': workspace['id'], 'state': 'creating'}
+            # This versioned, committed receipt supports the narrow no-launch
+            # recovery path. All reviewed launchers persist run-begin before
+            # spawning a process or publishing an external request. Legacy
+            # receipts without this proof are never retroactively upgraded.
+            result = {'workspace_id': workspace['id'], 'state': 'creating'}
+            if workspace['id'].startswith(DIRECT_WORKSPACE_PREFIX):
+                from framework.local.handoff import binding
+                result.update(launch_protocol=LAUNCH_PROTOCOL, execution_domain='direct-local-only',
+                    assignment_id=assignment['id'], epoch=assignment['authority_epoch'], token=assignment['fencing_token'],
+                    work_binding_sha256=binding(wp),
+                    authorization_sha256=fingerprint(find(snapshot['authorizations'], wp['authorization_ref'])))
+            return result
         if action == 'submit':
             if assignment['state'] != 'active' or workspace['state'] not in ('prepared', 'finished'):
                 raise ValueError('workspace is not ready for controlled delivery')

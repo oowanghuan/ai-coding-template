@@ -1,6 +1,6 @@
 # V4 工作包与当前检查点
 
-版本：0.7，2026-11-28 UTC。此账本是本项目当前唯一人工维护任务状态源；新状态控制器仍在组件验证，尚未接管本项目调度。Issue #3 是授权/评审事件台账，Draft PR 是交付载体。历史章节保留当时状态；当前状态以 §0 与 §16 为准。
+版本：0.8，2026-11-28 UTC。此账本是本项目当前唯一人工维护任务状态源；新状态控制器仍在组件验证，尚未接管本项目调度。Issue #3 是授权/评审事件台账，Draft PR 是交付载体。历史章节保留当时状态；当前状态以 §0 与 §16 为准。
 
 ## 0. 交付目标、关键路径与当前动作
 
@@ -41,7 +41,11 @@ Adapter、Recovery、确定性调度/集成三线并行实施，独立上下文�
 
 Owner：`oowanghuan`。Project Lead：当前执行上下文，负责盘点、设计和作者自测。独立 Advisor/Reviewer 通过 [协作台账 #3](https://github.com/oowanghuan/ai-coding-template/issues/3) 提交针对完整 SHA 的意见；同一 GitHub 登录账号不自动证明上下文独立，评审记录须说明角色与对象。合入责任仍由 Owner 指定，本轮不合入。
 
-已授权：只读研究、隔离验证、独立分支、七项设计交付、公开性检查后推送和 Draft PR；追加 #3 接入/请审/复核评论；本机每 15 分钟轮询及原范围内意见处理；OD-01 的 WP-001/101 与 OD-07 的 WP-102/103 实现和普通修订。云端 Advisor 由其侧调度，本机不替代该侧运行证据。其他实现包、破坏性迁移、main 合入、发布及新增费用不在当前授权内。
+已授权：只读研究、隔离验证、独立分支、设计交付、公开性检查后推送和 Draft PR；
+追加 #3 接入/请审/复核评论；本机每 15 分钟轮询及原范围内运维；OD-01 的 WP-001/101、
+OD-07 的 WP-102/103，以及 OD-09 明确批准的 WP-301/302/303。按最新 Owner 指令，
+结合在用协作实践共同修订 V4 方案。云端 Advisor 由其侧调度，本机不替代该侧运行
+证据。Team 后端部署、第二台机器、破坏迁移、main 合入、发布和新增费用不在本批范围。
 
 V3 盘点基线：`8ed245f5a5c7adeebd31b3f31272164ee85a1d39`。首批设计基线 `1fbe382a2ffce858f15ba1769e3068054e589f96`；首批实现受审基线 `673d6baa13283180b342f446bcadc17ad66efaf9`。OD-07 在此基础上放行 WP-102/103，具体范围见 §7；OD-02 及其他后续包不在本次实现范围。
 
@@ -52,7 +56,7 @@ V3 盘点基线：`8ed245f5a5c7adeebd31b3f31272164ee85a1d39`。首批设计基�
 - 责任：Project Lead 负责交付；实际 Worker、独立 Reviewer、验收者及合入者开工前实名登记，当前后续包均为 `unassigned`。高风险包不得在独立性未落实时宣称 ready。
 - 范围：每包只修改表中允许范围；共同禁止修改私有项目、main、登录配置/密钥、旧历史、未授权云资源和其他包目录。旧文件只允许获批的明确修改清单。
 - 验收：必须同时通过正向、负向条件；证据含实际对象 SHA、环境、命令、退出码、用例统计、日志/产物指纹及独立结论。计划命令不属于运行记录。
-- 认领：本项目自身仍人工登记执行者、开始/到期时间、独立目录及范围锁；同一包最多一个写者。候选本地租约组件尚未获工程验收，不能拿它的自测结果宣称已强制管理本项目。
+- 认领：本项目自身仍人工登记执行者、开始/到期时间、独立目录及范围锁；同一 Assignment 或重叠修改范围最多一个写者。一个 WP 可拆为接口/文件范围不冲突的子任务并行。候选本地租约组件尚未获整体工程验收，不能拿自测结果宣称已强制管理本项目。
 - 回退：停止该包执行，保留 Worktree/未提交成果；以可审计 revert 回退已合入改动，不 reset/clean 丢弃用户资产。涉及状态格式的包还需导入前导出及指纹校验。
 
 ## 3. 当前第一轮包
@@ -79,9 +83,9 @@ WP-004 正向验收：读取 Issue 正文、核对 Owner 账号、真实运行�
 | WP-201 / 高 | Evidence Schema、受控取证及 Gate；质量模块/测试 | WP-101 已审接口与 WP-102 external 限定工程范围；精确基线/新增开工裁定见 §11 | 实际命令、对象 SHA、日志、统计可核对；真失败阻断 | 假报告、改日志、错 SHA、零测试、解析失败、跳过必测均不通过 |
 | WP-203 / 高 | 独立签认、Contract Registry、Deviation、影响复签；治理模块/模板/测试 | 模型/影响计算依赖 WP-101；签认生效/联合 Gate 等 WP-201 对应工程条件，见 §11；须 OD-08 放行 | 精确 SHA 评审、候选合入树一致、跨契约影响可定位 | 自验高风险、签认后关键变动、过期偏离、未处理影响不能静默过门 |
 | WP-301 / 中 | Claude/Codex 薄入口、统一 CLI、额度分类与有界恢复探测；适配器/入口/测试 | WP-101、WP-102、WP-201 验收 | 同源规则加载、CLI 认证/能力探测；区分供应商额度、项目预算、上下文容量；资源组冷却和重试时间可观察 | 不共享凭证、不绕额度限制；未知额度不当无限；Provider 完成不映射 accepted |
-| WP-302 / 高 | 持续检查点、接管、额度恢复重新准入及未知操作对账；恢复模块/测试 | WP-102、WP-201、WP-301 验收 | dirty/untracked 保全；恢复后检查 Owner/预算/授权/任务/租约并续做；旧 token 失效 | 已接管/完成不得夺回任务；暂停/撤权/预算耗尽不得被额度恢复覆盖；未知动作不得重发 |
-| WP-303 / 中 | Alpha 集成、机器接入首任务、真实双 CLI、额度暂停/续做及 Lite 用户路径；示例/集成测试/证据 | WP-103、WP-203、WP-301、WP-302 验收；不依赖 WP-501 | S01-Join-Alpha、S06 各 Alpha 子场景及 S12-Alpha；续做干预目标 0、逻辑交付 1；真实 CLI 与模拟结果分列 | 不把模拟额度恢复当真实限额恢复；真实条件不可得明确未测；Lite 不延后验收 |
-| WP-202 / 高 | GitHub 控制分支事务、Issue 投影、authority 切换；GitHub 状态适配/测试 | OD-02 批准；WP-101、WP-102 验收 | 真实 GitHub 竞争事务只有一方成功；单主切换可恢复 | Issue 标签/本地缓存不能另行派单；冲突不可盲目合并；不写 main |
+| WP-302 / 高 | 持续检查点、接管、额度恢复重新准入及未知操作对账；恢复模块/测试 | 依赖102/201受审接口，可与301并行；真实联合验收需301相应能力实测 | dirty/untracked 保全；恢复后检查 Owner/预算/授权/任务/租约并续做；旧 token 失效 | 已接管/完成不得夺回任务；暂停/撤权/预算耗尽不得被额度恢复覆盖；未知动作不得重发 |
+| WP-303 / 中 | Alpha 集成、机器接入首任务、真实双 CLI、额度暂停/续做及 Lite 用户路径；示例/集成测试/证据 | 依赖103/203受审接口，与301/302并行准备；对应接口和证据就绪后联合验收，不依赖501 | S01-Join-Alpha、S06 各 Alpha 子场景及 S12-Alpha；续做干预目标 0、逻辑交付 1；真实 CLI 与模拟结果分列 | 不把模拟额度恢复当真实限额恢复；真实条件不可得明确未测；Lite 不延后验收 |
+| WP-202 / 高 | GitHub 单一权威适配与恢复；OD-02 决定 Issue 单写试点或控制分支增强 | OD-02 批准；WP-101、WP-102 验收 | 精确证明所选模式的唯一写入与恢复；自动竞争能力单独验收 | 不双主；不把普通Issue先查后写冒充原子认领；不写 main |
 | WP-401 / 高 | PMO Ready Set、分派及可复现进度；协调模块/报表 | WP-202、WP-201、WP-302 验收 | 同一 revision 生成同一报表；匹配资源/范围/授权 | 重复触发/旧快照/未明授权不可派单；不按 PR 数算完成 |
 | WP-402 / 中 | 通用 Advisor 意见协议及真实可观测调度适配；协调模块/运维说明 | WP-401 验收；具体调度环境授权有效 | 评论 ID/版本/SHA 去重，接收/核查/反驳/复核闭环 | Prompt 定期检查不算自动化；未知账号不执行；无意见不刷屏 |
 | WP-403 / 高 | 第二台物理机器接入、额度组隔离/接管、云本地竞争与未知结果故障注入；集成测试 | WP-401、WP-402 验收 | S04-Join-Team、S06-Takeover-Team 及跨机负向场景；旧 Worker 恢复只回池，单有效执行者/单交付 | 同机模拟不能代替真实跨机；不重复派单/覆盖；无法确定结果冻结，不声称 exactly-once |
@@ -431,3 +435,376 @@ Lead/独立 Reviewer 负责核实安全可用的工具执行边界。二者均�
 首任务到工程 Gate 的路径仍是产品关键路径；本次纠错不新增阶段审批。
 修正代码为 `03e7eaaf14b62a3b48b970df0ed877d3b3aab33f`，原缺陷复现、作者回归与
 冻结版本独立验证分列于 [时序修正证据](evidence/worker-timing/README.md)。
+
+### 16.2 持续推进实践与当前下一步
+
+Owner 明确以在用的多会话协作实践作为 V4 优先输入；V4 组织现有 Coding Agent
+能力，不重造 Agent 引擎。联合方案写在 [架构 §14](V4_ARCHITECTURE.md#14-持续协调方案组织既有-coding-agents)，
+Team 权威后端取舍仍 proposed，不阻塞本地工作。当前 WP 文档继续是本项目唯一人工
+任务账本；不为驱动轮询而制造新 Issue 评论，也不复制另一套本地 todo 主状态。
+
+| 具体动作 | 当前状态 / 责任 | 下一项产物与边界 |
+|---|---|---|
+| WP-301 探测完成事件严格准入 | 实现与独立回归完成，限定技术 GO；Adapter 作者/非作者 Reviewer | 代码 `8901f4602b6588177a6ddc9e61520a10b838b8c5`，作者/独立24项各通过；不是原生响应认证 |
+| WP-301 原生执行边界 | 有限核查完成，native live 准入 blocked；Lead/独立边界 Reviewer | Codex同层进程隔离与完整有效工具面未证，Claude准确受限环境auth=false；[证据及解除条件](evidence/native-admission/README.md)，不重跑无变化失败配置、不新开模型会话 |
+| WP-303 首任务至 Gate 集成 | 固定文本成果接线获 Advisor 限定 GO；真实 CLI / 完整 Alpha 待验 | 受审 `d151b5367ed3a1ee65a2a046ad303688ab4dc97c`，代码 `7ca3622908937339e6e064fd8e6e49fff8c914a5`；独立14项边界测试及4个真实正反例；不将本条done视为整个WP-303 completed |
+| WP-302 已准备未启动任务恢复 | 专用本地执行域恢复获 Advisor 限定 GO；完整恢复产品待验 | 受审 `a04d279ba5923fb564b1036cd70652fd79a34309`，代码 `f31e751826ec68b0d4e6eb2868cc9ae21f8e1a04`；[真实结果含初批测试缺陷](evidence/prepared-recovery/README.md)，旧/默认工作区不追认 |
+| WP-004 无新评论时的续做 | 已自然投递、ACK、实际交付并在正常后继轮跳过done条目；运维作者/独立 Reviewer | 09:25失败保留；09:40读取恢复、选WP301，两条各一投递/ACK。仅本机正常有限路径，重启/撤权/额度恢复另验，四次上限不变 |
+| Team Issue主账本试点 | 方案待共同确定；Owner/Lead/Advisor | OD-02选定后单列实施，不先部署控制分支、第二台机器或新服务 |
+
+三条评审已核对：
+[7236742248](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7236742248)
+关闭 `f0923f77a3527b7069b50ce3bc1c55b89dda60b5` 两项同机时序问题；
+[7236743139](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7236743139)
+认可 `c2c8a4ad991bd4ead616cf033284ad15d9373634` 严格布尔准入；
+[7236743976](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7236743976)
+认可 `e338d1fb259d5784f318e9575e0e21888174a8c0` 的设计与隔离原型。
+均不替代 Owner 授权、真实供应商集成或完整产品验收。本次由 Advisor 通知接手，
+不是无新消息续做的成功记录。
+
+后续两条评审也已按评论 ID、请审记录及受审 SHA 核对：
+
+- [7238038580](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7238038580)
+  回应请求7237343558，对 `d151b5367ed3a1ee65a2a046ad303688ab4dc97c` 的固定文本
+  成果取证与质量检查给出限定GO；同时关闭本机样本中“无人工提醒取得成果且正常
+  后继轮未重派首项”的观察项。不覆盖整个WP-303、原生显式start或重启/额度恢复。
+- [7238039165](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7238039165)
+  回应请求7237985018，对 `a04d279ba5923fb564b1036cd70652fd79a34309` 的新建
+  direct-local-only未启动恢复给出限定GO；仅限固定新控制器/Driver、没有旧外部
+  启动许可的环境。初批测试hook失败和两项目标复跑记录保留，工程验收仍为false。
+
+两条均为只读技术评审，未新增候选代码执行，不构成开工、合入或发布授权。本轮
+只登记评审结论与关闭对应事件，不修改产品代码、有限计划状态或3/4激活预算。
+
+下面是同一账本内的有限计划片段，不是第二主状态。按既有 OD-05 运维和 OD-09
+开发授权，将公开待办批次设为 `running`；本地启用前仍须核对固定受审代码、已读
+事件、原会话、未决写入和保护配置。最多四次唤起，每次至少相隔 15 分钟，到期停用，
+同进度两次无成果不再唤起；配置和账本两处的更严限制优先。没有自动补充预算。
+本地缓存只保存投递/ACK/停用与恢复信息，实际成果以 Git/证据及工作包状态为准。
+本批首项是 WP-303 的受控合成任务至真实 Gate 接线；现有首份交付为文本，须校核
+实际产物并建立新的取证快照提交，不能用原基线冒充受测 SHA 或称代码工程验收。
+独立记录投递、模型 ACK、成果、复核及下一轮去重；真实 CLI 两样本仍单列待验。
+完成状态必须更新本分支本账本；如更新 Issue，须重新核对并刷新已读事件缓存，
+不能把因新评论保护阻断误报为任务完成去重。
+
+本批自然续做实绩：09:10 UTC 原调度在无新评论、pending=0 时选取首项，
+09:11 模型收到并 ACK；随后实现、测试、独立复核产出上述代码。固定文本成果
+经新的 Git 取证快照进入真实 Gate；错误但摘要自洽的内容、未注册自报通过、
+同一取证 intent 重放均按明确原因拒绝。证据见
+[首交付 Gate](evidence/first-delivery-gate/README.md) 和
+[自然续做](evidence/lead-continuation/live/README.md)。
+有限条目 `first-task-to-gate` 的 `done` 只表示这项合成文本接线交付，不改变
+WP-303 整体未验收、真实供应商未完成的事实。09:25 下一轮身份查询超时，
+随后09:40自然轮读取恢复并跳过done首项，选WP-301；本机正常后继去重已有实证，
+不将失败轮改写为通过。WP-301本轮静态及元数据核查已收口为native live blocked。
+
+本轮原生核查区分官方元数据、准确 tag 静态源码与历史真实探针；关闭 shell
+不会自动关闭其他工具，但也未据此断言文件工具权限旁路。产品代码未改，真实
+CLI准入仍缺有效隔离/工具闭包及同环境认证。解除条件见上述证据，不重新审批
+已批准OD-09，也不为维持轮询制造进度。
+
+WP-302 未启动任务恢复于10:10 UTC自然投递接手，已产出上述实现和独立实跑。
+启动路径审查先发现“无run记录”无法排除外部预授权任务，故改为认领时固定
+`direct-local-only`命名空间，受审外部客户端/Driver按实际路径拒绝该域，普通
+旧工作区不能追认。新路径要求完整版本化启动证明、无历史launch意图、授权和
+最终快照未变，再在同一权威锁内撤销旧权。真实文件保全、旧令牌失效、逻辑交付
+去重、已运行任务拒绝新路径及原有停止证明均已验证；不是任意进程不存在的证明。
+
+独立初批94方法中93通过，一个并发方法的两个子用例因测试hook漏参失败，原件
+保留。修正测试后，仅定向重跑该方法并新增“改规范再生成新快照”反例，两项通过；
+产品代码未变。两次各九项隔离探针通过，不写成一次95项全绿，也不把synthetic
+fixture等同真实供应商。准确输入、日志及限定范围见上述证据。
+
+10:25自然轮观察当前会话active后未写队列；三项各一投递，累计3/4次，没有充值。
+本有限条目标为done，WP-302整体、真实CLI、自然额度恢复和完整Alpha仍待验。
+上一轮收口时本批无ready条目，原生准入blocked保留具体解除条件；本轮针对代码
+实际缺口新增的后继定义见§16.3，不能为继续唤起凭空新增工作或伪造进度。
+生产轮询保持运行，新增有效Advisor事件按原机制处理。
+
+### 16.3 资源池差距的解决顺序（Owner 本轮追问后的具体执行切片）
+
+本节沿用 OD-09，不重建总体规划。输入是当前代码中的三个可定位缺口：
+`AdapterRegistry` 仅装配 planner/classifier；`dispatch-next` 按 ID 顺序选择合格资源；
+本节建立时 `register-worker` 在生命周期启用后拒绝登记（B1 实施结果见下文）。此前有限批次“无 ready”是当时清单
+收口状态，不表示后续已授权产品工作只能等待真实 CLI 阻塞解除。
+
+以下是并行工作划分，不声称已经启动新的执行上下文或完成实现。首个下一切片
+为 B1，进入同一有限续做清单；A/C 的设计准备可以同时进行，集成在接口明确后汇合。
+现有会话、执行权限、费用、第二台机器和发布限制均保持。四次唤起上限、原期限不变，
+此前已使用三次；达到上限时明确报告，不通过换批次或制造成果充值。
+
+| 线 / 原工作包 | 具体交付 | 可复核退出条件 |
+|---|---|---|
+| A / WP-301 | 将非执行 proposal 与真实 invocation 生命周期分开；受信装配提供 auth/probe/start/poll/stop/result 能力，unknown/unsupported 不能启动。认证只读对比合法原环境与准确受限环境，定位配置/身份访问差异，不能从受限 false 推断 Owner 未登录。执行边界独立核查，不重跑无变化的嵌套沙盒失败 | 同一通用调用协议驱动第三合成执行器，并保留可信 invocation/结果未知/停止证据；每家真实 CLI 单独完成一个受控任务后才标 provider_live。当前不启动新模型会话、复制凭证、放宽隔离；若新环境或权限确属必要，先提交准确方案和裁定项 |
+| B1 / WP-302 + Lead 共享状态集成 | 生命周期已启用时，通过单一原子登记动作加入一个新 Worker，补齐运行时记录、Host/工具/模型/额度组引用。只允许新成员加入，不在本切片迁移活跃 Worker 的身份/额度组，不建多机服务 | 无需重建整池；旧 Assignment/执行权及其他 Worker 保持；重复 operation 幂等；同身份冲突/陈旧 revision 拒绝；未验证认证授权或共享组受限时不能接单；合格新 Worker 可通过既有能力/范围/并发检查认领一个未占用任务。真实 Git/状态反例在 A01 下独立验证 |
+| B2 / WP-302 | 在通用 invocation 接口可用后接入持续检查点、真实健康/恢复观察器及有界周期控制；分开 Worker 状态与任务状态 | PMO 模型不可用时控制循环仍能工作；探测失败不等于恢复；旧写者未知不接管；恢复后的 Worker 不夺回已被接管任务。后台部署、真实调用和重启验收分别记录，现有 Lead 通知轮询不冒充产品 Worker 服务 |
+| C / WP-303 | 正常用户初始化后创建任务、登记资源、选择已有授权范围、领取、执行及取证的最小入口；先支持一个小型标准库项目。基础调度采用硬性资格过滤、明确任务优先级、负载及稳定平局规则 | 不要求手改权威 JSON；缺授权/认证/能力明确拒绝；两家真实 Worker 执行不同任务，再做一次中断与接管，最终一份有效逻辑交付并通过相应质量 Gate。只有固定文本检查时不能冒充代码工程验收 |
+
+调度实施先过滤能力、环境、权限、独立性、额度组和并发，再按项目显式优先级及
+当前负载选择。历史质量和成本没有可靠输入时保持 unknown，不能编造打分；首批
+只执行明确预算上限，不为建立质量/计费平台延迟本机闭环。后续拓扑关键路径和质量/
+成本优化单列真实评测，不把按 ID 选择说成已经实现。
+
+B1 的输入为 `framework/local/store.py`、`lifecycle.py`、现有 Worker/Host/Session
+Schema 和 `tests/lifecycle/`。共享状态/schema由Lead单一集成，恢复/Adapter接口
+不维护另一份资源权威。候选变更限于必要本地登记协议及测试，任何未知授权/预算/
+外部操作继续默认拒绝。验收证据需区分故障注入、真实固定进程、真实供应商；本节
+是可执行任务定义，实际实施结果及未验边界见下文。
+
+### 16.4 B1 动态登记实施与待复核项
+
+第四次自然续做投递于 12:55 UTC 调度，12:58:23 UTC 模型实际收到并 ACK；
+实现提交 `6c78c133fd483c210317e20d5d400ff6521eeeaf`。已补生命周期启用后的
+原子新成员登记，保留原有效执行权、额度组限制及未决恢复探测；重复 operation
+不重置状态，引用冲突/旧 revision 拒绝。未知认证/授权不可接单，新 Host 仍须
+符合工作包既有授权。没有创建第二状态源、迁移活跃身份或引入供应商二元分支。
+
+13 项新增合成场景在真实 Git/状态文件上通过；另一次完整所选回归108项全部通过
+（包含这13项），0 fail/error/skip，两次各9项隔离检查通过；准确源码、日志
+及边界见 [登记证据](evidence/live-membership/README.md)。当前为作者运行结果，
+独立复核和非作者复跑待完成，因此有限条目先记 `blocked`（等待独立复核），
+不记工程验收完成。后续 Advisor 可按准确 SHA 复核；测试隔离不等同独立验收。
+
+补充 Owner 对 CLI 的澄清：本机已有正常运行的 Coding Agent 实践。此前阻塞描述
+只指 V4 所测试的具体启动/隔离/认证组合，不能推导为“本机 CLI 不可用”。B1 是
+接入已有合法资源的控制器登记能力，尚不声称已完成真实 CLI 自动接入或自动恢复。
+
+本有限续做批次已用 **4/4** 次，未改上限、期限或批次以补充预算。生产 Advisor
+通知轮询保持原配置，但不得承诺同批还会有第五次无人提醒续做。现有授权的产品
+工作未因此宣布完成；下一检查点是 B1 独立复核，以及 WP-301/303 已有接口方案下
+的真实资源接入。没有新增费用、放宽权限、main 合入或发布。
+
+Advisor [7240075040](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7240075040)
+对受审 `457dd418dd38e68589eda0fa987282529e7a6286` 提出 busy 新成员准入 REVISE。
+本轮通过既有 Advisor 通知接手，不计为第五次 continuation。已实际复现原版本
+busy→available并获新任务执行权；最小修复提交
+`2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81` 拒绝忙碌新成员热登记，直至受信
+控制器实际确认空闲。slots=1、2均拒绝，原权威状态、已有任务、额度探测和未提交
+文件不变。原版本14方法中13通过/1反例失败；修复后同组14全过，两次各9项隔离
+检查通过，均为作者运行。证据见 [忙碌准入整改](evidence/live-membership/busy-admission/README.md)。
+原13/108项记录不冒充新SHA回归；本条仍blocked，等待Advisor复核及要求的非作者
+实跑。通知禁止新建/恢复其他模型会话，本轮没有绕过该限制获取复跑或充值激活预算。
+
+后续 Advisor [7240744826](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7240744826)
+对 `4a467caa4a0421e80fb31debb5ac8fa3704263b1` 给出忙碌准入源码整改限定GO。
+B1仅余非作者复跑补证，允许随下一批已有独立验证提交；暂无执行者时保留待验。
+本条仍blocked（非作者执行待验），不阻塞已获授权的WP-301/303工作，不重开已关闭
+的源码问题，也不把只读复核计为独立实跑。
+
+### 16.5 Owner 直接续做：通用调用及认证阻塞定位
+
+Owner 直接要求继续推进后，沿用OD-09推进WP-301，不把B1的独立复核等待扩大为
+其他授权工作的停止条件，也不充值4/4自动激活预算。实际进展是通用invocation组件，
+不是新增一套PMO或治理框架。
+
+最终实现 `d815cf4a542316d14524d3cbc2891e9fb8b2b0a7`：Registry显式绑定受信
+executor，提供start/status/stop/result；固定执行输入、实时授权回调、启动前
+意图持久化、同键及换键防重、未知结果不重启、真实进程输出/时限控制，保持
+direct-local-only专用域边界。新执行日志只记观察，不能授予或替代Store执行权。
+
+最终71方法全部通过（18项调用、53项适配器回归），9项隔离检查通过，32项输入
+逐blob绑定；作者实测，独立复核待完成。初批漏fixture和系统程序硬链接判断导致
+13个error，原件保留；中间65/68项通过不重复累加。证据及适用范围见
+[通用调用](evidence/invocation/README.md)。仍不等于真实供应商或完整Alpha验收。
+
+认证阻塞有实质缩小：两家原环境只读认证均为已登录；Claude原同组safe/restricted
+参数在最小环境失败，而只恢复原有USER即成功。单独LOGNAME/SHELL/PATH无效。
+没有复制凭证、修改登录或放宽权限；该历史遗漏不再作为待Owner审批的阻塞。
+真实调用仍需受信装配、Store授权/状态接线和准确执行边界，不能把认证成功冒充
+执行通过。下一安全切片是该接线和WP-303正常用户入口；B1复核单独继续，工作
+未被4/4通知预算视作完成。没有新建/恢复模型会话、费用、main合入或发布。
+
+### 16.6 跨 Adapter 启动防重整改
+
+Advisor [7241630681](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7241630681)
+对 `321666b7d9c00fd79b01fa24c0a3ad84de18a6d9` 给出单绑定接口源码限定GO、跨适配器
+防重REVISE。已接受并实测复现：旧版在恢复观察unknown后切到另一绑定仍启动第二次。
+旧三适配器成功fixture重复使用执行权，已改为独立任务，历史证据未覆盖或删除。
+
+修复实现 `d27b65724b821443d992ba1f58c2925504436090` 加入显式共享启动预留域，
+跨Adapter/控制器文件锁内先持久化预留；换日志目录、操作ID、token不释放旧预留。
+同一Registry拒绝混用预留域，另一个独立工作区可正常执行；各控制器仍须受信配置
+为同一共享域。未做生产装配或旧日志迁移，Store继续是任务权威。
+
+[真实固定进程证据](evidence/cross-adapter-launch/README.md)：修复前72方法中71过、
+1失败，原工作区启动2次；修复后77方法全过，原工作区只启动1次，独立工作区1次。
+两轮各9项隔离检查通过；修复后32项输入逐blob绑定实现。均为作者运行。
+[Advisor 7242413633](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7242413633)
+对 `a8b08e7b440398a4f8707dd590b077233aa84d19` 给出源码整改限定GO，关闭重复启动
+整改；条件仍为同一受保护持久预留域、历史未知操作先对账。非作者执行、安全续做
+及一次交付待验，不是工程验收。B1非作者补证另行保留。
+
+下一安全项仍为受信CLI工厂/Store实时授权状态接线与WP-303正常入口。本意见处理
+不增开模型会话、不扩充4/4激活预算、不改权限或费用、不合入main或发布。
+
+### 16.7 Store 实时执行权接线
+
+Owner 盒盖后明确要求继续，沿用 OD-09 推进WP-301；未重启任务或改动旧4/4自动
+唤起预算。实现 `64704dca23d73a73c433d34d8723d4b6a661fc85` 新增
+`framework/adapters/store_binding.py`：启动前核对现有Store的认领/租约、工作包
+与规范授权、预算、Worker/Host/共享额度和真实Git工作区，原子保存启动意图后
+才允许通用调用入口继续。Store提交后丢回执或下一步失败时保留未明状态。
+
+[实测记录](evidence/store-binding/README.md)：初轮87过，最终88过（11新接线+77
+原回归），0 fail/error/skip；两轮各9项隔离检查通过，最终35项输入绑定提交。
+实际Popen前观察到Store已有唯一启动意图；额度受限组不能启动，独立组仍运行。
+作者运行。[Advisor 7242414495](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7242414495)
+对 `4f29feed191a964ce65919db52eac7148c3f0693` 给出单机启动前检查和意图落盘的
+源码限定GO；非作者执行仍待补，不冒充工程验收。
+
+最后一次授权检查返回到实际创建进程之间的撤权窗口尚未验证；当前反例只覆盖
+最后检查之前的撤权。将该窗口及启动后的撤权、owned进程停止、成果保全、终态
+对账列入 [S06-Launch-Revoke-Window](V4_ACCEPTANCE_PLAN.md)；状态not_run，不能
+用启动前GO替代持续授权或真实CLI准入。已有授权内实现无需重复审批。
+
+不自动按主进程退出释放执行权；没有部署真实CLI或持续运行控制器。下一切片为
+受信工厂/终态对账、运行中停止与检查点、WP-303正常入口。历史跨Adapter整改、
+B1非作者复跑分别保持各自待复核范围，不阻塞其他已授权代码工作。
+
+### 16.8 运行中撤权与结果对账；续做安排
+
+Owner再次直接要求继续推进，本轮沿OD-09完成运行中执行权监督与终态幂等入账。
+实现 `d740ee44158f3e12e9ddbc7f4e5ca5be5956992f`，
+[证据](evidence/runtime-control/README.md)：最终98方法通过（10新增+原88），
+9项隔离检查通过。最后检查后/实际Popen前注入额度限制，真实启动1次、约0.264秒
+停止；运行中撤权、租约过期、真实Store锁阻塞、结果落盘后丢回执均有执行记录。
+主进程停止不代表全部写者停止，Store保持unknown、阻止冲突接管；保留dirty成果。
+§16.7描述的是上一提交的未测状态；当前S06-Launch-Revoke-Window为部分验证。
+独立复核、完整写者停止证明、最终恢复至一次交付和真实供应商集成仍待补。
+
+旧批local-alpha-next-1的4次既有会话激活已使用；旧事件/ACK不删除、不重置。
+旧清单保留在[历史快照](evidence/runtime-control/previous-ready-batch.json)，其中
+B1、跨Adapter和Store非作者复跑仍为待验，不能被新清单覆盖成已通过。
+
+根据Owner本次“那你在等什么？没有持续往前推进”的直接继续指令，Lead补登记
+local-alpha-next-2：最多4次追加既有会话激活（累计上限由4至8），仍截止于
+2026-11-29T08:00:00Z，冷却900秒。次数是Lead对既有授权的有界执行安排，
+不是Owner新增阶段或费用裁定。只推进以下3个有限切片；前两项接口/文件范围可
+并行推进，第三项依赖接线完成。无需等待非关联源码评审才能做其他已授权工作。
+不创建/恢复其他模型会话、不改执行权限、不新增费用、不合入main或发布。
+未知投递、Owner暂停、账本变化、无实际进展及到期仍会阻止自动投递；不能自充预算。
+配置生效与自然轮询实况另记仓外操作journal及#3，文档登记不冒充实际唤醒证据。
+
+### 16.9 固定CLI工厂与资源选择接线
+
+19:10 UTC自然轮询投递本切片，19:11:14 UTC实际收到并ACK；没有Owner再次提醒。
+轮询记录add后会话busy、未另行start，真实接收与调用状态分别保留在
+[观察](evidence/fixed-factory/continuation-observation.json)。累计第5次激活，
+当前批第1次；预算/截止时间未改。ACK本身不算完成。
+
+实现 `a1a716a0460ee9c99defb4ae868949f04341c7fb` 新增 `framework/adapters/factory.py`，将固定执行配置、
+资源选择、Store执行权及受信边界回调装配到原Registry。首批两家CLI包装器从
+同一资源描述符生成模型参数，不将工具与模型供应商绑定一对一；第三工具使用
+通用工厂，Scheduler/状态机/Recovery无修改。注册不启动或写任务状态；边界
+检查缺失/未知/拒绝/异常会阻止启动，运行中撤销也触发owned停止，不能绕过Store。
+
+[实测](evidence/fixed-factory/README.md)：109方法通过（11新增+原98），
+0失败/异常/跳过、退出0，9项隔离检查通过、38份输入绑定。原生CLI只验证参数
+装配；公共工厂使用真实固定Python进程、合成资源状态，终态入账与重复操作对账
+已测。没有新建/恢复模型会话、真实供应商调用或部署。
+
+本有限切片标done代表代码与正反例已交付，独立复核仍待补，不是WP-301或Alpha
+验收。真实边界检查器/CLI准入、完整写者停止证明和恢复至一次交付仍待验。
+下一个就绪项为WP-302运行终态与检查点集成，不等待无关评审完成再开工。
+
+### 16.10 监督初始化REVISE整改与工厂源码GO
+
+实际接收两条后台评审通知后，于19:41:22 UTC分别ACK；核对79条评论、Git、
+发布journal与原SHA，没有重复回复或未知写入。接受Advisor7244707503发现：
+选择器/管道注册在try外，线程初始化失败可能留下无人监督进程。
+
+[复现与修复证据](evidence/supervisor-initialization/README.md)：原实现111方法中
+109过、2失败，两个注入用例均实测主进程仍在运行；测试外壳随后按owned句柄
+清理，不计作产品停止。实现 `d37f8bb8656d33e4a86e1d0a48a23cabe0bf5474`
+将取得进程句柄后的线程构造/启动、选择器和管道初始化置于异常保护中。
+最终114方法全过（5新故障+原109），五个初始化故障均实际停止主进程、保持
+unknown并阻止重新启动/释放；9项隔离检查通过、39份输入绑定。待Advisor复核。
+
+[Advisor7244708222](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7244708222)
+对 `6326260e8f0f1a808a121db7be1ee1b024dca0a7` 的固定参数装配和工厂注册给出
+源码限定GO；仅关闭该源码评审，非作者执行待补，运行监督按上述REVISE另行
+复核。真实CLI/生产边界检查器/全写者停止/检查点接管至一次交付/Alpha仍待验。
+
+本轮无模型会话、费用、权限、主分支或发布变化。续做预算保持累计5/8、当前批
+1/4；下一就绪项仍为WP-302运行终态与检查点集成，不因等待本轮复核停掉其他
+已授权工作，也不以GO自动新增执行授权。
+
+### 16.11 运行结果与检查点保全
+
+19:55 UTC自然轮询投递WP-302有限项，19:55:31 UTC实际ACK；累计第6次、
+当前批第2次，未追加预算。原监督器修复仍按其请审SHA待复核，不重复处理旧意见。
+
+实现 `e49125008a6d3ef2cea683f25bc4fa784b7c057d` 提供Registry检查点入口，读取受保护调用记录、
+核对可用输出，并在原Store事务中暂停工作包、撤销当前Assignment，保存实际
+文件快照、未知操作和幂等回执。复用原扫描与内容指纹；unknown不清除，不能按
+主进程退出或快照保存授予接管权，其他Worker继续执行无关任务。
+
+[证据](evidence/invocation-preservation/README.md)：首轮125中118过/7异常，
+原协议拒绝将未知操作挂在in_progress任务；修正为同事务暂停/撤权，没有放宽
+协议。最终125全过（11新+原114），9项隔离检查通过、41份输入绑定；真实快照
+产物和manifest指纹保留。dirty/untracked恢复至验证目录、旧执行权拒绝、独立
+任务实际退出0、回执丢失/晚到字节/篡改等反例均实测。作者运行，独立复核待补。
+
+有限项runtime-checkpoint-integration标done仅代表运行观察→保全→接管阻断
+已交付。完整写者停止、未知外部效果对账、真正重新分配与恢复至一次交付、真实
+CLI及整个WP-302仍待验。下一ready项为WP-303本地控制入口，不需要重复开工审批。
+
+<!-- v4-continuation-ready:v1 -->
+```json
+{
+  "version": 1,
+  "batch_id": "local-alpha-next-2",
+  "scope_ref": "OD-09",
+  "control": "running",
+  "expires_at": "2026-11-29T08:00:00Z",
+  "activation_budget": 4,
+  "items": [
+    {
+      "id": "native-factory-binding",
+      "wp_id": "WP-301",
+      "status": "done",
+      "depends_on": [],
+      "progress": {
+        "checkpoint": "a1a716a0460ee9c99defb4ae868949f04341c7fb",
+        "milestone": "Advisor7244708222 scoped source GO on6326260 for fixed recipes and factory registration; author109 includes98, non-author execution pending. Supervisor initialization REVISE7244707503 reproduced and fixed separately (author114); awaiting re-review. Native live/Alpha unaccepted; finite factory item remains done.",
+        "evidence_refs": [
+          "docs/v4/evidence/fixed-factory/README.md",
+          "framework/adapters/factory.py"
+        ]
+      }
+    },
+    {
+      "id": "runtime-checkpoint-integration",
+      "wp_id": "WP-302",
+      "status": "done",
+      "depends_on": [],
+      "progress": {
+        "checkpoint": "e49125008a6d3ef2cea683f25bc4fa784b7c057d",
+        "milestone": "Provisional invocation checkpoint integrated with exact Store launch identity, atomic assignment fencing/task pause, pinned artifacts and idempotent receipts. Author final125=11new+114,9canaries,41inputs; initial7 consistency errors retained. Unknown writer/effects block handoff; full native takeover and independent review pending.",
+        "evidence_refs": [
+          "docs/v4/evidence/invocation-preservation/README.md",
+          "framework/adapters/preservation.py"
+        ]
+      }
+    },
+    {
+      "id": "worker-control-entry",
+      "wp_id": "WP-303",
+      "status": "ready",
+      "depends_on": [
+        "native-factory-binding",
+        "runtime-checkpoint-integration"
+      ],
+      "progress": {
+        "checkpoint": "d740ee44158f3e12e9ddbc7f4e5ca5be5956992f",
+        "milestone": "Wire normal local start/status/result flow to the fixed factory and recovery contracts, with dry-run and fail-closed authority checks. Test isolated fixtures; no Web GUI, Enterprise expansion, deployment or model session.",
+        "evidence_refs": [
+          "docs/v4/evidence/runtime-control/README.md",
+          "framework/adapters/README.md"
+        ]
+      }
+    }
+  ]
+}
+```
+<!-- /v4-continuation-ready -->

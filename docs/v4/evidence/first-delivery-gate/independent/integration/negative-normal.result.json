@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<independent-coordinator>/approved-host-helper.py",
+    "--source",
+    "<workspace>",
+    "--dependencies",
+    "<python-site>"
+  ],
+  "exit_code": 0,
+  "finished_at": "2026-11-28T09:28:41.942248+00:00",
+  "outcome": "observed_exit",
+  "pid": 84219,
+  "started_at": "2026-11-28T09:28:13.353501+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "ff4b7230ee40f88f01a7cc0d886efaf54dda22cbf2e28d53b483d847c6785c56"
+}

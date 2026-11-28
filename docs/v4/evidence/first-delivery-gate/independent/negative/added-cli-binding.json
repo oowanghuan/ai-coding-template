@@ -1,0 +1,7 @@
+{
+  "commit": "7ca3622908937339e6e064fd8e6e49fff8c914a5",
+  "path": "scripts/v4_quality.py",
+  "sha256": "e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1",
+  "all_match": true,
+  "reason": "separately pinned addition to default-mode negative fixture; original28-input manifest retained"
+}

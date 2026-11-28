@@ -1,0 +1,71 @@
+{
+  "actor": "author",
+  "provider_calls": 0,
+  "evidence_level": "synthetic_state_real_fixed_process",
+  "independent_review": "pending",
+  "runs": {
+    "initial": {
+      "counts": {
+        "run": 125,
+        "failures": 0,
+        "errors": 7,
+        "skipped": 0
+      },
+      "exit_code": 1,
+      "started_at": "2026-11-28T19:59:34.103335+00:00",
+      "finished_at": "2026-11-28T20:04:55.733500+00:00",
+      "source_unchanged": true,
+      "frozen_unchanged": true,
+      "canaries": {
+        "empty_candidate_anchor": true,
+        "candidate_anchor_unlink": true,
+        "trusted_write": true,
+        "source_write": true,
+        "trusted_hardlink": true,
+        "outside_read": true,
+        "outside_write": true,
+        "network": true,
+        "credentials_absent": true
+      },
+      "observations": []
+    },
+    "final": {
+      "counts": {
+        "run": 125,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "started_at": "2026-11-28T20:05:44.145867+00:00",
+      "finished_at": "2026-11-28T20:11:46.136892+00:00",
+      "source_unchanged": true,
+      "frozen_unchanged": true,
+      "canaries": {
+        "empty_candidate_anchor": true,
+        "candidate_anchor_unlink": true,
+        "trusted_write": true,
+        "source_write": true,
+        "trusted_hardlink": true,
+        "outside_read": true,
+        "outside_write": true,
+        "network": true,
+        "credentials_absent": true
+      },
+      "observations": [
+        {
+          "dirty_tracked_restored": true,
+          "untracked_restored": true,
+          "unknown_operations": 1,
+          "workspace_state": "unknown",
+          "work_package_state": "paused",
+          "assignment_state": "revoked",
+          "independent_process_exit_code": 0,
+          "exported_manifest_sha256": "d484f6d0fcd9279f6b80efaabea37d4d1c8620bcdaeb9326fb912e32c0c50ac5",
+          "recovery_ready": false,
+          "engineering_accepted": false
+        }
+      ]
+    }
+  }
+}

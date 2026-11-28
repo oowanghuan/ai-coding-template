@@ -1,0 +1,128 @@
+{
+  "repository": "openai/codex",
+  "ref": "rust-v0.169.0",
+  "acquisition": "GitHub connector read-only exact-ref fetch",
+  "files": [
+    {
+      "path": "core/src/tools/handlers/view_image.rs",
+      "github_blob_sha1": "4add23f9508ea728efada24a9c439821b9f1b798",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/core/src/tools/handlers/view_image.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "2e4894c4f180312ae70cbdae5c946ccf4d7a4aea8ce3a8ca5043cece1d5055c4",
+      "local_size": 19782,
+      "local_git_blob_sha1": "36b775b52089746c1053ab8460b505f9b149c2de",
+      "local_matches_remote_git_blob": false,
+      "capture_difference": "one-extra-final-newline"
+    },
+    {
+      "path": "core/src/tools/handlers/apply_patch.rs",
+      "github_blob_sha1": "a25682bbb4d5aa1f65625b8d5db4f90bc052f566",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/core/src/tools/handlers/apply_patch.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "f27f758282f93b4988d2a087ef5f3894f3662d73cd8af4480201f6b4a2737a92",
+      "local_size": 23024,
+      "local_git_blob_sha1": "0a316c477e2b6032a6a4c6cc633b322eb3822949",
+      "local_matches_remote_git_blob": false,
+      "capture_difference": "one-extra-final-newline"
+    },
+    {
+      "path": "core/src/tools/runtimes/apply_patch.rs",
+      "github_blob_sha1": "bda1a9bb7420fc1384bf33d6066507cb4879083a",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/core/src/tools/runtimes/apply_patch.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "73491f9d12c914137cd2841a034ec11d2f299fc1ee88f283f6dffc0e78828044",
+      "local_size": 10067,
+      "local_git_blob_sha1": "b293e80da43c6f893127c347db59eb14539ea4e8",
+      "local_matches_remote_git_blob": false,
+      "capture_difference": "one-extra-final-newline"
+    },
+    {
+      "path": "core/src/apply_patch.rs",
+      "github_blob_sha1": "9a3aab9a70d335a5358b3825d8c593fe8b8714c9",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/core/src/apply_patch.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "abccf99974b978292fd9d4c6df8a9d130806b0e94a6ad8b0bef98a1ead1636bf",
+      "local_size": 2949,
+      "local_git_blob_sha1": "990200c59abf6fce7729cb27fe0a168279e84653",
+      "local_matches_remote_git_blob": false,
+      "capture_difference": "one-extra-final-newline"
+    },
+    {
+      "path": "core/src/tools/handlers/mod.rs",
+      "github_blob_sha1": "da4da19939255755fd31634cd8aa72036ba069ab",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/core/src/tools/handlers/mod.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "945fe8e87effd827e9224754c6c9a4c6769412cfc0181be160d9d3c60fe6be57",
+      "local_size": 25302,
+      "local_git_blob_sha1": "7b0cf051caa6a749e570f29ef69148c0416e11c7",
+      "local_matches_remote_git_blob": false,
+      "capture_difference": "one-extra-final-newline"
+    },
+    {
+      "path": "exec-server/src/lib.rs",
+      "github_blob_sha1": "4ef470c1491c7f4cf33c109bd2ad6d1112c6f34d",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/exec-server/src/lib.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "ae2b73a1a1e3690324d143d530d1af443b67f712004ec62f30b303ab282ca322",
+      "local_size": 10235,
+      "local_git_blob_sha1": "174b81d92fc1e03ec9b20ffbb9b4c825455a83e8",
+      "local_matches_remote_git_blob": false,
+      "capture_difference": "one-extra-final-newline"
+    },
+    {
+      "path": "exec-server/src/sandboxed_file_system.rs",
+      "github_blob_sha1": "f592edfbf374159b1e0f42b1e5fe8305c45d1e78",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/exec-server/src/sandboxed_file_system.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "74173bd0f6769a903012c3f2e82ebf68b19aeebe59da112693ea8fd6f50fbf56",
+      "local_size": 15450,
+      "local_git_blob_sha1": "851e975e35ced4015dac7c04921cb812d0448ada",
+      "local_matches_remote_git_blob": false,
+      "capture_difference": "one-extra-final-newline"
+    },
+    {
+      "path": "exec-server/src/local_file_system.rs",
+      "github_blob_sha1": "abe2a0a6f13e715541eafc11b4ba6a37b6bbf467",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/exec-server/src/local_file_system.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "654bc3fae86143e22c10593f35849f207b62fc9e2ade731f8a4b7beed2681f6d",
+      "local_size": 47696,
+      "local_git_blob_sha1": "353cf8642ee6c30f3c9836e2a3038a40c3493ee4",
+      "local_matches_remote_git_blob": false,
+      "capture_difference": "one-extra-final-newline"
+    },
+    {
+      "path": "exec-server/src/sandboxed_file_open.rs",
+      "github_blob_sha1": "bf21a065cc2b68e946583959a65979e0d3ed0d96",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/exec-server/src/sandboxed_file_open.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "e48661dc8b701a63d7153167f212d5ba5df7854b0b9d9fa9b25de8fa20a8033c",
+      "local_size": 7959,
+      "local_git_blob_sha1": "e61ed4157d54b3615aafa4f46ea74633d14eebda",
+      "local_matches_remote_git_blob": false,
+      "capture_difference": "one-extra-final-newline"
+    },
+    {
+      "path": "file-system/src/lib.rs",
+      "github_blob_sha1": "4756de18de64f8459d01dd619841db6e69d0be90",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/file-system/src/lib.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "66cb4904500d911da52341f26c96a62eb3679b2ac417790fc9bb04d69ad0ecaa",
+      "local_size": 27412,
+      "local_git_blob_sha1": "6a5031edb5bf07b5839ebdf569ba32e3344b7660",
+      "local_matches_remote_git_blob": false,
+      "capture_difference": "one-extra-final-newline"
+    },
+    {
+      "path": "exec-server/src/fs_sandbox.rs",
+      "github_blob_sha1": "cc0dd859a685c0e5276644e82d8548deec1273f2",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/exec-server/src/fs_sandbox.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "b40e064d8c496a43d0ae83c2382f9ad94cf90f6b41dd30cff5894a441e33564c",
+      "local_size": 40175,
+      "local_git_blob_sha1": "3b92c75abbdeddaac7078a8a81c22389893e96aa",
+      "local_matches_remote_git_blob": false,
+      "capture_difference": "one-extra-final-newline"
+    }
+  ]
+}

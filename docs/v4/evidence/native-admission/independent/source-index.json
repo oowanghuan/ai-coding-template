@@ -1,0 +1,128 @@
+{
+  "repository": "openai/codex",
+  "ref": "rust-v0.169.0",
+  "acquisition": "GitHub connector read-only exact-ref fetch",
+  "files": [
+    {
+      "path": "core/src/tools/handlers/view_image.rs",
+      "github_blob_sha1": "4add23f9508ea728efada24a9c439821b9f1b798",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/core/src/tools/handlers/view_image.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "95cca966cfd5f4044368eb1243d2b88dacf689c5b25e71b59267ce34c8fd1577",
+      "local_size": 19781,
+      "local_git_blob_sha1": "4add23f9508ea728efada24a9c439821b9f1b798",
+      "local_matches_remote_git_blob": true,
+      "capture_normalization": "Removed exactly one apply_patch-added final newline; Git blob SHA1 matched before replacement."
+    },
+    {
+      "path": "core/src/tools/handlers/apply_patch.rs",
+      "github_blob_sha1": "a25682bbb4d5aa1f65625b8d5db4f90bc052f566",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/core/src/tools/handlers/apply_patch.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "126ea64fffbcc48e1a2bdb4ed05e4afaa04d770f510f52b14d0ea2e0b375c3b5",
+      "local_size": 23023,
+      "local_git_blob_sha1": "a25682bbb4d5aa1f65625b8d5db4f90bc052f566",
+      "local_matches_remote_git_blob": true,
+      "capture_normalization": "Removed exactly one apply_patch-added final newline; Git blob SHA1 matched before replacement."
+    },
+    {
+      "path": "core/src/tools/runtimes/apply_patch.rs",
+      "github_blob_sha1": "bda1a9bb7420fc1384bf33d6066507cb4879083a",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/core/src/tools/runtimes/apply_patch.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "3d6faf33c539ec536dad58d12e9a2eb4cdd50e9e92cc83605fb528d2bdf11397",
+      "local_size": 10066,
+      "local_git_blob_sha1": "bda1a9bb7420fc1384bf33d6066507cb4879083a",
+      "local_matches_remote_git_blob": true,
+      "capture_normalization": "Removed exactly one apply_patch-added final newline; Git blob SHA1 matched before replacement."
+    },
+    {
+      "path": "core/src/apply_patch.rs",
+      "github_blob_sha1": "9a3aab9a70d335a5358b3825d8c593fe8b8714c9",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/core/src/apply_patch.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "f37e3773a9c18bf8ffb6115974512831dae3553e24bb72678bbcbda48fe9815d",
+      "local_size": 2948,
+      "local_git_blob_sha1": "9a3aab9a70d335a5358b3825d8c593fe8b8714c9",
+      "local_matches_remote_git_blob": true,
+      "capture_normalization": "Removed exactly one apply_patch-added final newline; Git blob SHA1 matched before replacement."
+    },
+    {
+      "path": "core/src/tools/handlers/mod.rs",
+      "github_blob_sha1": "da4da19939255755fd31634cd8aa72036ba069ab",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/core/src/tools/handlers/mod.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "2a831f17ba0c74a3aa0750bd7607d1352a3de6cfc19a54b3e4205972fba31976",
+      "local_size": 25301,
+      "local_git_blob_sha1": "da4da19939255755fd31634cd8aa72036ba069ab",
+      "local_matches_remote_git_blob": true,
+      "capture_normalization": "Removed exactly one apply_patch-added final newline; Git blob SHA1 matched before replacement."
+    },
+    {
+      "path": "exec-server/src/lib.rs",
+      "github_blob_sha1": "4ef470c1491c7f4cf33c109bd2ad6d1112c6f34d",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/exec-server/src/lib.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "c92b8b11b84e90b8091ad48a84a7f0dd222aa39aaf335235e140851c5111008a",
+      "local_size": 10234,
+      "local_git_blob_sha1": "4ef470c1491c7f4cf33c109bd2ad6d1112c6f34d",
+      "local_matches_remote_git_blob": true,
+      "capture_normalization": "Removed exactly one apply_patch-added final newline; Git blob SHA1 matched before replacement."
+    },
+    {
+      "path": "exec-server/src/sandboxed_file_system.rs",
+      "github_blob_sha1": "f592edfbf374159b1e0f42b1e5fe8305c45d1e78",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/exec-server/src/sandboxed_file_system.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "b61228539ffbfa0c46635647ff0393d07f94136936f8e82b6a15eb03d16b0263",
+      "local_size": 15449,
+      "local_git_blob_sha1": "f592edfbf374159b1e0f42b1e5fe8305c45d1e78",
+      "local_matches_remote_git_blob": true,
+      "capture_normalization": "Removed exactly one apply_patch-added final newline; Git blob SHA1 matched before replacement."
+    },
+    {
+      "path": "exec-server/src/local_file_system.rs",
+      "github_blob_sha1": "abe2a0a6f13e715541eafc11b4ba6a37b6bbf467",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/exec-server/src/local_file_system.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "cdde849d2bd265cf199bb01bd9051060d3c9576d2b6757104d52324bf6dcaea2",
+      "local_size": 47695,
+      "local_git_blob_sha1": "abe2a0a6f13e715541eafc11b4ba6a37b6bbf467",
+      "local_matches_remote_git_blob": true,
+      "capture_normalization": "Removed exactly one apply_patch-added final newline; Git blob SHA1 matched before replacement."
+    },
+    {
+      "path": "exec-server/src/sandboxed_file_open.rs",
+      "github_blob_sha1": "bf21a065cc2b68e946583959a65979e0d3ed0d96",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/exec-server/src/sandboxed_file_open.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "f98e6d84a82455b8c5d065645099e9c7175c8440c8feaa9efac372134112daa6",
+      "local_size": 7958,
+      "local_git_blob_sha1": "bf21a065cc2b68e946583959a65979e0d3ed0d96",
+      "local_matches_remote_git_blob": true,
+      "capture_normalization": "Removed exactly one apply_patch-added final newline; Git blob SHA1 matched before replacement."
+    },
+    {
+      "path": "file-system/src/lib.rs",
+      "github_blob_sha1": "4756de18de64f8459d01dd619841db6e69d0be90",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/file-system/src/lib.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "08d816c1d6dbd3a246fd3fc7a25a6bc8a39b75f3d88a0864d17f5352ac9259ad",
+      "local_size": 27411,
+      "local_git_blob_sha1": "4756de18de64f8459d01dd619841db6e69d0be90",
+      "local_matches_remote_git_blob": true,
+      "capture_normalization": "Removed exactly one apply_patch-added final newline; Git blob SHA1 matched before replacement."
+    },
+    {
+      "path": "exec-server/src/fs_sandbox.rs",
+      "github_blob_sha1": "cc0dd859a685c0e5276644e82d8548deec1273f2",
+      "source_url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/exec-server/src/fs_sandbox.rs",
+      "ref": "rust-v0.169.0",
+      "local_sha256": "4fdae8db60cd865bd5965dbe38b24f15207a3f6f4fe01cf403298f12d0f6fa99",
+      "local_size": 40174,
+      "local_git_blob_sha1": "cc0dd859a685c0e5276644e82d8548deec1273f2",
+      "local_matches_remote_git_blob": true,
+      "capture_normalization": "Removed exactly one apply_patch-added final newline; Git blob SHA1 matched before replacement."
+    }
+  ]
+}

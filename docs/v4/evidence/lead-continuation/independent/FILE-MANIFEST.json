@@ -1,0 +1,74 @@
+{
+  "files": [
+    {
+      "raw_source_alias": "canary-result.json",
+      "public_path": "canary-result.json",
+      "raw_sha256": "71167aefd48b9f3d13e10f9a2ae07c21f72bb9299169db4c5822abad1d90e678",
+      "public_sha256": "5d78d94a2e1e5268ffcade3f888aa75488e7c57775c28b3f4522213335003679",
+      "transformation": "machine paths replaced; actual result/count fields retained"
+    },
+    {
+      "raw_source_alias": "canary.py",
+      "public_path": "canary.py",
+      "raw_sha256": "08357c7eb6d0ea278f7d040799b22a1e9d187ab8193963428e2943fee997f012",
+      "public_sha256": "08357c7eb6d0ea278f7d040799b22a1e9d187ab8193963428e2943fee997f012",
+      "transformation": "machine paths replaced; actual result/count fields retained"
+    },
+    {
+      "raw_source_alias": "canary.stderr.log",
+      "public_path": "canary.stderr.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; actual result/count fields retained"
+    },
+    {
+      "raw_source_alias": "canary.stdout.log",
+      "public_path": "canary.stdout.log",
+      "raw_sha256": "1055ad3a59638574ee3bf64669a0a9617706785df53c1b7bc8f35d22297de52e",
+      "public_sha256": "1055ad3a59638574ee3bf64669a0a9617706785df53c1b7bc8f35d22297de52e",
+      "transformation": "machine paths replaced; actual result/count fields retained"
+    },
+    {
+      "raw_source_alias": "input-manifest.json",
+      "public_path": "input-manifest.json",
+      "raw_sha256": "e1f5529038650665cfbfaf641f6a1d7a8f800490cd6f582973b2a6a88171613b",
+      "public_sha256": "e1f5529038650665cfbfaf641f6a1d7a8f800490cd6f582973b2a6a88171613b",
+      "transformation": "machine paths replaced; actual result/count fields retained"
+    },
+    {
+      "raw_source_alias": "marker",
+      "public_path": "marker",
+      "raw_sha256": "9b2bbce6c72dd9bbd9c7a9976d5d76d1fcc2bb9832dec246375bb92006beccc3",
+      "public_sha256": "9b2bbce6c72dd9bbd9c7a9976d5d76d1fcc2bb9832dec246375bb92006beccc3",
+      "transformation": "machine paths replaced; actual result/count fields retained"
+    },
+    {
+      "raw_source_alias": "profile.sb",
+      "public_path": "profile.sb",
+      "raw_sha256": "fe17d224493b428731d1f15edcda06e3d05007e569768b7da4df8ab271074918",
+      "public_sha256": "f7f09ed7d1e9951f77745dc1b3cef74d2cace5a6cf4ae4251ede2a58a4a53dba",
+      "transformation": "machine paths replaced; actual result/count fields retained"
+    },
+    {
+      "raw_source_alias": "result.json",
+      "public_path": "result.json",
+      "raw_sha256": "2f5f26b2d8f277e5a4fa1fe907225a833f933683672f2c835f38ab3c8869bf78",
+      "public_sha256": "b8925cf6d8c913276336c9067780fd0d5dc3ac3ddda945b868427aa462725450",
+      "transformation": "machine paths replaced; actual result/count fields retained"
+    },
+    {
+      "raw_source_alias": "stderr.log",
+      "public_path": "stderr.log",
+      "raw_sha256": "e1ca977004a674f829008da5a536c2a38ec2c5aea6bcde45834c0bce6e602905",
+      "public_sha256": "a5ad791780c42416d0b11a8af29647997cce3df425f57380816de7d96d2d9f9d",
+      "transformation": "machine paths replaced; actual result/count fields retained"
+    },
+    {
+      "raw_source_alias": "stdout.log",
+      "public_path": "stdout.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; actual result/count fields retained"
+    }
+  ]
+}

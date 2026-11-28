@@ -1,0 +1,27 @@
+{
+  "binary": "<installed-claude>",
+  "binary_sha256": "5b8214f8f082f3187420b27b4063b9b4f4d9412cd66ea436d6d1966ad582700f",
+  "runs": [
+    {
+      "label": "version",
+      "argv": [
+        "<installed-claude>",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "auth-help",
+      "argv": [
+        "<installed-claude>",
+        "--safe-mode",
+        "--restricted",
+        "--setting-sources",
+        "",
+        "auth",
+        "--help"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

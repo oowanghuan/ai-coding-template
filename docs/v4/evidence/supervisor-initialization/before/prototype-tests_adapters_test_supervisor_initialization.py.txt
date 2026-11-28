@@ -1,0 +1,86 @@
+"""Real owned child + deterministic supervisor setup faults, no model calls."""
+import json
+import selectors
+import subprocess
+import time
+import unittest
+from unittest.mock import patch
+
+import test_store_binding as helpers
+
+
+class SupervisorInitializationTests(unittest.TestCase):
+    setUp = helpers.StoreBindingTests.setUp
+    initial = helpers.StoreBindingTests.initial
+    state = helpers.StoreBindingTests.state
+    change = helpers.StoreBindingTests.change
+    result = helpers.StoreBindingTests.result
+    enable = helpers.StoreBindingTests.enable
+    event = helpers.StoreBindingTests.event
+    claim = helpers.StoreBindingTests.claim
+    stop_owned = helpers.StoreBindingTests.stop_owned
+    bound = helpers.StoreBindingTests.bound
+    start = helpers.StoreBindingTests.start
+    finish = helpers.StoreBindingTests.finish
+
+    def injected(self, stage):
+        program="from pathlib import Path;import time;Path('ready').touch();time.sleep(30)"
+        job=self.bound(program=program);job['request']['timeout_seconds']=30
+        actual_popen=subprocess.Popen;actual_selector=selectors.DefaultSelector
+        children=[];selectors_created=[];threads=[];observations=[]
+        def spawn(argv,**kwargs):
+            proc=actual_popen(argv,**kwargs)
+            if argv[0]=='/usr/bin/python3':
+                children.append(proc)
+                deadline=time.monotonic()+3
+                while not (job['cwd']/'ready').exists() and time.monotonic()<deadline:time.sleep(.01)
+                self.assertTrue((job['cwd']/'ready').exists());self.assertIsNone(proc.poll())
+            return proc
+        def factory():
+            if stage=='selector':raise OSError('injected selector initialization failure')
+            sel=actual_selector();selectors_created.append(sel);register=sel.register;calls=[]
+            def fail_register(*args,**kwargs):
+                calls.append(1)
+                if len(calls)==2:raise OSError('injected second pipe registration failure')
+                return register(*args,**kwargs)
+            sel.register=fail_register
+            return sel
+        try:
+            with patch('subprocess.Popen',side_effect=spawn),patch('framework.adapters.invocation.selectors.DefaultSelector',side_effect=factory):
+                record=self.start(job)
+                live=job['executor']._live.get(record['invocation_id'])
+                if live:threads.append(live['thread']);live['thread'].join(6)
+                observed=job['registry'].status('synthetic',record['invocation_id'])
+                code=children[0].poll()
+                observations.append(dict(stage=stage,actual_process_starts=len(children),
+                    main_process_stopped=code is not None,exit_code=code,state=observed['state'],
+                    writer_stop_confirmed=observed['writer_stop_confirmed']))
+                print(json.dumps({'supervisor_initialization':observations[-1]}),flush=True)
+                self.assertIsNotNone(code,'supervisor setup failure left owned child alive')
+                self.assertEqual(observed['state'],'outcome_unknown')
+                self.assertFalse(observed['writer_stop_confirmed'])
+                self.assertFalse(observed['engineering_accepted'])
+                replay=self.start(job);self.assertEqual(replay['invocation_id'],record['invocation_id'])
+                with self.assertRaises(ValueError):self.start(job,operation='new-operation')
+                with self.assertRaises(ValueError):job['registry'].result('synthetic',record['invocation_id'])
+                with self.assertRaises(ValueError):self.result('release',job['authority'],actor='principal-a')
+                self.assertEqual(len(children),1)
+                self.assertTrue(children[0].stdout.closed);self.assertTrue(children[0].stderr.closed)
+                self.assertNotIn(record['invocation_id'],job['executor']._live)
+                replacement=self.bound(credentials=job['authority'],journal_name='replacement')
+                with self.assertRaises(ValueError):self.start(replacement,operation='replacement')
+                self.assertEqual(len(children),1)
+        finally:
+            # Test harness cleanup owns these exact synthetic handles only.
+            # This is not counted as a product stop when reproducing old code.
+            for proc in children:
+                if proc.poll() is None:proc.kill()
+                proc.wait(timeout=5);proc.stdout.close();proc.stderr.close()
+            for thread in threads:thread.join(6)
+            for sel in selectors_created:sel.close()
+
+    def test_selector_creation_failure_stops_owned_child_without_rearm(self):
+        self.injected('selector')
+
+    def test_second_pipe_registration_failure_stops_owned_child_without_rearm(self):
+        self.injected('second-pipe')

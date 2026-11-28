@@ -1,0 +1,17 @@
+{"sandbox_canaries": {"empty_candidate_anchor": true, "candidate_anchor_unlink": true, "trusted_write": true, "source_write": true, "trusted_hardlink": true, "outside_read": true, "outside_write": true, "network": true, "credentials_absent": true}}
+{"owned_handoff_stop": {"pid": 63864, "registered_group": 63864, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 64579, "registered_group": 64579, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 68183, "registered_group": 68183, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 70127, "registered_group": 70127, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 71735, "registered_group": 71735, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 73741, "registered_group": 73741, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 74127, "registered_group": 74127, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 74887, "registered_group": 74887, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 76030, "registered_group": 76030, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 77934, "registered_group": 77934, "wait_exit": -15, "group_absent": true}}
+{"actual_lock_order": "recover-prepared", "loser_rejected": "run-begin", "process_spawned": false}
+{"actual_lock_order": "run-begin", "loser_rejected": "recover-prepared", "process_spawned": false}
+{"direct_domain_actual_process": {"pid": 88258, "run_begin_persisted_before_spawn": true, "no_writer_recovery_rejected": true, "wait_exit": -15, "process_group_absent": true}}
+{"unstarted_handoff": {"old_token": 1, "new_token": 2, "execution_observed": "never_launched", "process_stop_observed": false, "delivery_count": 1, "accepted": false, "old_files_unchanged": true}}
+{"start_bound_scope": {"new_checkpoint_valid": true, "contract_changed_after_start": true, "old_start_proof_rejected": true}}
+{"run": 108, "failures": 0, "errors": 0, "skipped": 0}

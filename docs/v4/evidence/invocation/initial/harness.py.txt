@@ -1,0 +1,146 @@
+"""Reviewed-host candidate: fresh T/C, frozen sources, no host candidate imports."""
+from pathlib import Path
+import datetime
+import hashlib
+import json
+import os
+import signal
+import subprocess
+import tempfile
+
+REPO = Path('<REPOSITORY>')
+DEPS = Path('<EXISTING_DEPENDENCIES>')
+sha = lambda raw: hashlib.sha256(raw).hexdigest()
+now = lambda: datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def write(path, value):
+    path.write_text(json.dumps(value, indent=2) + '\n')
+
+
+WRAPPER = r'''import json,os,socket,sys,unittest
+from pathlib import Path
+t=Path(sys.argv[1]);c=Path(sys.argv[2]);checks={}
+def denied(name,action):
+    try:action()
+    except PermissionError:checks[name]=True
+    except OSError:checks[name]=False
+    else:checks[name]=False
+checks['empty_candidate_anchor']=not list(c.iterdir())
+denied('candidate_anchor_unlink',lambda:os.rmdir(c))
+denied('trusted_write',lambda:(t/'marker').write_text('forged'))
+denied('source_write',lambda:(t/'source/framework/local/handoff.py').write_text('forged'))
+denied('trusted_hardlink',lambda:os.link(t/'marker',c/'alias'))
+denied('outside_read',lambda:(t.parent/'outside').read_bytes())
+denied('outside_write',lambda:(t.parent/'outside').write_text('forged'))
+s=socket.socket()
+try:denied('network',lambda:s.connect(('127.0.0.1',9)))
+finally:s.close()
+checks['credentials_absent']=not any(k in os.environ for k in ['GH_TOKEN','GITHUB_TOKEN','OPENAI_API_KEY','ANTHROPIC_API_KEY','SSH_AUTH_SOCK','CODEX_HOME'])
+print(json.dumps({'sandbox_canaries':checks}),flush=True)
+if not all(checks.values()):raise SystemExit(3)
+(c/'home').mkdir();(c/'tmp').mkdir()
+os.environ.update(HOME=str(c/'home'),TMPDIR=str(c/'tmp'),V4_OUTER_SEATBELT='1',V4_UNSTARTED_EVIDENCE=str(c/'evidence'))
+sys.path[:0]=[str(t/'source'),str(t/'deps')]
+suite=unittest.TestSuite()
+for directory,pattern in [('adapters','test*.py')]:
+    suite.addTests(unittest.TestLoader().discover(str(t/'source/tests'/directory),pattern=pattern))
+r=unittest.TextTestRunner(verbosity=2).run(suite)
+print(json.dumps({'run':r.testsRun,'failures':len(r.failures),'errors':len(r.errors),'skipped':len(r.skipped)}),flush=True)
+raise SystemExit(0 if r.wasSuccessful() else 1)
+'''
+
+
+def profile(t, c):
+    q = lambda p: json.dumps(str(p))
+    reads = ['/System', '/usr', '/Library/Developer', '/Library/Apple', '/private/var/db/dyld',
+             '/bin', '/sbin', '/private/preboot/Cryptexes', t, c]
+    return '\n'.join(['(version 1)', '(deny default)', '(allow process*)',
+        '(deny process-info* (target others))', '(allow file-read-metadata)',
+        '(allow mach-lookup (global-name "com.apple.system.logger"))',
+        '(deny mach-lookup (global-name "com.apple.securityd") (global-name "com.apple.security.agent"))',
+        '(allow file-read* ' + ' '.join('(subpath ' + q(x) + ')' for x in reads) +
+        ' (literal "/dev/null") (literal "/dev/urandom") (literal "/"))',
+        '(allow file-map-executable)', '(allow file-write* (subpath ' + q(c) + ') (literal "/dev/null"))',
+        '(deny file-write-unlink (literal ' + q(c) + '))', '(allow signal (target children))', ''])
+
+
+def copied(source, target):
+    if source.is_symlink() or not source.is_file():
+        raise ValueError('input must be regular non-symlink: ' + str(source))
+    data = source.read_bytes()
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(data); target.chmod(0o400)
+    return sha(data)
+
+
+def main():
+    root = Path(tempfile.mkdtemp(prefix='v4-invocation-checks-', dir='/private/tmp'))
+    t = root / 'T'; c = root / 'C'; t.mkdir(mode=0o700); c.mkdir(mode=0o700)
+    print('Evidence: ' + str(root), flush=True)
+    before = {}; copies = {}; dependencies = {}
+    names = {str(p.relative_to(REPO)) for directory in ('framework/core', 'framework/local', 'framework/recovery', 'framework/adapters')
+             for p in (REPO / directory).glob('*.py')}
+    names.update(str(p.relative_to(REPO)) for p in (REPO / 'schemas').glob('*.json'))
+    names.update(str(p.relative_to(REPO)) for p in (REPO / 'tests/adapters').glob('*.py'))
+    names.update(('examples/protocol/in-progress.json', 'tests/local/test_external.py', 'tests/local/test_launch_driver.py'))
+    for name in sorted(names):
+        before[name] = copied(REPO / name, t / 'source' / name)
+        copies['source/' + name] = before[name]
+    for package in ('jsonschema', 'referencing', 'rpds', 'jsonschema_specifications', 'attrs', 'attr'):
+        for source in sorted((DEPS / package).rglob('*')):
+            if source.is_symlink(): raise ValueError('linked dependency')
+            if source.is_file() and '__pycache__' not in source.parts:
+                name = str(source.relative_to(DEPS))
+                dependencies[name] = copied(source, t / 'deps' / name)
+    dependencies['typing_extensions.py'] = copied(DEPS / 'typing_extensions.py', t / 'deps/typing_extensions.py')
+    copies.update({'deps/' + name: value for name, value in dependencies.items()})
+    git_env = dict(PATH='/usr/bin:/bin', GIT_CONFIG_NOSYSTEM='1', GIT_CONFIG_GLOBAL='/dev/null')
+    head = subprocess.run(['/usr/bin/git', '-C', str(REPO), 'rev-parse', 'HEAD'],
+        env=git_env, check=True, capture_output=True).stdout.decode().strip()
+    (t / 'harness.py.txt').write_bytes(Path(__file__).read_bytes())
+    (t / 'wrapper.py').write_text(WRAPPER); (t / 'sandbox.sb').write_text(profile(t, c))
+    (t / 'marker').write_text('protected synthetic marker\n')
+    (root / 'outside').write_text('synthetic outside marker\n')
+    controls = {name: sha((t / name).read_bytes()) for name in ('harness.py.txt', 'wrapper.py', 'sandbox.sb', 'marker')}
+    argv = ['/usr/bin/sandbox-exec', '-f', str(t / 'sandbox.sb'), '/usr/bin/python3', '-I', '-B', '-S',
+            str(t / 'wrapper.py'), str(t), str(c)]
+    env = dict(HOME=str(c / 'home'), TMPDIR=str(c / 'tmp'), PATH='/usr/bin:/bin:/usr/sbin:/sbin', LC_ALL='C', LANG='C')
+    result = dict(argv=argv, environment=env, started_at=now(), source_commit=head, source_inputs=before,
+        frozen_inputs=copies, controls=controls, evidence_level='synthetic_fixture', host_candidate_imports=0,
+        provider_calls=0, scope='generic invocation and adapter contracts; author-run fixed processes only')
+    write(t / 'launch.json', result); proc = None
+    try:
+        with (t / 'stdout.log').open('xb') as stdout, (t / 'stderr.log').open('xb') as stderr:
+            proc = subprocess.Popen(argv, cwd=t, env=env, stdin=subprocess.DEVNULL,
+                stdout=stdout, stderr=stderr, start_new_session=True)
+            result['pid'] = proc.pid
+            try: result.update(exit_code=proc.wait(timeout=600), outcome='observed_exit')
+            except subprocess.TimeoutExpired:
+                result.update(outcome='unknown', reason='test timeout; descendant stop not proven')
+                os.killpg(proc.pid, signal.SIGTERM)
+                try: proc.wait(timeout=5)
+                except subprocess.TimeoutExpired: os.killpg(proc.pid, signal.SIGKILL); proc.wait(timeout=5)
+                result['exit_code'] = proc.returncode
+    except BaseException as error:
+        result.update(outcome='error', error_type=type(error).__name__, error=str(error))
+        if proc is not None and proc.poll() is None:
+            os.killpg(proc.pid, signal.SIGTERM)
+            try: proc.wait(timeout=5)
+            except subprocess.TimeoutExpired: os.killpg(proc.pid, signal.SIGKILL); proc.wait(timeout=5)
+            result['descendant_stop'] = 'unknown'
+    finally:
+        result['finished_at'] = now()
+        result['source_after'] = {name: sha((REPO / name).read_bytes()) for name in before}
+        result['source_unchanged'] = result['source_after'] == before
+        result['frozen_unchanged'] = all(sha((t / name).read_bytes()) == value
+                                       for name, value in {**copies, **controls}.items())
+        result['logs'] = {name: sha((t / name).read_bytes()) for name in ('stdout.log', 'stderr.log') if (t / name).exists()}
+        write(t / 'result.json', result)
+    print(json.dumps({'result': str(t / 'result.json'), 'outcome': result['outcome'],
+        'exit_code': result.get('exit_code'), 'frozen_unchanged': result['frozen_unchanged']}))
+    return 0 if result.get('exit_code') == 0 and result['outcome'] == 'observed_exit' and result['frozen_unchanged'] else 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

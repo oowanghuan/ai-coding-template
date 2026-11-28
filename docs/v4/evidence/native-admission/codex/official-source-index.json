@@ -1,0 +1,36 @@
+{
+  "tag": "rust-v0.169.0",
+  "binding": "Fetched public tag content; not cryptographic installed-binary build attestation",
+  "files": [
+    {
+      "path": "cli/src/debug_sandbox.rs",
+      "sha256": "1a8f94b10325663d8ece486169ef2abecff072b77e1ffcf4eb24b7974080bfdc",
+      "bytes": 40483,
+      "url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/cli/src/debug_sandbox.rs"
+    },
+    {
+      "path": "config/src/config_toml.rs",
+      "sha256": "cea6005e9a93692b0504ffd8793ffb8304ab8b55b64bab9c8f026cdf0a60b191",
+      "bytes": 45458,
+      "url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/config/src/config_toml.rs"
+    },
+    {
+      "path": "config/src/permissions_toml.rs",
+      "sha256": "5527174caea5f1d0005dcff15a76d297c0eb759c7be5c3f2b4ba1f2ffbc82eed",
+      "bytes": 24528,
+      "url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/config/src/permissions_toml.rs"
+    },
+    {
+      "path": "core/src/tools/spec_plan.rs",
+      "sha256": "3ee623fa9a4be8579fb13f7af86403aade5eb6488c5e1930b1be708cd8594d71",
+      "bytes": 68518,
+      "url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/core/src/tools/spec_plan.rs"
+    },
+    {
+      "path": "sandboxing/src/seatbelt_base_policy.sbpl",
+      "sha256": "e62c879944d39a3e7a5667a3b006e01ca89ef2d269c4c1a3ee0a5181ad0e0651",
+      "bytes": 3911,
+      "url": "https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/sandboxing/src/seatbelt_base_policy.sbpl"
+    }
+  ]
+}

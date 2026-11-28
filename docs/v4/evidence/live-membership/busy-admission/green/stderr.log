@@ -1,0 +1,23 @@
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+python3: error: couldn't create cache file '/tmp/xcrun_db-o1GpXeaU' (errno=Operation not permitted)
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+python3: error: couldn't create cache file '/tmp/xcrun_db-lsLWaBC1' (errno=Operation not permitted)
+test_before_and_after_commit_faults_preserve_atomicity_and_replay (test_worker_membership.MembershipTests) ... ok
+test_busy_new_member_rejected_until_trusted_idle_without_mutation (test_worker_membership.MembershipTests) ... ok
+test_capability_budget_and_offline_restrictions_still_apply (test_worker_membership.MembershipTests) ... ok
+test_commit_fault_reconciliation_and_legacy_registration (test_worker_membership.MembershipTests) ... ok
+test_existing_provider_host_and_session_cannot_be_redefined (test_worker_membership.MembershipTests) ... ok
+test_invalid_resource_or_runtime_never_partially_adds_member (test_worker_membership.MembershipTests) ... ok
+test_live_pool_add_preserves_active_rights_and_claims_other_task (test_worker_membership.MembershipTests) ... ok
+test_new_host_registration_does_not_grant_task_environment_authority (test_worker_membership.MembershipTests) ... ok
+test_operation_replay_after_claim_does_not_reset_runtime_or_rights (test_worker_membership.MembershipTests) ... ok
+test_owner_only_missing_runtime_and_wrong_bindings_rollback (test_worker_membership.MembershipTests) ... ok
+test_same_revision_concurrent_admissions_have_one_winner (test_worker_membership.MembershipTests) ... ok
+test_shared_limit_pending_probe_and_generation_preserved (test_worker_membership.MembershipTests) ... ok
+test_unknown_credentials_cannot_claim (test_worker_membership.MembershipTests) ... ok
+test_unknown_new_quota_and_conflicting_shared_quota_fail_closed (test_worker_membership.MembershipTests) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 34.389s
+
+OK

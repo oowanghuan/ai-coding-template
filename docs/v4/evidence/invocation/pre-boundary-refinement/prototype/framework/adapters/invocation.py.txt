@@ -1,0 +1,220 @@
+"""Owned local process transport, wired only by a reviewed controller.
+
+No provider branches, authentication, sandbox changes or implicit environment.
+This module is NOT a sandbox: deploy a reviewed pinned copy in a protected
+supervisor, with the existing approved CLI execution boundary. Candidate work
+must not write its journal/config. Tests alone do not establish that deployment.
+"""
+import copy
+import fcntl
+import hashlib
+import os
+from pathlib import Path
+import selectors
+import stat
+import subprocess
+import threading
+import time
+
+from framework.local.launch_driver import atomic, canonical_sha, no_links, read_file
+from .runspec import ID, bounded_run_request
+
+TERMINAL = {'exited', 'stopped', 'timed_out', 'output_limited', 'outcome_unknown'}
+
+
+class ProcessExecutor:
+    """One trusted binding; no caller-supplied executable, cwd or environment.
+
+    authorize must recheck current Assignment, lease, scope, budget and Worker
+    eligibility. Selection is metadata, not authorization. Stop observes only
+    the owned process: callers still need existing writer-stop/handoff proofs.
+    """
+    def __init__(self, *, selection, argv, cwd, environment, journal_root,
+                 pinned_files, authorize):
+        if not callable(authorize): raise ValueError('live authorization checker required')
+        if not isinstance(argv, (list, tuple)) or not argv or any(type(x) is not str or '\0' in x for x in argv):
+            raise ValueError('fixed argv required')
+        if not isinstance(environment, dict) or any(type(k) is not str or type(v) is not str for k, v in environment.items()):
+            raise ValueError('explicit environment required; no implicit inheritance')
+        self.root = no_links(journal_root, directory=True)
+        self.cwd = no_links(cwd, directory=True)
+        if self.root == self.cwd or self.root in self.cwd.parents or self.cwd in self.root.parents:
+            raise ValueError('protected journal and work directory must be separate')
+        if not isinstance(pinned_files, dict) or argv[0] not in pinned_files:
+            raise ValueError('executable pin required')
+        self.argv = tuple(argv); self.environment = dict(environment)
+        self.pins = dict(pinned_files); self.selection = copy.deepcopy(selection)
+        self.authorize = authorize; self._live = {}; self._mutex = threading.RLock()
+        self._verify_pins()
+        self.binding = canonical_sha(dict(argv=self.argv, cwd=str(self.cwd),
+            environment=self.environment, pins=self.pins, selection=self.selection))
+
+    def _verify_pins(self):
+        for name, expected in self.pins.items():
+            path = Path(name)
+            no_links(path.parent, directory=True)
+            if not stat.S_ISREG(path.lstat().st_mode):
+                raise ValueError('pinned program/config must be a regular non-symlink file')
+            # OS executables can have legitimate hardlinks. Their immutable
+            # deployment and exact content pins are the boundary; journal files
+            # still use the stricter single-link reader/writer.
+            # Executables can exceed the small journal reader's size limit.
+            with path.open('rb') as stream:
+                digest = hashlib.sha256()
+                for data in iter(lambda: stream.read(1048576), b''): digest.update(data)
+            if digest.hexdigest() != expected: raise ValueError('execution input pin changed')
+
+    def _lock(self):
+        class Lock:
+            def __enter__(inner):
+                self._mutex.acquire()
+                try:
+                    path = self.root / 'invocation.lock'
+                    if path.exists() or path.is_symlink(): no_links(path)
+                    inner.file = path.open('a+')
+                    fcntl.flock(inner.file, fcntl.LOCK_EX)
+                except BaseException:
+                    self._mutex.release(); raise
+            def __exit__(inner, *args):
+                inner.file.close(); self._mutex.release()
+        return Lock()
+
+    def _path(self, invocation_id):
+        if not isinstance(invocation_id, str) or not ID.fullmatch(invocation_id):
+            raise ValueError('invalid invocation ID')
+        return self.root / (invocation_id + '.json')
+
+    def _read(self, invocation_id):
+        from .results import strict_json
+        record = strict_json(read_file(self._path(invocation_id)))
+        if record['binding_sha256'] != self.binding or record['selection'] != self.selection:
+            raise ValueError('invocation belongs to another binding')
+        return record
+
+    def _view(self, record):
+        value = copy.deepcopy(record)
+        if record['state'] not in TERMINAL and record['invocation_id'] not in self._live:
+            value.update(last_recorded_state=record['state'], state='outcome_unknown')
+        return value
+
+    def start(self, *, operation_id, authority, proposal):
+        if not isinstance(operation_id, str) or not ID.fullmatch(operation_id): raise ValueError('operation ID')
+        if (type(authority) is not dict or set(authority) != {'assignment_id', 'workspace_id', 'epoch', 'token'} or
+                any(type(authority[k]) is not int or authority[k] < 1 for k in ('epoch', 'token')) or
+                any(type(authority[k]) is not str or not ID.fullmatch(authority[k]) for k in ('assignment_id', 'workspace_id'))):
+            raise ValueError('exact execution authority required')
+        fields = bounded_run_request(**{k: proposal[k] for k in ('work_package_id', 'assignment_id', 'baseline_sha',
+            'timeout_seconds', 'max_output_bytes', 'model')}, prompt=proposal['stdin'])
+        if (proposal.get('execution_authorized') is not False or proposal.get('selection') != self.selection or
+                proposal['assignment_id'] != authority['assignment_id']):
+            raise ValueError('proposal/selection/authority mismatch')
+        identity = 'inv-' + hashlib.sha256(operation_id.encode()).hexdigest()
+        intent = canonical_sha(dict(binding=self.binding, request=fields, authority=authority))
+        with self._lock():
+            path = self._path(identity)
+            if path.exists() or path.is_symlink():
+                record = self._read(identity)
+                if record['intent_sha256'] != intent: raise ValueError('operation reused for different intent')
+                return self._view(record)
+            self._verify_pins()
+            if self.authorize(copy.deepcopy(authority), copy.deepcopy(proposal)) is not True:
+                raise ValueError('current execution authority not verified')
+            record = dict(format='provider-invocation/1', invocation_id=identity,
+                selection=self.selection, binding_sha256=self.binding, intent_sha256=intent,
+                work_package_id=fields['work_package_id'], baseline_sha=fields['baseline_sha'],
+                stdin_sha256=fields['stdin_sha256'], timeout_seconds=fields['timeout_seconds'],
+                max_output_bytes=fields['max_output_bytes'],
+                state='launch_intent', authority=copy.deepcopy(authority), exit_code=None,
+                engineering_accepted=False, writer_stop_confirmed=False,
+                evidence_level='untrusted_stdout', stdout_sha256=None, stderr_sha256=None)
+            atomic(path, record)  # Unknown response must never cause another launch.
+            stdin = self.root / (identity + '.stdin')
+            with stdin.open('xb') as stream: stream.write(fields['stdin'].encode())
+            if self.authorize(copy.deepcopy(authority), copy.deepcopy(proposal)) is not True:
+                record.update(state='outcome_unknown', reason='authority changed before launch')
+                atomic(path, record); return self._view(record)
+            self._verify_pins()
+            no_links(self.cwd, directory=True)
+            try:
+                with stdin.open('rb') as stream:
+                    proc = subprocess.Popen(self.argv, cwd=self.cwd, env=self.environment,
+                        stdin=stream, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                        close_fds=True, start_new_session=True)
+            except Exception as error:
+                record.update(state='outcome_unknown', reason=type(error).__name__)
+                atomic(path, record); return self._view(record)
+            live = dict(process=proc, stop=threading.Event())
+            self._live[identity] = live; record.update(state='running')
+            # Even a journal failure after spawn leaves an owned supervisor.
+            try: atomic(path, record)
+            finally:
+                thread = threading.Thread(target=self._supervise,
+                    args=(record, live, fields['timeout_seconds'], fields['max_output_bytes']), daemon=True)
+                live['thread'] = thread; thread.start()
+            return copy.deepcopy(record)
+
+    def _supervise(self, record, live, seconds, limit):
+        proc = live['process']; selector = selectors.DefaultSelector()
+        buffers = {'stdout': bytearray(), 'stderr': bytearray()}; reason = None
+        deadline = time.monotonic() + seconds
+        for name in buffers:
+            pipe = getattr(proc, name); os.set_blocking(pipe.fileno(), False)
+            selector.register(pipe, selectors.EVENT_READ, name)
+        try:
+            while selector.get_map() or proc.poll() is None:
+                if live['stop'].is_set(): reason = 'stopped'
+                if time.monotonic() >= deadline: reason = reason or 'timed_out'
+                if reason:
+                    if proc.poll() is None: proc.kill()  # Only this owned handle.
+                    break
+                for key, _ in selector.select(timeout=0.05):
+                    data = os.read(key.fileobj.fileno(), 65536)
+                    if not data: selector.unregister(key.fileobj); continue
+                    remaining = limit - sum(len(v) for v in buffers.values())
+                    buffers[key.data].extend(data[:remaining])
+                    if len(data) > remaining: reason = 'output_limited'; break
+            if reason is None:
+                try: proc.wait(timeout=max(0.01, deadline - time.monotonic()))
+                except subprocess.TimeoutExpired:
+                    reason = 'timed_out'
+                    if proc.poll() is None: proc.kill()
+            proc.wait(timeout=5)
+            record.update(state=reason or 'exited', exit_code=proc.returncode)
+            for name, data in buffers.items():
+                out = self.root / (record['invocation_id'] + '.' + name)
+                with out.open('xb') as stream: stream.write(data); stream.flush(); os.fsync(stream.fileno())
+                record[name + '_sha256'] = hashlib.sha256(data).hexdigest()
+            with self._lock(): atomic(self._path(record['invocation_id']), record)
+        except Exception:
+            if proc.poll() is None: proc.kill()
+            try: proc.wait(timeout=5)
+            except subprocess.TimeoutExpired: pass
+            record.update(state='outcome_unknown', exit_code=proc.returncode)
+            try:
+                with self._lock(): atomic(self._path(record['invocation_id']), record)
+            except Exception: pass  # Prior launch intent remains unknown on recovery.
+        finally:
+            selector.close(); proc.stdout.close(); proc.stderr.close()
+            with self._mutex: self._live.pop(record['invocation_id'], None)
+
+    def status(self, *, invocation_id):
+        with self._lock(): return self._view(self._read(invocation_id))
+
+    def stop(self, *, invocation_id):
+        with self._lock():
+            record = self._read(invocation_id)
+            if record['state'] not in TERMINAL and invocation_id in self._live:
+                self._live[invocation_id]['stop'].set()
+            return self._view(record)  # Request is not a stop receipt.
+
+    def result(self, *, invocation_id):
+        with self._lock():
+            record = self._view(self._read(invocation_id))
+            if record['state'] not in TERMINAL or record['stdout_sha256'] is None:
+                raise ValueError('result unavailable; reconcile running or unknown invocation')
+            for name in ('stdout', 'stderr'):
+                data = read_file(self.root / (invocation_id + '.' + name), limit=1048576)
+                if hashlib.sha256(data).hexdigest() != record[name + '_sha256']:
+                    raise ValueError('result content changed')
+                record[name] = data
+            return record

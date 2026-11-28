@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<independent-coordinator>/approved-host-helper.py",
+    "--source",
+    "<workspace>",
+    "--dependencies",
+    "<python-site>",
+    "--verify-first-delivery"
+  ],
+  "exit_code": null,
+  "outcome": "unknown",
+  "pid": 83439,
+  "started_at": "2026-11-28T09:27:43.613870+00:00"
+}

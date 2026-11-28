@@ -1,0 +1,43 @@
+{
+  "binary": "<installed-codex>",
+  "binary_sha256": "739cda86e15d30a6e2b40cf8dcbbfb988aaf48b305b27065573bb8e9fd41d002",
+  "runs": [
+    {
+      "label": "version",
+      "argv": [
+        "<installed-codex>",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "sandbox-help",
+      "argv": [
+        "<installed-codex>",
+        "sandbox",
+        "--help"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "sandbox-macos-help",
+      "argv": [
+        "<installed-codex>",
+        "sandbox",
+        "macos",
+        "--help"
+      ],
+      "exit_code": 71
+    },
+    {
+      "label": "exec-help",
+      "argv": [
+        "<installed-codex>",
+        "exec",
+        "--help"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "model_calls": 0
+}

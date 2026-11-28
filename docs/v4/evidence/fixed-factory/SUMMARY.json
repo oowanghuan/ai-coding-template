@@ -1,0 +1,47 @@
+{
+  "implementation_commit": "a1a716a0460ee9c99defb4ae868949f04341c7fb",
+  "evidence_level": "synthetic_state_real_fixed_process",
+  "actor": "author",
+  "native_recipes": "assembly_only",
+  "provider_calls": 0,
+  "counts": {
+    "run": 109,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "exit_code": 0,
+  "started_at": "2026-11-28T19:13:52.161076+00:00",
+  "finished_at": "2026-11-28T19:17:11.858307+00:00",
+  "canaries": {
+    "empty_candidate_anchor": true,
+    "candidate_anchor_unlink": true,
+    "trusted_write": true,
+    "source_write": true,
+    "trusted_hardlink": true,
+    "outside_read": true,
+    "outside_write": true,
+    "network": true,
+    "credentials_absent": true
+  },
+  "source_unchanged": true,
+  "frozen_unchanged": true,
+  "factory_observation": {
+    "selection": {
+      "adapter_id": "synthetic",
+      "agent_tool": "fixture-tool",
+      "credential_ref": "opaque-reference",
+      "model": null,
+      "model_provider": "fixture-model",
+      "quota_group": "Q1"
+    },
+    "state": "exited",
+    "actual_exit_code": 0,
+    "store_observed": true,
+    "invocation_records": 1,
+    "native_model_calls": 0,
+    "engineering_accepted": false
+  },
+  "independent_review": "pending",
+  "engineering_accepted": false
+}

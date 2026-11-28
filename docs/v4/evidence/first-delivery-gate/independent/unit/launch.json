@@ -1,0 +1,39 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<independent-unit-fixture>/T/sandbox.sb",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<independent-unit-fixture>/T/wrapper.py",
+    "<independent-unit-fixture>/T",
+    "<independent-unit-fixture>/C"
+  ],
+  "environment": {
+    "HOME": "<independent-unit-fixture>/C/home",
+    "TMPDIR": "<independent-unit-fixture>/C/tmp",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "LC_ALL": "C",
+    "LANG": "C"
+  },
+  "started_at": "2026-11-28T09:20:58.987273+00:00",
+  "source_inputs": {
+    "scripts/run_worker_demo.py": "e1dcf96a63994869c770ab6bb954294218d529dced2e33b095c6c114bebd63c1",
+    "tests/worker_demo/test_first_delivery_gate.py": "f9caeef6b0e3802ddca1266259a8172a6c22e711c45e8184b0e7ac57153f358e"
+  },
+  "frozen_inputs": {
+    "source/scripts/run_worker_demo.py": "e1dcf96a63994869c770ab6bb954294218d529dced2e33b095c6c114bebd63c1",
+    "source/tests/worker_demo/test_first_delivery_gate.py": "f9caeef6b0e3802ddca1266259a8172a6c22e711c45e8184b0e7ac57153f358e"
+  },
+  "controls": {
+    "harness.py.txt": "be8b10ddc235dee06ec9aa09e8d565e982c91c657349facf3df1d78b11eadb56",
+    "wrapper.py": "1e106c9c36820af91200f00670e830110b2d1636ab479531199db881b716d33f",
+    "sandbox.sb": "246b879dac898b05b23e0aadecfd82bd018edbff19565ff768f907b58a699522",
+    "marker": "9f24f28275dcd65d64a619e59e322e1592d7709e4defe6b092f4965caf7fbb36"
+  },
+  "evidence_level": "synthetic_fixture",
+  "host_candidate_imports": 0,
+  "collector_calls": 0
+}

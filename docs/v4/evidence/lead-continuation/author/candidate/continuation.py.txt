@@ -1,0 +1,270 @@
+"""Bounded idle-only continuation notifications; caller must hold poll.lock.
+
+The exact remote Work Packages fragment is the task authority. Local state is
+only delivery/ACK, progress observation and protective limits. No candidate code,
+Git writes, model selection, new session, permission change or GitHub publication.
+"""
+import argparse
+import asyncio
+import base64
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import uuid
+
+from session_delivery import NativeClient, atomic, binding_from, queue_rows, history_receipt
+
+REPO='oowanghuan/ai-coding-template'
+DOC='docs/v4/V4_WORK_PACKAGES.md'
+SHA=re.compile(r'[0-9a-f]{40}\Z')
+ID=re.compile(r'[A-Za-z0-9][A-Za-z0-9._-]{0,79}\Z')
+EVENT=re.compile(r'v4-continue:[0-9a-f]{64}\Z')
+ALLOWED_WPS={'WP-301','WP-302','WP-303'}
+
+
+def canonical(v):return json.dumps(v,sort_keys=True,separators=(',',':'),ensure_ascii=False)
+def digest(v):return hashlib.sha256(v.encode()).hexdigest()
+def now():return datetime.now(timezone.utc).isoformat()
+def instant(v):
+    t=datetime.fromisoformat(v.replace('Z','+00:00'))
+    if t.tzinfo is None:raise ValueError('timezone required')
+    return t
+
+def read(path,default=None):
+    if path.is_symlink():raise ValueError('symlink control/receipt refused')
+    if not path.exists():return default
+    if path.stat().st_size>2*1024*1024:raise ValueError('control/receipt too large')
+    return json.loads(path.read_text())
+
+def blocked(reason,**extra):return dict(state='blocked',reason=reason,**extra)
+
+def owner_ledger_fingerprint(rows):
+    observed=[{'id':r['id'],'body_sha256':digest(r['body'])} for r in rows if r['user']['login']=='oowanghuan']
+    return digest(canonical(sorted(observed,key=lambda r:r['id'])))
+
+
+def owner_ledger_matches(api,cfg):
+    expected=cfg.get('owner_ledger_sha256','')
+    if not isinstance(expected,str) or not re.fullmatch(r'[0-9a-f]{64}',expected):raise ValueError('foreground-read Owner ledger cache must be registered')
+    pages=api('repos/'+REPO+'/issues/3/comments?per_page=100',paginate=True)
+    return owner_ledger_fingerprint([row for page in pages for row in page])==expected
+
+
+def content(api,path,sha):
+    result=api('repos/'+REPO+'/contents/'+path+'?ref='+sha)
+    if result.get('encoding')!='base64' or result.get('type')!='file':raise ValueError('expected GitHub content file')
+    raw=base64.b64decode(result['content'],validate=False)
+    if len(raw)>1024*1024:raise ValueError('public Work Packages too large')
+    return raw.decode('utf-8')
+
+def unique_object(pairs):
+    result={}
+    for key,value in pairs:
+        if key in result:raise ValueError('duplicate public ready JSON key: '+key)
+        result[key]=value
+    return result
+
+
+def plan_from(text,at):
+    pattern=r'<!-- v4-continuation-ready:v1 -->\s*```json\s*(.*?)\s*```\s*<!-- /v4-continuation-ready -->'
+    matches=re.findall(pattern,text,re.S)
+    if len(matches)!=1:raise ValueError('exactly one public ready fragment required')
+    plan=json.loads(matches[0],object_pairs_hook=unique_object)
+    if type(plan['version']) is not int or plan['version']!=1 or not ID.fullmatch(plan['batch_id']) or plan['scope_ref']!='OD-09':raise ValueError('unsupported authorized batch')
+    if plan['control'] not in ('running','paused','blocked'):raise ValueError('invalid public control')
+    if instant(plan['expires_at'])<=at:raise ValueError('public ready batch expired')
+    budget=plan['activation_budget']
+    if type(budget) is not int or not 1<=budget<=8:raise ValueError('public activation budget must be 1..8')
+    items=plan['items']
+    if not isinstance(items,list) or not 1<=len(items)<=8:raise ValueError('finite 1..8 ready items required')
+    ids=set()
+    for item in items:
+        if not ID.fullmatch(item['id']) or item['id'] in ids or item['wp_id'] not in ALLOWED_WPS:raise ValueError('invalid/duplicate/out-of-scope ready item')
+        ids.add(item['id'])
+        if item['status'] not in ('ready','blocked','done'):raise ValueError('invalid public task status')
+        progress=item['progress']
+        if set(progress)!={'checkpoint','milestone','evidence_refs'}:raise ValueError('explicit checkpoint/milestone/evidence progress required')
+        if any(not isinstance(progress[k],str) or not progress[k].strip() for k in ('checkpoint','milestone')):raise ValueError('empty progress')
+        if not isinstance(progress['evidence_refs'],list) or any(not isinstance(x,str) or not x.strip() for x in progress['evidence_refs']):raise ValueError('invalid evidence references')
+        if not isinstance(item['depends_on'],list) or len(set(item['depends_on']))!=len(item['depends_on']):raise ValueError('invalid dependencies')
+    for item in items:
+        if item['id'] in item['depends_on'] or any(x not in ids for x in item['depends_on']):raise ValueError('unknown/self dependency')
+    return plan
+
+
+def remote(base,api,at):
+    cfg=read(base/'continuation-config.json',{})
+    if cfg.get('enabled') is not True:return None,{'state':'disabled'}
+    if cfg.get('owner_paused') is not False:return None,blocked('Owner pause or protective switch unset')
+    if cfg.get('blocked_reason'):return None,blocked(cfg['blocked_reason'])
+    if instant(cfg['expires_at'])<=at:return None,blocked('local continuation registration expired')
+    cap=cfg['max_activations'];cooldown=cfg['cooldown_seconds']
+    if type(cap) is not int or not 1<=cap<=8 or type(cooldown) is not int or not 60<=cooldown<=86400:raise ValueError('invalid protective budget/cooldown')
+    if not owner_ledger_matches(api,cfg):return None,blocked('Owner ledger changed; Project Lead must reconcile and refresh read cache (not new authorization)')
+    branch=cfg['branch']
+    if not re.fullmatch(r'v4/[A-Za-z0-9._/-]+',branch) or '..' in branch:raise ValueError('invalid V4 branch')
+    ref='repos/'+REPO+'/git/ref/heads/'+branch
+    head=api(ref)['object']['sha']
+    if not SHA.fullmatch(head):raise ValueError('invalid remote SHA')
+    text=content(api,DOC,head);plan=plan_from(text,at)
+    if plan['control']!='running':return None,blocked('public batch '+plan['control'])
+    if api(ref)['object']['sha']!=head:return None,blocked('branch advanced while reading ready authority')
+    return dict(cfg=cfg,plan=plan,head=head,ref=ref,document_sha256=digest(text)),None
+
+
+def ack_for(directory,record):
+    ack=read(directory/(record['event'].split(':')[1]+'.ack.json'))
+    if ack is None:return False
+    if any(ack.get(k)!=record[k] for k in ('event','client_id','thread_id','input_sha256')):raise ValueError('continuation ACK identity mismatch')
+    return True
+
+
+async def inspect_thread(client,binding):
+    thread=(await client.call('thread/read',{'threadId':binding['thread_id'],'includeTurns':False}))['thread']
+    if thread['id']!=binding['thread_id'] or thread['cwd']!=binding['cwd']:raise ValueError('bound thread identity/workspace mismatch')
+    return thread['status']['type']
+
+
+async def reconcile(client,binding,directory,record):
+    """Read-only for every previously attempted write, including visible queue rows."""
+    if ack_for(directory,record):return {'state':'acknowledged','completed':False,'event':record['event']}
+    found=await history_receipt(client,binding['thread_id'],record['client_id'])
+    rows=await queue_rows(client,binding['thread_id'])
+    if found:
+        record.update(delivery_state='history_confirmed',history=found)
+        atomic(directory/(record['event'].split(':')[1]+'.json'),record)
+    visible=[x for x in rows if x['clientUserMessageId']==record['client_id']]
+    return {'state':'awaiting_ack' if found or record['delivery_state']=='accepted' else 'unknown_or_queued',
+            'event':record['event'],'queue_visible':bool(visible),'reason':'No resend/start of an existing intent; ACK is not completion'}
+
+
+async def pulse(base,api,client,binding,at=None):
+    clock=(lambda:at) if at is not None else (lambda:datetime.now(timezone.utc))
+    at=clock()
+    selected,error=remote(base,api,at)
+    if error:return error
+    plan=selected['plan'];cfg=selected['cfg']
+    directory=base/'continuations'
+    if directory.is_symlink():raise ValueError('symlink continuation directory')
+    directory.mkdir(mode=0o700,exist_ok=True)
+    records=[read(p) for p in sorted(directory.glob('*.json')) if not p.name.endswith('.ack.json')]
+    # Unacknowledged notifications from ANY batch remain global blockers. A config
+    # edit, changed remote progress or a new batch cannot erase an unknown delivery.
+    for r in records:
+        if r['thread_id']!=binding['thread_id']:return blocked('unreconciled delivery belongs to another binding')
+        if not ack_for(directory,r):
+            if r['delivery_state']=='queued':
+                # The add was acknowledged and start has NEVER been attempted.
+                # It is safe to start that one existing row once after busy/queue
+                # races settle; unknown queue_intent/start_intent never enter here.
+                match=next((x for x in plan['items'] if x['id']==r['item_id']),None)
+                valid=(r['batch_id']==plan['batch_id'] and r['head_sha']==selected['head'] and
+                       match and match['status']=='ready' and digest(canonical(match['progress']))==r['progress_sha256'])
+                if not valid:return blocked('queued activation authority changed; foreground reconciliation required')
+                if await inspect_thread(client,binding)!='idle':return {'state':'queued','reason':'existing thread busy; no start'}
+                rows=await queue_rows(client,binding['thread_id'])
+                if len(rows)!=1 or rows[0]['id']!=r['queued_id']:return {'state':'queued','reason':'other queue entries or absent row; no start'}
+                if rows[0]['clientUserMessageId']!=r['client_id'] or digest(canonical(rows[0]['input']))!=r['input_sha256']:raise ValueError('queued continuation content mismatch')
+                if api(selected['ref'])['object']['sha']!=selected['head'] or read(base/'continuation-config.json',{})!=cfg or not owner_ledger_matches(api,cfg):return blocked('queued activation authority/Owner ledger changed; foreground reconciliation required')
+                if min(instant(cfg['expires_at']),instant(plan['expires_at']))<=clock():return blocked('activation expired before start')
+                if await inspect_thread(client,binding)!='idle':return {'state':'queued','reason':'thread changed before queued start'}
+                r['delivery_state']='start_intent';atomic(directory/(r['event'].split(':')[1]+'.json'),r)
+                result=await client.call('thread/queue/start',{'threadId':binding['thread_id'],'queuedSubmissionId':r['queued_id']})
+                r.update(delivery_state='accepted',turn_id=result['turn']['id']);atomic(directory/(r['event'].split(':')[1]+'.json'),r)
+                return {'state':'awaiting_ack','event':r['event'],'completed':False}
+            return await reconcile(client,binding,directory,r)
+    observed=await inspect_thread(client,binding)
+    if observed!='idle':return {'state':'deferred','reason':'existing thread '+observed+'; no queue writes'}
+    if await queue_rows(client,binding['thread_id']):return {'state':'deferred','reason':'existing user/Advisor queue takes precedence'}
+    batch=[r for r in records if r['batch_id']==plan['batch_id']]
+    if len(batch)>=plan['activation_budget'] or len(records)>=cfg['max_activations']:return blocked('batch activation budget exhausted')
+    if records and (at-max(instant(r['created_at']) for r in records)).total_seconds()<cfg['cooldown_seconds']:
+        return {'state':'deferred','reason':'persistent activation cooldown'}
+    eligible=[];waiting=[]
+    by_id={x['id']:x for x in plan['items']}
+    for item in plan['items']:
+        if item['status']!='ready':continue
+        if any(by_id[x]['status']!='done' for x in item['depends_on']):
+            waiting.append({'id':item['id'],'reason':'dependencies not done'});continue
+        progress=digest(canonical(item['progress']))
+        previous=[r for r in records if r['item_id']==item['id'] and r['wp_id']==item['wp_id'] and r['progress_sha256']==progress]
+        if len(previous)>=2:
+            waiting.append({'id':item['id'],'reason':'stalled: two activations without changed public progress'});continue
+        eligible.append((item,progress,len(previous)))
+    if not eligible:return {'state':'stalled' if waiting else 'no_ready_work','waiting':waiting}
+    item,progress,slot=eligible[0]
+    identity=digest(canonical([plan['batch_id'],item['id'],progress,slot]))
+    event='v4-continue:'+identity;client_id=str(uuid.uuid5(uuid.NAMESPACE_URL,event))
+    # Final public-branch and local-stop checks immediately precede the write.
+    if api(selected['ref'])['object']['sha']!=selected['head']:return blocked('branch advanced before continuation delivery')
+    if not owner_ledger_matches(api,cfg):return blocked('Owner ledger changed before add; Project Lead reconciliation required')
+    current_cfg=read(base/'continuation-config.json',{})
+    if current_cfg!=cfg:return blocked('local protective configuration changed')
+    if await inspect_thread(client,binding)!='idle':return {'state':'deferred','reason':'thread became busy before queue add'}
+    if await queue_rows(client,binding['thread_id']):return {'state':'deferred','reason':'queue changed before add'}
+    message=('[V4 Project Lead continued-work pulse; NOT new Owner authorization]\n'
+      'Event: '+event+'\nReady item: '+item['id']+' ('+item['wp_id']+')\n'
+      'Remote subject SHA: '+selected['head']+'\nPublic progress fingerprint: '+progress+'\n'
+      'Read the current public docs/v4/V4_WORK_PACKAGES.md ready fragment and actual Git/checkpoint state. '
+      'Continue only that already-authorized finite item; record real progress or a blocking reason in the existing work ledger. '
+      'Preserve A01 isolation; do not create/resume another model session, change permissions, add fees, merge main or release. '
+      'ACK only after actual model receipt, using the existing trusted helper: /usr/bin/python3 '+str(base/'continuation.py')+
+      ' ack --event '+event+' --client-id '+client_id+'. ACK is not completion. '
+      'Before yielding, persist the next safe checkpoint and public ready/blocked/done status. '
+      'No progress or exhausted continuation budget must be reported; do not manufacture progress to obtain more pulses.')
+    inputs=[{'type':'text','text':message,'text_elements':[]}]
+    record=dict(event=event,client_id=client_id,thread_id=binding['thread_id'],batch_id=plan['batch_id'],
+        item_id=item['id'],wp_id=item['wp_id'],progress_sha256=progress,slot=slot,head_sha=selected['head'],
+        document_sha256=selected['document_sha256'],input_sha256=digest(canonical(inputs)),created_at=at.isoformat(),delivery_state='queue_intent')
+    path=directory/(identity+'.json')
+    if path.exists():return blocked('activation identity already exists; no overwrite')
+    if min(instant(cfg['expires_at']),instant(plan['expires_at']))<=clock():return blocked('activation expired before add')
+    atomic(path,record)
+    added=await client.call('thread/queue/add',{'threadId':binding['thread_id'],'clientUserMessageId':client_id,'input':inputs})
+    queued=added['queuedSubmission'];record.update(delivery_state='queued',queued_id=queued['id']);atomic(path,record)
+    # No atomic idle precondition exists in this interface. If state raced to
+    # active after add, preserve the queue and do not steer/start or drop it.
+    if await inspect_thread(client,binding)!='idle':return {'state':'queued','event':event,'reason':'thread busy after add; no start'}
+    rows=await queue_rows(client,binding['thread_id'])
+    if len(rows)!=1 or rows[0]['id']!=record['queued_id']:return {'state':'queued','event':event,'reason':'other queue entries take precedence'}
+    if rows[0]['clientUserMessageId']!=client_id or digest(canonical(rows[0]['input']))!=record['input_sha256']:raise ValueError('queued continuation content mismatch')
+    if api(selected['ref'])['object']['sha']!=selected['head'] or read(base/'continuation-config.json',{})!=cfg or not owner_ledger_matches(api,cfg):
+        return {'state':'queued','event':event,'reason':'authority/config changed after add; no start'}
+    if min(instant(cfg['expires_at']),instant(plan['expires_at']))<=clock():return {'state':'queued','event':event,'reason':'activation expired after add; no start'}
+    if await inspect_thread(client,binding)!='idle':return {'state':'queued','event':event,'reason':'thread changed before start'}
+    record['delivery_state']='start_intent';atomic(path,record)
+    started=await client.call('thread/queue/start',{'threadId':binding['thread_id'],'queuedSubmissionId':record['queued_id']})
+    record.update(delivery_state='accepted',turn_id=started['turn']['id']);atomic(path,record)
+    return {'state':'awaiting_ack','event':event,'completed':False,'reason':'native acceptance is not model receipt or task completion'}
+
+
+def notify_continuation(base,api,pending_advisor=False,unresolved_operations=False):
+    if pending_advisor:return {'state':'deferred','reason':'Advisor/Owner events first'}
+    if unresolved_operations:return blocked('unresolved broker operation')
+    if read(base/'continuation-config.json',{}).get('enabled') is not True:return {'state':'disabled'}
+    binding=binding_from(base)
+    if binding is None:return blocked('no enabled existing session binding')
+    async def run():
+        async with NativeClient(binding) as client:return await pulse(base,api,client,binding)
+    try:return asyncio.run(run())
+    except Exception as exc:return {'state':'error_or_unknown','reason':str(exc)[:500]}
+
+
+def acknowledge(base,event,client_id):
+    if not EVENT.fullmatch(event):raise ValueError('invalid continuation event')
+    binding=binding_from(base)
+    if not binding or os.environ.get('CODEX_THREAD_ID')!=binding['thread_id']:raise ValueError('ACK only from bound existing model context')
+    directory=base/'continuations';record=read(directory/(event.split(':')[1]+'.json'))
+    if not record or record['event']!=event or record['client_id']!=client_id or record['thread_id']!=binding['thread_id']:raise ValueError('ACK identity mismatch')
+    path=directory/(event.split(':')[1]+'.ack.json')
+    if ack_for(directory,record):return read(path)
+    ack={k:record[k] for k in ('event','client_id','thread_id','input_sha256')};ack.update(received_at=now(),completed=False)
+    atomic(path,ack);return ack
+
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('action',choices=['ack']);p.add_argument('--event',required=True);p.add_argument('--client-id',required=True)
+    a=p.parse_args();print(json.dumps(acknowledge(Path(__file__).resolve().parent,a.event,a.client_id)))

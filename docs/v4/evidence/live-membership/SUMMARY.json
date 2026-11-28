@@ -1,0 +1,38 @@
+{
+  "implementation_sha": "6c78c133fd483c210317e20d5d400ff6521eeeaf",
+  "run_by": "implementation_author",
+  "independent_review": "pending",
+  "non_author_rerun": "pending",
+  "provider_calls": 0,
+  "real_quota_events": 0,
+  "engineering_accepted": false,
+  "runs": {
+    "targeted": {
+      "counts": {
+        "run": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "started_at": "2026-11-28T13:05:42.077008+00:00",
+      "finished_at": "2026-11-28T13:06:15.414319+00:00",
+      "canaries_passed": 9,
+      "inputs_unchanged": true
+    },
+    "regression": {
+      "counts": {
+        "run": 108,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "started_at": "2026-11-28T13:03:34.902273+00:00",
+      "finished_at": "2026-11-28T13:11:19.539622+00:00",
+      "canaries_passed": 9,
+      "inputs_unchanged": true
+    }
+  },
+  "note": "108 regression methods include the 13 separately run membership methods; not 121 distinct checks."
+}

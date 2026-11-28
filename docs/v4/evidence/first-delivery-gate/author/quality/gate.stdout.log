@@ -1,0 +1,17 @@
+{
+  "evidence_id": "first-delivery",
+  "evidence_sha256": "3ff2ec4e1d523c175e0fbe107125344e1d00e6d34e1fd94e2eaab2f320661ace",
+  "format": "quality-gate/1",
+  "gate_id": "2ed8c0941d2a0a76c4d2f657ed06788eb831d7e3f30b0ad58a16ea40bd6d6ed2",
+  "plan_sha256": "3acc8a273bba3b614dc1e249136b82fef2699ec49f2c5c72b908b6d88e358416",
+  "reasons": [],
+  "status": "passed",
+  "subject": {
+    "commit": "bfc6540219eb4351460d444784797965bf744ca2",
+    "manifest_sha256": "5f3c17a07a07bde9bad8631e7f45530906d9c8a072b1882c9d2c46f1a3ded7ad",
+    "tree": "5f5b517fd1c8c3469e627f15c534de0dcde746de"
+  },
+  "trust_sha256": "b92099cca43ca50f6872a664fe4e9fc59302bc909f1a609613b6cc0f11305605",
+  "wp_id": "WP-B",
+  "wp_revision": 4
+}

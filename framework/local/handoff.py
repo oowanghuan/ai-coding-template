@@ -10,10 +10,10 @@ from pathlib import Path
 import uuid
 
 from framework.local.storage import authority_lock, atomic_json, fingerprint, safe_path
-from framework.local.store import Store, find, now, shape, UNKNOWN
+from framework.local.store import Store, find, now, shape, UNKNOWN, LAUNCH_PROTOCOL, DIRECT_WORKSPACE_PREFIX
 from framework.local import lifecycle
 from framework.local.runner import git, workspace_entries, prepare, verify_workspace
-from framework.core.protocol import validate, within
+from framework.core.protocol import validate, within, timestamp
 from framework.recovery.checkpoint import create_snapshot, load_snapshot, restore_snapshot, open_directory, scan
 
 
@@ -54,38 +54,49 @@ def checkpoint(root, credentials, actor, *, completed=(), remaining=(), evidence
     store = Store(root)
     with authority_lock(store.root):
         state = store._read()
-        assignment, worker, wp, workspace = assigned(state, credentials, actor)
-        source = safe_path(store.root, workspace['path'])
-        verify_workspace(store.root, workspace)
-        baseline = {path: {'sha256': hashlib.sha256(git(store.root, 'cat-file', 'blob', blob)).hexdigest(),
-                           'mode': mode} for mode, blob, path in workspace_entries(store.root, assignment['base_sha'])}
-        cp_id = 'checkpoint-' + uuid.uuid4().hex
-        context = dict(wp_ref=wp['id'], assignment_ref=assignment['id'],
-            authority_epoch=assignment['authority_epoch'], fencing_token=assignment['fencing_token'],
-            baseline_sha=assignment['base_sha'], last_valid_commit=git(source, 'rev-parse', 'HEAD').decode().strip(),
-            completed=list(completed), remaining=list(remaining),
-            unknown_operations=copy.deepcopy((workspace['run'] or {}).get('unknown_operations', [])),
-            spec_refs=wp['spec_refs'], authorization_ref=wp['authorization_ref'],
-            role_ref=assignment['role_ref'], evidence_refs=list(evidence_refs),
-            lease_expires_at=assignment['lease_expires_at'], binding=binding(wp))
-        parent = safe_path(store.root, '.ai-org/checkpoints')
-        parent.mkdir(mode=0o700, exist_ok=True)
-        receipt = create_snapshot(source, parent / cp_id, context, baseline)
-        record = dict(path='.ai-org/checkpoints/' + cp_id, manifest_sha256=receipt['manifest_sha256'],
-                      binding=binding(wp), unknown_digest=fingerprint(context['unknown_operations']))
-        workspace['checkpoint'] = record
-        cp = dict(id=cp_id, wp_ref=wp['id'], wp_revision=wp['revision'], role_ref=assignment['role_ref'],
-            authorization_ref=wp['authorization_ref'], assignment_ref=assignment['id'],
-            lease_expires_at=assignment['lease_expires_at'], created_at=now(), spec_refs=wp['spec_refs'],
-            baseline_sha=assignment['base_sha'], last_valid_commit=context['last_valid_commit'],
-            uncommitted=[{'location': record['path'], 'sha256': record['manifest_sha256']}],
-            completed=list(completed), remaining=list(remaining), evidence_refs=list(evidence_refs),
-            decision_refs=[], blockers=[], unknown_operations=context['unknown_operations'],
-            next_actions=['Reconcile exact current authority and stopped writer before handoff'])
-        state['snapshot']['checkpoints'].append(cp)
-        assignment['last_checkpoint'] = cp_id
-        wp['checkpoint_ref'] = cp_id
-        return commit(store, state, 'checkpoint', dict(checkpoint_id=cp_id, **record))
+        receipt = capture_checkpoint_state(store, state, credentials, actor, completed=completed,
+                                           remaining=remaining, evidence_refs=evidence_refs)
+        return commit(store, state, 'checkpoint', receipt)
+
+
+def capture_checkpoint_state(store, state, credentials, actor, *, completed=(), remaining=(), evidence_refs=()):
+    """Internal transaction helper: caller holds Store lock and commits state.
+
+    Published snapshot artifacts may survive a failed state commit; never delete
+    or overwrite them on retry. A snapshot is not stopped-writer proof.
+    """
+    assignment, worker, wp, workspace = assigned(state, credentials, actor)
+    source = safe_path(store.root, workspace['path'])
+    verify_workspace(store.root, workspace)
+    baseline = {path: {'sha256': hashlib.sha256(git(store.root, 'cat-file', 'blob', blob)).hexdigest(),
+                       'mode': mode} for mode, blob, path in workspace_entries(store.root, assignment['base_sha'])}
+    cp_id = 'checkpoint-' + uuid.uuid4().hex
+    context = dict(wp_ref=wp['id'], assignment_ref=assignment['id'],
+        authority_epoch=assignment['authority_epoch'], fencing_token=assignment['fencing_token'],
+        baseline_sha=assignment['base_sha'], last_valid_commit=git(source, 'rev-parse', 'HEAD').decode().strip(),
+        completed=list(completed), remaining=list(remaining),
+        unknown_operations=copy.deepcopy((workspace['run'] or {}).get('unknown_operations', [])),
+        spec_refs=wp['spec_refs'], authorization_ref=wp['authorization_ref'],
+        role_ref=assignment['role_ref'], evidence_refs=list(evidence_refs),
+        lease_expires_at=assignment['lease_expires_at'], binding=binding(wp))
+    parent = safe_path(store.root, '.ai-org/checkpoints')
+    parent.mkdir(mode=0o700, exist_ok=True)
+    receipt = create_snapshot(source, parent / cp_id, context, baseline)
+    record = dict(path='.ai-org/checkpoints/' + cp_id, manifest_sha256=receipt['manifest_sha256'],
+                  binding=binding(wp), unknown_digest=fingerprint(context['unknown_operations']))
+    workspace['checkpoint'] = record
+    cp = dict(id=cp_id, wp_ref=wp['id'], wp_revision=wp['revision'], role_ref=assignment['role_ref'],
+        authorization_ref=wp['authorization_ref'], assignment_ref=assignment['id'],
+        lease_expires_at=assignment['lease_expires_at'], created_at=now(), spec_refs=wp['spec_refs'],
+        baseline_sha=assignment['base_sha'], last_valid_commit=context['last_valid_commit'],
+        uncommitted=[{'location': record['path'], 'sha256': record['manifest_sha256']}],
+        completed=list(completed), remaining=list(remaining), evidence_refs=list(evidence_refs),
+        decision_refs=[], blockers=[], unknown_operations=context['unknown_operations'],
+        next_actions=['Reconcile exact current authority and stopped writer before handoff'])
+    state['snapshot']['checkpoints'].append(cp)
+    assignment['last_checkpoint'] = cp_id
+    wp['checkpoint_ref'] = cp_id
+    return dict(checkpoint_id=cp_id, **record)
 
 
 def confirm_stopped(root, credentials, actor, process):
@@ -125,6 +136,88 @@ def confirm_stopped(root, credentials, actor, process):
             state['worker_runtime']['workers'][worker['id']]['stop_confirmed'] = not others
             lifecycle.refresh(state, worker['id'])
         return commit(store, state, 'confirmed-stop', {'assignment_id': assignment['id'], 'exit_code': status})
+
+
+def recover_prepared(root, credentials, actor, expected_revision, operation_id):
+    """Fence an exactly checkpointed workspace with durable no-launch proof.
+
+    This is limited to cooperative reviewed launchers obeying the versioned
+    persist-before-spawn protocol. It is not an OS process-absence detector.
+    Only a direct-local-only claim uses the reserved workspace namespace. The
+    reviewed external client and driver reject that namespace, including target
+    paths beneath an ancestor job. Existing pinned legacy drivers must not have
+    authority over the new namespace. Out-of-band writers or unknown external
+    authority require separate reconciliation; they are not supported here.
+    The caller first saves a final checkpoint. Same operation/intent replays the
+    committed receipt without writes; a new operation cannot recover it twice.
+    Legacy prepared workspaces without versioned history fail closed.
+    """
+    return Store(root).change('recover-prepared', credentials, actor,
+                              expected_revision, operation_id)
+
+
+def recover_prepared_state(root, state, credentials, actor, at):
+    """Internal Store transaction; caller holds the one authority lock."""
+    assignment, worker, wp, workspace = assigned(state, credentials, actor)
+    if (not workspace['id'].startswith(DIRECT_WORKSPACE_PREFIX) or
+            workspace['path'] != '.ai-org/workspaces/' + workspace['id']):
+        raise ValueError('prepared recovery requires the direct-local-only execution domain')
+    if (assignment['state'] not in ('active', 'revoked', 'expired') or
+            workspace['state'] != 'prepared' or workspace['run'] is not None):
+        raise ValueError('prepared recovery requires an unlaunched current assignment')
+    if wp['id'] in state['deliveries']:
+        raise ValueError('delivered work cannot use prepared recovery')
+    if (not workspace.get('checkpoint') or not assignment['last_checkpoint'] or
+            wp['checkpoint_ref'] != assignment['last_checkpoint']):
+        raise ValueError('final current checkpoint required before prepared recovery')
+    auth = find(state['snapshot']['authorizations'], wp['authorization_ref'])
+    if auth['state'] != 'granted' or timestamp(auth['expires_at']) <= timestamp(at):
+        raise ValueError('authorization changed or expired; preserve for explicit reconciliation')
+    expected = dict(workspace_id=workspace['id'], state='creating', launch_protocol=LAUNCH_PROTOCOL,
+        execution_domain='direct-local-only',
+        assignment_id=assignment['id'], epoch=assignment['authority_epoch'], token=assignment['fencing_token'],
+        work_binding_sha256=binding(wp),
+        authorization_sha256=fingerprint(auth))
+    starts = []
+    checkpoints = []
+    for record in state['operations'].values():
+        result = record['result']
+        if record['action'] == 'run-begin':
+            # An unusable launch history is unknown, not evidence of absence.
+            if not isinstance(result.get('workspace_id'), str):
+                raise ValueError('unverifiable launch history')
+            if result['workspace_id'] == workspace['id']:
+                raise ValueError('persistent launch intent exists; reconcile owned execution')
+        if record['action'] == 'start' and result.get('workspace_id') == workspace['id']:
+            starts.append(record)
+        if record['action'] == 'checkpoint' and result.get('checkpoint_id') == assignment['last_checkpoint']:
+            checkpoints.append(record)
+    if (len(starts) != 1 or starts[0]['status'] != 'committed' or starts[0]['actor'] != actor or
+            starts[0]['result'] != expected or
+            type(starts[0]['result'].get('epoch')) is not int or
+            type(starts[0]['result'].get('token')) is not int):
+        raise ValueError('missing or ambiguous versioned launch-protocol proof')
+    if (len(checkpoints) != 1 or checkpoints[0]['status'] != 'committed' or
+            checkpoints[0]['revision'] <= starts[0]['revision'] or
+            checkpoints[0]['result'] != dict(checkpoint_id=assignment['last_checkpoint'], **workspace['checkpoint'])):
+        raise ValueError('final checkpoint history is not bound to preparation')
+    checked_checkpoint(root, state, wp, workspace)
+    # The same lock protects run-begin. If launch won the race, checks above
+    # reject. If recovery wins, these credentials cannot authorize a later
+    # launch. No PID absence or caller-supplied stopped boolean is consulted.
+    if assignment['state'] == 'active':
+        assignment.update(state='revoked', revocation_reason='prepared-checkpoint-recovery')
+    wp.update(state='paused', revision=wp['revision'] + 1)
+    workspace.update(state='stopped', handoff_required=True)
+    if 'worker_runtime' in state:
+        unresolved = any(w['state'] in UNKNOWN and
+            find(state['snapshot']['assignments'], w['assignment_id'])['worker_ref'] == worker['id']
+            for w in state['workspaces'].values())
+        state['worker_runtime']['workers'][worker['id']]['stop_confirmed'] = not unresolved
+        lifecycle.refresh(state, worker['id'])
+    return dict(assignment_id=assignment['id'], workspace_id=workspace['id'], state='stopped',
+        execution_observed='never_launched', process_stop_observed=False, launch_protocol=LAUNCH_PROTOCOL,
+        checkpoint_id=assignment['last_checkpoint'], manifest_sha256=workspace['checkpoint']['manifest_sha256'])
 
 
 def checked_checkpoint(root, state, wp, workspace):

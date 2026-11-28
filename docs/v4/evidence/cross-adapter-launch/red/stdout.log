@@ -1,0 +1,3 @@
+{"sandbox_canaries": {"empty_candidate_anchor": true, "candidate_anchor_unlink": true, "trusted_write": true, "source_write": true, "trusted_hardlink": true, "outside_read": true, "outside_write": true, "network": true, "credentials_absent": true}}
+{"cross_adapter_receipt_loss": {"original_process_starts": 2, "replacement_rejected": false, "restored_state": "outcome_unknown", "independent_process_starts": 1, "independent_state": "exited"}}
+{"run": 72, "failures": 1, "errors": 0, "skipped": 0}

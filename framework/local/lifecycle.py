@@ -42,6 +42,8 @@ def check(state):
         return
     if set(runtime) != {'format', 'workers', 'groups', 'policy'} or runtime['format'] != 'worker-runtime/1':
         raise ValueError('invalid worker runtime')
+    if set(runtime['workers']) != {w['id'] for w in state['snapshot']['workers']}:
+        raise ValueError('all workers require explicit runtime membership')
     for identity, worker in runtime['workers'].items():
         row(state['snapshot']['workers'], identity)
         if worker['status'] not in STATES or worker['mode'] not in ('dedicated', 'elastic', 'restricted'):
@@ -92,6 +94,53 @@ def enable(state, payload, at):
         refresh(state, identity)
     check(state)
     return {'registered': sorted(runtime['workers']), 'execution_started': False}
+
+
+def admit(state, config, identity, at):
+    """Add one member under Store's lock; never reset an existing group's probes.
+
+    Authentication booleans are trusted controller observations, not proof from
+    an applicant. This is the same-owner local authority, not remote enrollment.
+    """
+    runtime = state['worker_runtime']
+    allowed = {'worker_id', 'quota_group', 'auth_identity', 'mode', 'resource',
+               'authenticated', 'authorized'}
+    if not isinstance(config, dict) or set(config) - allowed or config.get('worker_id') != identity:
+        raise ValueError('explicit matching runtime membership required')
+    if identity in runtime['workers']:
+        raise ValueError('runtime identity is immutable; replay the original operation')
+    for field in ('quota_group', 'auth_identity'):
+        value = config.get(field)
+        if not isinstance(value, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._:-]{0,127}', value):
+            raise ValueError('explicit opaque quota/identity binding required')
+    mode = config.get('mode', 'dedicated')
+    if mode not in ('dedicated', 'elastic', 'restricted'):
+        raise ValueError('invalid contribution mode')
+    worker = row(state['snapshot']['workers'], identity)
+    # A new identity has no pool Assignment accounting for existing occupancy.
+    # Neither verified login nor configured slots proves spare capacity.
+    if worker['state'] == 'busy':
+        raise ValueError('busy new worker requires a trusted idle observation before admission')
+    group_id = config['quota_group']
+    group = runtime['groups'].get(group_id)
+    # An admission cannot report a new shared-group restriction and silently
+    # invalidate siblings. Record that observation through worker-event first.
+    if group is not None and not group['limited'] and worker['quota'] != 'available':
+        raise ValueError('shared quota conflict; record a group observation before admission')
+    if group is None:
+        limited = worker['quota'] != 'available'
+        runtime['groups'][group_id] = dict(limited=limited,
+            reason='quota_' + worker['quota'] if limited else None, retry_at=None,
+            next_probe_at=stamp(at, runtime['policy']['initial_backoff']) if limited else None,
+            attempts=0, pending_probe=None, generation=0)
+    runtime['workers'][identity] = dict(status='recovering', quota_group=group_id,
+        auth_identity=config['auth_identity'], resource=resource(config), mode=mode,
+        heartbeat_at=at, authenticated=config.get('authenticated') is True,
+        authorized=config.get('authorized') is True,
+        host_available=worker['state'] in ('available', 'busy'),
+        owner_hold={'paused': 'suspended', 'retired': 'disabled'}.get(worker['state']),
+        reason=None, stop_confirmed=True, last_observation=None)
+    return refresh(state, identity)
 
 
 def fence(state, identities, reason):
