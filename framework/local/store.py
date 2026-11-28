@@ -224,9 +224,16 @@ class Store:
             return {'assignment_id': None, 'rejected': rejected, 'model_calls': 0}
         if action == 'register-worker':
             self._owner(state, actor)
-            if 'worker_runtime' in state:
-                raise ValueError('runtime membership change requires explicit reviewed migration')
             worker = payload['worker']
+            enabled = 'worker_runtime' in state
+            if enabled and any(w['id'] == worker['id'] for w in snapshot['workers']):
+                raise ValueError('runtime identity is immutable; replay the original operation')
+            if (worker['provider_ref'] != payload['provider']['id'] or
+                    worker['host_ref'] != payload['host']['id'] or
+                    payload['session']['worker_ref'] != worker['id'] or
+                    payload['session']['provider_ref'] != worker['provider_ref'] or
+                    payload['session']['host_ref'] != worker['host_ref']):
+                raise ValueError('registration identity binding mismatch')
             if any(a['worker_ref'] == worker['id'] and a['state'] in LIVE for a in snapshot['assignments']):
                 raise ValueError('cannot reconfigure an assigned worker')
             for group, field in [('providers', 'provider'), ('hosts', 'host'), ('workers', 'worker'), ('sessions', 'session')]:
@@ -236,6 +243,9 @@ class Store:
                     raise ValueError('registered identity is immutable; register a new identity')
                 if not existing:
                     snapshot[group].append(copy.deepcopy(row))
+            if enabled:
+                status = lifecycle.admit(state, payload.get('runtime'), worker['id'], at)
+                return {'worker_id': worker['id'], 'status': status, 'execution_started': False}
             return {'worker_id': worker['id']}
         if action == 'claim':
             wp = find(snapshot['work_packages'], payload['wp_id'])
