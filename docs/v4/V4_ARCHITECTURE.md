@@ -39,12 +39,24 @@ flowchart TD
 | Role | role_id、职责、可操作资源/动作、禁止项、冲突角色 | 长期，不绑定 Session |
 | Worker | worker_id、可承担角色、capabilities、provider/host、并发槽、状态、heartbeat、usage 可知性 | 可上线/离线/暂停/退役 |
 | Provider | provider_id、产品/CLI 版本、支持能力与限制 | 适配器版本化 |
+| Agent Tool / Model Provider / Model | 执行工具、实际模型供应商和模型分别引用；未知模型为 null | 一个工具可配置多个供应商，一个供应商可有多个执行入口；不能用旧 Provider 字段隐含一对一 |
+| Credential Reference / Quota Group | 合法授权的 opaque reference、实际共享限制组 | 不保存明文凭证；多个 Worker 可共用额度组，不能把进程数量当成独立额度 |
 | Host | host_id、OS/架构、工具链、隔离与网络策略、可用性 | 设备或云执行环境 |
 | Session | session_id、worker_id、native_session_ref（可空）、开始/终止时间 | 单次上下文 |
 | Work Package | wp_id、定义版本、策略版本、交付与验收范围 | 跨 Session 持久 |
 | Assignment | assignment_id、wp_id、worker_id、角色绑定、lease、fencing_token | 一次有期限的执行权 |
 
 认证主体 principal 与扮演的角色分开记录。`role=reviewer` 的文本声明不构成授权。身份来自受控身份绑定和执行环境，GitHub 同一登录名下的多个 Agent 不能天然证明职责隔离。
+
+Owner 已明确产品是 **Multi-provider, Model-agnostic Engineering Resource Pool**。
+Claude Code/Codex 是首批实际验证样本，不是核心二选一。最小实现以受信装配注册
+Adapter，声明 auth、availability、start、status、stop、result、quota、recovery、
+checkpoint、native_resume、logs、evidence 的 supported/unsupported/unknown，
+并分别记录工具、模型供应商、模型、凭证引用与额度组。具体解析器可以识别供应商错误，
+Scheduler/Recovery 只消费通用语义，不能凭供应商名决定配额、独立性或能力。
+第三个合成 Adapter 在不修改核心任务/调度/恢复代码下跑完整链作为架构验收；
+模拟执行、真实 CLI、自然额度事件三个等级分开。当前实现位置见
+[Worker 生命周期增量](../../framework/local/LIFECYCLE.md)，不表示跨机服务已经部署。
 
 实现者可以进行自测；高风险独立评审和独立验收不得由该成果的作者或其同一可写上下文承担。独立评审者默认只读被评对象、单独提交结论；合入者核验条件而不冒充评审者。Owner 决定战略、授权、成本和需其签认的事项；External Advisor 监督、建议和复核意见关闭，不派单、不替代验收。
 

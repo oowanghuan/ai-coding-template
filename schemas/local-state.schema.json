@@ -124,6 +124,18 @@
               "object",
               "null"
             ]
+          },
+          "checkpoint": {
+            "type": "object"
+          },
+          "recovery_source": {
+            "type": "string"
+          },
+          "restored": {
+            "type": "object"
+          },
+          "handoff_required": {
+            "type": "boolean"
           }
         }
       }
@@ -137,6 +149,31 @@
     },
     "deliveries": {
       "type": "object"
+    },
+    "worker_runtime": {
+      "type": "object",
+      "description": "Optional worker-runtime/1; same atomic authority; validated by lifecycle.check.",
+      "required": [
+        "format",
+        "workers",
+        "groups",
+        "policy"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "worker-runtime/1"
+        },
+        "workers": {
+          "type": "object"
+        },
+        "groups": {
+          "type": "object"
+        },
+        "policy": {
+          "type": "object"
+        }
+      }
     }
   }
 }
