@@ -661,73 +661,82 @@ Owner 盒盖后明确要求继续，沿用 OD-09 推进WP-301；未重启任务�
 受信工厂/终态对账、运行中停止与检查点、WP-303正常入口。历史跨Adapter整改、
 B1非作者复跑分别保持各自待复核范围，不阻塞其他已授权代码工作。
 
+### 16.8 运行中撤权与结果对账；续做安排
+
+Owner再次直接要求继续推进，本轮沿OD-09完成运行中执行权监督与终态幂等入账。
+实现 `d740ee44158f3e12e9ddbc7f4e5ca5be5956992f`，
+[证据](evidence/runtime-control/README.md)：最终98方法通过（10新增+原88），
+9项隔离检查通过。最后检查后/实际Popen前注入额度限制，真实启动1次、约0.264秒
+停止；运行中撤权、租约过期、真实Store锁阻塞、结果落盘后丢回执均有执行记录。
+主进程停止不代表全部写者停止，Store保持unknown、阻止冲突接管；保留dirty成果。
+§16.7描述的是上一提交的未测状态；当前S06-Launch-Revoke-Window为部分验证。
+独立复核、完整写者停止证明、最终恢复至一次交付和真实供应商集成仍待补。
+
+旧批local-alpha-next-1的4次既有会话激活已使用；旧事件/ACK不删除、不重置。
+旧清单保留在[历史快照](evidence/runtime-control/previous-ready-batch.json)，其中
+B1、跨Adapter和Store非作者复跑仍为待验，不能被新清单覆盖成已通过。
+
+根据Owner本次“那你在等什么？没有持续往前推进”的直接继续指令，Lead补登记
+local-alpha-next-2：最多4次追加既有会话激活（累计上限由4至8），仍截止于
+2026-11-29T08:00:00Z，冷却900秒。次数是Lead对既有授权的有界执行安排，
+不是Owner新增阶段或费用裁定。只推进以下3个有限切片；前两项接口/文件范围可
+并行推进，第三项依赖接线完成。无需等待非关联源码评审才能做其他已授权工作。
+不创建/恢复其他模型会话、不改执行权限、不新增费用、不合入main或发布。
+未知投递、Owner暂停、账本变化、无实际进展及到期仍会阻止自动投递；不能自充预算。
+配置生效与自然轮询实况另记仓外操作journal及#3，文档登记不冒充实际唤醒证据。
+
 <!-- v4-continuation-ready:v1 -->
 ```json
 {
   "version": 1,
-  "batch_id": "local-alpha-next-1",
+  "batch_id": "local-alpha-next-2",
   "scope_ref": "OD-09",
   "control": "running",
   "expires_at": "2026-11-29T08:00:00Z",
   "activation_budget": 4,
   "items": [
     {
-      "id": "first-task-to-gate",
-      "wp_id": "WP-303",
-      "status": "done",
-      "depends_on": [],
-      "progress": {
-        "checkpoint": "7ca3622908937339e6e064fd8e6e49fff8c914a5",
-        "milestone": "fixed synthetic document delivery integrated with real collector/Gate; independent positive and negative checks passed; full WP303 and real providers remain unaccepted",
-        "evidence_refs": [
-          "docs/v4/evidence/first-delivery-gate/README.md",
-          "docs/v4/evidence/lead-continuation/live/README.md"
-        ]
-      }
-    },
-    {
-      "id": "native-execution-boundary",
+      "id": "native-factory-binding",
       "wp_id": "WP-301",
-      "status": "blocked",
+      "status": "ready",
       "depends_on": [],
       "progress": {
-        "checkpoint": "64704dca23d73a73c433d34d8723d4b6a661fc85",
-        "milestone": "Advisor7242413633 scoped source GO on a8b08e7 and7242414495 scoped prelaunch Store source GO on4f29feed; author88 includes77. Non-author execution pending. Last-check-to-spawn revocation window, running owned-stop/checkpoint/reconciliation, native factory and Alpha unverified; no source GO expands deployment authority.",
+        "checkpoint": "d740ee44158f3e12e9ddbc7f4e5ca5be5956992f",
+        "milestone": "Implement trusted fixed native-tool factory and resource selection binding behind the existing N-provider interface; validate using synthetic fixed executables under A01. No new/resumed model session or deployment. Done means code plus executable positive/negative contract evidence; live CLI remains pending.",
         "evidence_refs": [
-          "docs/v4/evidence/native-admission/README.md",
-          "docs/v4/evidence/invocation/README.md",
-          "docs/v4/evidence/cross-adapter-launch/README.md",
-          "docs/v4/evidence/store-binding/README.md"
+          "docs/v4/evidence/runtime-control/README.md",
+          "framework/adapters/README.md"
         ]
       }
     },
     {
-      "id": "prepared-workspace-recovery",
+      "id": "runtime-checkpoint-integration",
       "wp_id": "WP-302",
-      "status": "done",
+      "status": "ready",
       "depends_on": [],
       "progress": {
-        "checkpoint": "f31e751826ec68b0d4e6eb2868cc9ae21f8e1a04",
-        "milestone": "explicit direct-local-only prepared recovery implemented and independently verified; initial test-hook failure retained, corrected lock-order and contract-change targets passed; general legacy workspaces and real native recovery remain outside accepted scope",
+        "checkpoint": "d740ee44158f3e12e9ddbc7f4e5ca5be5956992f",
+        "milestone": "Connect terminal observations to preservation/recovery; test dirty/untracked and unknown-writer cases in isolated fixed processes. Missing complete writer-stop proof must block handoff. Do not claim real native recovery or touch live task directories.",
         "evidence_refs": [
-          "docs/v4/evidence/prepared-recovery/README.md",
-          "docs/v4/evidence/lead-continuation/live/README.md"
+          "docs/v4/evidence/runtime-control/README.md",
+          "framework/adapters/README.md"
         ]
       }
     },
     {
-      "id": "live-worker-membership",
-      "wp_id": "WP-302",
-      "status": "blocked",
-      "depends_on": [],
+      "id": "worker-control-entry",
+      "wp_id": "WP-303",
+      "status": "ready",
+      "depends_on": [
+        "native-factory-binding",
+        "runtime-checkpoint-integration"
+      ],
       "progress": {
-        "checkpoint": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
-        "milestone": "Advisor 7240744826 scoped source-fix GO on 4a467caa4a0421e80fb31debb5ac8fa3704263b1; busy admission fixed. Non-author execution evidence remains pending and may join next existing independent batch; no full engineering acceptance. Continuation 4/4 unchanged; unrelated authorized work continues.",
+        "checkpoint": "d740ee44158f3e12e9ddbc7f4e5ca5be5956992f",
+        "milestone": "Wire normal local start/status/result flow to the fixed factory and recovery contracts, with dry-run and fail-closed authority checks. Test isolated fixtures; no Web GUI, Enterprise expansion, deployment or model session.",
         "evidence_refs": [
-          "docs/v4/evidence/live-membership/busy-admission/README.md",
-          "docs/v4/evidence/live-membership/README.md",
-          "framework/local/store.py",
-          "framework/local/lifecycle.py"
+          "docs/v4/evidence/runtime-control/README.md",
+          "framework/adapters/README.md"
         ]
       }
     }

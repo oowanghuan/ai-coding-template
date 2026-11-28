@@ -1,0 +1,74 @@
+{
+  "actor": "author",
+  "evidence_level": "synthetic_state_real_fixed_process",
+  "provider_calls": 0,
+  "engineering_accepted": false,
+  "runs": {
+    "initial": {
+      "counts": {
+        "run": 97,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "started_at": "2026-11-28T18:48:17.917093+00:00",
+      "finished_at": "2026-11-28T18:50:45.896228+00:00",
+      "source_unchanged": true,
+      "frozen_unchanged": true,
+      "canaries": {
+        "empty_candidate_anchor": true,
+        "candidate_anchor_unlink": true,
+        "trusted_write": true,
+        "source_write": true,
+        "trusted_hardlink": true,
+        "outside_read": true,
+        "outside_write": true,
+        "network": true,
+        "credentials_absent": true
+      },
+      "window_observation": {
+        "actual_process_starts": 1,
+        "stop_elapsed_seconds": 0.3044440420000001,
+        "declared_test_bound_seconds": 5,
+        "stop_reason": "authority_revoked",
+        "writer_stop_confirmed": false,
+        "store_workspace_state": "unknown",
+        "engineering_accepted": false
+      }
+    },
+    "final": {
+      "counts": {
+        "run": 98,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "started_at": "2026-11-28T18:52:21.975214+00:00",
+      "finished_at": "2026-11-28T18:54:51.017805+00:00",
+      "source_unchanged": true,
+      "frozen_unchanged": true,
+      "canaries": {
+        "empty_candidate_anchor": true,
+        "candidate_anchor_unlink": true,
+        "trusted_write": true,
+        "source_write": true,
+        "trusted_hardlink": true,
+        "outside_read": true,
+        "outside_write": true,
+        "network": true,
+        "credentials_absent": true
+      },
+      "window_observation": {
+        "actual_process_starts": 1,
+        "stop_elapsed_seconds": 0.2638028749999961,
+        "declared_test_bound_seconds": 5,
+        "stop_reason": "authority_revoked",
+        "writer_stop_confirmed": false,
+        "store_workspace_state": "unknown",
+        "engineering_accepted": false
+      }
+    }
+  }
+}
