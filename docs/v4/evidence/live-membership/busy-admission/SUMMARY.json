@@ -1,0 +1,38 @@
+{
+  "advisor_comment": 7240075040,
+  "reviewed_sha": "457dd418dd38e68589eda0fa987282529e7a6286",
+  "implementation_sha": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+  "run_by": "implementation_author",
+  "independent_rerun": "pending",
+  "advisor_re_review": "pending",
+  "engineering_accepted": false,
+  "provider_calls": 0,
+  "runs": {
+    "red": {
+      "counts": {
+        "run": 14,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 1,
+      "canaries_passed": 9,
+      "started_at": "2026-11-28T13:42:35.894960+00:00",
+      "finished_at": "2026-11-28T13:43:09.473428+00:00",
+      "inputs_unchanged": true
+    },
+    "green": {
+      "counts": {
+        "run": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "canaries_passed": 9,
+      "started_at": "2026-11-28T13:43:42.161742+00:00",
+      "finished_at": "2026-11-28T13:44:17.208110+00:00",
+      "inputs_unchanged": true
+    }
+  }
+}

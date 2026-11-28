@@ -1,0 +1,258 @@
+{
+  "note": "Red uses old product plus the new test from the fix commit; green uses the fixed commit for all 24 inputs. Exact same tests and host harness in both runs.",
+  "changed_frozen_inputs": [
+    "framework/local/lifecycle.py"
+  ],
+  "runs": {
+    "red": {
+      "launch_head": "457dd418dd38e68589eda0fa987282529e7a6286",
+      "files": {
+        "examples/protocol/in-progress.json": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "7cf2fad959882203f00b74d8f15a79e4a6f1a8c524dfb7eaf5468a81e061013e",
+          "match": true
+        },
+        "framework/core/protocol.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+          "match": true
+        },
+        "framework/local/bootstrap.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "05d4810f9a748d9785a76598ea2bbd91a3b414d16cec43b71bff506b1c58afa8",
+          "match": true
+        },
+        "framework/local/external.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "7d7cb874a054c8e86a0d81f640010d2b9bec6a1b0972ad9c4d21643c45675cd7",
+          "match": true
+        },
+        "framework/local/handoff.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "298c7c386f64e5a346e880fe0f14b6ca285e1cd10e410edfc66794741ef829a4",
+          "match": true
+        },
+        "framework/local/launch_driver.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "91fd5c807d0e760c354c54ddaec316ad5771c8a5ad9e1af84d8a8e017259d60d",
+          "match": true
+        },
+        "framework/local/lifecycle.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "8a7d50fbb32fac8fa702558783368c710bfbb9537e8a88dd72bb3d4ea85aa1f2",
+          "match": true
+        },
+        "framework/local/runner.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "c6b06a0fd06f543f25d576cd583df9a22c06b070f501368d7eb9a522aefb74df",
+          "match": true
+        },
+        "framework/local/storage.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "af2ddd9d5d717d1f3afe71fc8bcf09f1aaca7b514d3a1e1b1d389f0113a37dea",
+          "match": true
+        },
+        "framework/local/store.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "b165552c253b2c320299d0c1315a622854df5f943081fa10251d484fbf0a17b9",
+          "match": true
+        },
+        "framework/local/worker_process.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d",
+          "match": true
+        },
+        "framework/recovery/admission.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "94724a7317d649550bfd5e0076c6ad2712bd0834411898e19b44206019a8dddb",
+          "match": true
+        },
+        "framework/recovery/checkpoint.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "587d77708c6c3b237684f5390ba8f9b7ddbf9170d9a6fba6c3ce3f67d288b844",
+          "match": true
+        },
+        "schemas/evidence.schema.json": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+          "match": true
+        },
+        "schemas/governance.schema.json": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+          "match": true
+        },
+        "schemas/install-plan.schema.json": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "b276d52b899267c431274a11e8d0880d72ffda43a399ba94cf1c2235d8f7ebdb",
+          "match": true
+        },
+        "schemas/local-state.schema.json": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "aae186335a1817c572e381c28982ebcdb701184606668774c91b5c74cc4789c9",
+          "match": true
+        },
+        "schemas/protocol.schema.json": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+          "match": true
+        },
+        "tests/lifecycle/test_handoff.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "fe42d95f3b6be59758216678bd97c38a6f1e8e1680ab0bf35ef92e46b6816014",
+          "match": true
+        },
+        "tests/lifecycle/test_lifecycle.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "f86252a7b65812bed52bf9d73dfb1995aa771d994ab7958555eaf602fda430f9",
+          "match": true
+        },
+        "tests/lifecycle/test_unstarted_handoff.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "afd69de6118adbbf48afda54684002b9465037b60b0afd2be14ae71437a63782",
+          "match": true
+        },
+        "tests/lifecycle/test_worker_membership.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "8d2b9d91b2bf75706edd1afe1a6b62d20843bf355c5e8d03b99700c879392394",
+          "match": true
+        },
+        "tests/local/test_external.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "13669f1daa675e48b3f827c099c52bfc63e083c6dad4c2302a3c678798d59203",
+          "match": true
+        },
+        "tests/local/test_launch_driver.py": {
+          "commit": "457dd418dd38e68589eda0fa987282529e7a6286",
+          "sha256": "815a62c123f68de3d9af282a7c3105a96415e71b957707afe23e3c878609a8a3",
+          "match": true
+        }
+      }
+    },
+    "green": {
+      "launch_head": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+      "files": {
+        "examples/protocol/in-progress.json": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "7cf2fad959882203f00b74d8f15a79e4a6f1a8c524dfb7eaf5468a81e061013e",
+          "match": true
+        },
+        "framework/core/protocol.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+          "match": true
+        },
+        "framework/local/bootstrap.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "05d4810f9a748d9785a76598ea2bbd91a3b414d16cec43b71bff506b1c58afa8",
+          "match": true
+        },
+        "framework/local/external.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "7d7cb874a054c8e86a0d81f640010d2b9bec6a1b0972ad9c4d21643c45675cd7",
+          "match": true
+        },
+        "framework/local/handoff.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "298c7c386f64e5a346e880fe0f14b6ca285e1cd10e410edfc66794741ef829a4",
+          "match": true
+        },
+        "framework/local/launch_driver.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "91fd5c807d0e760c354c54ddaec316ad5771c8a5ad9e1af84d8a8e017259d60d",
+          "match": true
+        },
+        "framework/local/lifecycle.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "2cc98efc8ded021a827fb32e97f41929601e2b5f61241bf023e869adb7635ee1",
+          "match": true
+        },
+        "framework/local/runner.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "c6b06a0fd06f543f25d576cd583df9a22c06b070f501368d7eb9a522aefb74df",
+          "match": true
+        },
+        "framework/local/storage.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "af2ddd9d5d717d1f3afe71fc8bcf09f1aaca7b514d3a1e1b1d389f0113a37dea",
+          "match": true
+        },
+        "framework/local/store.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "b165552c253b2c320299d0c1315a622854df5f943081fa10251d484fbf0a17b9",
+          "match": true
+        },
+        "framework/local/worker_process.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d",
+          "match": true
+        },
+        "framework/recovery/admission.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "94724a7317d649550bfd5e0076c6ad2712bd0834411898e19b44206019a8dddb",
+          "match": true
+        },
+        "framework/recovery/checkpoint.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "587d77708c6c3b237684f5390ba8f9b7ddbf9170d9a6fba6c3ce3f67d288b844",
+          "match": true
+        },
+        "schemas/evidence.schema.json": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+          "match": true
+        },
+        "schemas/governance.schema.json": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+          "match": true
+        },
+        "schemas/install-plan.schema.json": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "b276d52b899267c431274a11e8d0880d72ffda43a399ba94cf1c2235d8f7ebdb",
+          "match": true
+        },
+        "schemas/local-state.schema.json": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "aae186335a1817c572e381c28982ebcdb701184606668774c91b5c74cc4789c9",
+          "match": true
+        },
+        "schemas/protocol.schema.json": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+          "match": true
+        },
+        "tests/lifecycle/test_handoff.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "fe42d95f3b6be59758216678bd97c38a6f1e8e1680ab0bf35ef92e46b6816014",
+          "match": true
+        },
+        "tests/lifecycle/test_lifecycle.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "f86252a7b65812bed52bf9d73dfb1995aa771d994ab7958555eaf602fda430f9",
+          "match": true
+        },
+        "tests/lifecycle/test_unstarted_handoff.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "afd69de6118adbbf48afda54684002b9465037b60b0afd2be14ae71437a63782",
+          "match": true
+        },
+        "tests/lifecycle/test_worker_membership.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "8d2b9d91b2bf75706edd1afe1a6b62d20843bf355c5e8d03b99700c879392394",
+          "match": true
+        },
+        "tests/local/test_external.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "13669f1daa675e48b3f827c099c52bfc63e083c6dad4c2302a3c678798d59203",
+          "match": true
+        },
+        "tests/local/test_launch_driver.py": {
+          "commit": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+          "sha256": "815a62c123f68de3d9af282a7c3105a96415e71b957707afe23e3c878609a8a3",
+          "match": true
+        }
+      }
+    }
+  }
+}

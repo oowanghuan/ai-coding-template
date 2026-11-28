@@ -1,6 +1,10 @@
 # 已启用资源池的动态 Worker 登记
 
 实现提交：`6c78c133fd483c210317e20d5d400ff6521eeeaf`。
+该版本的忙碌新成员准入被 Advisor [7240075040](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7240075040)
+指出反例并要求修订。修复提交 `2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81`；
+旧版本复现、新版本验证及仍缺的非作者复跑见 [忙碌准入整改](busy-admission/README.md)。
+下方13/108项记录是原版本证据，不冒充修复后重新运行的结果。
 沿用 OD-09 的 WP-302 / B1，第四次自然续做投递触发；没有新建或恢复其他模型会话。
 
 原先 `register-worker` 在生命周期启用后直接拒绝。现在可在同一个 Store 锁和
@@ -20,7 +24,7 @@ generation、pending probe、恢复时间及重试数不被新成员重置；新
 
 ## 实测记录
 
-新增 [13 个测试](../../../../tests/lifecycle/test_worker_membership.py) 在独立临时 Git
+原版本的 [13 个测试](../../../../tests/lifecycle/test_worker_membership.py) 在独立临时 Git
 及真实状态文件上运行：13 pass、0 fail/error/skip，退出码 0，9 项隔离检查全部通过。
 见 [逐项日志](targeted/stderr.log)、[计数和隔离检查](targeted/stdout.log)、
 [实际启动参数](targeted/launch.json)、[运行结果](targeted/result.json)。

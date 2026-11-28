@@ -574,6 +574,17 @@ Schema 和 `tests/lifecycle/`。共享状态/schema由Lead单一集成，恢复/
 工作未因此宣布完成；下一检查点是 B1 独立复核，以及 WP-301/303 已有接口方案下
 的真实资源接入。没有新增费用、放宽权限、main 合入或发布。
 
+Advisor [7240075040](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7240075040)
+对受审 `457dd418dd38e68589eda0fa987282529e7a6286` 提出 busy 新成员准入 REVISE。
+本轮通过既有 Advisor 通知接手，不计为第五次 continuation。已实际复现原版本
+busy→available并获新任务执行权；最小修复提交
+`2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81` 拒绝忙碌新成员热登记，直至受信
+控制器实际确认空闲。slots=1、2均拒绝，原权威状态、已有任务、额度探测和未提交
+文件不变。原版本14方法中13通过/1反例失败；修复后同组14全过，两次各9项隔离
+检查通过，均为作者运行。证据见 [忙碌准入整改](evidence/live-membership/busy-admission/README.md)。
+原13/108项记录不冒充新SHA回归；本条仍blocked，等待Advisor复核及要求的非作者
+实跑。通知禁止新建/恢复其他模型会话，本轮没有绕过该限制获取复跑或充值激活预算。
+
 <!-- v4-continuation-ready:v1 -->
 ```json
 {
@@ -631,9 +642,10 @@ Schema 和 `tests/lifecycle/`。共享状态/schema由Lead单一集成，恢复/
       "status": "blocked",
       "depends_on": [],
       "progress": {
-        "checkpoint": "6c78c133fd483c210317e20d5d400ff6521eeeaf",
-        "milestone": "Atomic live membership implemented; 13 author-run isolated tests passed; blocked pending independent review and non-author validation, not product acceptance. Continuation activation budget exhausted at 4/4; no recharge.",
+        "checkpoint": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
+        "milestone": "Advisor 7240075040 busy-admission counterexample reproduced; reject busy new members until trusted idle. Same 14 author-run isolated tests: old product 13 pass/1 fail, fixed product 14 pass. Still blocked pending Advisor re-review and non-author run; continuation 4/4 unchanged.",
         "evidence_refs": [
+          "docs/v4/evidence/live-membership/busy-admission/README.md",
           "docs/v4/evidence/live-membership/README.md",
           "framework/local/store.py",
           "framework/local/lifecycle.py"
