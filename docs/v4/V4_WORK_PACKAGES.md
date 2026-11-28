@@ -448,6 +448,7 @@ Team 权威后端取舍仍 proposed，不阻塞本地工作。当前 WP 文档�
 | WP-301 探测完成事件严格准入 | 实现与独立回归完成，限定技术 GO；Adapter 作者/非作者 Reviewer | 代码 `8901f4602b6588177a6ddc9e61520a10b838b8c5`，作者/独立24项各通过；不是原生响应认证 |
 | WP-301 原生执行边界 | 有限核查完成，native live 准入 blocked；Lead/独立边界 Reviewer | Codex同层进程隔离与完整有效工具面未证，Claude准确受限环境auth=false；[证据及解除条件](evidence/native-admission/README.md)，不重跑无变化失败配置、不新开模型会话 |
 | WP-303 首任务至 Gate 集成 | 本批固定文本成果接线已实测并独立复核；真实 CLI / 完整 Alpha 待验 | 代码 `7ca3622908937339e6e064fd8e6e49fff8c914a5`；独立14项边界测试及4个真实正反例，固定演示、真实collector/Gate串联；不将本条done视为整个WP-303 completed |
+| WP-302 已准备未启动任务恢复 | 专用本地执行域的有限实现及独立验证完成；完整恢复产品待验 | 代码 `f31e751826ec68b0d4e6eb2868cc9ae21f8e1a04`；新域机器排除外部启动、最终快照核对、原子撤权及一次逻辑交付；[真实结果含初批测试缺陷](evidence/prepared-recovery/README.md)，旧/默认工作区不追认 |
 | WP-004 无新评论时的续做 | 已自然投递、ACK、实际交付并在正常后继轮跳过done条目；运维作者/独立 Reviewer | 09:25失败保留；09:40读取恢复、选WP301，两条各一投递/ACK。仅本机正常有限路径，重启/撤权/额度恢复另验，四次上限不变 |
 | Team Issue主账本试点 | 方案待共同确定；Owner/Lead/Advisor | OD-02选定后单列实施，不先部署控制分支、第二台机器或新服务 |
 
@@ -488,16 +489,22 @@ WP-303 整体未验收、真实供应商未完成的事实。09:25 下一轮身�
 CLI准入仍缺有效隔离/工具闭包及同环境认证。解除条件见上述证据，不重新审批
 已批准OD-09，也不为维持轮询制造进度。
 
-为避免一个资源前提阻塞整个研发，按既有OD-09把本节原已登记的WP-302未启动
-任务恢复缺口纳入下一有限ready条目，**本轮尚未实施**。输入为当前Store的
-`run-begin`持久意图、`prepared/launching/unknown`区分及handoff真实停止证明；
-范围为`framework/local/`恢复接口、必要`framework/recovery/`和对应测试。目标是
-给“尚未启动且可证明无执行者”的已准备工作区提供保全、撤销旧执行权及安全接管，
-不能只凭无PID或self-report释放。须先审查所有启动路径，再用真实隔离文件/进程
-和独立反例证明：已登记或结果未知的launch不可接管，目录/规范/授权变更不可
-绕过，重复事件不重复交付。若无法建立可信未启动证明，保持阻塞而不降低门禁。
-该工作不依赖原生认证或新模型会话，不扩展为多机/新调度平台。预算仍最多四次，
-已用两次不充值；当前只登记后继，实际执行由下一次有效投递接手。
+WP-302 未启动任务恢复于10:10 UTC自然投递接手，已产出上述实现和独立实跑。
+启动路径审查先发现“无run记录”无法排除外部预授权任务，故改为认领时固定
+`direct-local-only`命名空间，受审外部客户端/Driver按实际路径拒绝该域，普通
+旧工作区不能追认。新路径要求完整版本化启动证明、无历史launch意图、授权和
+最终快照未变，再在同一权威锁内撤销旧权。真实文件保全、旧令牌失效、逻辑交付
+去重、已运行任务拒绝新路径及原有停止证明均已验证；不是任意进程不存在的证明。
+
+独立初批94方法中93通过，一个并发方法的两个子用例因测试hook漏参失败，原件
+保留。修正测试后，仅定向重跑该方法并新增“改规范再生成新快照”反例，两项通过；
+产品代码未变。两次各九项隔离探针通过，不写成一次95项全绿，也不把synthetic
+fixture等同真实供应商。准确输入、日志及限定范围见上述证据。
+
+10:25自然轮观察当前会话active后未写队列；三项各一投递，累计3/4次，没有充值。
+本有限条目标为done，WP-302整体、真实CLI、自然额度恢复和完整Alpha仍待验。
+本批已无ready条目，原生准入blocked保留具体解除条件；不能为继续唤起凭空新增
+工作或伪造进度。生产轮询保持运行，新增有效Advisor事件按原机制处理。
 
 <!-- v4-continuation-ready:v1 -->
 ```json
@@ -539,15 +546,14 @@ CLI准入仍缺有效隔离/工具闭包及同环境认证。解除条件见上�
     {
       "id": "prepared-workspace-recovery",
       "wp_id": "WP-302",
-      "status": "ready",
+      "status": "done",
       "depends_on": [],
       "progress": {
-        "checkpoint": "7ca3622908937339e6e064fd8e6e49fff8c914a5",
-        "milestone": "existing OD09 no-writer gap: prepared workspace lacks owned-stop proof; audit launch-intent paths and implement only provable safe recovery with unknown outcomes fail-closed; not started",
+        "checkpoint": "f31e751826ec68b0d4e6eb2868cc9ae21f8e1a04",
+        "milestone": "explicit direct-local-only prepared recovery implemented and independently verified; initial test-hook failure retained, corrected lock-order and contract-change targets passed; general legacy workspaces and real native recovery remain outside accepted scope",
         "evidence_refs": [
-          "framework/local/store.py",
-          "framework/local/handoff.py",
-          "tests/lifecycle/test_handoff.py"
+          "docs/v4/evidence/prepared-recovery/README.md",
+          "docs/v4/evidence/lead-continuation/live/README.md"
         ]
       }
     }

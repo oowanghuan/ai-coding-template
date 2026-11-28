@@ -48,3 +48,15 @@ ID/正文指纹与已读缓存完全一致。读取的准确 Git 版本为
 会话 active，返回 `deferred: existing thread active; no queue writes`；投递记录
 保持两条，无新增激活。见 [忙碌保护实跑](busy-poll.json)。这是已观察忙碌时的
 保护路径，不替代撤权测试，也不消除检查后状态改变的原生竞态。
+
+10:10:06–10:10:32 UTC，原定时任务读取 57 条评论、pending=0，从准确版本
+`3f8024f8e998b4c2b5371168708bf618d3870011` 选择 WP-302 的
+`prepared-workspace-recovery`。10:10:40.715094 UTC 模型实际收到并 ACK；
+三条有限任务各一份投递，累计使用 3/4 次激活，没有充值或新开会话。见
+[第三次自然投递](prepared-recovery-poll.json)。日志同样止于 queued，
+`thread busy after add; no start` 不代表显式启动成功；ACK 也不代表实现完成。
+
+10:25:11–10:25:49 UTC，下一自然轮仍读到 57 条评论、pending=0，观察到当前
+会话 active 后 deferred，没有队列写入，投递仍为三条。见
+[本轮忙碌保护](prepared-recovery-busy-poll.json)。这不是完成后去重证明，
+也不能据此推断原生 idle 检查与入队是原子的。

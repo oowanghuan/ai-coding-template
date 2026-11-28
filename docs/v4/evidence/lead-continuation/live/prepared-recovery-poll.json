@@ -1,0 +1,29 @@
+{
+  "run_id": "20261128T101006175376Z",
+  "trigger": "original scheduled Project Lead job",
+  "started_at": "2026-11-28T10:10:06.178874+00:00",
+  "finished_at": "2026-11-28T10:10:32.578631+00:00",
+  "comments_read": 57,
+  "pending_advisor": 0,
+  "item_id": "prepared-workspace-recovery",
+  "wp_id": "WP-302",
+  "subject_sha": "3f8024f8e998b4c2b5371168708bf618d3870011",
+  "input_sha256": "9156cc3aea601f3e0b8c933fb8b38189a95efd5a424f3a44a2641e268e8c6291",
+  "progress_sha256": "e4e7359810a18ae43a8ebc0ef64f947fa61b7f05fb65a24fa41ba675504deef5",
+  "continuation": {
+    "state": "queued",
+    "event": "v4-continue:d4813622511a9212207fd2744c8836e1e4dc50fa87069000759cf4543d006eca",
+    "reason": "thread busy after add; no start"
+  },
+  "received_at": "2026-11-28T10:10:40.715094+00:00",
+  "ack_is_completion": false,
+  "activation_records_after": 3,
+  "budget": 4,
+  "new_model_session": false,
+  "explicit_start_observed": false,
+  "raw_sha256": {
+    "result": "f4512537083543a19f38bb21f14b1ce0262c558d00195812b586079146563e5e",
+    "record": "447594d729fd730dd8c5db086c3d4bbf230764dc8a89ed0c64e64a97005b8c1e",
+    "ack": "edef64e4421c559c2f1d61d326fd800f457fde4a8deef46a621f24f56c00a8bd"
+  }
+}

@@ -1,0 +1,118 @@
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+python3: error: couldn't create cache file '/tmp/xcrun_db-b5z3hOko' (errno=Operation not permitted)
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+python3: error: couldn't create cache file '/tmp/xcrun_db-GUTITwhF' (errno=Operation not permitted)
+test_actual_stop_then_higher_fence_handoff_preserves_dirty_and_untracked (test_handoff.HandoffTests) ... ok
+test_corrupt_checkpoint_artifact_rejected_before_new_claim (test_handoff.HandoffTests) ... ok
+test_final_boolean_epoch_and_token_cannot_alias_integer_execution_rights (test_handoff.HandoffTests) ... ok
+test_final_prepared_or_finished_output_without_checkpoint_blocks_reassignment (test_handoff.HandoffTests) ... ok
+test_final_writer_mutation_requires_post_stop_snapshot_before_takeover (test_handoff.HandoffTests) ... ok
+test_partial_restore_write_cannot_be_submitted_or_replayed (test_handoff.HandoffTests) ... ok
+test_post_claim_workspace_change_keeps_new_target_creating (test_handoff.HandoffTests) ... ok
+test_post_stop_workspace_mutations_block_claim_without_authority_write (test_handoff.HandoffTests) ... ok
+test_recovered_old_worker_cannot_steal_new_assignment (test_handoff.HandoffTests) ... ok
+test_restore_error_leaves_creating_and_forbids_submit (test_handoff.HandoffTests) ... ok
+test_running_or_unregistered_owned_process_cannot_confirm_stopped (test_handoff.HandoffTests) ... ok
+test_spec_baseline_and_new_unknown_after_checkpoint_block_claim (test_handoff.HandoffTests) ... ok
+test_stale_checkpoint_pin_rejected_against_latest_registered_checkpoint (test_handoff.HandoffTests) ... ok
+test_stop_without_checkpoint_cannot_release_unknown_workspace (test_handoff.HandoffTests) ... ok
+test_workspace_change_during_restore_never_publishes_prepared (test_handoff.HandoffTests) ... ok
+test_active_guard_also_rechecks_worker_heartbeat (test_lifecycle.LifecycleTests) ... ok
+test_ambiguous_probe_result_and_changed_replay_payload_rejected (test_lifecycle.LifecycleTests) ... ok
+test_budget_scope_unknown_and_untrusted_project_source_cannot_stop_project (test_lifecycle.LifecycleTests) ... ok
+test_dispatch_does_not_consume_and_hide_due_probe (test_lifecycle.LifecycleTests) ... ok
+test_enable_preserves_offline_unknown_and_requires_explicit_verified_credentials (test_lifecycle.LifecycleTests) ... ok
+test_failed_authentication_cannot_be_cleared_by_heartbeat (test_lifecycle.LifecycleTests) ... ok
+test_heartbeat_rechecked_on_direct_claim_start_submit (test_lifecycle.LifecycleTests) ... ok
+test_invocation_budget_exhaustion_and_context_limit_are_not_account_quota (test_lifecycle.LifecycleTests) ... ok
+test_new_quota_observation_and_stale_probe_completion_replays_are_idempotent (test_lifecycle.LifecycleTests) ... ok
+test_newer_shared_quota_limit_cannot_be_cleared_by_older_probe_success (test_lifecycle.LifecycleTests) ... ok
+test_old_failed_probe_preserves_new_retry_and_bounded_attempt_budget (test_lifecycle.LifecycleTests) ... ok
+test_only_owner_controller_can_mutate_runtime (test_lifecycle.LifecycleTests) ... ok
+test_owner_hold_and_budget_precede_recovered_quota (test_lifecycle.LifecycleTests) ... ok
+test_owner_pause_and_project_budget_block_probe_intents (test_lifecycle.LifecycleTests) ... ok
+test_probe_available_boolean_false_then_true_settle_only_matching_intents (test_lifecycle.LifecycleTests) ... ok
+test_probe_available_missing_rejected_without_authority_or_receipt_change (test_lifecycle.LifecycleTests) ... ok
+test_probe_available_nonboolean_rejected_before_in_memory_or_authority_mutation (test_lifecycle.LifecycleTests) ... ok
+test_probe_backoff_durable_unknown_and_attempt_limit (test_lifecycle.LifecycleTests) ... ok
+test_repeated_limit_does_not_forget_an_unknown_probe_or_reset_budget (test_lifecycle.LifecycleTests) ... ok
+test_shared_limit_fences_both_and_third_adapter_can_dispatch_without_pmo (test_lifecycle.LifecycleTests) ... ok
+test_tick_commit_response_loss_replays_same_probe_once (test_lifecycle.LifecycleTests) ... ok
+test_tick_expires_heartbeat_and_refresh_does_not_restore_old_rights (test_lifecycle.LifecycleTests) ... ok
+test_unknown_workspace_blocks_reassignment_even_after_quota_recovers (test_lifecycle.LifecycleTests) ... ok
+test_unverified_credentials_do_not_get_live_authority (test_lifecycle.LifecycleTests) ... ok
+test_external_client_refuses_reserved_domain_before_reading_config (test_unstarted_handoff.ExternalDomainExclusionTests) ... ok
+test_normal_external_configuration_remains_valid_without_spawning (test_unstarted_handoff.ExternalDomainExclusionTests) ... ok
+test_reserved_workspace_ancestor_and_output_paths_reject_before_external_launch (test_unstarted_handoff.ExternalDomainExclusionTests) ... ok
+test_actual_authority_lock_serializes_recovery_and_launch_in_both_orders (test_unstarted_handoff.UnstartedHandoffTests) ... test_default_domain_cannot_claim_never_launched (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_direct_domain_actual_owned_process_requires_real_stop_path (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_explicit_general_domain_is_rejected_and_unknown_domains_do_not_claim (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_identity_epoch_token_and_operation_conflicts_do_not_mutate (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_late_head_change_rejected_without_rewriting_checkpoint_or_original (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_launching_unknown_without_pid_is_not_never_launched (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_legacy_missing_or_ambiguous_start_proof_rejected (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_missing_checkpoint_and_stale_revision_never_release (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_prior_launch_receipt_cannot_be_erased_by_run_none (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_quota_fenced_prepared_workspace_uses_same_never_launched_proof (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_real_prepared_handoff_preserves_files_and_delivers_once_at_new_fence (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_same_authorization_reference_changed_or_expired_rejected (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_stale_latest_pin_late_content_and_scope_changes_rejected (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_terminal_unknown_delivery_and_epoch_change_are_not_unstarted (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_absent_receipt_never_means_success (test_external.ExternalClientTests) ... ok
+test_cancel_is_bound_idempotent_and_does_not_assert_stopped (test_external.ExternalClientTests) ... ok
+test_pid_is_immutable_across_receipts (test_external.ExternalClientTests) ... ok
+test_provisioned_identity_scope_content_and_limits_are_enforced (test_external.ExternalClientTests) ... ok
+test_receipt_binds_job_operation_and_request (test_external.ExternalClientTests) ... ok
+test_receipt_cannot_be_reused_for_another_workspace_capability (test_external.ExternalClientTests) ... ok
+test_receipt_cannot_regress_or_change_same_sequence (test_external.ExternalClientTests) ... ok
+test_receipt_symlink_and_hardlink_are_refused (test_external.ExternalClientTests) ... ok
+test_rejected_cannot_assert_a_spawned_process (test_external.ExternalClientTests) ... ok
+test_request_and_lock_aliases_do_not_overwrite_other_files (test_external.ExternalClientTests) ... ok
+test_request_replay_is_immutable_and_unicode_hash_is_utf8 (test_external.ExternalClientTests) ... ok
+test_terminal_needs_real_exit_and_matching_log_bytes (test_external.ExternalClientTests) ... ok
+test_writable_request_tree_cannot_contain_trusted_storage (test_external.ExternalClientTests) ... ok
+test_cancel_before_launch_never_spawns (test_launch_driver.LauncherTests) ... ok
+test_cancel_observes_owned_child_exit (test_launch_driver.LauncherTests) ... ok
+test_changed_request_cannot_relaunch_same_slot (test_launch_driver.LauncherTests) ... ok
+test_config_rejects_duplicate_workspace_and_bad_job_id (test_launch_driver.LauncherTests) ... ok
+test_config_rejects_nested_workspaces (test_launch_driver.LauncherTests) ... ok
+test_config_rejects_trust_overlap (test_launch_driver.LauncherTests) ... ok
+test_failure_exit_is_not_success (test_launch_driver.LauncherTests) ... ok
+test_mailbox_pins_original_directory (test_launch_driver.LauncherTests) ... ok
+test_mailbox_rejects_fifo_without_blocking (test_launch_driver.LauncherTests) ... ok
+test_nonreading_pipe_cannot_block_runtime_timeout (test_launch_driver.LauncherTests) ... ok
+test_policy_has_no_network_or_controller_authority_grant (test_launch_driver.LauncherTests) ... ok
+test_real_launch_arguments_are_fixed_but_process_is_fake (test_launch_driver.LauncherTests) ... ok
+test_request_is_bound_to_operation_content_and_limits (test_launch_driver.LauncherTests) ... ok
+test_request_rejects_command_environment_and_policy (test_launch_driver.LauncherTests) ... ok
+test_request_symlink_and_hardlink_refused (test_launch_driver.LauncherTests) ... ok
+test_restarted_launch_is_unknown_without_signal_or_spawn (test_launch_driver.LauncherTests) ... ok
+test_restore_rejects_different_config_bytes (test_launch_driver.LauncherTests) ... ok
+test_spawn_exception_preserves_launch_intent_as_unknown (test_launch_driver.LauncherTests) ... ok
+test_strict_json_rejects_duplicates_and_nonfinite (test_launch_driver.LauncherTests) ... ok
+test_timeout_observes_owned_child_exit (test_launch_driver.LauncherTests) ... ok
+test_two_fixed_slots_have_distinct_processes_and_receipts (test_launch_driver.LauncherTests) ... ok
+test_unconfirmed_stop_is_unknown (test_launch_driver.LauncherTests) ... ok
+test_utf8_request_hash_matches_canonical_protocol (test_launch_driver.LauncherTests) ... ok
+test_worker_hash_and_hardlink_fail_closed (test_launch_driver.LauncherTests) ... ok
+
+======================================================================
+FAIL: test_actual_authority_lock_serializes_recovery_and_launch_in_both_orders (test_unstarted_handoff.UnstartedHandoffTests) (winner='recover-prepared')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<INITIAL_EXPERIMENT>/T/source/tests/lifecycle/test_unstarted_handoff.py", line 287, in test_actual_authority_lock_serializes_recovery_and_launch_in_both_orders
+    self.assertTrue(entered.wait(5), failures)
+AssertionError: False is not true : {'recover-prepared': TypeError('held_apply() takes 5 positional arguments but 6 were given')}
+
+======================================================================
+FAIL: test_actual_authority_lock_serializes_recovery_and_launch_in_both_orders (test_unstarted_handoff.UnstartedHandoffTests) (winner='run-begin')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<INITIAL_EXPERIMENT>/T/source/tests/lifecycle/test_unstarted_handoff.py", line 287, in test_actual_authority_lock_serializes_recovery_and_launch_in_both_orders
+    self.assertTrue(entered.wait(5), failures)
+AssertionError: False is not true : {'run-begin': TypeError('held_apply() takes 5 positional arguments but 6 were given')}
+
+----------------------------------------------------------------------
+Ran 94 tests in 413.146s
+
+FAILED (failures=2)

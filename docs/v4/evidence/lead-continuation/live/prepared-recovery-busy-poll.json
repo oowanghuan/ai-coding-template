@@ -1,0 +1,15 @@
+{
+  "run_id": "20261128T102511273283Z",
+  "started_at": "2026-11-28T10:25:11.275831+00:00",
+  "finished_at": "2026-11-28T10:25:49.792439+00:00",
+  "comments_read": 57,
+  "continuation": {
+    "state": "deferred",
+    "reason": "existing thread active; no queue writes"
+  },
+  "pending_advisor": 0,
+  "activation_records_after": 3,
+  "new_activation_records": 0,
+  "scope": "active existing session; no queue write in this scheduled run",
+  "raw_sha256": "d9fc388b54df7be28d7b79fd0cc906e7361c176404d68803c323aafaba7b2982"
+}

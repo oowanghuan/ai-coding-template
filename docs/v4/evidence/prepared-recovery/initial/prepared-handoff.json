@@ -1,0 +1,875 @@
+{
+  "kind": "synthetic_fixture",
+  "no_provider_calls": true,
+  "actual_git_worktrees": true,
+  "checkpoint": {
+    "checkpoint_id": "checkpoint-4087185f248e4f989a3912c2f8278158",
+    "path": ".ai-org/checkpoints/checkpoint-4087185f248e4f989a3912c2f8278158",
+    "manifest_sha256": "69eb922ac5a2cece33352ebb7599a64b98a7fcd33055dd07770322c446d94103",
+    "binding": "1fe94224161394f7e79e909a95220616f0b62ca6f2abe5fb6275797e70a5c037",
+    "unknown_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "old_credentials": {
+    "assignment_id": "assignment-a51c9116e2f14420b17009956120a434",
+    "epoch": 1,
+    "token": 1,
+    "lease_expires_at": "2026-11-28T12:10:00Z",
+    "workspace_id": "v4-direct-local-252a1133b125490cbdb873147f45b16e"
+  },
+  "new_credentials": {
+    "assignment_id": "assignment-fd36b5a17b0241bcbedf8fe43357be25",
+    "epoch": 1,
+    "token": 2,
+    "lease_expires_at": "2026-11-28T12:10:00Z",
+    "workspace_id": "workspace-1b9649cdfb924271b796565c9cdba4df"
+  },
+  "recovery": {
+    "replayed": false,
+    "revision": 6,
+    "operation": {
+      "intent": "7d187c9855be80ae4c5e480775c40e5bcee689df31a4c666de9a2cb6492d8819",
+      "action": "recover-prepared",
+      "actor": "principal-a",
+      "at": "2026-11-28T12:00:00Z",
+      "status": "committed",
+      "result": {
+        "assignment_id": "assignment-a51c9116e2f14420b17009956120a434",
+        "workspace_id": "v4-direct-local-252a1133b125490cbdb873147f45b16e",
+        "state": "stopped",
+        "execution_observed": "never_launched",
+        "process_stop_observed": false,
+        "launch_protocol": "persist-before-spawn/1",
+        "checkpoint_id": "checkpoint-4087185f248e4f989a3912c2f8278158",
+        "manifest_sha256": "69eb922ac5a2cece33352ebb7599a64b98a7fcd33055dd07770322c446d94103"
+      },
+      "revision": 6
+    }
+  },
+  "delivery": {
+    "replayed": false,
+    "revision": 12,
+    "operation": {
+      "intent": "393fcc46b69a4efcaa1498293456a1888c87a3b5b2ef88eaf8f0840c52d0eeb8",
+      "action": "submit",
+      "actor": "principal-c",
+      "at": "2026-11-28T12:00:00Z",
+      "status": "committed",
+      "result": {
+        "delivery_id": "WP-A",
+        "sha256": "b4351c9f2c58e98b13ad7dcb010bccf37ad52456bccff04cedd02270c3a7669a",
+        "accepted": false
+      },
+      "revision": 12
+    }
+  },
+  "old_files_unchanged": true,
+  "original_files": {
+    "src/base.txt": {
+      "sha256": "6230eb8e0eb0a06b035f26e412c5c897572c305dd16ff36c79cc4edf88dc75d7",
+      "executable": false
+    },
+    "src/a/dirty.txt": {
+      "sha256": "1ce7d3e31853e7b29593c269449095de8de0afc5849fcfe3118f267f3da28a67",
+      "executable": true
+    },
+    "src/a/draft.txt": {
+      "sha256": "b4351c9f2c58e98b13ad7dcb010bccf37ad52456bccff04cedd02270c3a7669a",
+      "executable": false
+    }
+  },
+  "final_state": {
+    "deliveries": {
+      "WP-A": {
+        "assignment_id": "assignment-fd36b5a17b0241bcbedf8fe43357be25",
+        "baseline_sha": "f4f39e74aaac9e893ed29a49da15a50f4ee79a29",
+        "content_base64": "cHJlc2VydmVkIHVudHJhY2tlZCByZXN1bHQK",
+        "epoch": 1,
+        "path": "src/a/draft.txt",
+        "sha256": "b4351c9f2c58e98b13ad7dcb010bccf37ad52456bccff04cedd02270c3a7669a",
+        "token": 2
+      }
+    },
+    "format": "local-state/1",
+    "operations": {
+      "checkpoint:312b16a0790a4096a2cb69435e809524": {
+        "action": "checkpoint",
+        "actor": "trusted-local-supervisor",
+        "at": "2026-11-28T12:00:00Z",
+        "intent": "99ad1bf2125717822ebc80e9a028b67cbf63e0b8d30d6c6ac8ab8454fd2f6f08",
+        "result": {
+          "binding": "1fe94224161394f7e79e909a95220616f0b62ca6f2abe5fb6275797e70a5c037",
+          "checkpoint_id": "checkpoint-4087185f248e4f989a3912c2f8278158",
+          "manifest_sha256": "69eb922ac5a2cece33352ebb7599a64b98a7fcd33055dd07770322c446d94103",
+          "path": ".ai-org/checkpoints/checkpoint-4087185f248e4f989a3912c2f8278158",
+          "unknown_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "revision": 5,
+        "status": "committed"
+      },
+      "operation-1": {
+        "action": "enable-lifecycle",
+        "actor": "principal-owner",
+        "at": "2026-11-28T12:00:00Z",
+        "intent": "e186a4a64c24c7180d32e216a132181084520645db665617983ea7b41b930d03",
+        "result": {
+          "execution_started": false,
+          "registered": [
+            "worker-a",
+            "worker-b",
+            "worker-c"
+          ]
+        },
+        "revision": 1,
+        "status": "committed"
+      },
+      "operation-2": {
+        "action": "claim",
+        "actor": "principal-a",
+        "at": "2026-11-28T12:00:00Z",
+        "intent": "f80dbc374102b58959628c8fd06779147bc714f4e7b91499ce9cfcbda75bae9d",
+        "result": {
+          "assignment_id": "assignment-a51c9116e2f14420b17009956120a434",
+          "epoch": 1,
+          "lease_expires_at": "2026-11-28T12:10:00Z",
+          "token": 1,
+          "workspace_id": "v4-direct-local-252a1133b125490cbdb873147f45b16e"
+        },
+        "revision": 2,
+        "status": "committed"
+      },
+      "operation-6": {
+        "action": "claim",
+        "actor": "principal-c",
+        "at": "2026-11-28T12:00:00Z",
+        "intent": "93dee6b98bfedc7640274f140b38a78b81a5e358bee070cbae76a756c9bcfbf4",
+        "result": {
+          "assignment_id": "assignment-fd36b5a17b0241bcbedf8fe43357be25",
+          "epoch": 1,
+          "lease_expires_at": "2026-11-28T12:10:00Z",
+          "token": 2,
+          "workspace_id": "workspace-1b9649cdfb924271b796565c9cdba4df"
+        },
+        "revision": 7,
+        "status": "committed"
+      },
+      "prepare-new": {
+        "action": "start",
+        "actor": "principal-c",
+        "at": "2026-11-28T12:00:00Z",
+        "intent": "f09854069535f99be407dd1307719488d9317ea7c0336a23557ae21775df054b",
+        "result": {
+          "state": "creating",
+          "workspace_id": "workspace-1b9649cdfb924271b796565c9cdba4df"
+        },
+        "revision": 8,
+        "status": "committed"
+      },
+      "prepare-old": {
+        "action": "start",
+        "actor": "principal-a",
+        "at": "2026-11-28T12:00:00Z",
+        "intent": "5d2deb85357326f8cdb568972ca119cf08424555e17e6c353102aa308ed682e8",
+        "result": {
+          "assignment_id": "assignment-a51c9116e2f14420b17009956120a434",
+          "authorization_sha256": "054fbdadba2980cb144ba372aa3c77a8ef6cf1acd09808f49c3d2f926ac0da80",
+          "epoch": 1,
+          "execution_domain": "direct-local-only",
+          "launch_protocol": "persist-before-spawn/1",
+          "state": "creating",
+          "token": 1,
+          "work_binding_sha256": "1fe94224161394f7e79e909a95220616f0b62ca6f2abe5fb6275797e70a5c037",
+          "workspace_id": "v4-direct-local-252a1133b125490cbdb873147f45b16e"
+        },
+        "revision": 3,
+        "status": "committed"
+      },
+      "recover-old": {
+        "action": "recover-prepared",
+        "actor": "principal-a",
+        "at": "2026-11-28T12:00:00Z",
+        "intent": "7d187c9855be80ae4c5e480775c40e5bcee689df31a4c666de9a2cb6492d8819",
+        "result": {
+          "assignment_id": "assignment-a51c9116e2f14420b17009956120a434",
+          "checkpoint_id": "checkpoint-4087185f248e4f989a3912c2f8278158",
+          "execution_observed": "never_launched",
+          "launch_protocol": "persist-before-spawn/1",
+          "manifest_sha256": "69eb922ac5a2cece33352ebb7599a64b98a7fcd33055dd07770322c446d94103",
+          "process_stop_observed": false,
+          "state": "stopped",
+          "workspace_id": "v4-direct-local-252a1133b125490cbdb873147f45b16e"
+        },
+        "revision": 6,
+        "status": "committed"
+      },
+      "restore-handoff:4d969b31a60d471691e8910f337a8406": {
+        "action": "restore-handoff",
+        "actor": "trusted-local-supervisor",
+        "at": "2026-11-28T12:00:00Z",
+        "intent": "cd9bc9246fb19d1baac1ed2bc0cf70fdf042559b7898a2bbca31dae3cd5434bb",
+        "result": {
+          "assignment_id": "assignment-fd36b5a17b0241bcbedf8fe43357be25",
+          "changed_paths": [
+            "src/a/deleted.txt",
+            "src/a/dirty.txt",
+            "src/a/draft.txt"
+          ],
+          "manifest_sha256": "69eb922ac5a2cece33352ebb7599a64b98a7fcd33055dd07770322c446d94103"
+        },
+        "revision": 11,
+        "status": "committed"
+      },
+      "restore-intent:7372fcc1fb0f4aafb68624d579ab6b29": {
+        "action": "restore-intent",
+        "actor": "trusted-local-supervisor",
+        "at": "2026-11-28T12:00:00Z",
+        "intent": "0997f0f9808ef1a11359611ef2c8a756887e287e65631e47d122bf8ecf4b09b1",
+        "result": {
+          "assignment_id": "assignment-fd36b5a17b0241bcbedf8fe43357be25",
+          "source": "v4-direct-local-252a1133b125490cbdb873147f45b16e"
+        },
+        "revision": 10,
+        "status": "committed"
+      },
+      "submit-recovered": {
+        "action": "submit",
+        "actor": "principal-c",
+        "at": "2026-11-28T12:00:00Z",
+        "intent": "393fcc46b69a4efcaa1498293456a1888c87a3b5b2ef88eaf8f0840c52d0eeb8",
+        "result": {
+          "accepted": false,
+          "delivery_id": "WP-A",
+          "sha256": "b4351c9f2c58e98b13ad7dcb010bccf37ad52456bccff04cedd02270c3a7669a"
+        },
+        "revision": 12,
+        "status": "committed"
+      }
+    },
+    "revision": 12,
+    "snapshot": {
+      "assignments": [
+        {
+          "allowed_paths": [
+            "src/a/"
+          ],
+          "authority_epoch": 1,
+          "base_sha": "f4f39e74aaac9e893ed29a49da15a50f4ee79a29",
+          "fencing_token": 1,
+          "heartbeat_at": "2026-11-28T12:00:00Z",
+          "id": "assignment-a51c9116e2f14420b17009956120a434",
+          "last_checkpoint": "checkpoint-4087185f248e4f989a3912c2f8278158",
+          "lease_expires_at": "2026-11-28T12:10:00Z",
+          "revocation_reason": "prepared-checkpoint-recovery",
+          "role_ref": "role-developer",
+          "session_ref": "session-a",
+          "state": "revoked",
+          "worker_ref": "worker-a",
+          "workspace_id": "v4-direct-local-252a1133b125490cbdb873147f45b16e",
+          "wp_ref": "WP-A"
+        },
+        {
+          "allowed_paths": [
+            "src/a/"
+          ],
+          "authority_epoch": 1,
+          "base_sha": "f4f39e74aaac9e893ed29a49da15a50f4ee79a29",
+          "fencing_token": 2,
+          "heartbeat_at": "2026-11-28T12:00:00Z",
+          "id": "assignment-fd36b5a17b0241bcbedf8fe43357be25",
+          "last_checkpoint": null,
+          "lease_expires_at": "2026-11-28T12:10:00Z",
+          "revocation_reason": null,
+          "role_ref": "role-developer",
+          "session_ref": "session-c",
+          "state": "active",
+          "worker_ref": "worker-c",
+          "workspace_id": "workspace-1b9649cdfb924271b796565c9cdba4df",
+          "wp_ref": "WP-A"
+        }
+      ],
+      "authorizations": [
+        {
+          "allowed_paths": [
+            "src/"
+          ],
+          "decision_ref": "synthetic-decision",
+          "environment_refs": [
+            "host-local"
+          ],
+          "expires_at": "2030-01-01T00:00:00Z",
+          "external_effects": [],
+          "id": "auth-demo",
+          "issuer": "principal-owner",
+          "role_refs": [
+            "role-developer"
+          ],
+          "state": "granted",
+          "wp_refs": [
+            "WP-A",
+            "WP-B",
+            "WP-C"
+          ]
+        }
+      ],
+      "checkpoints": [
+        {
+          "assignment_ref": "assignment-a51c9116e2f14420b17009956120a434",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "f4f39e74aaac9e893ed29a49da15a50f4ee79a29",
+          "blockers": [],
+          "completed": [
+            "synthetic local edits"
+          ],
+          "created_at": "2026-11-28T12:00:00Z",
+          "decision_refs": [],
+          "evidence_refs": [],
+          "id": "checkpoint-4087185f248e4f989a3912c2f8278158",
+          "last_valid_commit": "f4f39e74aaac9e893ed29a49da15a50f4ee79a29",
+          "lease_expires_at": "2026-11-28T12:10:00Z",
+          "next_actions": [
+            "Reconcile exact current authority and stopped writer before handoff"
+          ],
+          "remaining": [
+            "resume actual task"
+          ],
+          "role_ref": "role-developer",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "uncommitted": [
+            {
+              "location": ".ai-org/checkpoints/checkpoint-4087185f248e4f989a3912c2f8278158",
+              "sha256": "69eb922ac5a2cece33352ebb7599a64b98a7fcd33055dd07770322c446d94103"
+            }
+          ],
+          "unknown_operations": [],
+          "wp_ref": "WP-A",
+          "wp_revision": 3
+        }
+      ],
+      "hosts": [
+        {
+          "environment": "synthetic-isolated",
+          "id": "host-local"
+        }
+      ],
+      "project": {
+        "authority_epoch": 1,
+        "budget": "available",
+        "id": "demo",
+        "owner_principals": [
+          "principal-owner"
+        ],
+        "paused": false,
+        "policy_revision": "1",
+        "profile": "lite",
+        "revision": 13,
+        "state_backend": "local_git"
+      },
+      "providers": [
+        {
+          "adapter": "synthetic",
+          "id": "provider-a"
+        },
+        {
+          "adapter": "synthetic",
+          "id": "provider-b"
+        },
+        {
+          "adapter": "synthetic",
+          "id": "provider-c"
+        }
+      ],
+      "roles": [
+        {
+          "asset_refs": [],
+          "id": "role-developer",
+          "permissions": [
+            "edit-assigned-scope"
+          ],
+          "responsibilities": [
+            "Implementation"
+          ]
+        },
+        {
+          "asset_refs": [],
+          "id": "role-reviewer",
+          "permissions": [
+            "read"
+          ],
+          "responsibilities": [
+            "Independent review"
+          ]
+        }
+      ],
+      "schema_version": "0.2",
+      "sessions": [
+        {
+          "context_ref": "synthetic-a",
+          "host_ref": "host-local",
+          "id": "session-a",
+          "provider_ref": "provider-a",
+          "worker_ref": "worker-a"
+        },
+        {
+          "context_ref": "synthetic-b",
+          "host_ref": "host-local",
+          "id": "session-b",
+          "provider_ref": "provider-b",
+          "worker_ref": "worker-b"
+        },
+        {
+          "context_ref": "synthetic-c",
+          "host_ref": "host-local",
+          "id": "session-c",
+          "provider_ref": "provider-c",
+          "worker_ref": "worker-c"
+        }
+      ],
+      "work_packages": [
+        {
+          "acceptor": "principal-owner",
+          "accountable_role": "role-developer",
+          "allowed_paths": [
+            "src/a/"
+          ],
+          "assignment_ref": "assignment-fd36b5a17b0241bcbedf8fe43357be25",
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "f4f39e74aaac9e893ed29a49da15a50f4ee79a29",
+          "blocking_conditions": [],
+          "change_reason": null,
+          "checkpoint_ref": null,
+          "deliverables": [
+            "Synthetic patch"
+          ],
+          "dependencies": [],
+          "evidence_refs": [],
+          "external_effects": [],
+          "forbidden_paths": [
+            "secrets/"
+          ],
+          "goal_refs": [
+            "GOAL-DEMO"
+          ],
+          "handoff_refs": [],
+          "id": "WP-A",
+          "implementer": "principal-c",
+          "inputs": [],
+          "kind": "code",
+          "merger": "principal-owner",
+          "milestones": {
+            "engineering_accepted": {
+              "evidence_refs": [],
+              "reason": null,
+              "signer": null,
+              "status": "pending",
+              "subject_sha": null
+            },
+            "merged": {
+              "evidence_refs": [],
+              "reason": null,
+              "signer": null,
+              "status": "pending",
+              "subject_sha": null
+            },
+            "review_passed": {
+              "evidence_refs": [],
+              "reason": null,
+              "signer": null,
+              "status": "pending",
+              "subject_sha": null
+            }
+          },
+          "negative_criteria": [
+            "Reject invalid input"
+          ],
+          "objective": "Validate protocol consistency",
+          "positive_criteria": [
+            "Expected output"
+          ],
+          "project_id": "demo",
+          "required_milestones": [
+            "review_passed",
+            "merged",
+            "engineering_accepted"
+          ],
+          "requirement_refs": [
+            "REQ-DEMO"
+          ],
+          "review_refs": [],
+          "reviewer": "principal-owner",
+          "revision": 6,
+          "risk": "medium",
+          "rollback": "Preserve worktree; revert reviewed commit",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "state": "in_progress",
+          "submitted_sha": null,
+          "test_strategy": "Synthetic unit checks",
+          "title": "Synthetic local change"
+        },
+        {
+          "acceptor": "principal-owner",
+          "accountable_role": "role-developer",
+          "allowed_paths": [
+            "src/b/"
+          ],
+          "assignment_ref": null,
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "f4f39e74aaac9e893ed29a49da15a50f4ee79a29",
+          "blocking_conditions": [],
+          "change_reason": null,
+          "checkpoint_ref": null,
+          "deliverables": [
+            "Synthetic patch"
+          ],
+          "dependencies": [],
+          "evidence_refs": [],
+          "external_effects": [],
+          "forbidden_paths": [
+            "secrets/"
+          ],
+          "goal_refs": [
+            "GOAL-DEMO"
+          ],
+          "handoff_refs": [],
+          "id": "WP-B",
+          "implementer": "principal-b",
+          "inputs": [],
+          "kind": "code",
+          "merger": "principal-owner",
+          "milestones": {
+            "engineering_accepted": {
+              "evidence_refs": [],
+              "reason": null,
+              "signer": null,
+              "status": "pending",
+              "subject_sha": null
+            },
+            "merged": {
+              "evidence_refs": [],
+              "reason": null,
+              "signer": null,
+              "status": "pending",
+              "subject_sha": null
+            },
+            "review_passed": {
+              "evidence_refs": [],
+              "reason": null,
+              "signer": null,
+              "status": "pending",
+              "subject_sha": null
+            }
+          },
+          "negative_criteria": [
+            "Reject invalid input"
+          ],
+          "objective": "Validate protocol consistency",
+          "positive_criteria": [
+            "Expected output"
+          ],
+          "project_id": "demo",
+          "required_milestones": [
+            "review_passed",
+            "merged",
+            "engineering_accepted"
+          ],
+          "requirement_refs": [
+            "REQ-DEMO"
+          ],
+          "review_refs": [],
+          "reviewer": "principal-owner",
+          "revision": 1,
+          "risk": "medium",
+          "rollback": "Preserve worktree; revert reviewed commit",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "state": "planned",
+          "submitted_sha": null,
+          "test_strategy": "Synthetic unit checks",
+          "title": "Synthetic local change"
+        },
+        {
+          "acceptor": "principal-owner",
+          "accountable_role": "role-developer",
+          "allowed_paths": [
+            "src/c/"
+          ],
+          "assignment_ref": null,
+          "authorization_ref": "auth-demo",
+          "baseline_sha": "f4f39e74aaac9e893ed29a49da15a50f4ee79a29",
+          "blocking_conditions": [],
+          "change_reason": null,
+          "checkpoint_ref": null,
+          "deliverables": [
+            "Synthetic patch"
+          ],
+          "dependencies": [],
+          "evidence_refs": [],
+          "external_effects": [],
+          "forbidden_paths": [
+            "secrets/"
+          ],
+          "goal_refs": [
+            "GOAL-DEMO"
+          ],
+          "handoff_refs": [],
+          "id": "WP-C",
+          "implementer": "principal-c",
+          "inputs": [],
+          "kind": "code",
+          "merger": "principal-owner",
+          "milestones": {
+            "engineering_accepted": {
+              "evidence_refs": [],
+              "reason": null,
+              "signer": null,
+              "status": "pending",
+              "subject_sha": null
+            },
+            "merged": {
+              "evidence_refs": [],
+              "reason": null,
+              "signer": null,
+              "status": "pending",
+              "subject_sha": null
+            },
+            "review_passed": {
+              "evidence_refs": [],
+              "reason": null,
+              "signer": null,
+              "status": "pending",
+              "subject_sha": null
+            }
+          },
+          "negative_criteria": [
+            "Reject invalid input"
+          ],
+          "objective": "Validate protocol consistency",
+          "positive_criteria": [
+            "Expected output"
+          ],
+          "project_id": "demo",
+          "required_milestones": [
+            "review_passed",
+            "merged",
+            "engineering_accepted"
+          ],
+          "requirement_refs": [
+            "REQ-DEMO"
+          ],
+          "review_refs": [],
+          "reviewer": "principal-owner",
+          "revision": 1,
+          "risk": "medium",
+          "rollback": "Preserve worktree; revert reviewed commit",
+          "spec_refs": [
+            {
+              "path": "contracts/example.md",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "1"
+            }
+          ],
+          "state": "planned",
+          "submitted_sha": null,
+          "test_strategy": "Synthetic unit checks",
+          "title": "Synthetic local change"
+        }
+      ],
+      "workers": [
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "code"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-a",
+          "principal": "principal-a",
+          "provider_ref": "provider-a",
+          "quota": "available",
+          "role_refs": [
+            "role-developer"
+          ],
+          "slots": 1,
+          "state": "available"
+        },
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "code"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-b",
+          "principal": "principal-b",
+          "provider_ref": "provider-b",
+          "quota": "available",
+          "role_refs": [
+            "role-developer"
+          ],
+          "slots": 1,
+          "state": "available"
+        },
+        {
+          "authorization_method": "synthetic-no-credentials",
+          "capabilities": [
+            "code"
+          ],
+          "host_ref": "host-local",
+          "id": "worker-c",
+          "principal": "principal-c",
+          "provider_ref": "provider-c",
+          "quota": "available",
+          "role_refs": [
+            "role-developer"
+          ],
+          "slots": 1,
+          "state": "busy"
+        }
+      ]
+    },
+    "store_id": "dfaac43d90654ac6b5265496429ac4da",
+    "tokens": {
+      "WP-A": 2
+    },
+    "worker_runtime": {
+      "format": "worker-runtime/1",
+      "groups": {
+        "Q1": {
+          "attempts": 0,
+          "generation": 0,
+          "limited": false,
+          "next_probe_at": null,
+          "pending_probe": null,
+          "reason": null,
+          "retry_at": null
+        },
+        "Q2": {
+          "attempts": 0,
+          "generation": 0,
+          "limited": false,
+          "next_probe_at": null,
+          "pending_probe": null,
+          "reason": null,
+          "retry_at": null
+        }
+      },
+      "policy": {
+        "heartbeat_timeout": 120,
+        "initial_backoff": 5,
+        "max_backoff": 10,
+        "max_probes": 2
+      },
+      "workers": {
+        "worker-a": {
+          "auth_identity": "identity-shared",
+          "authenticated": true,
+          "authorized": true,
+          "heartbeat_at": "2026-11-28T12:00:00Z",
+          "host_available": true,
+          "last_observation": null,
+          "mode": "dedicated",
+          "owner_hold": null,
+          "quota_group": "Q1",
+          "reason": null,
+          "resource": {
+            "agent_tool": null,
+            "credential_ref": null,
+            "model": null,
+            "model_provider": null
+          },
+          "status": "available",
+          "stop_confirmed": true
+        },
+        "worker-b": {
+          "auth_identity": "identity-shared",
+          "authenticated": true,
+          "authorized": true,
+          "heartbeat_at": "2026-11-28T12:00:00Z",
+          "host_available": true,
+          "last_observation": null,
+          "mode": "dedicated",
+          "owner_hold": null,
+          "quota_group": "Q1",
+          "reason": null,
+          "resource": {
+            "agent_tool": null,
+            "credential_ref": null,
+            "model": null,
+            "model_provider": null
+          },
+          "status": "available",
+          "stop_confirmed": true
+        },
+        "worker-c": {
+          "auth_identity": "identity-c",
+          "authenticated": true,
+          "authorized": true,
+          "heartbeat_at": "2026-11-28T12:00:00Z",
+          "host_available": true,
+          "last_observation": null,
+          "mode": "elastic",
+          "owner_hold": null,
+          "quota_group": "Q2",
+          "reason": null,
+          "resource": {
+            "agent_tool": null,
+            "credential_ref": null,
+            "model": null,
+            "model_provider": null
+          },
+          "status": "running",
+          "stop_confirmed": true
+        }
+      }
+    },
+    "workspaces": {
+      "v4-direct-local-252a1133b125490cbdb873147f45b16e": {
+        "assignment_id": "assignment-a51c9116e2f14420b17009956120a434",
+        "baseline_sha": "f4f39e74aaac9e893ed29a49da15a50f4ee79a29",
+        "checkpoint": {
+          "binding": "1fe94224161394f7e79e909a95220616f0b62ca6f2abe5fb6275797e70a5c037",
+          "manifest_sha256": "69eb922ac5a2cece33352ebb7599a64b98a7fcd33055dd07770322c446d94103",
+          "path": ".ai-org/checkpoints/checkpoint-4087185f248e4f989a3912c2f8278158",
+          "unknown_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "handoff_required": true,
+        "id": "v4-direct-local-252a1133b125490cbdb873147f45b16e",
+        "path": ".ai-org/workspaces/v4-direct-local-252a1133b125490cbdb873147f45b16e",
+        "run": null,
+        "state": "stopped",
+        "wp_id": "WP-A"
+      },
+      "workspace-1b9649cdfb924271b796565c9cdba4df": {
+        "assignment_id": "assignment-fd36b5a17b0241bcbedf8fe43357be25",
+        "baseline_sha": "f4f39e74aaac9e893ed29a49da15a50f4ee79a29",
+        "id": "workspace-1b9649cdfb924271b796565c9cdba4df",
+        "path": ".ai-org/workspaces/workspace-1b9649cdfb924271b796565c9cdba4df",
+        "recovery_source": "v4-direct-local-252a1133b125490cbdb873147f45b16e",
+        "restored": {
+          "changed_paths": [
+            "src/a/deleted.txt",
+            "src/a/dirty.txt",
+            "src/a/draft.txt"
+          ],
+          "manifest_sha256": "69eb922ac5a2cece33352ebb7599a64b98a7fcd33055dd07770322c446d94103"
+        },
+        "run": null,
+        "state": "prepared",
+        "wp_id": "WP-A"
+      }
+    }
+  }
+}

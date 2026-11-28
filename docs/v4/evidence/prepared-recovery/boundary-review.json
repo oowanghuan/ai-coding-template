@@ -1,0 +1,171 @@
+{
+  "format": "wp302-independent-boundary-review/1",
+  "reviewed_at": "2026-11-28T10:31:59.140045+00:00",
+  "review_role": "non-author static, harness-admission, and later read-only result reviewer",
+  "source_commit": "f31e751826ec68b0d4e6eb2868cc9ae21f8e1a04",
+  "inputs": {
+    "framework/local/store.py": {
+      "sha256": "d39411369fcfeb25c233da3e73823f5023df9405aeca7d11364487161dd62a4b",
+      "matches_commit_blob": true,
+      "binding_state": "bound"
+    },
+    "framework/local/handoff.py": {
+      "sha256": "298c7c386f64e5a346e880fe0f14b6ca285e1cd10e410edfc66794741ef829a4",
+      "matches_commit_blob": true,
+      "binding_state": "bound"
+    },
+    "framework/local/external.py": {
+      "sha256": "7d7cb874a054c8e86a0d81f640010d2b9bec6a1b0972ad9c4d21643c45675cd7",
+      "matches_commit_blob": true,
+      "binding_state": "bound"
+    },
+    "framework/local/launch_driver.py": {
+      "sha256": "91fd5c807d0e760c354c54ddaec316ad5771c8a5ad9e1af84d8a8e017259d60d",
+      "matches_commit_blob": true,
+      "binding_state": "bound"
+    },
+    "tests/lifecycle/test_unstarted_handoff.py": {
+      "sha256": "afd69de6118adbbf48afda54684002b9465037b60b0afd2be14ae71437a63782",
+      "matches_commit_blob": false,
+      "binding_state": "final_test_input_pending_separate_commit; not part of product commit f31e751",
+      "previous_frozen_sha256": "9dba904e06c1fd50409e6debcecad204a0581a88504065494c54b7c9f1526d39"
+    },
+    "examples/alpha/README.md": {
+      "sha256": "3937e4e33b310a35e3b39cf419be441fb456b49f01113146a5aad34f0abf6b2e",
+      "matches_commit_blob": true,
+      "binding_state": "bound"
+    }
+  },
+  "static_decision": "approved for bounded fresh A01 test closure; not engineering acceptance",
+  "findings_resolved": [
+    "Uniform prepared start proof could not exclude pre-armed external jobs. Recovery now requires a newly claimed reserved direct-local-only namespace. General/legacy workspaces cannot be retroactively admitted.",
+    "ExternalClient rejects reserved workspace and final-output path segments before config/request access. Standalone Driver rejects the same casefolded namespace at config admission and existing pre-spawn revalidation, without importing candidate modules or trusting candidate state.",
+    "Versioned start receipt binds assignment, epoch/token, complete authorization fingerprint and work binding. Recovery requires no matching historical run-begin, a unique current checkpoint receipt and unchanged actual workspace contents.",
+    "Store serializes recovery and run-begin under the same authority lock; recovery atomically revokes old execution authority, retains checkpoint, pauses WP and records never_launched with process_stop_observed=false."
+  ],
+  "harness": {
+    "sha256": "c2f0905e4770a2b9f9016d619e569b62a52cac7559ae57dce503511b7e242abd",
+    "previous_reviewed_sha256": "c5fbbd11c876e8367f8de069dc2eda390c7705843d734490f966b44fabd2a036",
+    "admitted": true,
+    "scope": "Fresh E/T/C, protected source/dependencies/profile and host-owned logs; C-only writes, root-unlink denial, deny process-info others, no network or credentials; nine canaries precede candidate import; 600-second bounded lifecycle/external-client/driver tests.",
+    "host_candidate_imports": 0,
+    "host_driver_execution_authorized": false,
+    "actual_executor": "independent_checks",
+    "reviewer_execution_count": 0
+  },
+  "natural_pulse": {
+    "result_sha256": "f4512537083543a19f38bb21f14b1ce0262c558d00195812b586079146563e5e",
+    "run_id": "20261128T101006175376Z",
+    "trigger": "com.ai-coding-template.v4.project-lead",
+    "started_at": "2026-11-28T10:10:06.178874+00:00",
+    "finished_at": "2026-11-28T10:10:32.578631+00:00",
+    "comments_read": 57,
+    "pending": 0,
+    "state": "queued",
+    "reason": "thread busy after add; no start",
+    "record_count": 3,
+    "records": [
+      {
+        "item_id": "native-execution-boundary",
+        "wp_id": "WP-301",
+        "slot": 0,
+        "delivery_state": "queued",
+        "ack_matches": true,
+        "ack_received_at": "2026-11-28T09:41:01.244986+00:00",
+        "ack_completed": false,
+        "record_sha256": "b44672aeb0e79aa7340c5883b900c19e9e246be460fe9ce73a14fa1ceafaaf95",
+        "ack_sha256": "f0a8c7683770c642b410adba3d9087ff34184e98b4f0a140c826579ed6f3b396"
+      },
+      {
+        "item_id": "prepared-workspace-recovery",
+        "wp_id": "WP-302",
+        "slot": 0,
+        "delivery_state": "queued",
+        "ack_matches": true,
+        "ack_received_at": "2026-11-28T10:10:40.715094+00:00",
+        "ack_completed": false,
+        "record_sha256": "447594d729fd730dd8c5db086c3d4bbf230764dc8a89ed0c64e64a97005b8c1e",
+        "ack_sha256": "edef64e4421c559c2f1d61d326fd800f457fde4a8deef46a621f24f56c00a8bd"
+      },
+      {
+        "item_id": "first-task-to-gate",
+        "wp_id": "WP-303",
+        "slot": 0,
+        "delivery_state": "queued",
+        "ack_matches": true,
+        "ack_received_at": "2026-11-28T09:11:08.646688+00:00",
+        "ack_completed": false,
+        "record_sha256": "ec61f34034025ac72cc01b5b8145243dddd8a56abb152eb8ef4341acefe18c13",
+        "ack_sha256": "c1d9f25b3cfd166fbbbdc6b4d6d394b569b96b5cf3ae98c5a545f91a1d03b0c4"
+      }
+    ],
+    "limits": "Observed model ACK and three distinct item records only. No explicit queue/start success, reboot recovery, or atomic idle-only enqueue claim."
+  },
+  "limitations": [
+    "Finite synthetic prepared-recovery closure verified across two runs; original failed batch is retained. This is not full engineering acceptance or a single all-green 95-test run.",
+    "Production trusted Driver has not been deployed or restarted. Old pinned external capabilities are not revoked by updating source; new direct namespace use requires the reviewed fresh closure with no outstanding old capabilities over it.",
+    "This is trusted cooperative single-host controller evidence, not OS proof of arbitrary process absence or authentication against a malicious host owner.",
+    "Prepared recovery does not stop any process. Historical launch intent, unknown/running/finished states remain ineligible for this path.",
+    "Real native provider execution/recovery and full Alpha acceptance remain unverified.",
+    "Existing snapshot restore does not promise complete empty-directory topology reproduction.",
+    "Actual test-owned Git/worktree/checkpoint directories were removed by test cleanup; retained state/receipts/fingerprints are records, not a reusable checkpoint bundle."
+  ],
+  "result_review": {
+    "state": "bounded_finite_closure_verified; original_test_hook_failure_preserved",
+    "actual_executor": "independent_checks",
+    "reviewer_execution_count": 0,
+    "do_not_count_as_additional_execution": true,
+    "initial_run": {
+      "fixture": "<INITIAL_EXPERIMENT>",
+      "result_sha256": "f803392c9a2d7c4aeb5a6a96d10435ab7c0eab91df5b82d9fe56c8773454125f",
+      "stderr_sha256": "4e88959fca12560ab9df3ba66dabcaa5685f5e17d90ad45cf3ff9f03197a046a",
+      "methods_run": 94,
+      "methods_passed": 93,
+      "failing_methods": 1,
+      "subtest_failures": 2,
+      "duration_seconds": 413.146,
+      "exit_code": 1,
+      "frozen_unchanged": true,
+      "source_unchanged": true,
+      "cause": "Test hook held_apply omitted Store._apply state argument; the two actual lock orders were not exercised. No product failure conclusion from this hook exception."
+    },
+    "targeted_run": {
+      "fixture": "<TARGETED_EXPERIMENT>",
+      "result_sha256": "7a0389a83d3aa528ffb8384998047ad2461ded7d5100e71ae84183dfc55ccedf",
+      "stdout_sha256": "1efdb1d24ddf625e3770ab52aea4ef994d2b4eaadab79ca9e0c9c84621ce251d",
+      "stderr_sha256": "c7d0ee46552dcb5450afff20256c784c4dd83a0601fb0bce7544f325301229c9",
+      "harness_sha256": "6c1ee0a53a03a8161531a0fc06973041e98d5d39c4fce2387118ae0d1add91b4",
+      "test_sha256": "afd69de6118adbbf48afda54684002b9465037b60b0afd2be14ae71437a63782",
+      "started_at": "2026-11-28T10:29:01.005735+00:00",
+      "finished_at": "2026-11-28T10:29:19.780456+00:00",
+      "methods_run": 2,
+      "methods_passed": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration_seconds": 17.702,
+      "exit_code": 0,
+      "source_unchanged": true,
+      "frozen_unchanged": true,
+      "canaries_passed": 9,
+      "actual_lock_orders": [
+        "recover-prepared before run-begin",
+        "run-begin before recover-prepared"
+      ],
+      "start_binding_negative": "Changed contract followed by a new valid checkpoint still rejects old start proof without authority mutation.",
+      "reviewed_test_diff": "Only corrected hook state argument, bounded waits 5 to 30 seconds, and one start-to-new-checkpoint binding negative; no product changes.",
+      "independently_recomputed_frozen_mismatches": 0,
+      "independently_recomputed_controls_mismatches": 0,
+      "source_inputs_bound_to_product_commit": 22,
+      "excluded_test_input_pending_commit": 1
+    },
+    "executor_report": {
+      "path": "<LOCAL_OPERATIONS>/wp302-review-stage/unstarted-independent/INDEPENDENT_REPORT.json",
+      "sha256": "e7649aaba0c289962c24b8088e666140ff5c552c0d9d49357eea979063f9aba1",
+      "artifact_hashes_independently_checked": 20,
+      "mismatches": 0
+    },
+    "counting": "93 initial passing methods plus 2 targeted passing methods across two distinct runs. The initial 94-method batch exited 1 due to two subtest hook failures in one method. Do not claim a single all-green 95-test run.",
+    "conclusion": "No blocking issue found within newly claimed direct-local-only workspaces, reviewed updated cooperative launchers, strict start/checkpoint binding, and common authority locking. No production Driver deployment, arbitrary out-of-band process absence, real native-provider recovery, or full Alpha acceptance was tested."
+  }
+}

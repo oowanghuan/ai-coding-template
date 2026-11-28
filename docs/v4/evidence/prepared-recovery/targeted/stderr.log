@@ -1,0 +1,11 @@
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+python3: error: couldn't create cache file '/tmp/xcrun_db-QwupUi8H' (errno=Operation not permitted)
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+python3: error: couldn't create cache file '/tmp/xcrun_db-B1Yfg8FA' (errno=Operation not permitted)
+test_actual_authority_lock_serializes_recovery_and_launch_in_both_orders (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+test_start_bound_scope_cannot_be_reset_by_new_checkpoint (test_unstarted_handoff.UnstartedHandoffTests) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 17.702s
+
+OK

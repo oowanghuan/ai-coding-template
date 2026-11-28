@@ -1,0 +1,14 @@
+{"sandbox_canaries": {"empty_candidate_anchor": true, "candidate_anchor_unlink": true, "trusted_write": true, "source_write": true, "trusted_hardlink": true, "outside_read": true, "outside_write": true, "network": true, "credentials_absent": true}}
+{"owned_handoff_stop": {"pid": 28617, "registered_group": 28617, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 29437, "registered_group": 29437, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 31099, "registered_group": 31099, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 31805, "registered_group": 31805, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 32649, "registered_group": 32649, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 33085, "registered_group": 33085, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 33388, "registered_group": 33388, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 34258, "registered_group": 34258, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 34572, "registered_group": 34572, "wait_exit": -15, "group_absent": true}}
+{"owned_handoff_stop": {"pid": 35234, "registered_group": 35234, "wait_exit": -15, "group_absent": true}}
+{"direct_domain_actual_process": {"pid": 40354, "run_begin_persisted_before_spawn": true, "no_writer_recovery_rejected": true, "wait_exit": -15, "process_group_absent": true}}
+{"unstarted_handoff": {"old_token": 1, "new_token": 2, "execution_observed": "never_launched", "process_stop_observed": false, "delivery_count": 1, "accepted": false, "old_files_unchanged": true}}
+{"run": 94, "failures": 2, "errors": 0, "skipped": 0}
