@@ -115,6 +115,8 @@ Owner提供的实践报告、V4自身实跑和未验证设计，不把不同项�
 | [锁定基线快照修订](evidence/governance-snapshot/README.md) | Advisor 7226757604 后新增 32 项治理测试、作者及非作者实际临时 Git 目标前移与公开 CLI 前后核验；原签认/候选/策略保全；Advisor 7227662743 对 534c1196738a5ec00d98587c0c77754605e27282 给出限定 GO | 输出明确 locked_baseline/not_observed；不是产品实时 ref 观测。前一行全量记录归属其原提交，本次计划更新未重跑测试 |
 | [Worker 生命周期可运行增量](evidence/worker-lifecycle/README.md) | N-adapter/八状态/共享额度组/确定性 tick 和认领、真实文件检查点；独立固定合成进程中断→停止确认→更高 token 接管→恢复回池→拒绝旧 token/重复交付。十组回归 343 pass/3 原 skip；原 76 输入匹配提交，新增使用 README 的例外保留 | 尚非两家真实 CLI、自然额度恢复或通用 Adapter.start；未安装无人值守供应商调度服务；固定监督器的本地动作不能替代真实外部 API 的未知结果恢复验收 |
 
+| [固定CLI工厂与资源绑定](evidence/fixed-factory/README.md) | 实现a1a716a0460ee9c99defb4ae868949f04341c7fb；作者109方法全过（11新+原98），9项隔离检查通过、38份输入绑定；原生参数装配与公共工厂固定真实进程分开记录 | 独立复核、真实CLI边界/任务/额度恢复仍待验；没有部署；不代表S03/S06或完整WP-301通过 |
+
 P0 的可复跑入口：`python3 tests/p0_audit.py --output <不存在的新目录>`。退出 0 只表示“观测与冻结基线一致”，包括正确复现退出 1 的安装故障。macOS Bash 3.2 为本次环境，其他 Bash/OS 未验收。
 
 独立 Reviewer 应从 Draft PR 精确 SHA 获取代码、复跑审计、核查日志和关键源码，区分文件证明与作者断言。后续版本必须把自己的 evidence 指向自己的执行对象，不能复用 V3 测试当 V4 通过记录。

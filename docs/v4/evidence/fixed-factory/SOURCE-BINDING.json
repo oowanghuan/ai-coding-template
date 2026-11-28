@@ -1,0 +1,158 @@
+{
+  "implementation_commit": "a1a716a0460ee9c99defb4ae868949f04341c7fb",
+  "launch_head": "d39bb9e758578285c5f47365755f0831083d4280",
+  "inputs": {
+    "adapters/PROTOCOL.md": {
+      "sha256": "f49fa4c4ecc470a138bced0764fe145f6face14ecf7a3bf04f9bfc22f63f77a9",
+      "matches_commit": true
+    },
+    "adapters/claude-code/CLAUDE.md": {
+      "sha256": "1fdc5575a49b835c783be1d74a65d96316cf3e41828642019aae214dd6998c17",
+      "matches_commit": true
+    },
+    "adapters/codex/AGENTS.md": {
+      "sha256": "1fdc5575a49b835c783be1d74a65d96316cf3e41828642019aae214dd6998c17",
+      "matches_commit": true
+    },
+    "examples/protocol/in-progress.json": {
+      "sha256": "7cf2fad959882203f00b74d8f15a79e4a6f1a8c524dfb7eaf5468a81e061013e",
+      "matches_commit": true
+    },
+    "framework/adapters/__init__.py": {
+      "sha256": "21092ba6faff3e8eec72838825c0e5c34e4937d284190429cec5ab9af592bc2a",
+      "matches_commit": true
+    },
+    "framework/adapters/entries.py": {
+      "sha256": "3dd40fc0261568c798a0ce6f2fb65a03c84e5fdd99ea25e39e36a8409856e855",
+      "matches_commit": true
+    },
+    "framework/adapters/factory.py": {
+      "sha256": "a6b6ef9701d5b1c339f4ce60b13f4c5170b800083a3e7dffc22dfc5c069283c6",
+      "matches_commit": true
+    },
+    "framework/adapters/invocation.py": {
+      "sha256": "f7703d257bbfdff8c2ba5d6ab325be6450dbe4fddacb7954b64b14510c183029",
+      "matches_commit": true
+    },
+    "framework/adapters/registry.py": {
+      "sha256": "43f4b2abb09015d61692975c5716ee39357909a6f77b4bde67b82f3c1e8bcd1c",
+      "matches_commit": true
+    },
+    "framework/adapters/results.py": {
+      "sha256": "8c9bf0774369c187a5d02ca53d7764760f9a067cb61599088293b7bc9805f534",
+      "matches_commit": true
+    },
+    "framework/adapters/runspec.py": {
+      "sha256": "5e799b9601d12b4a57f038b9afaae71a9fc44ac51394e1417c13bdbe130c5a96",
+      "matches_commit": true
+    },
+    "framework/adapters/store_binding.py": {
+      "sha256": "a8ecc044245119d6ed37ab40995f5dcec71f96dc2f2369ac11ae19f3f88bc7c2",
+      "matches_commit": true
+    },
+    "framework/core/protocol.py": {
+      "sha256": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+      "matches_commit": true
+    },
+    "framework/local/bootstrap.py": {
+      "sha256": "05d4810f9a748d9785a76598ea2bbd91a3b414d16cec43b71bff506b1c58afa8",
+      "matches_commit": true
+    },
+    "framework/local/external.py": {
+      "sha256": "7d7cb874a054c8e86a0d81f640010d2b9bec6a1b0972ad9c4d21643c45675cd7",
+      "matches_commit": true
+    },
+    "framework/local/handoff.py": {
+      "sha256": "298c7c386f64e5a346e880fe0f14b6ca285e1cd10e410edfc66794741ef829a4",
+      "matches_commit": true
+    },
+    "framework/local/launch_driver.py": {
+      "sha256": "91fd5c807d0e760c354c54ddaec316ad5771c8a5ad9e1af84d8a8e017259d60d",
+      "matches_commit": true
+    },
+    "framework/local/lifecycle.py": {
+      "sha256": "2cc98efc8ded021a827fb32e97f41929601e2b5f61241bf023e869adb7635ee1",
+      "matches_commit": true
+    },
+    "framework/local/runner.py": {
+      "sha256": "c6b06a0fd06f543f25d576cd583df9a22c06b070f501368d7eb9a522aefb74df",
+      "matches_commit": true
+    },
+    "framework/local/storage.py": {
+      "sha256": "af2ddd9d5d717d1f3afe71fc8bcf09f1aaca7b514d3a1e1b1d389f0113a37dea",
+      "matches_commit": true
+    },
+    "framework/local/store.py": {
+      "sha256": "b165552c253b2c320299d0c1315a622854df5f943081fa10251d484fbf0a17b9",
+      "matches_commit": true
+    },
+    "framework/local/worker_process.py": {
+      "sha256": "05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d",
+      "matches_commit": true
+    },
+    "framework/recovery/admission.py": {
+      "sha256": "94724a7317d649550bfd5e0076c6ad2712bd0834411898e19b44206019a8dddb",
+      "matches_commit": true
+    },
+    "framework/recovery/checkpoint.py": {
+      "sha256": "587d77708c6c3b237684f5390ba8f9b7ddbf9170d9a6fba6c3ce3f67d288b844",
+      "matches_commit": true
+    },
+    "schemas/evidence.schema.json": {
+      "sha256": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+      "matches_commit": true
+    },
+    "schemas/governance.schema.json": {
+      "sha256": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+      "matches_commit": true
+    },
+    "schemas/install-plan.schema.json": {
+      "sha256": "b276d52b899267c431274a11e8d0880d72ffda43a399ba94cf1c2235d8f7ebdb",
+      "matches_commit": true
+    },
+    "schemas/local-state.schema.json": {
+      "sha256": "aae186335a1817c572e381c28982ebcdb701184606668774c91b5c74cc4789c9",
+      "matches_commit": true
+    },
+    "schemas/protocol.schema.json": {
+      "sha256": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+      "matches_commit": true
+    },
+    "tests/adapters/test_adapters.py": {
+      "sha256": "531139e34d797383239effdc6f3dc661c958659d5f0d466b48e0b63e5e6da046",
+      "matches_commit": true
+    },
+    "tests/adapters/test_factory.py": {
+      "sha256": "216a1b4b41e6fc7a1b5c6e211e3ee564a964a430dfddccf3eccb1a05a0272c9a",
+      "matches_commit": true
+    },
+    "tests/adapters/test_invocation.py": {
+      "sha256": "2b595a6fc7bc71b9c3fbcb901dd0f7bbf31ac35fb20d18314084d3d56b262c18",
+      "matches_commit": true
+    },
+    "tests/adapters/test_registry.py": {
+      "sha256": "74dad85a90635c8379138b9b91a84b06915d33777f17fc6c1527f0de34874ece",
+      "matches_commit": true
+    },
+    "tests/adapters/test_runtime_control.py": {
+      "sha256": "0b41c9cad4fe6825d885f1e3fb5de54937df8082f6c29e087163f6fa8874c445",
+      "matches_commit": true
+    },
+    "tests/adapters/test_store_binding.py": {
+      "sha256": "74a7794fa79fb0198fe602830cfabec3f6c85924c549bff5458113c299c406ce",
+      "matches_commit": true
+    },
+    "tests/lifecycle/test_lifecycle.py": {
+      "sha256": "f86252a7b65812bed52bf9d73dfb1995aa771d994ab7958555eaf602fda430f9",
+      "matches_commit": true
+    },
+    "tests/local/test_external.py": {
+      "sha256": "13669f1daa675e48b3f827c099c52bfc63e083c6dad4c2302a3c678798d59203",
+      "matches_commit": true
+    },
+    "tests/local/test_launch_driver.py": {
+      "sha256": "815a62c123f68de3d9af282a7c3105a96415e71b957707afe23e3c878609a8a3",
+      "matches_commit": true
+    }
+  }
+}

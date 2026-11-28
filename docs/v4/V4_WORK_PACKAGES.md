@@ -685,6 +685,28 @@ local-alpha-next-2：最多4次追加既有会话激活（累计上限由4至8�
 未知投递、Owner暂停、账本变化、无实际进展及到期仍会阻止自动投递；不能自充预算。
 配置生效与自然轮询实况另记仓外操作journal及#3，文档登记不冒充实际唤醒证据。
 
+### 16.9 固定CLI工厂与资源选择接线
+
+19:10 UTC自然轮询投递本切片，19:11:14 UTC实际收到并ACK；没有Owner再次提醒。
+轮询记录add后会话busy、未另行start，真实接收与调用状态分别保留在
+[观察](evidence/fixed-factory/continuation-observation.json)。累计第5次激活，
+当前批第1次；预算/截止时间未改。ACK本身不算完成。
+
+实现 `a1a716a0460ee9c99defb4ae868949f04341c7fb` 新增 `framework/adapters/factory.py`，将固定执行配置、
+资源选择、Store执行权及受信边界回调装配到原Registry。首批两家CLI包装器从
+同一资源描述符生成模型参数，不将工具与模型供应商绑定一对一；第三工具使用
+通用工厂，Scheduler/状态机/Recovery无修改。注册不启动或写任务状态；边界
+检查缺失/未知/拒绝/异常会阻止启动，运行中撤销也触发owned停止，不能绕过Store。
+
+[实测](evidence/fixed-factory/README.md)：109方法通过（11新增+原98），
+0失败/异常/跳过、退出0，9项隔离检查通过、38份输入绑定。原生CLI只验证参数
+装配；公共工厂使用真实固定Python进程、合成资源状态，终态入账与重复操作对账
+已测。没有新建/恢复模型会话、真实供应商调用或部署。
+
+本有限切片标done代表代码与正反例已交付，独立复核仍待补，不是WP-301或Alpha
+验收。真实边界检查器/CLI准入、完整写者停止证明和恢复至一次交付仍待验。
+下一个就绪项为WP-302运行终态与检查点集成，不等待无关评审完成再开工。
+
 <!-- v4-continuation-ready:v1 -->
 ```json
 {
@@ -698,14 +720,14 @@ local-alpha-next-2：最多4次追加既有会话激活（累计上限由4至8�
     {
       "id": "native-factory-binding",
       "wp_id": "WP-301",
-      "status": "ready",
+      "status": "done",
       "depends_on": [],
       "progress": {
-        "checkpoint": "d740ee44158f3e12e9ddbc7f4e5ca5be5956992f",
-        "milestone": "Implement trusted fixed native-tool factory and resource selection binding behind the existing N-provider interface; validate using synthetic fixed executables under A01. No new/resumed model session or deployment. Done means code plus executable positive/negative contract evidence; live CLI remains pending.",
+        "checkpoint": "a1a716a0460ee9c99defb4ae868949f04341c7fb",
+        "milestone": "Fixed N-provider Store factory and native recipe model binding implemented; author109=11new+98regression under unchanged A01,9canaries,38inputs. Native recipes assembly-only; generic factory real fixed Python. Independent review and live CLI admission remain pending; no model calls/deployment.",
         "evidence_refs": [
-          "docs/v4/evidence/runtime-control/README.md",
-          "framework/adapters/README.md"
+          "docs/v4/evidence/fixed-factory/README.md",
+          "framework/adapters/factory.py"
         ]
       }
     },
