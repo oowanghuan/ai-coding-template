@@ -445,16 +445,32 @@ Team 权威后端取舍仍 proposed，不阻塞本地工作。当前 WP 文档�
 
 | 具体动作 | 当前状态 / 责任 | 下一项产物与边界 |
 |---|---|---|
-| WP-301 探测完成事件严格准入 | 实现与独立回归完成，待技术复核；Adapter 作者/非作者 Reviewer | 代码 `8901f4602b6588177a6ddc9e61520a10b838b8c5`，作者/独立24项各通过；不是原生响应认证 |
+| WP-301 探测完成事件严格准入 | 实现与独立回归完成，限定技术 GO；Adapter 作者/非作者 Reviewer | 代码 `8901f4602b6588177a6ddc9e61520a10b838b8c5`，作者/独立24项各通过；不是原生响应认证 |
 | WP-301 原生执行边界 | 可继续研究和固定系统探针；Lead/独立边界 Reviewer | 核实既有 CLI 的实际工具面/隔离组合，形成能运行的受控启动入口或精确失败证据；不扩大权限、不新增调用费用 |
 | WP-303 首任务至 Gate 集成 | 可并行开发；集成执行者/独立 Reviewer | 将现有任务、固定受控执行与真实证据Gate串成用户入口；先合成任务验证接口，真实CLI两样本另验，不把前者冒充后者 |
-| WP-004 无新评论时的续做 | 候选原型验证；运维作者/独立 Reviewer | 同一已加载会话的有界投递，A01 Fake IPC正负测；本轮生产配置未切换，尚无新机制真实idle续做证据 |
+| WP-004 无新评论时的续做 | 原型限定 GO，按既有运维授权接入；运维作者/独立 Reviewer | 同一已加载会话有界投递，保留四次保护上限；部署与真实idle成果分别取证，当前未验收真实续做 |
 | Team Issue主账本试点 | 方案待共同确定；Owner/Lead/Advisor | OD-02选定后单列实施，不先部署控制分支、第二台机器或新服务 |
 
-下面是同一账本内供候选轮询器读取的有限计划片段，不是第二主状态；目前 `paused`
-表示该投递批次未启用，**不表示 Owner 暂停 V4 开发**。模型/前台按既有授权继续上表
-工作。启用前须核对准确公开版本、已读事件集合、保护预算、原生边界和独立测试；
-本地缓存只保存投递/ACK/停用与恢复信息。任何真实工作成果以 Git/证据及工作包状态为准。
+三条评审已核对：
+[7236742248](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7236742248)
+关闭 `f0923f77a3527b7069b50ce3bc1c55b89dda60b5` 两项同机时序问题；
+[7236743139](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7236743139)
+认可 `c2c8a4ad991bd4ead616cf033284ad15d9373634` 严格布尔准入；
+[7236743976](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7236743976)
+认可 `e338d1fb259d5784f318e9575e0e21888174a8c0` 的设计与隔离原型。
+均不替代 Owner 授权、真实供应商集成或完整产品验收。本次由 Advisor 通知接手，
+不是无新消息续做的成功记录。
+
+下面是同一账本内的有限计划片段，不是第二主状态。按既有 OD-05 运维和 OD-09
+开发授权，将公开待办批次设为 `running`；本地启用前仍须核对固定受审代码、已读
+事件、原会话、未决写入和保护配置。最多四次唤起，每次至少相隔 15 分钟，到期停用，
+同进度两次无成果不再唤起；配置和账本两处的更严限制优先。没有自动补充预算。
+本地缓存只保存投递/ACK/停用与恢复信息，实际成果以 Git/证据及工作包状态为准。
+本批首项是 WP-303 的受控合成任务至真实 Gate 接线；现有首份交付为文本，须校核
+实际产物并建立新的取证快照提交，不能用原基线冒充受测 SHA 或称代码工程验收。
+独立记录投递、模型 ACK、成果、复核及下一轮去重；真实 CLI 两样本仍单列待验。
+完成状态必须更新本分支本账本；如更新 Issue，须重新核对并刷新已读事件缓存，
+不能把因新评论保护阻断误报为任务完成去重。
 
 <!-- v4-continuation-ready:v1 -->
 ```json
@@ -462,21 +478,10 @@ Team 权威后端取舍仍 proposed，不阻塞本地工作。当前 WP 文档�
   "version": 1,
   "batch_id": "local-alpha-next-1",
   "scope_ref": "OD-09",
-  "control": "paused",
+  "control": "running",
   "expires_at": "2026-11-29T08:00:00Z",
-  "activation_budget": 8,
+  "activation_budget": 4,
   "items": [
-    {
-      "id": "native-execution-boundary",
-      "wp_id": "WP-301",
-      "status": "ready",
-      "depends_on": [],
-      "progress": {
-        "checkpoint": "1552a59b2e908535f9ed6938217b1fd0c8c6cf39",
-        "milestone": "native-boundary-unresolved; safe research and fixed probes remain actionable",
-        "evidence_refs": ["docs/v4/evidence/worker-lifecycle/independent/README.md"]
-      }
-    },
     {
       "id": "first-task-to-gate",
       "wp_id": "WP-303",
@@ -485,7 +490,22 @@ Team 权威后端取舍仍 proposed，不阻塞本地工作。当前 WP 文档�
       "progress": {
         "checkpoint": "f0923f77a3527b7069b50ce3bc1c55b89dda60b5",
         "milestone": "synthetic-recovery-tested; first-task-to-gate integration remains actionable",
-        "evidence_refs": ["docs/v4/evidence/worker-timing/README.md"]
+        "evidence_refs": [
+          "docs/v4/evidence/worker-timing/README.md"
+        ]
+      }
+    },
+    {
+      "id": "native-execution-boundary",
+      "wp_id": "WP-301",
+      "status": "ready",
+      "depends_on": [],
+      "progress": {
+        "checkpoint": "1552a59b2e908535f9ed6938217b1fd0c8c6cf39",
+        "milestone": "native-boundary-unresolved; safe research and fixed probes remain actionable",
+        "evidence_refs": [
+          "docs/v4/evidence/worker-lifecycle/independent/README.md"
+        ]
       }
     }
   ]
