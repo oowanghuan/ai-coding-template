@@ -1,0 +1,5 @@
+{
+  "candidate": "<runs>/v4-worker-demo-fi02g16x/C",
+  "forbidden": "<runs>/v4-worker-demo-fi02g16x/outside/marker",
+  "trusted": "<runs>/v4-worker-demo-fi02g16x/T"
+}

@@ -1,0 +1,2 @@
+Evidence directory: <runs>/v4-worker-demo-fi02g16x
+{"passed": true, "outcome": "observed_exit", "evidence": "<runs>/v4-worker-demo-fi02g16x/T/result.json"}

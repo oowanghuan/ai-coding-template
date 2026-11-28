@@ -1,0 +1,43 @@
+{
+  "after": {
+    "framework/recovery/README.md": "1399a720d569794ad9e909e43179646d5027bbd7de988f079ef2826834d0954f",
+    "framework/recovery/admission.py": "94724a7317d649550bfd5e0076c6ad2712bd0834411898e19b44206019a8dddb",
+    "framework/recovery/checkpoint.py": "587d77708c6c3b237684f5390ba8f9b7ddbf9170d9a6fba6c3ce3f67d288b844",
+    "tests/recovery/test_checkpoint.py": "a7ce53271cc07f89fc4081b9ded05a2f3ef2372a766a36b48c50b4d373027308"
+  },
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<EVIDENCE_ROOT>/recovery-author/profile.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/recovery",
+    "-v"
+  ],
+  "before": {
+    "framework/recovery/README.md": "1399a720d569794ad9e909e43179646d5027bbd7de988f079ef2826834d0954f",
+    "framework/recovery/admission.py": "94724a7317d649550bfd5e0076c6ad2712bd0834411898e19b44206019a8dddb",
+    "framework/recovery/checkpoint.py": "587d77708c6c3b237684f5390ba8f9b7ddbf9170d9a6fba6c3ce3f67d288b844",
+    "tests/recovery/test_checkpoint.py": "a7ce53271cc07f89fc4081b9ded05a2f3ef2372a766a36b48c50b4d373027308"
+  },
+  "environment": {
+    "HOME": "<EVIDENCE_ROOT>/recovery-author/home",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONPATH": "<REPO>:<DEPENDENCIES>",
+    "TMPDIR": "<EVIDENCE_ROOT>/recovery-author/tmp",
+    "V4_OUTER_SEATBELT": "1"
+  },
+  "exit_code": 0,
+  "finished_at": "2026-11-28T06:00:24.661487+00:00",
+  "note": "Author tests with real temporary filesystem/two publishing processes; admission identities are fixtures, not actual stopped-worker observation.",
+  "profile_sha256": "782a2296f133c870984acfc8f56573eee0e5fd24041fa8e9f38525e93e8d2537",
+  "source_unchanged": true,
+  "started_at": "2026-11-28T06:00:21.754491+00:00"
+}

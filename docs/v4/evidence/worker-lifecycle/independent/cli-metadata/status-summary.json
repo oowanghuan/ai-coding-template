@@ -1,0 +1,17 @@
+{
+  "scope": "Exact fixed CLI, clean environment, original HOME for status; no model inference, login, token extraction or credential copying.",
+  "claude": {
+    "loggedIn": false,
+    "authMethod": "none",
+    "apiProvider": "firstParty",
+    "doctor_remote_policy": "not fetched: no usable credentials for settings fetch",
+    "auto_updates": "disabled by DISABLE_UPDATES",
+    "interpretation": "This exact launch environment did not observe usable authentication; no claim about every user environment or subscription."
+  },
+  "codex": {
+    "authenticated": true,
+    "method": "chatgpt",
+    "interpretation": "Stored authentication present; quota and inference availability remain untested."
+  },
+  "raw_diagnostics": "Original authentication/doctor output stays outside repository; only fixed safe summaries and raw byte hashes are published."
+}

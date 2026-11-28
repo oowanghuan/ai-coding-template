@@ -1,0 +1,5 @@
+{
+  "message": "unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer",
+  "passed": false,
+  "type": "ValueError"
+}

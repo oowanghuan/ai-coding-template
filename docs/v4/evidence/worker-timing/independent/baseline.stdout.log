@@ -1,0 +1,44 @@
+{
+  "scope": "actual local frozen-baseline reproduction, synthetic observation, no provider calls",
+  "quota": {
+    "probe": {
+      "group": "Q1",
+      "probe_id": "probe:Q1:1:1"
+    },
+    "before_late_success": {
+      "attempts": 1,
+      "generation": 1,
+      "limited": true,
+      "next_probe_at": "2026-11-28T12:01:40Z",
+      "pending_probe": "probe:Q1:1:1",
+      "reason": "quota_limited",
+      "retry_at": "2026-11-28T12:01:40Z"
+    },
+    "after_late_success": {
+      "attempts": 1,
+      "generation": 1,
+      "limited": false,
+      "next_probe_at": null,
+      "pending_probe": null,
+      "reason": null,
+      "retry_at": null
+    },
+    "bug_reproduced": true
+  },
+  "snapshot": {
+    "actual_writer_pid": 86263,
+    "actual_writer_exit": 0,
+    "checkpoint": {
+      "checkpoint_id": "checkpoint-5b17d93d223a4482b7e3250f82fde79e",
+      "path": ".ai-org/checkpoints/checkpoint-5b17d93d223a4482b7e3250f82fde79e",
+      "manifest_sha256": "0277dda649c2ff4e307eb673e480041a0864b2b96d5aad93036679442f13325a",
+      "binding": "a79352722cb2f8fc68d170d3e8c5280ddb665fec7d2fefaecb22b9a7dec4fb62",
+      "unknown_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "snapshot_bytes": "dirty checkpoint result\n",
+    "final_old_workspace_bytes": "FINAL-WRITER-BYTES\n",
+    "restored_new_workspace_bytes": "dirty checkpoint result\n",
+    "bug_reproduced": true
+  },
+  "both_reproduced": true
+}

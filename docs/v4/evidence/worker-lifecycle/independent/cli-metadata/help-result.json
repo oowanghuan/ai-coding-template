@@ -1,0 +1,16 @@
+{
+  "binary_sha256": "739cda86e15d30a6e2b40cf8dcbbfb988aaf48b305b27065573bb8e9fd41d002",
+  "argv": [
+    "<owner-home>/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/bin/codex",
+    "app-server",
+    "generate-json-schema",
+    "--help"
+  ],
+  "exit_code": 0,
+  "environment": {
+    "HOME": "<runs>/v4-cli-schema-review-z_8jb12t/home",
+    "TMPDIR": "<runs>/v4-cli-schema-review-z_8jb12t/tmp",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin"
+  },
+  "at": "2026-11-28T06:07:03.299044+00:00"
+}

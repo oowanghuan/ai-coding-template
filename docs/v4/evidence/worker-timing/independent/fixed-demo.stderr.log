@@ -1,0 +1,8 @@
+test_completed_delivery_recovery_replay_twice_and_new_id_rejected (test_completed_recovery.CompletedRecoveryTests) ... ok
+test_existing_root_is_preserved (test_demo.WorkerDemoTests) ... ok
+test_real_parallel_quota_checkpoint_takeover_once (test_demo.WorkerDemoTests) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 54.467s
+
+OK

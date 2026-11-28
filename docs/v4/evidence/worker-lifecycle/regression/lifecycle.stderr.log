@@ -1,0 +1,34 @@
+test_actual_stop_then_higher_fence_handoff_preserves_dirty_and_untracked (test_handoff.HandoffTests) ... ok
+test_corrupt_checkpoint_artifact_rejected_before_new_claim (test_handoff.HandoffTests) ... ok
+test_final_boolean_epoch_and_token_cannot_alias_integer_execution_rights (test_handoff.HandoffTests) ... ok
+test_final_prepared_or_finished_output_without_checkpoint_blocks_reassignment (test_handoff.HandoffTests) ... ok
+test_partial_restore_write_cannot_be_submitted_or_replayed (test_handoff.HandoffTests) ... ok
+test_recovered_old_worker_cannot_steal_new_assignment (test_handoff.HandoffTests) ... ok
+test_restore_error_leaves_creating_and_forbids_submit (test_handoff.HandoffTests) ... ok
+test_running_or_unregistered_owned_process_cannot_confirm_stopped (test_handoff.HandoffTests) ... ok
+test_spec_baseline_and_new_unknown_after_checkpoint_block_claim (test_handoff.HandoffTests) ... ok
+test_stale_checkpoint_pin_rejected_against_latest_registered_checkpoint (test_handoff.HandoffTests) ... ok
+test_stop_without_checkpoint_cannot_release_unknown_workspace (test_handoff.HandoffTests) ... ok
+test_active_guard_also_rechecks_worker_heartbeat (test_lifecycle.LifecycleTests) ... ok
+test_ambiguous_probe_result_and_changed_replay_payload_rejected (test_lifecycle.LifecycleTests) ... ok
+test_budget_scope_unknown_and_untrusted_project_source_cannot_stop_project (test_lifecycle.LifecycleTests) ... ok
+test_dispatch_does_not_consume_and_hide_due_probe (test_lifecycle.LifecycleTests) ... ok
+test_enable_preserves_offline_unknown_and_requires_explicit_verified_credentials (test_lifecycle.LifecycleTests) ... ok
+test_failed_authentication_cannot_be_cleared_by_heartbeat (test_lifecycle.LifecycleTests) ... ok
+test_heartbeat_rechecked_on_direct_claim_start_submit (test_lifecycle.LifecycleTests) ... ok
+test_invocation_budget_exhaustion_and_context_limit_are_not_account_quota (test_lifecycle.LifecycleTests) ... ok
+test_only_owner_controller_can_mutate_runtime (test_lifecycle.LifecycleTests) ... ok
+test_owner_hold_and_budget_precede_recovered_quota (test_lifecycle.LifecycleTests) ... ok
+test_owner_pause_and_project_budget_block_probe_intents (test_lifecycle.LifecycleTests) ... ok
+test_probe_backoff_durable_unknown_and_attempt_limit (test_lifecycle.LifecycleTests) ... ok
+test_repeated_limit_does_not_forget_an_unknown_probe_or_reset_budget (test_lifecycle.LifecycleTests) ... ok
+test_shared_limit_fences_both_and_third_adapter_can_dispatch_without_pmo (test_lifecycle.LifecycleTests) ... ok
+test_tick_commit_response_loss_replays_same_probe_once (test_lifecycle.LifecycleTests) ... ok
+test_tick_expires_heartbeat_and_refresh_does_not_restore_old_rights (test_lifecycle.LifecycleTests) ... ok
+test_unknown_workspace_blocks_reassignment_even_after_quota_recovers (test_lifecycle.LifecycleTests) ... ok
+test_unverified_credentials_do_not_get_live_authority (test_lifecycle.LifecycleTests) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 153.687s
+
+OK

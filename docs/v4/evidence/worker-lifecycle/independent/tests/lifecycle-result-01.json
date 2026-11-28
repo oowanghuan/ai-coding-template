@@ -1,0 +1,1 @@
+{"result": "harness_timeout", "timeout_seconds": 120, "detail": "subprocess.TimeoutExpired escaped initial harness; partial subprocess streams were not persisted; no passing claim", "worker_demo_started": false}

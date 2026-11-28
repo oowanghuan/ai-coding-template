@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "<owner-home>/.local/share/claude/versions/2.1.332",
+    "--safe-mode",
+    "--restricted",
+    "--setting-sources",
+    "",
+    "auth",
+    "status",
+    "--json"
+  ],
+  "exit_code": 1,
+  "safe_result": {
+    "loggedIn": false,
+    "authMethod": "none",
+    "apiProvider": "firstParty"
+  },
+  "stdout_sha256": "341032062b0b5a86ce89dc95f6a9086d0b470c70c12083a1a18013bd0587bb83",
+  "official_source": "https://code.claude.com/docs/en/cli-reference"
+}

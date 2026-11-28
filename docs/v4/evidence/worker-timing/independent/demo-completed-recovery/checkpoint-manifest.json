@@ -1,0 +1,70 @@
+{
+  "baseline_manifest": {
+    "src/a/tracked.txt": {
+      "mode": "100644",
+      "sha256": "236ff86be06bb3302867825ba24ad311817e5b1a9ec539f531d52d0db1bddd94"
+    },
+    "src/b/tracked.txt": {
+      "mode": "100644",
+      "sha256": "f03d662d3d3d2703004855cbf5e772c162146b0d391df28b3c78ed21cf5a6cbe"
+    }
+  },
+  "context": {
+    "assignment_ref": "assignment-7923041a53b04209bac87651bc0c941a",
+    "authority_epoch": 1,
+    "authorization_ref": "auth-demo",
+    "baseline_sha": "9e1e6354a9131edab46ea63a69ee0a7353410df4",
+    "binding": "612df2d581d46f5a2c41e2a7ed5eda07389136eca22c2f3c63dbe97a0c633161",
+    "completed": [
+      "tracked draft and untracked note preserved"
+    ],
+    "evidence_refs": [],
+    "fencing_token": 1,
+    "last_valid_commit": "9e1e6354a9131edab46ea63a69ee0a7353410df4",
+    "lease_expires_at": "2026-11-28T07:55:34Z",
+    "remaining": [
+      "finish delivery"
+    ],
+    "role_ref": "role-developer",
+    "spec_refs": [
+      {
+        "path": "contracts/example.md",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "version": "1"
+      }
+    ],
+    "unknown_operations": [],
+    "wp_ref": "WP-A"
+  },
+  "deleted_tracked": [],
+  "directories": [
+    "src",
+    "src/a",
+    "src/b"
+  ],
+  "excluded_git_metadata": true,
+  "files": {
+    "src/a/tracked.txt": {
+      "dirty": true,
+      "mode": "100644",
+      "sha256": "3585766451e572974b4a14bbf2ce691c578a169d6321298be5778efcb6b274d5",
+      "size": 13,
+      "tracked": true
+    },
+    "src/a/untracked.txt": {
+      "dirty": true,
+      "mode": "100644",
+      "sha256": "1e7232d4b478e05bca867c9b15ef58f3a724710f09c3d161ca8387b83aac07cf",
+      "size": 22,
+      "tracked": false
+    },
+    "src/b/tracked.txt": {
+      "dirty": false,
+      "mode": "100644",
+      "sha256": "f03d662d3d3d2703004855cbf5e772c162146b0d391df28b3c78ed21cf5a6cbe",
+      "size": 11,
+      "tracked": true
+    }
+  },
+  "format": "recovery-checkpoint/1"
+}

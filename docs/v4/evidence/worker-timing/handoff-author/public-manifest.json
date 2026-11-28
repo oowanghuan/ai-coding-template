@@ -1,0 +1,73 @@
+{
+  "format": "public-evidence-map/1",
+  "evidence_level": "synthetic_fixture",
+  "provider_live": false,
+  "authorship": "author-executed regression; not independent signoff",
+  "warning": "Redacted copies are not original trusted receipts. Input fingerprints remain original values; public_sha256 verifies copied bytes.",
+  "files": [
+    {
+      "source_ref": "<EVIDENCE_ROOT>/handoff-final-writer-author/result-01.json",
+      "public_path": "result-01.json",
+      "original_sha256": "dbef865445265740aa25ce5b32905929d89742f0a277ec0371d7e05c4cbd53ad",
+      "public_sha256": "bf1acf2e366ff7a8c750c34087354cba2e744ded4db326521cc9cc5d6974caa1",
+      "original_bytes": 3784,
+      "public_bytes": 3637
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/handoff-final-writer-author/stderr-01.log",
+      "public_path": "stderr-01.log",
+      "original_sha256": "2f02cded26fb2fca666c17432c3832b39111826ba6da0e999b8428d16795dd21",
+      "public_sha256": "c6359357fee97967ec987d486e19a4453f8fe70c83a2f063ca257b91ff0b2c53",
+      "original_bytes": 790,
+      "public_bytes": 751
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/handoff-final-writer-author/stdout-01.log",
+      "public_path": "stdout-01.log",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_bytes": 0,
+      "public_bytes": 0
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/handoff-final-writer-author/result-02.json",
+      "public_path": "result-02.json",
+      "original_sha256": "621b8a4ab4d4c1900f43f592f1e1eaaccacbcb83b8b7d318e772be8558c98c72",
+      "public_sha256": "72932327027c75388e96b7ce298fcdb0421bb70cf179a2f6e4a21d9a49afb361",
+      "original_bytes": 3750,
+      "public_bytes": 3603
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/handoff-final-writer-author/stderr-02.log",
+      "public_path": "stderr-02.log",
+      "original_sha256": "7b50d20d9f701a1213e4da1ffc87debf1f8def4455af2d9a7981101b304bd621",
+      "public_sha256": "7b50d20d9f701a1213e4da1ffc87debf1f8def4455af2d9a7981101b304bd621",
+      "original_bytes": 1603,
+      "public_bytes": 1603
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/handoff-final-writer-author/stdout-02.log",
+      "public_path": "stdout-02.log",
+      "original_sha256": "cfb842768ad02a4f04d6a7da4505d833fbc3686d35d18441758cdf6727366dc4",
+      "public_sha256": "cfb842768ad02a4f04d6a7da4505d833fbc3686d35d18441758cdf6727366dc4",
+      "original_bytes": 1060,
+      "public_bytes": 1060
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/handoff-final-writer-author/run.py",
+      "public_path": "run.py.txt",
+      "original_sha256": "c740b0746f47a9b77e0f08408cf5c26876a6e2298a94c175791a20482e722631",
+      "public_sha256": "558b89bd6353186ac24f725570bd98f397a3382a5e599cab15cc45301dc442c2",
+      "original_bytes": 2325,
+      "public_bytes": 2241
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/handoff-final-writer-author/profile.sb",
+      "public_path": "profile.sb",
+      "original_sha256": "782a2296f133c870984acfc8f56573eee0e5fd24041fa8e9f38525e93e8d2537",
+      "public_sha256": "ba6b90aab523f1d23e1d1f15f3b0ab21c15147738a914ab8700a1f225cfcbe91",
+      "original_bytes": 918,
+      "public_bytes": 792
+    }
+  ]
+}

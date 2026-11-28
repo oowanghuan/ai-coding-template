@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "<owner-home>/.local/share/claude/versions/2.1.332",
+    "--safe-mode",
+    "--restricted",
+    "--setting-sources",
+    "",
+    "doctor"
+  ],
+  "env": {
+    "HOME": "<owner-home>",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "TMPDIR": "<runs>/v4-claude-doctor-8sknf2fx/tmp",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_UPDATES": "1"
+  },
+  "binary_sha256": "5b8214f8f082f3187420b27b4063b9b4f4d9412cd66ea436d6d1966ad582700f",
+  "started_at": "2026-11-28T06:19:13.772928+00:00",
+  "exit_code": 0,
+  "timed_out": false,
+  "stdout_sha256": "e64d913586519c535cb9f5dca0d231a8b73a93e36278853ee532c2f9e138839c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 1351,
+  "stderr_bytes": 0,
+  "ended_at": "2026-11-28T06:19:16.712423+00:00",
+  "official_read_only_source": "https://code.claude.com/docs/en/setup#verify-your-installation",
+  "model_requested": false
+}

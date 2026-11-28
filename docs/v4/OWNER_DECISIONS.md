@@ -71,11 +71,14 @@ Advisor 的账号若仍为 `oowanghuan`，记录独立执行上下文和只读�
 
 ### OD-09：本地 Lite Alpha 实现与限定依赖采纳
 
-状态：**proposed，尚未放行实现**。最近 Owner 要求继续推进并说明进展，本轮据此完成
-具体开工计划；不把一般推进要求改写成未列明的阶段批准。推荐范围见
+状态：**approved，Owner 已在本工作会话明确逐项批准**。Owner 最新指令明确
+“同意 OD-09 的推荐方向”，列出限定依赖完整 SHA、WP-301/302/303 和隔离/费用限制。
+随后补充 N 供应商边界；[Project Lead 开工转记](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7234932005)
+标明会话指令来源，不冒充 Owner 账号下的一条独立裁定评论，不追认 OD-08。
+此前 PR #11 的 proposed 状态是批准前历史。获批计划见
 [工作包 §15](V4_WORK_PACKAGES.md#15-当前进度与下一批本地-lite-alphaod-09-proposed)。
 
-**推荐一次确认以下范围**：采纳 PR #10 的
+**此次明确批准范围**：采纳 PR #10 的
 `534c1196738a5ec00d98587c0c77754605e27282` 为限定依赖，批准 WP-301/302/303 的
 本地 Lite Alpha 实现和隔离验收，按文件/接口并行推进。允许沿用合法现有 CLI 账号，
 在独立审核的最小权限启动边界建立实际任务执行上下文，以验证 Claude Code/Codex
@@ -88,7 +91,19 @@ Python 取证及签认的连接、持续检查点和接管。真实额度恢复�
 额度、不绕限制；未满足原验收要求不得宣布完整 Alpha。可控故障注入和真实供应商证据分开。
 
 不包含 Team/GitHub 权威状态服务、第二台机器/云端部署、实时目标引用观察服务、
-main 合入、发布及新增费用。当前 Project Lead 轮询的权限边界保持；此提案不自行启动会话。
+main 合入、发布及新增费用。当前 Project Lead 轮询的权限边界保持；真实供应商任务
+只在独立预审的启动边界完成后执行，不因本次批准关闭保护。
+
+补充裁定：正式定位为 **Multi-provider, Model-agnostic Engineering Resource Pool**。
+首批真实 Claude Code/Codex 验证不形成二元核心；Agent Tool、Model Provider、Model、
+Credential Reference、Quota Group、Host、Worker、Session、Role、Assignment 分开表达。
+共享额度按组处理，凭证仅引用，不保存明文。新增第三个合成 Adapter 的注册/匹配/认领/
+暂停恢复/检查点/交付验收，不改核心调度、任务状态机与恢复协议。该扩展测试不增加订阅。
+
+本批首要验收改为确定性调度不依赖 PMO 模型在线；八种 Worker 状态独立于任务；
+有界退避、停止确认、保全与安全接管、恢复后回池和一次逻辑交付。先用故障注入完成
+状态链，真实 CLI 及自然额度恢复单列证据；不得故意耗尽额度。新增机器、Dedicated/
+Elastic/Restricted Worker 的接口当前明确，第二台机器和跨机部署另列具体方案与授权。
 
 取舍：优先将已验证组件变成一条可用产品路径，延后 Team/Enterprise 平台建设；
 成本集中在真实供应商执行边界与恢复一致性。替代是仅交付离线模拟器，风险更低，

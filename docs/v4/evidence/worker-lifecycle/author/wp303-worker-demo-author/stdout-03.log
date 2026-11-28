@@ -1,0 +1,37 @@
+{"sandbox_canaries": {"outside_file_read": true, "outside_file_write": true, "checkout_write": true, "network_connect": true, "credentials_removed": true}}
+{
+  "format": "synthetic-worker-demo/1",
+  "evidence_level": "synthetic_fixture",
+  "provider_live": false,
+  "baseline_sha": "1831982f37da3dea204584cf3b90cb183a6c2bca",
+  "parallel_processes_observed": true,
+  "original_writer_exit": -15,
+  "checkpoint": {
+    "checkpoint_id": "checkpoint-f58b6814ae014e058f696d71d3cdf9ba",
+    "path": ".ai-org/checkpoints/checkpoint-f58b6814ae014e058f696d71d3cdf9ba",
+    "manifest_sha256": "34b6d2d7fed9aaf05fe586790d9aa1e27f8bbc5611a05920176f878486420726",
+    "binding": "e164f03e9e43e832fe9de0d6eca2e57852a6a09f840aa23e2837c198b4d31d1a",
+    "unknown_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "old_token": 1,
+  "new_token": 2,
+  "new_workspace": "<EVIDENCE_ROOT>/wp303-worker-demo-author/demo-03/.ai-org/workspaces/workspace-14e6de9fce9242aa855618f6362c5387",
+  "old_workspace": "<EVIDENCE_ROOT>/wp303-worker-demo-author/demo-03/.ai-org/workspaces/workspace-21ba66c27112434e928f19253f6516a6",
+  "old_worker_recovered_to_pool": true,
+  "old_token_rejected": true,
+  "logical_deliveries": {
+    "WP-A": 1,
+    "WP-B": 1
+  },
+  "duplicate_delivery_rejected": true,
+  "pmo_model_calls": 0,
+  "actual_model_calls": 0,
+  "states": {
+    "worker-a": "available",
+    "worker-b": "available",
+    "worker-c": "available"
+  },
+  "engineering_accepted": false,
+  "scope": "fixed synthetic fixture under enclosing A01; not actual Claude/Codex execution",
+  "passed": true
+}

@@ -1,0 +1,76 @@
+test_absent_receipt_never_means_success (test_external.ExternalClientTests) ... ok
+test_cancel_is_bound_idempotent_and_does_not_assert_stopped (test_external.ExternalClientTests) ... ok
+test_pid_is_immutable_across_receipts (test_external.ExternalClientTests) ... ok
+test_provisioned_identity_scope_content_and_limits_are_enforced (test_external.ExternalClientTests) ... ok
+test_receipt_binds_job_operation_and_request (test_external.ExternalClientTests) ... ok
+test_receipt_cannot_be_reused_for_another_workspace_capability (test_external.ExternalClientTests) ... ok
+test_receipt_cannot_regress_or_change_same_sequence (test_external.ExternalClientTests) ... ok
+test_receipt_symlink_and_hardlink_are_refused (test_external.ExternalClientTests) ... ok
+test_rejected_cannot_assert_a_spawned_process (test_external.ExternalClientTests) ... ok
+test_request_and_lock_aliases_do_not_overwrite_other_files (test_external.ExternalClientTests) ... ok
+test_request_replay_is_immutable_and_unicode_hash_is_utf8 (test_external.ExternalClientTests) ... ok
+test_terminal_needs_real_exit_and_matching_log_bytes (test_external.ExternalClientTests) ... ok
+test_writable_request_tree_cannot_contain_trusted_storage (test_external.ExternalClientTests) ... ok
+test_cli_requires_both_explicit_launcher_arguments (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_explicit_unknown_receipt_is_not_stop_confirmation (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_invalid_terminal_logs_do_not_release_uncertainty (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_missing_driver_receipt_stays_unknown_and_blocks_reclaim (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_revocation_requests_cancel_without_inventing_stop (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_same_operation_cannot_switch_backend_job_or_config (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_terminal_failure_cli_replay_is_nonzero_and_does_not_submit_again (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_validated_prelaunch_rejection_is_not_success_or_delivery (test_external_lifecycle.ExternalLifecycleTests) ... ok
+test_cancel_before_launch_never_spawns (test_launch_driver.LauncherTests) ... ok
+test_cancel_observes_owned_child_exit (test_launch_driver.LauncherTests) ... ok
+test_changed_request_cannot_relaunch_same_slot (test_launch_driver.LauncherTests) ... ok
+test_config_rejects_duplicate_workspace_and_bad_job_id (test_launch_driver.LauncherTests) ... ok
+test_config_rejects_nested_workspaces (test_launch_driver.LauncherTests) ... ok
+test_config_rejects_trust_overlap (test_launch_driver.LauncherTests) ... ok
+test_failure_exit_is_not_success (test_launch_driver.LauncherTests) ... ok
+test_mailbox_pins_original_directory (test_launch_driver.LauncherTests) ... ok
+test_mailbox_rejects_fifo_without_blocking (test_launch_driver.LauncherTests) ... ok
+test_nonreading_pipe_cannot_block_runtime_timeout (test_launch_driver.LauncherTests) ... ok
+test_policy_has_no_network_or_controller_authority_grant (test_launch_driver.LauncherTests) ... ok
+test_real_launch_arguments_are_fixed_but_process_is_fake (test_launch_driver.LauncherTests) ... ok
+test_request_is_bound_to_operation_content_and_limits (test_launch_driver.LauncherTests) ... ok
+test_request_rejects_command_environment_and_policy (test_launch_driver.LauncherTests) ... ok
+test_request_symlink_and_hardlink_refused (test_launch_driver.LauncherTests) ... ok
+test_restarted_launch_is_unknown_without_signal_or_spawn (test_launch_driver.LauncherTests) ... ok
+test_restore_rejects_different_config_bytes (test_launch_driver.LauncherTests) ... ok
+test_spawn_exception_preserves_launch_intent_as_unknown (test_launch_driver.LauncherTests) ... ok
+test_strict_json_rejects_duplicates_and_nonfinite (test_launch_driver.LauncherTests) ... ok
+test_timeout_observes_owned_child_exit (test_launch_driver.LauncherTests) ... ok
+test_two_fixed_slots_have_distinct_processes_and_receipts (test_launch_driver.LauncherTests) ... ok
+test_unconfirmed_stop_is_unknown (test_launch_driver.LauncherTests) ... ok
+test_utf8_request_hash_matches_canonical_protocol (test_launch_driver.LauncherTests) ... ok
+test_worker_hash_and_hardlink_fail_closed (test_launch_driver.LauncherTests) ... ok
+test_authorization_budget_quota_and_pause_block_claim (test_local.LocalTests) ... ok
+test_before_commit_preserves_authority (test_local.LocalTests) ... ok
+test_cli_failed_run_replay_stays_failed_and_does_not_launch (test_local.LocalTests) ... ok
+test_cli_success_receipt_replay_preserves_result (test_local.LocalTests) ... ok
+test_commit_crash_replay_and_payload_mismatch (test_local.LocalTests) ... ok
+test_created_worktree_can_reconcile_without_duplicate (test_local.LocalTests) ... ok
+test_expired_reservation_reclaims_with_new_token (test_local.LocalTests) ... ok
+test_launch_intent_is_not_retried (test_local.LocalTests) ... ok
+test_no_sandbox_fallback_on_nested_launch_failure (test_local.LocalTests) ... ok
+test_partial_worktree_cannot_be_reconciled_as_complete (test_local.LocalTests) ... ok
+test_path_escape_symlink_and_hardlink_refused (test_local.LocalTests) ... ok
+test_process_started_failure_is_stopped_not_accepted (test_local.LocalTests) ... ok
+test_protocol_01_stays_strict_and_02_requires_known_execution_baseline (test_local.LocalTests) ... ok
+test_real_crash_after_atomic_write_reconciles_on_restart (test_local.LocalTests) ... ok
+test_real_process_race_has_one_winner (test_local.LocalTests) ... ok
+test_reserved_start_and_controlled_delivery (test_local.LocalTests) ... skipped 'nested Seatbelt unavailable; full runner integration requires independent isolated host'
+test_revoke_fences_old_delivery_and_preserves_workspace (test_local.LocalTests) ... ok
+test_sandbox_denies_network_host_read_write_and_credentials (test_local.LocalTests) ... skipped 'nested Seatbelt unavailable; policy/worker is separately tested by trusted outer harness'
+test_scope_conflict_and_capacity (test_local.LocalTests) ... ok
+test_two_actual_workers_inherit_outer_sandbox_and_submit (test_local.LocalTests) ... ok
+test_two_isolated_runners_capture_distinct_deliveries (test_local.LocalTests) ... skipped 'nested Seatbelt unavailable; not counted as end-to-end runner acceptance'
+test_unauthorized_actor_cannot_claim_or_revoke (test_local.LocalTests) ... ok
+test_unknown_worktree_intent_blocks_reassignment (test_local.LocalTests) ... ok
+test_unmet_dependency (test_local.LocalTests) ... ok
+test_worker_registration_owner_only_and_immutable (test_local.LocalTests) ... ok
+test_wrong_epoch_token_and_expired_lease (test_local.LocalTests) ... ok
+
+----------------------------------------------------------------------
+Ran 71 tests in 142.456s
+
+OK (skipped=3)

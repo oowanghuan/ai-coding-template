@@ -1,0 +1,58 @@
+Run commands within a Codex-provided sandbox
+
+Usage: codex sandbox [OPTIONS] [COMMAND]... [COMMAND]
+
+Commands:
+  uninstall  Remove the legacy Windows sandbox's machine-wide accounts and network rules
+  help       Print this message or the help of the given subcommand(s)
+
+Arguments:
+  [COMMAND]...
+          Full command args to run under seatbelt
+
+Options:
+  -c, --config <key=value>
+          Override a configuration value that would otherwise be loaded from `~/.codex/config.toml`.
+          Use a dotted path (`foo.bar.baz`) to override nested values. The `value` portion is parsed
+          as TOML. If it fails to parse as TOML, the raw string is used as a literal.
+          
+          Examples: - `-c model="o3"` - `-c 'sandbox_permissions=["disk-full-read-access"]'` - `-c
+          shell_environment_policy.inherit=all`
+
+      --sandbox-state-json <JSON>
+          Opaque JSON value from `codex/sandbox-state` to apply directly
+
+      --enable <FEATURE>
+          Enable a feature (repeatable). Equivalent to `-c features.<name>=true`
+
+      --sandbox-state-readable-root <SANDBOX_STATE_READABLE_ROOT>
+          Add a readable root to the supplied sandbox state. Repeat for multiple roots
+
+      --disable <FEATURE>
+          Disable a feature (repeatable). Equivalent to `-c features.<name>=false`
+
+      --sandbox-state-disable-network
+          Disable direct network access in the supplied sandbox state
+
+  -P, --permission-profile <NAME>
+          Named permissions profile to apply from the active configuration stack
+
+  -p, --profile <CONFIG_PROFILE>
+          Layer $CODEX_HOME/<name>.config.toml on top of the base user config
+
+  -C, --cd <DIR>
+          Working directory used for profile resolution and command execution
+
+      --include-managed-config
+          Include managed requirements while resolving an explicit permissions profile
+
+      --allow-unix-socket <ALLOW_UNIX_SOCKETS>
+          Allow the sandboxed command to bind/connect AF_UNIX sockets rooted at this path. Relative
+          paths are resolved against the current directory. Repeat to allow multiple paths
+
+      --log-denials
+          While the command runs, capture macOS sandbox denials via `log stream` and print them
+          after exit
+
+  -h, --help
+          Print help (see a summary with '-h')

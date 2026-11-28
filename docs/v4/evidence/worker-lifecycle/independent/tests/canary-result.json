@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<runs>/v4-od09-independent-j0pw06wx/T/profile.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "<runs>/v4-od09-independent-j0pw06wx/T/canary.py",
+    "{\"t\": \"<runs>/v4-od09-independent-j0pw06wx/T/profile.sb\", \"outside\": \"<runs>/v4-od09-independent-j0pw06wx/outside\", \"repo\": \"<checkout>/od09-canary\", \"alias\": \"<runs>/v4-od09-independent-j0pw06wx/C/alias\"}"
+  ],
+  "exit_code": 0,
+  "checks": {
+    "trusted_write": true,
+    "outside_read": true,
+    "checkout_write": true,
+    "hardlink_to_T": true,
+    "network": true,
+    "credential_env_absent": true
+  }
+}

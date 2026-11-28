@@ -12,6 +12,7 @@ from referencing import Registry, Resource
 
 from framework.core.protocol import load_json, validate, schema_errors, overlap, within, timestamp
 from framework.local.storage import authority_lock, atomic_json, check_install_journal, fingerprint, root_path, safe_path
+from framework.local import lifecycle
 
 ROOT = Path(__file__).resolve().parents[2]
 LIVE = ('reserved', 'active')
@@ -42,6 +43,7 @@ def envelope(snapshot, store_id=None):
 
 
 def shape(state):
+    lifecycle.check(state)
     core = load_json(ROOT / 'schemas/protocol.schema.json')
     local = load_json(ROOT / 'schemas/local-state.schema.json')
     registry = Registry().with_resource(core['$id'], Resource.from_contents(core))
@@ -139,6 +141,12 @@ class Store:
                 if wp['assignment_ref'] == assignment['id']:
                     wp['state'] = 'paused'
                     wp['revision'] += 1
+                if 'worker_runtime' in state:
+                    workspace = state['workspaces'][assignment['workspace_id']]
+                    if workspace['state'] != 'planned':
+                        workspace['handoff_required'] = True
+                    if workspace['state'] not in ('planned', 'prepared', 'finished', 'stopped'):
+                        state['worker_runtime']['workers'][assignment['worker_ref']]['stop_confirmed'] = False
 
     def change(self, action, payload, actor, expected_revision, operation_id, at=None, fault=None):
         if not re.fullmatch(r'[A-Za-z0-9._:-]{1,128}', operation_id):
@@ -174,8 +182,43 @@ class Store:
 
     def _apply(self, state, action, payload, actor, at):
         snapshot = state['snapshot']
+        if action in ('enable-lifecycle', 'worker-event', 'scheduler-tick', 'dispatch-next'):
+            self._owner(state, actor)
+            if action == 'enable-lifecycle':
+                return lifecycle.enable(state, payload, at)
+            if action == 'worker-event':
+                return lifecycle.observe(state, payload, at)
+            if action == 'scheduler-tick':
+                return lifecycle.tick(state, at)
+            if 'worker_runtime' not in state:
+                raise ValueError('configure worker lifecycle before automatic dispatch')
+            lifecycle.tick(state, at, create_probes=False)
+            rejected = []
+            for wp in sorted(snapshot['work_packages'], key=lambda x: x['id']):
+                for worker in sorted(snapshot['workers'], key=lambda x: x['id']):
+                    trial = copy.deepcopy(state)
+                    session = dict(id='session-' + uuid.uuid4().hex, worker_ref=worker['id'],
+                                   host_ref=worker['host_ref'], provider_ref=worker['provider_ref'],
+                                   context_ref='pending-provider-context')
+                    trial['snapshot']['sessions'].append(session)
+                    try:
+                        result = self._apply(trial, 'claim', dict(wp_id=wp['id'], worker_id=worker['id'],
+                            session_id=session['id'], lease_seconds=payload.get('lease_seconds', 300)), worker['principal'], at)
+                        errors = validate(trial['snapshot'], at)
+                        if errors:
+                            raise ValueError('; '.join(errors))
+                    except ValueError as error:
+                        rejected.append({'wp_id': wp['id'], 'worker_id': worker['id'], 'reason': str(error)})
+                        continue
+                    lifecycle.refresh(trial, worker['id'])
+                    state.clear()
+                    state.update(trial)
+                    return dict(result, worker_id=worker['id'], wp_id=wp['id'], session_id=session['id'], model_calls=0)
+            return {'assignment_id': None, 'rejected': rejected, 'model_calls': 0}
         if action == 'register-worker':
             self._owner(state, actor)
+            if 'worker_runtime' in state:
+                raise ValueError('runtime membership change requires explicit reviewed migration')
             worker = payload['worker']
             if any(a['worker_ref'] == worker['id'] and a['state'] in LIVE for a in snapshot['assignments']):
                 raise ValueError('cannot reconfigure an assigned worker')
@@ -190,6 +233,9 @@ class Store:
         if action == 'claim':
             wp = find(snapshot['work_packages'], payload['wp_id'])
             worker = find(snapshot['workers'], payload['worker_id'])
+            lifecycle.claimable(state, worker['id'], at)
+            if wp['id'] in state['deliveries']:
+                raise ValueError('logical delivery already recorded; no re-execution')
             session = find(snapshot['sessions'], payload['session_id'])
             if actor != worker['principal'] or session['worker_ref'] != worker['id']:
                 raise ValueError('worker/session principal mismatch')
@@ -205,6 +251,18 @@ class Store:
                 raise ValueError('worker capability mismatch')
             if not wp['baseline_sha']:
                 raise ValueError('unknown baseline')
+            recovery_source = None
+            if wp['assignment_ref']:
+                previous = find(snapshot['assignments'], wp['assignment_ref'])
+                old_workspace = state['workspaces'][previous['workspace_id']]
+                if old_workspace.get('handoff_required') and not old_workspace.get('checkpoint'):
+                    raise ValueError('interrupted work must be checkpointed before reassignment')
+                if old_workspace.get('checkpoint'):
+                    from framework.local.handoff import checked_checkpoint
+                    if old_workspace['state'] != 'stopped':
+                        raise ValueError('checkpoint handoff requires confirmed stopped writer')
+                    checked_checkpoint(self.root, state, wp, old_workspace)
+                    recovery_source = old_workspace['id']
             seconds = payload['lease_seconds']
             if type(seconds) is not int or not 1 <= seconds <= 3600:
                 raise ValueError('lease_seconds must be 1..3600')
@@ -224,6 +282,10 @@ class Store:
             state['workspaces'][workspace] = {'id': workspace, 'wp_id': wp['id'], 'assignment_id': identity,
                                               'path': '.ai-org/workspaces/' + workspace,
                                               'baseline_sha': wp['baseline_sha'], 'state': 'planned', 'run': None}
+            if recovery_source:
+                state['workspaces'][workspace]['recovery_source'] = recovery_source
+            if 'worker_runtime' in state:
+                lifecycle.refresh(state, worker['id'])
             return {'assignment_id': identity, 'epoch': assignment['authority_epoch'], 'token': counter,
                     'lease_expires_at': lease, 'workspace_id': workspace}
         if action == 'revoke':
@@ -234,6 +296,11 @@ class Store:
             assignment.update(state='revoked', revocation_reason=payload['reason'])
             wp = find(snapshot['work_packages'], assignment['wp_ref'])
             wp.update(state='paused', revision=wp['revision'] + 1)
+            if 'worker_runtime' in state:
+                workspace = state['workspaces'][assignment['workspace_id']]
+                if workspace['state'] != 'planned':
+                    workspace['handoff_required'] = True
+                lifecycle.refresh(state, assignment['worker_ref'])
             return {'assignment_id': assignment['id'], 'state': 'revoked'}
         if action == 'reconcile':
             self._owner(state, actor)
@@ -245,7 +312,11 @@ class Store:
             workspace['state'] = 'prepared'
             return {'workspace_id': workspace['id'], 'state': 'prepared'}
         assignment, wp, worker = self._credential(state, payload, actor, at)
+        if action in ('start', 'run-begin', 'submit'):
+            lifecycle.claimable(state, worker['id'], at)
         workspace = state['workspaces'][assignment['workspace_id']]
+        if action in ('run-begin', 'submit') and workspace.get('recovery_source') and not workspace.get('restored'):
+            raise ValueError('handoff restoration incomplete; execution and delivery blocked')
         if action == 'heartbeat':
             seconds = payload['lease_seconds']
             if type(seconds) is not int or not 1 <= seconds <= 3600:
@@ -258,6 +329,8 @@ class Store:
                 raise ValueError('cannot release an unresolved runner')
             assignment['state'] = 'released'
             wp.update(state='paused', revision=wp['revision'] + 1)
+            if 'worker_runtime' in state:
+                lifecycle.refresh(state, worker['id'])
             return {'state': 'released'}
         if action == 'start':
             if assignment['state'] != 'reserved' or workspace['state'] != 'planned':
@@ -297,6 +370,8 @@ class Store:
                 raise ValueError('synthetic output outside assigned scope')
             workspace.update(state='launching', run={'state': 'launching', 'path': relative,
                 'content_sha256': payload['content_sha256'], 'started_at': at})
+            if 'worker_runtime' in state:
+                state['worker_runtime']['workers'][worker['id']]['stop_confirmed'] = False
             return {'workspace_id': workspace['id']}
         raise ValueError('unknown action: ' + action)
 
@@ -304,6 +379,8 @@ class Store:
         with authority_lock(self.root):
             state = self._read()
             self._credential(state, credentials, actor, now(), states=('active',))
+            assignment = find(state['snapshot']['assignments'], credentials['assignment_id'])
+            lifecycle.claimable(state, assignment['worker_ref'], now())
             errors = validate(state['snapshot'], now())
             if errors:
                 raise ValueError('; '.join(errors))
@@ -327,6 +404,15 @@ class Store:
             workspace['state'] = new
             if run is not None:
                 workspace['run'] = run
+            if 'worker_runtime' in state:
+                identity = assignment['worker_ref']
+                if new in ('finished', 'stopped'):
+                    # Called only by the reviewed runner after its process wait/reconciliation.
+                    unresolved = any(w['state'] in UNKNOWN and
+                        find(state['snapshot']['assignments'], w['assignment_id'])['worker_ref'] == identity
+                        for w in state['workspaces'].values())
+                    state['worker_runtime']['workers'][identity]['stop_confirmed'] = not unresolved
+                lifecycle.refresh(state, identity)
             state['revision'] += 1
             state['snapshot']['project']['revision'] += 1
             atomic_json(self.path, state)

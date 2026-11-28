@@ -1,0 +1,11 @@
+import json,os,pathlib,socket,ctypes
+r={}
+try:r['public_read']=pathlib.Path('public.txt').read_text()=='public fixture'
+except OSError:r['public_read']=False
+try:pathlib.Path('allowed.txt').write_text('ok');r['own_write']=True
+except OSError:r['own_write']=False
+for name,op in [('trusted_read',lambda:pathlib.Path(os.environ['CANARY']).read_bytes()),('trusted_write',lambda:pathlib.Path(os.environ['CANARY']).write_bytes(b'bad')),('network',lambda:socket.create_connection(('127.0.0.1',9),timeout=1))]:
+ try:op();r[name]={'denied':False}
+ except OSError as e:r[name]={'denied':e.errno in (1,13),'errno':e.errno}
+lib=ctypes.CDLL(None,use_errno=True);mib=(ctypes.c_int*3)(1,49,int(os.environ['OWNED_PID']));size=ctypes.c_size_t(1024*1024);buf=ctypes.create_string_buffer(size.value)
+rc=lib.sysctl(mib,3,buf,ctypes.byref(size),None,0);r['procargs']={'rc':rc,'errno':ctypes.get_errno(),'synthetic_marker_observed':b'PUBLIC_CANARY_NOT_A_CREDENTIAL' in buf.raw[:size.value] if rc==0 else False};print(json.dumps(r))

@@ -1,0 +1,55 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<runs>/v4-od09-independent-j0pw06wx/T/profile.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/recovery",
+    "-v"
+  ],
+  "cwd": "<checkout>",
+  "environment": {
+    "HOME": "<runs>/v4-od09-independent-j0pw06wx/C/home",
+    "TMPDIR": "<runs>/v4-od09-independent-j0pw06wx/C/tmp",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONPATH": "<checkout>:<owner-home>/Library/Python/3.9/lib/python/site-packages",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "V4_OUTER_SEATBELT": "1"
+  },
+  "exit_code": 0,
+  "started_at": "2026-11-28T06:09:11.057271+00:00",
+  "finished_at": "2026-11-28T06:09:13.142132+00:00",
+  "before": {
+    "framework/adapters/runspec.py": "5e799b9601d12b4a57f038b9afaae71a9fc44ac51394e1417c13bdbe130c5a96",
+    "framework/adapters/results.py": "8c9bf0774369c187a5d02ca53d7764760f9a067cb61599088293b7bc9805f534",
+    "framework/adapters/registry.py": "35b28f37600a29715431705064f6e5afcae22a152e3dfc22bf4bc3066460b84a",
+    "framework/adapters/__init__.py": "83132090586a39c702aa93886e6e59f7e895d2e3fcb96e3f17bec1cf34e75c06",
+    "framework/adapters/entries.py": "3dd40fc0261568c798a0ce6f2fb65a03c84e5fdd99ea25e39e36a8409856e855",
+    "framework/recovery/checkpoint.py": "587d77708c6c3b237684f5390ba8f9b7ddbf9170d9a6fba6c3ce3f67d288b844",
+    "framework/recovery/admission.py": "94724a7317d649550bfd5e0076c6ad2712bd0834411898e19b44206019a8dddb",
+    "tests/adapters/test_registry.py": "74dad85a90635c8379138b9b91a84b06915d33777f17fc6c1527f0de34874ece",
+    "tests/adapters/test_adapters.py": "531139e34d797383239effdc6f3dc661c958659d5f0d466b48e0b63e5e6da046",
+    "tests/recovery/test_checkpoint.py": "a7ce53271cc07f89fc4081b9ded05a2f3ef2372a766a36b48c50b4d373027308"
+  },
+  "after": {
+    "framework/adapters/runspec.py": "5e799b9601d12b4a57f038b9afaae71a9fc44ac51394e1417c13bdbe130c5a96",
+    "framework/adapters/results.py": "8c9bf0774369c187a5d02ca53d7764760f9a067cb61599088293b7bc9805f534",
+    "framework/adapters/registry.py": "35b28f37600a29715431705064f6e5afcae22a152e3dfc22bf4bc3066460b84a",
+    "framework/adapters/__init__.py": "83132090586a39c702aa93886e6e59f7e895d2e3fcb96e3f17bec1cf34e75c06",
+    "framework/adapters/entries.py": "3dd40fc0261568c798a0ce6f2fb65a03c84e5fdd99ea25e39e36a8409856e855",
+    "framework/recovery/checkpoint.py": "587d77708c6c3b237684f5390ba8f9b7ddbf9170d9a6fba6c3ce3f67d288b844",
+    "framework/recovery/admission.py": "94724a7317d649550bfd5e0076c6ad2712bd0834411898e19b44206019a8dddb",
+    "tests/adapters/test_registry.py": "74dad85a90635c8379138b9b91a84b06915d33777f17fc6c1527f0de34874ece",
+    "tests/adapters/test_adapters.py": "531139e34d797383239effdc6f3dc661c958659d5f0d466b48e0b63e5e6da046",
+    "tests/recovery/test_checkpoint.py": "a7ce53271cc07f89fc4081b9ded05a2f3ef2372a766a36b48c50b4d373027308"
+  },
+  "inputs_unchanged": true,
+  "profile_sha256": "a5f3487c20c9b2c21896d550f14c223a43db5db086bca55458c7ebc1468c5938"
+}

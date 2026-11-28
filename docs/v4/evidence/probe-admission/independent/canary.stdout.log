@@ -1,0 +1,1 @@
+{"trusted_write": true, "outside_read": true, "checkout_write": true, "hardlink_to_T": true, "network": true, "credential_env_absent": true}

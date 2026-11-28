@@ -1,0 +1,61 @@
+{
+  "after": {
+    "examples/protocol/in-progress.json": "7cf2fad959882203f00b74d8f15a79e4a6f1a8c524dfb7eaf5468a81e061013e",
+    "framework/core/protocol.py": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+    "framework/local/handoff.py": "0e0133fb4f386f540e6168d561fe8258d2fdfb9c27abe45ca030a41cf262d98c",
+    "framework/local/lifecycle.py": "6eec3315d202f890c220fc0357967e8d18eacb38e40183f06fa6767f100ed057",
+    "framework/local/runner.py": "c6b06a0fd06f543f25d576cd583df9a22c06b070f501368d7eb9a522aefb74df",
+    "framework/local/store.py": "5b64a57eb47a2883e2ccf13be8e5c70eed5c50a731cc1b935867ede2af1852d6",
+    "framework/recovery/admission.py": "94724a7317d649550bfd5e0076c6ad2712bd0834411898e19b44206019a8dddb",
+    "framework/recovery/checkpoint.py": "587d77708c6c3b237684f5390ba8f9b7ddbf9170d9a6fba6c3ce3f67d288b844",
+    "schemas/local-state.schema.json": "aae186335a1817c572e381c28982ebcdb701184606668774c91b5c74cc4789c9",
+    "schemas/protocol.schema.json": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+    "tests/lifecycle/test_handoff.py": "fe42d95f3b6be59758216678bd97c38a6f1e8e1680ab0bf35ef92e46b6816014",
+    "tests/lifecycle/test_lifecycle.py": "fd243e046f753f5f210713ac0bf8ae62f59c35ec41263c0e1cbcbfafc6ecf647"
+  },
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<EVIDENCE_ROOT>/handoff-final-writer-author/profile.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/lifecycle",
+    "-v",
+    "-p",
+    "test_handoff.py"
+  ],
+  "before": {
+    "examples/protocol/in-progress.json": "7cf2fad959882203f00b74d8f15a79e4a6f1a8c524dfb7eaf5468a81e061013e",
+    "framework/core/protocol.py": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+    "framework/local/handoff.py": "0e0133fb4f386f540e6168d561fe8258d2fdfb9c27abe45ca030a41cf262d98c",
+    "framework/local/lifecycle.py": "2c840ee1516e2af5bff059ad8b3d64c4111999bad90e23ea146a165c4950ae16",
+    "framework/local/runner.py": "c6b06a0fd06f543f25d576cd583df9a22c06b070f501368d7eb9a522aefb74df",
+    "framework/local/store.py": "5b64a57eb47a2883e2ccf13be8e5c70eed5c50a731cc1b935867ede2af1852d6",
+    "framework/recovery/admission.py": "94724a7317d649550bfd5e0076c6ad2712bd0834411898e19b44206019a8dddb",
+    "framework/recovery/checkpoint.py": "587d77708c6c3b237684f5390ba8f9b7ddbf9170d9a6fba6c3ce3f67d288b844",
+    "schemas/local-state.schema.json": "aae186335a1817c572e381c28982ebcdb701184606668774c91b5c74cc4789c9",
+    "schemas/protocol.schema.json": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+    "tests/lifecycle/test_handoff.py": "fe42d95f3b6be59758216678bd97c38a6f1e8e1680ab0bf35ef92e46b6816014",
+    "tests/lifecycle/test_lifecycle.py": "d2fe02682074610b2b9d7526cc697b38b14cb56c1088e5cc87b46dd570fbc7f5"
+  },
+  "environment": {
+    "HOME": "<EVIDENCE_ROOT>/handoff-final-writer-author/home",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONPATH": "<REPO>:<DEPENDENCIES>",
+    "TMPDIR": "<EVIDENCE_ROOT>/handoff-final-writer-author/tmp",
+    "V4_OUTER_SEATBELT": "1"
+  },
+  "exit_code": 0,
+  "finished_at": "2026-11-28T07:46:23.150018+00:00",
+  "note": "Non-author lifecycle/Store tests; real temporary Git/state, trusted synthetic worker observations; product may still be under author development, before/after hashes retained.",
+  "profile_sha256": "782a2296f133c870984acfc8f56573eee0e5fd24041fa8e9f38525e93e8d2537",
+  "source_unchanged": false,
+  "started_at": "2026-11-28T07:42:58.979087+00:00"
+}

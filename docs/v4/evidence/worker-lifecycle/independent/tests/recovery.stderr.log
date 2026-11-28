@@ -1,0 +1,31 @@
+test_missing_or_invalid_inputs_fail_closed (test_checkpoint.Admission) ... ok
+test_old_fence_same_assignment_epoch_and_expiry_block (test_checkpoint.Admission) ... ok
+test_positive_is_not_execution_authority (test_checkpoint.Admission) ... ok
+test_stop_owner_authorization_budget_and_task_precedence (test_checkpoint.Admission) ... ok
+test_unknown_operation_requires_actual_reconciliation_reference (test_checkpoint.Admission) ... ok
+test_changed_source_aborts_and_preserves_partial_staging (test_checkpoint.Checkpoints) ... ok
+test_checkpoint_links_refused (test_checkpoint.Checkpoints) ... ok
+test_empty_checkpoint_and_unique_successive_checkpoints (test_checkpoint.Checkpoints) ... ok
+test_existing_destination_preserved_for_create_and_restore (test_checkpoint.Checkpoints) ... ok
+test_explicit_git_metadata_exclusion_never_follows_worktree_pointer (test_checkpoint.Checkpoints) ... ok
+test_fifo_refused_without_blocking (test_checkpoint.Checkpoints) ... ok
+test_git_symlink_is_refused_even_when_excluded (test_checkpoint.Checkpoints) ... ok
+test_manifest_tampering_and_extra_files_refused (test_checkpoint.Checkpoints) ... ok
+test_nested_destination_and_missing_parent_refused (test_checkpoint.Checkpoints) ... ok
+test_publication_failure_leaves_source_and_incomplete_stage (test_checkpoint.Checkpoints) ... ok
+test_real_git_dirty_state_and_untracked_content_preserved (test_checkpoint.Checkpoints) ... ok
+test_restore_source_mutation_between_validation_and_copy_is_refused (test_checkpoint.Checkpoints) ... ok
+test_roundtrip_preserves_dirty_untracked_empty_directory_and_exec (test_checkpoint.Checkpoints) ... ok
+test_size_bound_fails_before_publication (test_checkpoint.Checkpoints) ... ok
+test_source_does_not_infer_facts_from_model_completed_text (test_checkpoint.Checkpoints) ... ok
+test_source_symlink_and_hardlink_refused (test_checkpoint.Checkpoints) ... ok
+test_staging_corruption_is_not_published (test_checkpoint.Checkpoints) ... ok
+test_symlink_ancestor_and_path_escape_refused (test_checkpoint.Checkpoints) ... ok
+test_three_adapter_contexts_share_checkpoint_and_takeover_protocol (test_checkpoint.Checkpoints) ... ok
+test_two_actual_processes_publish_once_without_overwrite (test_checkpoint.Checkpoints) ... ok
+test_wrong_pin_and_corrupt_content_refused (test_checkpoint.Checkpoints) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 1.742s
+
+OK

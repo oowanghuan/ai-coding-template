@@ -1,0 +1,91 @@
+{
+  "actor": "principal-owner",
+  "actual_external_api_calls": 0,
+  "artifact_sha256": {
+    ".ai-org/workspaces/workspace-0cfeb26c337949b896cd2bd07300aa30/.git": "cc209d79a988aed93cf2fc802950528f80821b53cdcbe4e5324abb6c4083b7ee",
+    ".ai-org/workspaces/workspace-0cfeb26c337949b896cd2bd07300aa30/src/a/tracked.txt": "236ff86be06bb3302867825ba24ad311817e5b1a9ec539f531d52d0db1bddd94",
+    ".ai-org/workspaces/workspace-0cfeb26c337949b896cd2bd07300aa30/src/b/output.txt": "28f17b97909760e33a1eed3acdfd6348a9a70c91fb81772a2c9ac4f2027fe07b",
+    ".ai-org/workspaces/workspace-0cfeb26c337949b896cd2bd07300aa30/src/b/tracked.txt": "e73e3c93e109961c1aa36d5d69d2b4cc8acabdf4639524c48e79b9de016deed3",
+    ".ai-org/workspaces/workspace-c892484767af43fb8e1cdf2be2c1c9e5/.git": "768ad1cf2572f382040731c94e4b48bbe73e0dd3e003650182e695843d2b655b",
+    ".ai-org/workspaces/workspace-c892484767af43fb8e1cdf2be2c1c9e5/src/a/tracked.txt": "3585766451e572974b4a14bbf2ce691c578a169d6321298be5778efcb6b274d5",
+    ".ai-org/workspaces/workspace-c892484767af43fb8e1cdf2be2c1c9e5/src/a/untracked.txt": "1e7232d4b478e05bca867c9b15ef58f3a724710f09c3d161ca8387b83aac07cf",
+    ".ai-org/workspaces/workspace-c892484767af43fb8e1cdf2be2c1c9e5/src/b/tracked.txt": "f03d662d3d3d2703004855cbf5e772c162146b0d391df28b3c78ed21cf5a6cbe",
+    ".ai-org/workspaces/workspace-fcf9f87486e1432fb13d5c47d1b81143/.git": "0d8d5f968d94607dbecdf7deb0794fc87bb2fc95c68e4c3f4949a6a9701ee449",
+    ".ai-org/workspaces/workspace-fcf9f87486e1432fb13d5c47d1b81143/src/a/output.txt": "3875e6bc84299a47cf13f3f7ecd4bc9aa45fc3f5c94154a3373086871cb6f9bf",
+    ".ai-org/workspaces/workspace-fcf9f87486e1432fb13d5c47d1b81143/src/a/tracked.txt": "3585766451e572974b4a14bbf2ce691c578a169d6321298be5778efcb6b274d5",
+    ".ai-org/workspaces/workspace-fcf9f87486e1432fb13d5c47d1b81143/src/a/untracked.txt": "1e7232d4b478e05bca867c9b15ef58f3a724710f09c3d161ca8387b83aac07cf",
+    ".ai-org/workspaces/workspace-fcf9f87486e1432fb13d5c47d1b81143/src/b/tracked.txt": "f03d662d3d3d2703004855cbf5e772c162146b0d391df28b3c78ed21cf5a6cbe"
+  },
+  "assignments_unchanged": true,
+  "authority_unchanged": true,
+  "evidence_level": "synthetic_fixture",
+  "external_exactly_once_verified": false,
+  "format": "completed-recovery-replay/1",
+  "logical_deliveries_unchanged": true,
+  "new_operation_same_probe_rejected": true,
+  "operation_id": "demo-worker-event-26",
+  "passed": true,
+  "payload": {
+    "available": true,
+    "event": "probe-result",
+    "probe_id": "probe:quota-a:1:1",
+    "source": "synthetic_fixture",
+    "worker_id": "worker-a"
+  },
+  "post_completion_process_start_attempts": 0,
+  "prior_actual_fixed_writer_starts": 3,
+  "provider_live": false,
+  "replays": [
+    {
+      "operation": {
+        "action": "worker-event",
+        "actor": "principal-owner",
+        "at": "2026-11-28T06:43:33Z",
+        "intent": "150f0621b19b9cdfc9f83dbc1e8f18bf0b0628456f14f1366d10a196d49c8be0",
+        "result": {
+          "group": {
+            "attempts": 1,
+            "generation": 1,
+            "limited": false,
+            "next_probe_at": null,
+            "pending_probe": null,
+            "reason": null,
+            "retry_at": null
+          },
+          "status": "available",
+          "worker_id": "worker-a"
+        },
+        "revision": 27,
+        "status": "committed"
+      },
+      "replayed": true,
+      "revision": 31
+    },
+    {
+      "operation": {
+        "action": "worker-event",
+        "actor": "principal-owner",
+        "at": "2026-11-28T06:43:33Z",
+        "intent": "150f0621b19b9cdfc9f83dbc1e8f18bf0b0628456f14f1366d10a196d49c8be0",
+        "result": {
+          "group": {
+            "attempts": 1,
+            "generation": 1,
+            "limited": false,
+            "next_probe_at": null,
+            "pending_probe": null,
+            "reason": null,
+            "retry_at": null
+          },
+          "status": "available",
+          "worker_id": "worker-a"
+        },
+        "revision": 27,
+        "status": "committed"
+      },
+      "replayed": true,
+      "revision": 31
+    }
+  ],
+  "state_sha256": "c416de24b82061bc0d221454dbce62fc50270ab12450b1f0180485d2d4f93928"
+}

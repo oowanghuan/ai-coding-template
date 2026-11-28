@@ -1,0 +1,1012 @@
+{
+  "deliveries": {
+    "WP-A": {
+      "assignment_id": "assignment-6cb819d118e943929c8cae14968089e4",
+      "baseline_sha": "41fddbd6624436612bd3a4d738b2decce8335fa8",
+      "content_base64": "ZHJhZnQgZnJvbSBBCnVudHJhY2tlZCBub3RlIGZyb20gQQpjb21wbGV0ZWQgYnkgQgo=",
+      "epoch": 1,
+      "path": "src/a/output.txt",
+      "sha256": "3875e6bc84299a47cf13f3f7ecd4bc9aa45fc3f5c94154a3373086871cb6f9bf",
+      "token": 2
+    },
+    "WP-B": {
+      "assignment_id": "assignment-9fd9be8e45c54787a894e8471452966d",
+      "baseline_sha": "41fddbd6624436612bd3a4d738b2decce8335fa8",
+      "content_base64": "QiBvd24gZGVsaXZlcnkK",
+      "epoch": 1,
+      "path": "src/b/output.txt",
+      "sha256": "28f17b97909760e33a1eed3acdfd6348a9a70c91fb81772a2c9ac4f2027fe07b",
+      "token": 1
+    }
+  },
+  "format": "local-state/1",
+  "operations": {
+    "checkpoint:7e2f57f528274cc088d461e427fc39f0": {
+      "action": "checkpoint",
+      "actor": "trusted-local-supervisor",
+      "at": "2026-11-28T06:32:44Z",
+      "intent": "0569ffb5ad5a199531435bce431b2ab57c2dfc6cebe8721e849eea4600df660a",
+      "result": {
+        "binding": "e2eb5e2ffc405258093194f14ab1140afea3d8073994c08f6ba0f6d40d380ad2",
+        "checkpoint_id": "checkpoint-1caa6f2da86a4f4babdd671083da4483",
+        "manifest_sha256": "cd55ff321c9fed16983d55a124ea965644595ffe00b98258081e9d7b1bd36992",
+        "path": ".ai-org/checkpoints/checkpoint-1caa6f2da86a4f4babdd671083da4483",
+        "unknown_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "revision": 14,
+      "status": "committed"
+    },
+    "confirmed-stop:47f5fc7e1a4c4877a2f4a7a0b3794936": {
+      "action": "confirmed-stop",
+      "actor": "trusted-local-supervisor",
+      "at": "2026-11-28T06:32:44Z",
+      "intent": "663fdf9717779efba05d909c1547a7c1a02c115552a3dfa479516cbbac54c715",
+      "result": {
+        "assignment_id": "assignment-c0197a021df54853a1239c42e65310cd",
+        "exit_code": -15
+      },
+      "revision": 15,
+      "status": "committed"
+    },
+    "demo-dispatch-next-1": {
+      "action": "dispatch-next",
+      "actor": "principal-owner",
+      "at": "2026-11-28T06:32:32Z",
+      "intent": "1b38e406e64ed23952381e2130ce9cfdcd6b0cef06c3c31f6ba1c6134a60183e",
+      "result": {
+        "assignment_id": "assignment-c0197a021df54853a1239c42e65310cd",
+        "epoch": 1,
+        "lease_expires_at": "2026-11-28T06:37:32Z",
+        "model_calls": 0,
+        "session_id": "session-509fd0d5628949598ff76ce11d4ebd6a",
+        "token": 1,
+        "worker_id": "worker-a",
+        "workspace_id": "workspace-685dd96406f345808a0ab31ee7ad50f9",
+        "wp_id": "WP-A"
+      },
+      "revision": 2,
+      "status": "committed"
+    },
+    "demo-dispatch-next-12": {
+      "action": "dispatch-next",
+      "actor": "principal-owner",
+      "at": "2026-11-28T06:32:42Z",
+      "intent": "1b38e406e64ed23952381e2130ce9cfdcd6b0cef06c3c31f6ba1c6134a60183e",
+      "result": {
+        "assignment_id": null,
+        "model_calls": 0,
+        "rejected": [
+          {
+            "reason": "worker lifecycle blocks new work",
+            "worker_id": "worker-a",
+            "wp_id": "WP-A"
+          },
+          {
+            "reason": "unknown workspace/process outcome; reconcile before reassignment",
+            "worker_id": "worker-b",
+            "wp_id": "WP-A"
+          },
+          {
+            "reason": "unknown workspace/process outcome; reconcile before reassignment",
+            "worker_id": "worker-c",
+            "wp_id": "WP-A"
+          },
+          {
+            "reason": "worker lifecycle blocks new work",
+            "worker_id": "worker-a",
+            "wp_id": "WP-B"
+          },
+          {
+            "reason": "task is not claimable",
+            "worker_id": "worker-b",
+            "wp_id": "WP-B"
+          },
+          {
+            "reason": "task is not claimable",
+            "worker_id": "worker-c",
+            "wp_id": "WP-B"
+          }
+        ]
+      },
+      "revision": 13,
+      "status": "committed"
+    },
+    "demo-dispatch-next-18": {
+      "action": "dispatch-next",
+      "actor": "principal-owner",
+      "at": "2026-11-28T06:32:45Z",
+      "intent": "1b38e406e64ed23952381e2130ce9cfdcd6b0cef06c3c31f6ba1c6134a60183e",
+      "result": {
+        "assignment_id": "assignment-6cb819d118e943929c8cae14968089e4",
+        "epoch": 1,
+        "lease_expires_at": "2026-11-28T06:37:45Z",
+        "model_calls": 0,
+        "session_id": "session-8468d24f5beb4904b0c468bf064acade",
+        "token": 2,
+        "worker_id": "worker-b",
+        "workspace_id": "workspace-e8ef3c334ef44248bf60d99cf668ec52",
+        "wp_id": "WP-A"
+      },
+      "revision": 19,
+      "status": "committed"
+    },
+    "demo-dispatch-next-2": {
+      "action": "dispatch-next",
+      "actor": "principal-owner",
+      "at": "2026-11-28T06:32:33Z",
+      "intent": "1b38e406e64ed23952381e2130ce9cfdcd6b0cef06c3c31f6ba1c6134a60183e",
+      "result": {
+        "assignment_id": "assignment-9fd9be8e45c54787a894e8471452966d",
+        "epoch": 1,
+        "lease_expires_at": "2026-11-28T06:37:33Z",
+        "model_calls": 0,
+        "session_id": "session-baa7ffef7e1b4e20a3d3da961d75705b",
+        "token": 1,
+        "worker_id": "worker-b",
+        "workspace_id": "workspace-d4c39b0ac7414f76bc5d4cfca3b3e078",
+        "wp_id": "WP-B"
+      },
+      "revision": 3,
+      "status": "committed"
+    },
+    "demo-dispatch-next-27": {
+      "action": "dispatch-next",
+      "actor": "principal-owner",
+      "at": "2026-11-28T06:32:53Z",
+      "intent": "1b38e406e64ed23952381e2130ce9cfdcd6b0cef06c3c31f6ba1c6134a60183e",
+      "result": {
+        "assignment_id": null,
+        "model_calls": 0,
+        "rejected": [
+          {
+            "reason": "task is not claimable",
+            "worker_id": "worker-a",
+            "wp_id": "WP-A"
+          },
+          {
+            "reason": "task is not claimable",
+            "worker_id": "worker-b",
+            "wp_id": "WP-A"
+          },
+          {
+            "reason": "task is not claimable",
+            "worker_id": "worker-c",
+            "wp_id": "WP-A"
+          },
+          {
+            "reason": "logical delivery already recorded; no re-execution",
+            "worker_id": "worker-a",
+            "wp_id": "WP-B"
+          },
+          {
+            "reason": "logical delivery already recorded; no re-execution",
+            "worker_id": "worker-b",
+            "wp_id": "WP-B"
+          },
+          {
+            "reason": "logical delivery already recorded; no re-execution",
+            "worker_id": "worker-c",
+            "wp_id": "WP-B"
+          }
+        ]
+      },
+      "revision": 28,
+      "status": "committed"
+    },
+    "demo-enable-lifecycle-0": {
+      "action": "enable-lifecycle",
+      "actor": "principal-owner",
+      "at": "2026-11-28T06:32:32Z",
+      "intent": "a747f26d2afa193a55e9d5cf4b9ccfec7bb67cee626e49828d2b39d234e4c3df",
+      "result": {
+        "execution_started": false,
+        "registered": [
+          "worker-a",
+          "worker-b",
+          "worker-c"
+        ]
+      },
+      "revision": 1,
+      "status": "committed"
+    },
+    "demo-release-17": {
+      "action": "release",
+      "actor": "principal-worker-b",
+      "at": "2026-11-28T06:32:45Z",
+      "intent": "f12581b10683d236f9618199fd92549d5da3aa19de07344cdd166e6111879ef7",
+      "result": {
+        "state": "released"
+      },
+      "revision": 18,
+      "status": "committed"
+    },
+    "demo-release-30": {
+      "action": "release",
+      "actor": "principal-worker-b",
+      "at": "2026-11-28T06:32:55Z",
+      "intent": "81846aad30e55261c692b7997b01a48a591114423b6ee495c88b0633d3fccf25",
+      "result": {
+        "state": "released"
+      },
+      "revision": 31,
+      "status": "committed"
+    },
+    "demo-run-begin-23": {
+      "action": "run-begin",
+      "actor": "principal-worker-b",
+      "at": "2026-11-28T06:32:52Z",
+      "intent": "0dc44fa9cadef840f91e6aef96b3f506316d28d344a1f96184154cc253e50da9",
+      "result": {
+        "workspace_id": "workspace-e8ef3c334ef44248bf60d99cf668ec52"
+      },
+      "revision": 24,
+      "status": "committed"
+    },
+    "demo-run-begin-7": {
+      "action": "run-begin",
+      "actor": "principal-worker-a",
+      "at": "2026-11-28T06:32:40Z",
+      "intent": "f780802f939df11802a32a5e5a56a5d065b6b9af4084325219a386cc503f58b7",
+      "result": {
+        "workspace_id": "workspace-685dd96406f345808a0ab31ee7ad50f9"
+      },
+      "revision": 8,
+      "status": "committed"
+    },
+    "demo-run-begin-9": {
+      "action": "run-begin",
+      "actor": "principal-worker-b",
+      "at": "2026-11-28T06:32:41Z",
+      "intent": "851350d21c9be595bf148abad241ea425bb011ae1042752850682a8314b1c906",
+      "result": {
+        "workspace_id": "workspace-d4c39b0ac7414f76bc5d4cfca3b3e078"
+      },
+      "revision": 10,
+      "status": "committed"
+    },
+    "demo-scheduler-tick-25": {
+      "action": "scheduler-tick",
+      "actor": "principal-owner",
+      "at": "2026-11-28T06:32:55Z",
+      "intent": "08209cf1d461899498fd4c6d09c1d24a4d847399107b1cecd394afb6d624396a",
+      "result": {
+        "model_calls": 0,
+        "probes": [
+          {
+            "group": "quota-a",
+            "probe_id": "probe:quota-a:1:1"
+          }
+        ]
+      },
+      "revision": 26,
+      "status": "committed"
+    },
+    "demo-submit-16": {
+      "action": "submit",
+      "actor": "principal-worker-b",
+      "at": "2026-11-28T06:32:44Z",
+      "intent": "ff78a04464a8c06354e9c9113e55d0c6a9c0fc6fbe822dff1bf3f12dad2a3a06",
+      "result": {
+        "accepted": false,
+        "delivery_id": "WP-B",
+        "sha256": "28f17b97909760e33a1eed3acdfd6348a9a70c91fb81772a2c9ac4f2027fe07b"
+      },
+      "revision": 17,
+      "status": "committed"
+    },
+    "demo-submit-29": {
+      "action": "submit",
+      "actor": "principal-worker-b",
+      "at": "2026-11-28T06:32:54Z",
+      "intent": "5bfa23a7798ff42b956fd0e84e1f108f886a58ef2d8d6987900ec6975948a66b",
+      "result": {
+        "accepted": false,
+        "delivery_id": "WP-A",
+        "sha256": "3875e6bc84299a47cf13f3f7ecd4bc9aa45fc3f5c94154a3373086871cb6f9bf"
+      },
+      "revision": 30,
+      "status": "committed"
+    },
+    "demo-worker-event-11": {
+      "action": "worker-event",
+      "actor": "principal-owner",
+      "at": "2026-11-28T06:32:42Z",
+      "intent": "d9b8ae7f40a09011ab1a49e9544b0725c8529d2671f32c1e4cb4eaa7eb258c4d",
+      "result": {
+        "group": {
+          "attempts": 0,
+          "generation": 1,
+          "limited": true,
+          "next_probe_at": "2026-11-28T06:32:43Z",
+          "pending_probe": null,
+          "reason": "quota_limited",
+          "retry_at": null
+        },
+        "status": "quota_limited",
+        "worker_id": "worker-a"
+      },
+      "revision": 12,
+      "status": "committed"
+    },
+    "demo-worker-event-26": {
+      "action": "worker-event",
+      "actor": "principal-owner",
+      "at": "2026-11-28T06:32:55Z",
+      "intent": "150f0621b19b9cdfc9f83dbc1e8f18bf0b0628456f14f1366d10a196d49c8be0",
+      "result": {
+        "group": {
+          "attempts": 1,
+          "generation": 1,
+          "limited": false,
+          "next_probe_at": null,
+          "pending_probe": null,
+          "reason": null,
+          "retry_at": null
+        },
+        "status": "available",
+        "worker_id": "worker-a"
+      },
+      "revision": 27,
+      "status": "committed"
+    },
+    "prepare-a": {
+      "action": "start",
+      "actor": "principal-worker-a",
+      "at": "2026-11-28T06:32:34Z",
+      "intent": "04e07524f4bda533fa3b3855682267970e871eba92fba3254b62a9d6e1e7bf38",
+      "result": {
+        "state": "creating",
+        "workspace_id": "workspace-685dd96406f345808a0ab31ee7ad50f9"
+      },
+      "revision": 4,
+      "status": "committed"
+    },
+    "prepare-b": {
+      "action": "start",
+      "actor": "principal-worker-b",
+      "at": "2026-11-28T06:32:37Z",
+      "intent": "83e7c1f431b8cc33e8aec9e78ad5a22c47f374544ef998793434ad7dabbd69c6",
+      "result": {
+        "state": "creating",
+        "workspace_id": "workspace-d4c39b0ac7414f76bc5d4cfca3b3e078"
+      },
+      "revision": 6,
+      "status": "committed"
+    },
+    "prepare-handoff-b": {
+      "action": "start",
+      "actor": "principal-worker-b",
+      "at": "2026-11-28T06:32:46Z",
+      "intent": "8f279d7e77813666bbaa0154325de5c5415db0187286e89071f7535962db9b4b",
+      "result": {
+        "state": "creating",
+        "workspace_id": "workspace-e8ef3c334ef44248bf60d99cf668ec52"
+      },
+      "revision": 20,
+      "status": "committed"
+    },
+    "restore-handoff:ed45551218c54dc7a94ff1a7da15057f": {
+      "action": "restore-handoff",
+      "actor": "trusted-local-supervisor",
+      "at": "2026-11-28T06:32:51Z",
+      "intent": "36b30cc6b4d6054a20836c404a8f3e5a8c962dad018359dd875cddba9fe60be7",
+      "result": {
+        "assignment_id": "assignment-6cb819d118e943929c8cae14968089e4",
+        "changed_paths": [
+          "src/a/tracked.txt",
+          "src/a/untracked.txt"
+        ],
+        "manifest_sha256": "cd55ff321c9fed16983d55a124ea965644595ffe00b98258081e9d7b1bd36992"
+      },
+      "revision": 23,
+      "status": "committed"
+    },
+    "restore-intent:d28f40166ef54167ba2c717ac4aa8943": {
+      "action": "restore-intent",
+      "actor": "trusted-local-supervisor",
+      "at": "2026-11-28T06:32:49Z",
+      "intent": "13316a7913c85cd47cbd728c3039ff2e40a35ebf5ec723e213a1120541d94d7a",
+      "result": {
+        "assignment_id": "assignment-6cb819d118e943929c8cae14968089e4",
+        "source": "workspace-685dd96406f345808a0ab31ee7ad50f9"
+      },
+      "revision": 22,
+      "status": "committed"
+    }
+  },
+  "revision": 31,
+  "snapshot": {
+    "assignments": [
+      {
+        "allowed_paths": [
+          "src/a/"
+        ],
+        "authority_epoch": 1,
+        "base_sha": "41fddbd6624436612bd3a4d738b2decce8335fa8",
+        "fencing_token": 1,
+        "heartbeat_at": "2026-11-28T06:32:32Z",
+        "id": "assignment-c0197a021df54853a1239c42e65310cd",
+        "last_checkpoint": "checkpoint-1caa6f2da86a4f4babdd671083da4483",
+        "lease_expires_at": "2026-11-28T06:37:32Z",
+        "revocation_reason": "quota_limited",
+        "role_ref": "role-developer",
+        "session_ref": "session-509fd0d5628949598ff76ce11d4ebd6a",
+        "state": "revoked",
+        "worker_ref": "worker-a",
+        "workspace_id": "workspace-685dd96406f345808a0ab31ee7ad50f9",
+        "wp_ref": "WP-A"
+      },
+      {
+        "allowed_paths": [
+          "src/b/"
+        ],
+        "authority_epoch": 1,
+        "base_sha": "41fddbd6624436612bd3a4d738b2decce8335fa8",
+        "fencing_token": 1,
+        "heartbeat_at": "2026-11-28T06:32:33Z",
+        "id": "assignment-9fd9be8e45c54787a894e8471452966d",
+        "last_checkpoint": null,
+        "lease_expires_at": "2026-11-28T06:37:33Z",
+        "revocation_reason": null,
+        "role_ref": "role-developer",
+        "session_ref": "session-baa7ffef7e1b4e20a3d3da961d75705b",
+        "state": "released",
+        "worker_ref": "worker-b",
+        "workspace_id": "workspace-d4c39b0ac7414f76bc5d4cfca3b3e078",
+        "wp_ref": "WP-B"
+      },
+      {
+        "allowed_paths": [
+          "src/a/"
+        ],
+        "authority_epoch": 1,
+        "base_sha": "41fddbd6624436612bd3a4d738b2decce8335fa8",
+        "fencing_token": 2,
+        "heartbeat_at": "2026-11-28T06:32:45Z",
+        "id": "assignment-6cb819d118e943929c8cae14968089e4",
+        "last_checkpoint": null,
+        "lease_expires_at": "2026-11-28T06:37:45Z",
+        "revocation_reason": null,
+        "role_ref": "role-developer",
+        "session_ref": "session-8468d24f5beb4904b0c468bf064acade",
+        "state": "released",
+        "worker_ref": "worker-b",
+        "workspace_id": "workspace-e8ef3c334ef44248bf60d99cf668ec52",
+        "wp_ref": "WP-A"
+      }
+    ],
+    "authorizations": [
+      {
+        "allowed_paths": [
+          "src/"
+        ],
+        "decision_ref": "synthetic-decision",
+        "environment_refs": [
+          "host-local"
+        ],
+        "expires_at": "2030-01-01T00:00:00Z",
+        "external_effects": [],
+        "id": "auth-demo",
+        "issuer": "principal-owner",
+        "role_refs": [
+          "role-developer"
+        ],
+        "state": "granted",
+        "wp_refs": [
+          "WP-A",
+          "WP-B"
+        ]
+      }
+    ],
+    "checkpoints": [
+      {
+        "assignment_ref": "assignment-c0197a021df54853a1239c42e65310cd",
+        "authorization_ref": "auth-demo",
+        "baseline_sha": "41fddbd6624436612bd3a4d738b2decce8335fa8",
+        "blockers": [],
+        "completed": [
+          "tracked draft and untracked note preserved"
+        ],
+        "created_at": "2026-11-28T06:32:44Z",
+        "decision_refs": [],
+        "evidence_refs": [],
+        "id": "checkpoint-1caa6f2da86a4f4babdd671083da4483",
+        "last_valid_commit": "41fddbd6624436612bd3a4d738b2decce8335fa8",
+        "lease_expires_at": "2026-11-28T06:37:32Z",
+        "next_actions": [
+          "Reconcile exact current authority and stopped writer before handoff"
+        ],
+        "remaining": [
+          "finish delivery"
+        ],
+        "role_ref": "role-developer",
+        "spec_refs": [
+          {
+            "path": "contracts/example.md",
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "version": "1"
+          }
+        ],
+        "uncommitted": [
+          {
+            "location": ".ai-org/checkpoints/checkpoint-1caa6f2da86a4f4babdd671083da4483",
+            "sha256": "cd55ff321c9fed16983d55a124ea965644595ffe00b98258081e9d7b1bd36992"
+          }
+        ],
+        "unknown_operations": [],
+        "wp_ref": "WP-A",
+        "wp_revision": 4
+      }
+    ],
+    "hosts": [
+      {
+        "environment": "synthetic-isolated",
+        "id": "host-local"
+      }
+    ],
+    "project": {
+      "authority_epoch": 1,
+      "budget": "available",
+      "id": "demo",
+      "owner_principals": [
+        "principal-owner"
+      ],
+      "paused": false,
+      "policy_revision": "1",
+      "profile": "lite",
+      "revision": 32,
+      "state_backend": "local_git"
+    },
+    "providers": [
+      {
+        "adapter": "synthetic-fixture",
+        "id": "provider-synthetic"
+      }
+    ],
+    "roles": [
+      {
+        "asset_refs": [],
+        "id": "role-developer",
+        "permissions": [
+          "edit-assigned-scope"
+        ],
+        "responsibilities": [
+          "Implementation"
+        ]
+      },
+      {
+        "asset_refs": [],
+        "id": "role-reviewer",
+        "permissions": [
+          "read"
+        ],
+        "responsibilities": [
+          "Independent review"
+        ]
+      }
+    ],
+    "schema_version": "0.2",
+    "sessions": [
+      {
+        "context_ref": "pending-provider-context",
+        "host_ref": "host-local",
+        "id": "session-509fd0d5628949598ff76ce11d4ebd6a",
+        "provider_ref": "provider-synthetic",
+        "worker_ref": "worker-a"
+      },
+      {
+        "context_ref": "pending-provider-context",
+        "host_ref": "host-local",
+        "id": "session-baa7ffef7e1b4e20a3d3da961d75705b",
+        "provider_ref": "provider-synthetic",
+        "worker_ref": "worker-b"
+      },
+      {
+        "context_ref": "pending-provider-context",
+        "host_ref": "host-local",
+        "id": "session-8468d24f5beb4904b0c468bf064acade",
+        "provider_ref": "provider-synthetic",
+        "worker_ref": "worker-b"
+      }
+    ],
+    "work_packages": [
+      {
+        "acceptor": "principal-worker-c",
+        "accountable_role": "role-developer",
+        "allowed_paths": [
+          "src/a/"
+        ],
+        "assignment_ref": "assignment-6cb819d118e943929c8cae14968089e4",
+        "authorization_ref": "auth-demo",
+        "baseline_sha": "41fddbd6624436612bd3a4d738b2decce8335fa8",
+        "blocking_conditions": [],
+        "change_reason": null,
+        "checkpoint_ref": null,
+        "deliverables": [
+          "Synthetic patch"
+        ],
+        "dependencies": [],
+        "evidence_refs": [],
+        "external_effects": [],
+        "forbidden_paths": [
+          "secrets/"
+        ],
+        "goal_refs": [
+          "GOAL-DEMO"
+        ],
+        "handoff_refs": [],
+        "id": "WP-A",
+        "implementer": "principal-worker-b",
+        "inputs": [],
+        "kind": "code",
+        "merger": "principal-owner",
+        "milestones": {
+          "engineering_accepted": {
+            "evidence_refs": [],
+            "reason": null,
+            "signer": null,
+            "status": "pending",
+            "subject_sha": null
+          },
+          "merged": {
+            "evidence_refs": [],
+            "reason": null,
+            "signer": null,
+            "status": "pending",
+            "subject_sha": null
+          },
+          "review_passed": {
+            "evidence_refs": [],
+            "reason": null,
+            "signer": null,
+            "status": "pending",
+            "subject_sha": null
+          }
+        },
+        "negative_criteria": [
+          "Reject invalid input"
+        ],
+        "objective": "Validate protocol consistency",
+        "positive_criteria": [
+          "Expected output"
+        ],
+        "project_id": "demo",
+        "required_milestones": [
+          "review_passed",
+          "merged",
+          "engineering_accepted"
+        ],
+        "requirement_refs": [
+          "REQ-DEMO"
+        ],
+        "review_refs": [],
+        "reviewer": "principal-worker-c",
+        "revision": 7,
+        "risk": "medium",
+        "rollback": "Preserve worktree; revert reviewed commit",
+        "spec_refs": [
+          {
+            "path": "contracts/example.md",
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "version": "1"
+          }
+        ],
+        "state": "paused",
+        "submitted_sha": null,
+        "test_strategy": "Synthetic unit checks",
+        "title": "Synthetic local change"
+      },
+      {
+        "acceptor": "principal-worker-c",
+        "accountable_role": "role-developer",
+        "allowed_paths": [
+          "src/b/"
+        ],
+        "assignment_ref": "assignment-9fd9be8e45c54787a894e8471452966d",
+        "authorization_ref": "auth-demo",
+        "baseline_sha": "41fddbd6624436612bd3a4d738b2decce8335fa8",
+        "blocking_conditions": [],
+        "change_reason": null,
+        "checkpoint_ref": null,
+        "deliverables": [
+          "Synthetic patch"
+        ],
+        "dependencies": [],
+        "evidence_refs": [],
+        "external_effects": [],
+        "forbidden_paths": [
+          "secrets/"
+        ],
+        "goal_refs": [
+          "GOAL-DEMO"
+        ],
+        "handoff_refs": [],
+        "id": "WP-B",
+        "implementer": "principal-worker-b",
+        "inputs": [],
+        "kind": "code",
+        "merger": "principal-owner",
+        "milestones": {
+          "engineering_accepted": {
+            "evidence_refs": [],
+            "reason": null,
+            "signer": null,
+            "status": "pending",
+            "subject_sha": null
+          },
+          "merged": {
+            "evidence_refs": [],
+            "reason": null,
+            "signer": null,
+            "status": "pending",
+            "subject_sha": null
+          },
+          "review_passed": {
+            "evidence_refs": [],
+            "reason": null,
+            "signer": null,
+            "status": "pending",
+            "subject_sha": null
+          }
+        },
+        "negative_criteria": [
+          "Reject invalid input"
+        ],
+        "objective": "Validate protocol consistency",
+        "positive_criteria": [
+          "Expected output"
+        ],
+        "project_id": "demo",
+        "required_milestones": [
+          "review_passed",
+          "merged",
+          "engineering_accepted"
+        ],
+        "requirement_refs": [
+          "REQ-DEMO"
+        ],
+        "review_refs": [],
+        "reviewer": "principal-worker-c",
+        "revision": 4,
+        "risk": "medium",
+        "rollback": "Preserve worktree; revert reviewed commit",
+        "spec_refs": [
+          {
+            "path": "contracts/example.md",
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "version": "1"
+          }
+        ],
+        "state": "paused",
+        "submitted_sha": null,
+        "test_strategy": "Synthetic unit checks",
+        "title": "Synthetic local change"
+      }
+    ],
+    "workers": [
+      {
+        "authorization_method": "synthetic-no-credentials",
+        "capabilities": [
+          "code"
+        ],
+        "host_ref": "host-local",
+        "id": "worker-a",
+        "principal": "principal-worker-a",
+        "provider_ref": "provider-synthetic",
+        "quota": "available",
+        "role_refs": [
+          "role-developer"
+        ],
+        "slots": 1,
+        "state": "available"
+      },
+      {
+        "authorization_method": "synthetic-no-credentials",
+        "capabilities": [
+          "code"
+        ],
+        "host_ref": "host-local",
+        "id": "worker-b",
+        "principal": "principal-worker-b",
+        "provider_ref": "provider-synthetic",
+        "quota": "available",
+        "role_refs": [
+          "role-developer"
+        ],
+        "slots": 1,
+        "state": "available"
+      },
+      {
+        "authorization_method": "synthetic-no-credentials",
+        "capabilities": [
+          "review"
+        ],
+        "host_ref": "host-local",
+        "id": "worker-c",
+        "principal": "principal-worker-c",
+        "provider_ref": "provider-synthetic",
+        "quota": "available",
+        "role_refs": [
+          "role-reviewer"
+        ],
+        "slots": 1,
+        "state": "available"
+      }
+    ]
+  },
+  "store_id": "50288acd2f9a45d09221ac7b1717ea9b",
+  "tokens": {
+    "WP-A": 2,
+    "WP-B": 1
+  },
+  "worker_runtime": {
+    "format": "worker-runtime/1",
+    "groups": {
+      "quota-a": {
+        "attempts": 1,
+        "generation": 1,
+        "limited": false,
+        "next_probe_at": null,
+        "pending_probe": null,
+        "reason": null,
+        "retry_at": null
+      },
+      "quota-b": {
+        "attempts": 0,
+        "generation": 0,
+        "limited": false,
+        "next_probe_at": null,
+        "pending_probe": null,
+        "reason": null,
+        "retry_at": null
+      },
+      "quota-c": {
+        "attempts": 0,
+        "generation": 0,
+        "limited": false,
+        "next_probe_at": null,
+        "pending_probe": null,
+        "reason": null,
+        "retry_at": null
+      }
+    },
+    "policy": {
+      "heartbeat_timeout": 120,
+      "initial_backoff": 1,
+      "max_backoff": 4,
+      "max_probes": 3
+    },
+    "workers": {
+      "worker-a": {
+        "auth_identity": "fixture-identity-a",
+        "authenticated": true,
+        "authorized": true,
+        "heartbeat_at": "2026-11-28T06:32:32Z",
+        "host_available": true,
+        "last_observation": {
+          "at": "2026-11-28T06:32:55Z",
+          "event": "probe-result",
+          "source": "synthetic_fixture"
+        },
+        "mode": "dedicated",
+        "owner_hold": null,
+        "quota_group": "quota-a",
+        "reason": null,
+        "resource": {
+          "agent_tool": null,
+          "credential_ref": null,
+          "model": null,
+          "model_provider": null
+        },
+        "status": "available",
+        "stop_confirmed": true
+      },
+      "worker-b": {
+        "auth_identity": "fixture-identity-b",
+        "authenticated": true,
+        "authorized": true,
+        "heartbeat_at": "2026-11-28T06:32:32Z",
+        "host_available": true,
+        "last_observation": null,
+        "mode": "dedicated",
+        "owner_hold": null,
+        "quota_group": "quota-b",
+        "reason": null,
+        "resource": {
+          "agent_tool": null,
+          "credential_ref": null,
+          "model": null,
+          "model_provider": null
+        },
+        "status": "available",
+        "stop_confirmed": true
+      },
+      "worker-c": {
+        "auth_identity": "fixture-identity-c",
+        "authenticated": true,
+        "authorized": true,
+        "heartbeat_at": "2026-11-28T06:32:32Z",
+        "host_available": true,
+        "last_observation": null,
+        "mode": "dedicated",
+        "owner_hold": null,
+        "quota_group": "quota-c",
+        "reason": null,
+        "resource": {
+          "agent_tool": null,
+          "credential_ref": null,
+          "model": null,
+          "model_provider": null
+        },
+        "status": "available",
+        "stop_confirmed": true
+      }
+    }
+  },
+  "workspaces": {
+    "workspace-685dd96406f345808a0ab31ee7ad50f9": {
+      "assignment_id": "assignment-c0197a021df54853a1239c42e65310cd",
+      "baseline_sha": "41fddbd6624436612bd3a4d738b2decce8335fa8",
+      "checkpoint": {
+        "binding": "e2eb5e2ffc405258093194f14ab1140afea3d8073994c08f6ba0f6d40d380ad2",
+        "manifest_sha256": "cd55ff321c9fed16983d55a124ea965644595ffe00b98258081e9d7b1bd36992",
+        "path": ".ai-org/checkpoints/checkpoint-1caa6f2da86a4f4babdd671083da4483",
+        "unknown_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "handoff_required": true,
+      "id": "workspace-685dd96406f345808a0ab31ee7ad50f9",
+      "path": ".ai-org/workspaces/workspace-685dd96406f345808a0ab31ee7ad50f9",
+      "run": {
+        "backend": "fixed-synthetic-demo",
+        "evidence_level": "synthetic_fixture",
+        "exit_code": -15,
+        "pid": 46044,
+        "process_group": 46044,
+        "state": "stopped",
+        "unknown_operations": []
+      },
+      "state": "stopped",
+      "wp_id": "WP-A"
+    },
+    "workspace-d4c39b0ac7414f76bc5d4cfca3b3e078": {
+      "assignment_id": "assignment-9fd9be8e45c54787a894e8471452966d",
+      "baseline_sha": "41fddbd6624436612bd3a4d738b2decce8335fa8",
+      "id": "workspace-d4c39b0ac7414f76bc5d4cfca3b3e078",
+      "path": ".ai-org/workspaces/workspace-d4c39b0ac7414f76bc5d4cfca3b3e078",
+      "run": {
+        "evidence_level": "synthetic_fixture",
+        "exit_code": 0,
+        "pid": 46073,
+        "process_group": 46073,
+        "state": "finished",
+        "unknown_operations": []
+      },
+      "state": "finished",
+      "wp_id": "WP-B"
+    },
+    "workspace-e8ef3c334ef44248bf60d99cf668ec52": {
+      "assignment_id": "assignment-6cb819d118e943929c8cae14968089e4",
+      "baseline_sha": "41fddbd6624436612bd3a4d738b2decce8335fa8",
+      "id": "workspace-e8ef3c334ef44248bf60d99cf668ec52",
+      "path": ".ai-org/workspaces/workspace-e8ef3c334ef44248bf60d99cf668ec52",
+      "recovery_source": "workspace-685dd96406f345808a0ab31ee7ad50f9",
+      "restored": {
+        "changed_paths": [
+          "src/a/tracked.txt",
+          "src/a/untracked.txt"
+        ],
+        "manifest_sha256": "cd55ff321c9fed16983d55a124ea965644595ffe00b98258081e9d7b1bd36992"
+      },
+      "run": {
+        "evidence_level": "synthetic_fixture",
+        "exit_code": 0,
+        "pid": 46652,
+        "process_group": 46652,
+        "state": "finished",
+        "unknown_operations": []
+      },
+      "state": "finished",
+      "wp_id": "WP-A"
+    }
+  }
+}

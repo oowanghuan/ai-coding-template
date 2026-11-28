@@ -1,0 +1,39 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<EVIDENCE_ROOT>/quality-governance-regression-02/sandbox.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "<EVIDENCE_ROOT>/wp301-adapters-author/runner.py",
+    "<EVIDENCE_ROOT>/quality-governance-regression-02/config.json"
+  ],
+  "started_at": "2026-11-28T05:59:36.933246+00:00",
+  "finished_at": "2026-11-28T05:59:37.219338+00:00",
+  "exit_code": 0,
+  "before": {
+    "framework/adapters/runspec.py": "e7917c3f91430a0f245da33f58a1e5254a4c308434eb1f58c2e589ab406331c0",
+    "framework/adapters/results.py": "ee8f080d159e46f2bd6a0a2cbec125e0ad45d53d3ffa41403a36917927798cab",
+    "framework/adapters/__init__.py": "d8cd56ec814bea3f809bfbcb1001d10c44bd903f42b27cbc8da68fb9e4f15e2c",
+    "framework/adapters/entries.py": "3dd40fc0261568c798a0ce6f2fb65a03c84e5fdd99ea25e39e36a8409856e855",
+    "adapters/OFFICIAL_SUPPORT.md": "3272d444958fbc0aa3ae59fee42ccb66bf6a7732a13fb4cb95ae08d5b4661067",
+    "adapters/README.md": "4876a060698c5a6e3c89fb5dc16e385e15699a9a93998217bf04f8043912573b",
+    "adapters/PROTOCOL.md": "867f1c3dfd3aa1c7a121ccfc82077c0266045d14699a267b5fb63250717883eb",
+    "adapters/claude-code/CLAUDE.md": "9de6daaef0be59de0141dd85583f2184bfd74b1736986bc8c5fd0abe6bb9746d",
+    "adapters/codex/AGENTS.md": "9de6daaef0be59de0141dd85583f2184bfd74b1736986bc8c5fd0abe6bb9746d",
+    "tests/adapters/test_adapters.py": "7acd1966aefa7a673760463c2c66c5ef6b02248747a261dfcb489facb28415fd"
+  },
+  "after": {
+    "framework/adapters/runspec.py": "e7917c3f91430a0f245da33f58a1e5254a4c308434eb1f58c2e589ab406331c0",
+    "framework/adapters/results.py": "ee8f080d159e46f2bd6a0a2cbec125e0ad45d53d3ffa41403a36917927798cab",
+    "framework/adapters/__init__.py": "d8cd56ec814bea3f809bfbcb1001d10c44bd903f42b27cbc8da68fb9e4f15e2c",
+    "framework/adapters/entries.py": "3dd40fc0261568c798a0ce6f2fb65a03c84e5fdd99ea25e39e36a8409856e855",
+    "adapters/OFFICIAL_SUPPORT.md": "3272d444958fbc0aa3ae59fee42ccb66bf6a7732a13fb4cb95ae08d5b4661067",
+    "adapters/README.md": "4876a060698c5a6e3c89fb5dc16e385e15699a9a93998217bf04f8043912573b",
+    "adapters/PROTOCOL.md": "867f1c3dfd3aa1c7a121ccfc82077c0266045d14699a267b5fb63250717883eb",
+    "adapters/claude-code/CLAUDE.md": "9de6daaef0be59de0141dd85583f2184bfd74b1736986bc8c5fd0abe6bb9746d",
+    "adapters/codex/AGENTS.md": "9de6daaef0be59de0141dd85583f2184bfd74b1736986bc8c5fd0abe6bb9746d",
+    "tests/adapters/test_adapters.py": "7acd1966aefa7a673760463c2c66c5ef6b02248747a261dfcb489facb28415fd"
+  }
+}

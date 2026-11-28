@@ -1,0 +1,3 @@
+{"sandbox_canaries": {"outside_file_read": true, "outside_file_write": true, "checkout_write": true, "network_connect": true, "credentials_removed": true}}
+completed recovery evidence: <EVIDENCE_ROOT>/wp303-completed-recovery-author/tmp/completed-recovery-gnpk7huv
+{"tests": 1, "failures": 0, "errors": 0, "skips": 0}

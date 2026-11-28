@@ -1,0 +1,17 @@
+"""Host stdlib orchestration only; all candidate execution is outer A01 sandboxed."""
+import hashlib,json,subprocess,datetime
+from pathlib import Path
+base=Path(__file__).resolve().parent;repo=Path('<REPO>')
+files=sorted([*repo.joinpath('framework/recovery').glob('*'),*repo.joinpath('tests/recovery').glob('*.py')])
+sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
+original={str(p.relative_to(repo)):sha(p) for p in files if p.is_file()}
+env={'HOME':str(base/'home'),'TMPDIR':str(base/'tmp'),'PATH':'/usr/bin:/bin:/usr/sbin:/sbin','PYTHONPATH':str(repo)+':<DEPENDENCIES>','PYTHONNOUSERSITE':'1','PYTHONDONTWRITEBYTECODE':'1','V4_OUTER_SEATBELT':'1'}
+argv=['/usr/bin/sandbox-exec','-f',str(base/'profile.sb'),'/usr/bin/python3','-B','-S','-m','unittest','discover','-s','tests/recovery','-v']
+number=len(list(base.glob('result-*.json')))+1
+now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+start=now();run=subprocess.run(argv,cwd=repo,env=env,capture_output=True)
+(base/('stdout-%02d.log'%number)).write_bytes(run.stdout);(base/('stderr-%02d.log'%number)).write_bytes(run.stderr)
+after={str(p.relative_to(repo)):sha(p) for p in files if p.is_file()}
+result={'argv':argv,'environment':env,'started_at':start,'finished_at':now(),'exit_code':run.returncode,'before':original,'after':after,'source_unchanged':original==after,'profile_sha256':sha(base/'profile.sb'),'note':'Author tests with real temporary filesystem/two publishing processes; admission identities are fixtures, not actual stopped-worker observation.'}
+(base/('result-%02d.json'%number)).write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+print(json.dumps({'exit_code':run.returncode,'source_unchanged':original==after,'result':str(base/('result-%02d.json'%number))}));raise SystemExit(run.returncode)

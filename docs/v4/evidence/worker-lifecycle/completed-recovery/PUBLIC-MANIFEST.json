@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "file": "stderr.log",
+      "original_sha256": "73e6b4389f4bc35e67c05ede3e40188fdcb958ee2b9b11121bb42a061ddbb0c0",
+      "public_sha256": "73e6b4389f4bc35e67c05ede3e40188fdcb958ee2b9b11121bb42a061ddbb0c0"
+    },
+    {
+      "file": "runner.py",
+      "original_sha256": "b12561eb8f6cf6a0e751d45a3dfd128c649cca32a090e468f403c60037cd50e1",
+      "public_sha256": "b12561eb8f6cf6a0e751d45a3dfd128c649cca32a090e468f403c60037cd50e1"
+    },
+    {
+      "file": "result.json",
+      "original_sha256": "336716e15fbd8e5533e8e4712e12bfea0b7394f0cd3d370395b329ebb2934c06",
+      "public_sha256": "a3dd3d8ef151706a616ab91958a797beb87b211a9ca40bafcdf5f59522af9b76"
+    },
+    {
+      "file": "stdout.log",
+      "original_sha256": "f8de706c2a774d2d9bea1595f3484d2c273b5c81773811b3015b2571baa855fe",
+      "public_sha256": "e3d56e53b7458f2534f5f799faaccf0dfc456e97227e1c788fa2188681b2a262"
+    },
+    {
+      "file": "scenario-result.json",
+      "original_sha256": "cf44f95f8fc223b28daf61346657a5c1cd074f2e2481734fd46638b6435f0c2c",
+      "public_sha256": "cf44f95f8fc223b28daf61346657a5c1cd074f2e2481734fd46638b6435f0c2c"
+    }
+  ],
+  "note": "Synthetic fixture; path-redacted copies, embedded original hashes retained. This is one supplemental run, not a new full regression."
+}

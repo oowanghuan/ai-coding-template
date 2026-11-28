@@ -1,0 +1,28 @@
+test_committed_old_receipt_cannot_delete_later_repair (test_install.Installation) ... ok
+test_conflict_aborts_before_any_write (test_install.Installation) ... ok
+test_cooperative_single_instance (test_install.Installation) ... ok
+test_dry_run_and_repeat_are_non_destructive (test_install.Installation) ... ok
+test_empty_install_copies_exact_declared_assets (test_install.Installation) ... ok
+test_existing_git_dirty_and_untracked_preserved (test_install.Installation) ... ok
+test_incomplete_transaction_blocks_new_install (test_install.Installation) ... ok
+test_legacy_receipt_cannot_delete_new_repair_and_ambiguous_history_stops (test_install.Installation) ... ok
+test_legacy_shell_entry_point (test_install.Installation) ... ok
+test_manifest_coverage_and_preserved_legacy_variants (test_install.Installation) ... ok
+test_manifest_path_escape_and_duplicate_rejected (test_install.Installation) ... ok
+test_missing_dependency_rejected (test_install.Installation) ... ok
+test_missing_or_changed_source_fails_list_and_install (test_install.Installation) ... ok
+test_non_directory_ancestor_refused (test_install.Installation) ... ok
+test_old_rollback_cannot_delete_a_later_install (test_install.Installation) ... ok
+test_rollback_preserves_preexisting_files (test_install.Installation) ... ok
+test_rollback_refuses_edited_file_without_partial_deletion (test_install.Installation) ... ok
+test_selection_includes_declared_dependencies (test_install.Installation) ... ok
+test_single_legacy_receipt_can_still_rollback (test_install.Installation) ... ok
+test_symlink_destination_refused (test_install.Installation) ... ok
+test_symlink_source_refused_even_when_content_matches (test_install.Installation) ... ok
+test_unknown_interrupted_write_preserved (test_install.Installation) ... ok
+test_unknown_later_write_blocks_old_receipt (test_install.Installation) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 21.351s
+
+OK

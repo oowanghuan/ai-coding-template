@@ -1,0 +1,26 @@
+test_active_guard_also_rechecks_worker_heartbeat (test_lifecycle.LifecycleTests) ... ok
+test_ambiguous_probe_result_and_changed_replay_payload_rejected (test_lifecycle.LifecycleTests) ... ok
+test_budget_scope_unknown_and_untrusted_project_source_cannot_stop_project (test_lifecycle.LifecycleTests) ... ok
+test_dispatch_does_not_consume_and_hide_due_probe (test_lifecycle.LifecycleTests) ... ok
+test_enable_preserves_offline_unknown_and_requires_explicit_verified_credentials (test_lifecycle.LifecycleTests) ... ok
+test_failed_authentication_cannot_be_cleared_by_heartbeat (test_lifecycle.LifecycleTests) ... ok
+test_heartbeat_rechecked_on_direct_claim_start_submit (test_lifecycle.LifecycleTests) ... ok
+test_invocation_budget_exhaustion_and_context_limit_are_not_account_quota (test_lifecycle.LifecycleTests) ... ok
+test_new_quota_observation_and_stale_probe_completion_replays_are_idempotent (test_lifecycle.LifecycleTests) ... ok
+test_newer_shared_quota_limit_cannot_be_cleared_by_older_probe_success (test_lifecycle.LifecycleTests) ... ok
+test_old_failed_probe_preserves_new_retry_and_bounded_attempt_budget (test_lifecycle.LifecycleTests) ... ok
+test_only_owner_controller_can_mutate_runtime (test_lifecycle.LifecycleTests) ... ok
+test_owner_hold_and_budget_precede_recovered_quota (test_lifecycle.LifecycleTests) ... ok
+test_owner_pause_and_project_budget_block_probe_intents (test_lifecycle.LifecycleTests) ... ok
+test_probe_backoff_durable_unknown_and_attempt_limit (test_lifecycle.LifecycleTests) ... ok
+test_repeated_limit_does_not_forget_an_unknown_probe_or_reset_budget (test_lifecycle.LifecycleTests) ... ok
+test_shared_limit_fences_both_and_third_adapter_can_dispatch_without_pmo (test_lifecycle.LifecycleTests) ... ok
+test_tick_commit_response_loss_replays_same_probe_once (test_lifecycle.LifecycleTests) ... ok
+test_tick_expires_heartbeat_and_refresh_does_not_restore_old_rights (test_lifecycle.LifecycleTests) ... ok
+test_unknown_workspace_blocks_reassignment_even_after_quota_recovers (test_lifecycle.LifecycleTests) ... ok
+test_unverified_credentials_do_not_get_live_authority (test_lifecycle.LifecycleTests) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 57.222s
+
+OK

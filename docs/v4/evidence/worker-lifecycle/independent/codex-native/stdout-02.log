@@ -1,0 +1,1 @@
+{"public_read": true, "own_write": true, "trusted_read": {"denied": true, "errno": 1}, "trusted_write": {"denied": true, "errno": 1}, "network": {"denied": true, "errno": 1}}

@@ -1,0 +1,6 @@
+test_completed_delivery_recovery_replay_twice_and_new_id_rejected (test_completed_recovery.CompletedRecoveryTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 24.949s
+
+OK
