@@ -7,7 +7,8 @@ network or process is started by registration or planning.
 
 `ProcessExecutor` is a local process transport for a trusted supervisor. Its
 constructor fixes argv, cwd, explicit environment, content-pinned executable and
-configuration files, a protected journal root, and a live authorization checker.
+configuration files, a protected journal root, a live authorization checker, and
+a mandatory `LaunchReservations(shared_root)` bound by the trusted controller.
 Agent output cannot choose those values. It does not turn the proposal's
 `execution_authorized=false` into permission: the controller must check current
 Assignment, epoch/token, lease, Worker/Host, scope and budget before launch.
@@ -27,11 +28,32 @@ same selection. Operations are:
 - `registry.result(adapter_id, invocation_id)`: bounded stdout/stderr, hashes,
   exit code, exact binding and input identity. Changed output is rejected.
 
-The protected journal records intent before spawn. Same operation and intent
-returns the previous invocation; different intent is rejected. A crash/unknown
-launch is never silently retried. A different operation ID cannot repeat an
-already-bound authority/workspace, even after exit; higher fencing tokens do not
-authorize reuse of that workspace. The direct-local-only recovery namespace is
+The **shared launch reservation root** spans all adapters and controller
+instances of the resource pool, including replacement controllers. It must be
+persistent, protected from candidates, and fixed by application configuration;
+never allocate one per adapter, retry, or session. The registry rejects mixed
+launch domains. Separate registries/controllers must use that same root too;
+independently configured roots cannot fence each other. Real deployment must
+verify this wiring against the project's authoritative Store before admission.
+
+Under a common OS file lock, the reservation records Assignment, workspace ID,
+canonical working directory, invocation/binding and selection **before** the
+per-binding journal and spawn. Any existing Assignment/workspace reservation or
+equal/nested working directory rejects a new launch, irrespective of adapter,
+operation ID or token. Reservations never expire or release automatically here.
+A crash between reservation and local journal leaves an uncertain reservation
+that blocks retry; local receipt loss cannot grant another spawn. Another
+workspace with independent authorization can proceed. The reservation journal
+is a launch fence, not a second task authority and not authorization by itself.
+
+The per-binding journal records execution observations and bounded output.
+Same operation and intent returns the previous invocation; different intent is
+rejected. Invocation IDs include the fixed binding, so independent bindings may
+share an output directory and operation name without reading one another's
+status as their own. A crash/unknown launch is never silently retried. A
+different operation ID cannot repeat an already-bound authority/workspace,
+even after exit; higher fencing tokens do not authorize reuse of that workspace.
+The direct-local-only recovery namespace is
 rejected in cwd, journal paths and fixed argv, including case variants.
 Thread supervision drains both pipes with a combined size cap and a deadline;
 no parent environment is inherited implicitly.
@@ -46,6 +68,13 @@ work must not modify the journal, executable or configuration. System executable
 hardlinks are allowed with exact content pins; symlinks are rejected. Journal and
 output files retain single-link checks. Pin checks cannot substitute for immutable
 deployment when an attacker can concurrently replace an executable.
+
+This revision changes binding/ID derivation. It is for fresh, never-launched
+workspaces; it does **not** migrate or rearm historical invocation records.
+Before any upgrade with existing work, reconcile/import all outstanding intents
+into the common fence under the existing authority, or keep those workspaces
+blocked. Do not create an empty reservation root to bypass historical uncertainty.
+No migration or production deployment is performed by this component.
 
 `tests/adapters/test_invocation.py` runs real fixed Python processes through this
 interface. It does not start Claude, Codex, or another model. The factory wiring

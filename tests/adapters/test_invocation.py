@@ -11,7 +11,7 @@ import unittest
 from unittest.mock import patch
 
 from framework.adapters.registry import AdapterRegistry, descriptor, synthetic_plan, synthetic_classify
-from framework.adapters.invocation import ProcessExecutor
+from framework.adapters.invocation import ProcessExecutor, LaunchReservations
 from framework.local.launch_driver import atomic
 
 
@@ -20,6 +20,7 @@ class InvocationTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name).resolve(); self.work = self.root / 'work'; self.work.mkdir()
         self.journal = self.root / 'journal'; self.journal.mkdir(); self.executors = []
+        self.reservations = self.root / 'launches'; self.reservations.mkdir()
         self.addCleanup(self.stop_owned)
         self.authority = dict(assignment_id='assign-a', workspace_id='workspace-a', epoch=1, token=1)
         self.request = dict(work_package_id='WP-A', assignment_id='assign-a', baseline_sha='a'*40,
@@ -40,6 +41,7 @@ class InvocationTests(unittest.TestCase):
         executor = ProcessExecutor(selection=selection, argv=['/usr/bin/python3', '-I', '-B', '-S', '-c', program],
             cwd=str(self.work), environment=dict(PATH='/usr/bin:/bin', HOME=str(self.work), LC_ALL='C'),
             journal_root=str(journal or self.journal),
+            launch_reservations=LaunchReservations(self.reservations),
             pinned_files={'/usr/bin/python3':hashlib.sha256(Path('/usr/bin/python3').read_bytes()).hexdigest()},
             authorize=authorize or (lambda a,p:a==self.authority))
         self.executors.append(executor); registry = AdapterRegistry()
@@ -70,6 +72,9 @@ class InvocationTests(unittest.TestCase):
 
     def test_n_adapters_execute_through_same_interface_without_provider_branches(self):
         for name in ('first', 'second', 'third'):
+            self.work = self.root / ('work-' + name); self.work.mkdir()
+            self.authority = dict(assignment_id='assign-' + name, workspace_id='workspace-' + name, epoch=1, token=1)
+            self.request['assignment_id'] = self.authority['assignment_id']
             journal = self.root / name; journal.mkdir()
             r, e, d = self.configured(name=name, journal=journal)
             v = self.launch(r, name=name); self.assertEqual(self.finished(r, v['invocation_id'], name)['exit_code'], 0)
@@ -109,6 +114,9 @@ class InvocationTests(unittest.TestCase):
     def test_timeout_and_output_bound_are_distinct_and_never_accepted(self):
         for program,changes,expected in [('import time;time.sleep(5)',{'timeout_seconds':1},'timed_out'),
                                          ("print('x'*10000)",{},'output_limited')]:
+            self.work = self.root / ('work-' + expected); self.work.mkdir()
+            self.authority = dict(assignment_id='assign-' + expected, workspace_id='workspace-' + expected, epoch=1, token=1)
+            self.request['assignment_id'] = self.authority['assignment_id']
             journal=self.root/expected;journal.mkdir();r,e,d=self.configured(program,journal=journal)
             v=self.launch(r,**changes);done=self.finished(r,v['invocation_id']);self.assertEqual(done['state'],expected)
             out=r.result('tool-x',v['invocation_id']);self.assertLessEqual(len(out['stdout'])+len(out['stderr']),1024)
@@ -189,6 +197,109 @@ class InvocationTests(unittest.TestCase):
         self.work=self.root/'work'
         with self.assertRaisesRegex(ValueError,'direct-local-only'):
             self.configured("print('/tmp/v4-direct-local-output')")
+
+    def test_cross_adapter_lost_receipt_restarted_controller_and_independent_work(self):
+        program = "import os,time;f=os.open('starts',os.O_CREAT|os.O_APPEND|os.O_WRONLY,0o600);os.write(f,b'x');os.close(f);time.sleep(1)"
+        a, executor, _ = self.configured(program)
+        first = self.launch(a)
+        deadline = time.monotonic() + 2
+        while not (self.work/'starts').exists() and time.monotonic() < deadline: time.sleep(0.01)
+        self.assertEqual((self.work/'starts').read_bytes(), b'x')
+        # Discard the caller's receipt. A replacement controller owns no handle.
+        restored, _, _ = self.configured(program)
+        unknown = restored.status('tool-x', first['invocation_id'])
+        self.assertEqual(unknown['state'], 'outcome_unknown')
+        journal_b = self.root/'journal-b'; journal_b.mkdir()
+        b, _, _ = self.configured(program, name='tool-b', journal=journal_b)
+        rejected = False
+        try:
+            second = self.launch(b, name='tool-b', operation='changed-key')
+            self.finished(b, second['invocation_id'], 'tool-b')
+        except ValueError: rejected = True
+        self.finished(a, first['invocation_id'])
+        original_count = len((self.work/'starts').read_bytes())
+        # Another workspace/authority must not be blocked by A's observation.
+        self.work = self.root/'independent'; self.work.mkdir()
+        self.authority = dict(assignment_id='assign-b', workspace_id='workspace-b', epoch=1, token=1)
+        self.request.update(assignment_id='assign-b', work_package_id='WP-B')
+        journal_c = self.root/'journal-c'; journal_c.mkdir()
+        c, _, _ = self.configured(program, name='tool-b', journal=journal_c)
+        third = self.launch(c, name='tool-b', operation='independent-key')
+        independent = self.finished(c, third['invocation_id'], 'tool-b')
+        independent_count = len((self.work/'starts').read_bytes())
+        print(json.dumps(dict(cross_adapter_receipt_loss=dict(original_process_starts=original_count,
+            replacement_rejected=rejected, restored_state=unknown['state'],
+            independent_process_starts=independent_count, independent_state=independent['state']))), flush=True)
+        reservations = json.loads((self.reservations/'launches.json').read_text())
+        print(json.dumps({'cross_adapter_reservations': [dict(authority=row['authority'],
+            selection=row['selection'], state=row['state']) for row in reservations['intents']]}), flush=True)
+        self.assertTrue(rejected)
+        self.assertEqual(original_count, 1)
+        self.assertEqual(independent_count, 1)
+        self.assertEqual(independent['exit_code'], 0)
+
+    def test_cross_adapter_concurrent_starts_share_persistent_lock(self):
+        program = "import os;f=os.open('starts',os.O_CREAT|os.O_APPEND|os.O_WRONLY,0o600);os.write(f,b'x');os.close(f)"
+        a, _, _ = self.configured(program)
+        other = self.root/'other-journal'; other.mkdir()
+        b, _, _ = self.configured(program, name='tool-b', journal=other)
+        barrier = threading.Barrier(2); results = []; rejected = []
+        def launch(registry, name):
+            try:
+                barrier.wait(timeout=3)
+                results.append((registry, name, self.launch(registry, name=name, operation=name)))
+            except ValueError as error: rejected.append(str(error))
+        threads = [threading.Thread(target=launch, args=(r,n)) for r,n in ((a,'tool-x'),(b,'tool-b'))]
+        for thread in threads: thread.start()
+        for thread in threads: thread.join(timeout=5); self.assertFalse(thread.is_alive())
+        self.assertEqual(len(results),1); self.assertEqual(len(rejected),1)
+        r,n,v = results[0]; self.finished(r,v['invocation_id'],n)
+        self.assertEqual((self.work/'starts').read_bytes(),b'x')
+
+    def test_reservation_commit_then_local_journal_failure_never_rearms(self):
+        r,e,_ = self.configured()
+        real_atomic = atomic
+        def fail_local(path, value):
+            if path.parent == self.journal: raise OSError('injected lost local write')
+            return real_atomic(path,value)
+        with patch('framework.adapters.invocation.atomic', side_effect=fail_local):
+            with patch('subprocess.Popen',side_effect=AssertionError('must not spawn')):
+                with self.assertRaises(OSError): self.launch(r)
+        self.assertEqual(list(self.journal.glob('inv-*.json')), [])
+        before = (self.reservations/'launches.json').read_bytes()
+        other = self.root/'replacement'; other.mkdir()
+        self.authority['token'] = 2
+        b,_,_ = self.configured(name='tool-b',journal=other)
+        with patch('subprocess.Popen',side_effect=AssertionError('must not retry uncertain reservation')):
+            with self.assertRaisesRegex(ValueError,'already bound'):
+                self.launch(b,name='tool-b',operation='replacement')
+        self.assertEqual(before,(self.reservations/'launches.json').read_bytes())
+
+    def test_same_path_with_changed_workspace_identity_cannot_bypass_fence(self):
+        r,_,_ = self.configured(); v = self.launch(r); self.finished(r,v['invocation_id'])
+        self.authority.update(assignment_id='assign-other',workspace_id='workspace-other',token=2)
+        self.request['assignment_id'] = 'assign-other'
+        other = self.root/'other'; other.mkdir()
+        b,_,_ = self.configured(name='tool-b',journal=other)
+        with self.assertRaisesRegex(ValueError,'already bound'): self.launch(b,name='tool-b',operation='new-ids')
+
+    def test_shared_output_journal_allows_independent_binding_and_same_operation(self):
+        r,_,_ = self.configured(); v = self.launch(r); self.finished(r,v['invocation_id'])
+        self.work = self.root/'work-b'; self.work.mkdir()
+        self.authority.update(assignment_id='assign-b',workspace_id='workspace-b')
+        self.request.update(assignment_id='assign-b',work_package_id='WP-B')
+        b,e,d = self.configured(name='tool-b')
+        r.register(d,planner=synthetic_plan,classifier=synthetic_classify,executor=e)
+        other = self.launch(r,name='tool-b')
+        self.assertNotEqual(v['invocation_id'],other['invocation_id'])
+        self.assertEqual(self.finished(r,other['invocation_id'],'tool-b')['exit_code'],0)
+
+    def test_registry_refuses_mixed_launch_domains(self):
+        r,_,_ = self.configured()
+        self.reservations = self.root/'wrong-domain'; self.reservations.mkdir()
+        b,e,d = self.configured(name='tool-b')
+        with self.assertRaisesRegex(ValueError,'share a launch domain'):
+            r.register(d,planner=synthetic_plan,classifier=synthetic_classify,executor=e)
 
 
 if __name__ == '__main__': unittest.main()

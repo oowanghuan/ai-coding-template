@@ -51,6 +51,11 @@ class AdapterRegistry:
                 raise ValueError('executor selection mismatch')
             if not all(callable(getattr(executor, k, None)) for k in (*execution, 'result')):
                 raise ValueError('complete invocation executor required')
+            domain = getattr(executor, 'launch_domain', None)
+            if not isinstance(domain, str) or not domain:
+                raise ValueError('shared launch domain required')
+            if any(old is not None and old.launch_domain != domain for _, _, _, old in self._adapters.values()):
+                raise ValueError('executors in one registry must share a launch domain')
         self._adapters[identity] = (descriptor, planner, classifier, executor)
 
     def _entry(self, identity):

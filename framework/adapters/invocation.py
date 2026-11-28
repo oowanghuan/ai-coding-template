@@ -22,6 +22,42 @@ from .runspec import ID, bounded_run_request
 TERMINAL = {'exited', 'stopped', 'timed_out', 'output_limited', 'outcome_unknown'}
 
 
+class LaunchReservations:
+    """Shared protected launch fence, not a task/permission authority.
+
+    Trusted application wiring MUST bind every executor/controller for one pool
+    to the same persistent root. Never create a root per provider or retry.
+    Reservations are irreversible here: reconciliation cannot silently rearm a
+    workspace, even after an observed process exit. A lost write receipt fails
+    closed. The authoritative Store still grants and fences Assignments.
+    """
+    def __init__(self, root):
+        self.root = no_links(root, directory=True)
+
+    def reserve(self, record, *, cwd, journal_root):
+        from .results import strict_json
+        lock = self.root / 'launch.lock'
+        if lock.exists() or lock.is_symlink(): no_links(lock)
+        with lock.open('a+') as stream:
+            fcntl.flock(stream, fcntl.LOCK_EX)
+            path = self.root / 'launches.json'
+            value = strict_json(read_file(path)) if path.exists() or path.is_symlink() else {
+                'format': 'launch-reservations/1', 'intents': []}
+            if set(value) != {'format', 'intents'} or value['format'] != 'launch-reservations/1' or type(value['intents']) is not list:
+                raise ValueError('invalid launch reservation journal')
+            for prior in value['intents']:
+                previous = Path(prior['cwd'])
+                if (prior['authority']['assignment_id'] == record['authority']['assignment_id'] or
+                        prior['authority']['workspace_id'] == record['authority']['workspace_id'] or
+                        previous == cwd or previous in cwd.parents or cwd in previous.parents):
+                    raise ValueError('execution authority/workspace already bound across adapters; reconcile original invocation')
+            value['intents'].append(dict(authority=copy.deepcopy(record['authority']), cwd=str(cwd),
+                journal_root=str(journal_root), invocation_id=record['invocation_id'],
+                binding_sha256=record['binding_sha256'], intent_sha256=record['intent_sha256'],
+                selection=copy.deepcopy(record['selection']), state='launch_reserved'))
+            atomic(path, value)  # No replay returns a fresh permission to spawn.
+
+
 class ProcessExecutor:
     """One trusted binding; no caller-supplied executable, cwd or environment.
 
@@ -30,7 +66,9 @@ class ProcessExecutor:
     the owned process: callers still need existing writer-stop/handoff proofs.
     """
     def __init__(self, *, selection, argv, cwd, environment, journal_root,
-                 pinned_files, authorize):
+                 pinned_files, authorize, launch_reservations):
+        if not isinstance(launch_reservations, LaunchReservations):
+            raise ValueError('shared protected launch reservations required')
         if not callable(authorize): raise ValueError('live authorization checker required')
         if not isinstance(argv, (list, tuple)) or not argv or any(type(x) is not str or '\0' in x for x in argv):
             raise ValueError('fixed argv required')
@@ -38,6 +76,11 @@ class ProcessExecutor:
             raise ValueError('explicit environment required; no implicit inheritance')
         self.root = no_links(journal_root, directory=True)
         self.cwd = no_links(cwd, directory=True)
+        self.reservations = launch_reservations
+        self.launch_domain = str(launch_reservations.root)
+        if (self.reservations.root == self.cwd or self.reservations.root in self.cwd.parents or
+                self.cwd in self.reservations.root.parents):
+            raise ValueError('protected launch reservations and work directory must be separate')
         if self.root == self.cwd or self.root in self.cwd.parents or self.cwd in self.root.parents:
             raise ValueError('protected journal and work directory must be separate')
         if not isinstance(pinned_files, dict) or argv[0] not in pinned_files:
@@ -48,12 +91,13 @@ class ProcessExecutor:
         self._check_namespace()
         self._verify_pins()
         self.binding = canonical_sha(dict(argv=self.argv, cwd=str(self.cwd),
-            environment=self.environment, pins=self.pins, selection=self.selection))
+            environment=self.environment, pins=self.pins, selection=self.selection,
+            launch_domain=self.launch_domain))
 
     def _check_namespace(self):
         # Preserve the previously reviewed never-launched recovery boundary.
         if (any(part.casefold().startswith(DIRECT_WORKSPACE_PREFIX)
-                for path in (self.root, self.cwd) for part in path.parts) or
+                for path in (self.root, self.cwd, self.reservations.root) for part in path.parts) or
                 any(DIRECT_WORKSPACE_PREFIX in arg.casefold() for arg in self.argv)):
             raise ValueError('external invocation cannot authorize direct-local-only namespace')
 
@@ -116,7 +160,7 @@ class ProcessExecutor:
         if (proposal.get('execution_authorized') is not False or proposal.get('selection') != self.selection or
                 proposal['assignment_id'] != authority['assignment_id']):
             raise ValueError('proposal/selection/authority mismatch')
-        identity = 'inv-' + hashlib.sha256(operation_id.encode()).hexdigest()
+        identity = 'inv-' + canonical_sha(dict(operation_id=operation_id, binding=self.binding))
         intent = canonical_sha(dict(binding=self.binding, request=fields, authority=authority))
         with self._lock():
             path = self._path(identity)
@@ -125,7 +169,10 @@ class ProcessExecutor:
                 if record['intent_sha256'] != intent: raise ValueError('operation reused for different intent')
                 return self._view(record)
             for prior_path in self.root.glob('inv-*.json'):
-                prior = self._read(prior_path.stem)
+                # A shared output directory may contain other bindings. Those
+                # records are collision evidence, not this executor's status.
+                from .results import strict_json
+                prior = strict_json(read_file(prior_path))
                 if (prior['authority'] == authority or
                         prior['authority']['workspace_id'] == authority['workspace_id']):
                     raise ValueError('execution authority/workspace already bound; reconcile original invocation')
@@ -141,6 +188,7 @@ class ProcessExecutor:
                 state='launch_intent', authority=copy.deepcopy(authority), exit_code=None,
                 engineering_accepted=False, writer_stop_confirmed=False,
                 evidence_level='untrusted_stdout', stdout_sha256=None, stderr_sha256=None)
+            self.reservations.reserve(record, cwd=self.cwd, journal_root=self.root)
             atomic(path, record)  # Unknown response must never cause another launch.
             stdin = self.root / (identity + '.stdin')
             with stdin.open('xb') as stream: stream.write(fields['stdin'].encode())
