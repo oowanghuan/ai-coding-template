@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<independent-negative-fixture>/T/quality/collector.py",
+    "--plan",
+    "<independent-negative-fixture>/T/quality/plan.json",
+    "--plan-sha256",
+    "f16815c68265e96a4067cf38d18d653a8db2a0bd92a16fd356108a5c8b2c20e3"
+  ],
+  "exit_code": null,
+  "outcome": "unknown",
+  "pid": 85340,
+  "started_at": "2026-11-28T09:28:42.094873+00:00"
+}

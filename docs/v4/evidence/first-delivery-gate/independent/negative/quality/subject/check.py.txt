@@ -1,0 +1,19 @@
+import json,os,socket,sys
+from pathlib import Path
+subject=Path(__file__).parent
+checks={}
+def denied(name,action):
+    try:action()
+    except PermissionError:checks[name]=True
+    else:checks[name]=False
+denied('case_root_unlink',lambda:os.rmdir(Path.cwd()))
+denied('trusted_plan_write',lambda:(subject.parent/'plan.json').write_text('forged'))
+denied('subject_hardlink_alias',lambda:os.link(subject/'artifact.txt',Path.cwd()/'alias'))
+s=socket.socket()
+try:denied('network_connect',lambda:s.connect(('127.0.0.1',9)))
+finally:s.close()
+checks['credential_environment_absent']=not any(k in os.environ for k in
+ ['GH_TOKEN','GITHUB_TOKEN','OPENAI_API_KEY','ANTHROPIC_API_KEY','SSH_AUTH_SOCK','CODEX_HOME'])
+print(json.dumps({'quality_canaries':checks}),file=sys.stderr,flush=True)
+if not all(checks.values()):raise SystemExit(3)
+sys.stdout.buffer.write((subject/'artifact.txt').read_bytes())

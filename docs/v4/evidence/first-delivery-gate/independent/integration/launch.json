@@ -1,0 +1,10 @@
+{
+  "coordinator_sha256": "c78309da98297727306b48ce256e0113946424d70d2900778f4db3960775939d",
+  "engineering_accepted": false,
+  "evidence_level": "synthetic_fixture",
+  "format": "independent-first-delivery-integration/1",
+  "helper_sha256": "e1dcf96a63994869c770ab6bb954294218d529dced2e33b095c6c114bebd63c1",
+  "provider_live": false,
+  "scenarios": {},
+  "source_commit": "7ca3622908937339e6e064fd8e6e49fff8c914a5"
+}

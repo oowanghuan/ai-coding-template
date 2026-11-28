@@ -1,0 +1,48 @@
+{
+  "changed": {
+    "artifact_sha256": "8ddf5f56e667a4779d82f287b042d928456b3b55a6f2106c019f7cfb4dd76ee5",
+    "assignment_id": "assignment-8200ce72af9642f494088d1a1cf40ff3",
+    "authority_sha256": "ba0213fe9f0ca849b30174986d0b8163e51f19cda5fd3f59e08d369dc6a997b9",
+    "baseline_sha": "7b43ca2fc695c2158532650f30f6d1f094ed3bbd",
+    "epoch": 1,
+    "format": "worker-delivery-binding/1",
+    "path": "src/b/output.txt",
+    "provenance": "synthetic_fixture",
+    "scope": "document-artifact",
+    "submit_operation_id": "demo-submit-16",
+    "submit_revision": 17,
+    "token": 1,
+    "worker_id": "worker-b",
+    "workspace_id": "workspace-5b235b5d07c14eb1b49164c36d49ab8c",
+    "wp_id": "WP-B",
+    "wp_revision": 4
+  },
+  "changed_artifact_sha256": "8ddf5f56e667a4779d82f287b042d928456b3b55a6f2106c019f7cfb4dd76ee5",
+  "changed_authority_sha256": "ba0213fe9f0ca849b30174986d0b8163e51f19cda5fd3f59e08d369dc6a997b9",
+  "fields": [
+    "worktree src/b/output.txt bytes",
+    "deliveries.WP-B.sha256/content_base64",
+    "committed WP-B submit result.sha256"
+  ],
+  "original": {
+    "artifact_sha256": "28f17b97909760e33a1eed3acdfd6348a9a70c91fb81772a2c9ac4f2027fe07b",
+    "assignment_id": "assignment-8200ce72af9642f494088d1a1cf40ff3",
+    "authority_sha256": "508db1c9a4627dad73f6c7d82f54abb53e9af8de9ef91d88582d3caab9141123",
+    "baseline_sha": "7b43ca2fc695c2158532650f30f6d1f094ed3bbd",
+    "epoch": 1,
+    "format": "worker-delivery-binding/1",
+    "path": "src/b/output.txt",
+    "provenance": "synthetic_fixture",
+    "scope": "document-artifact",
+    "submit_operation_id": "demo-submit-16",
+    "submit_revision": 17,
+    "token": 1,
+    "worker_id": "worker-b",
+    "workspace_id": "workspace-5b235b5d07c14eb1b49164c36d49ab8c",
+    "wp_id": "WP-B",
+    "wp_revision": 4
+  },
+  "original_artifact_sha256": "28f17b97909760e33a1eed3acdfd6348a9a70c91fb81772a2c9ac4f2027fe07b",
+  "original_authority_sha256": "508db1c9a4627dad73f6c7d82f54abb53e9af8de9ef91d88582d3caab9141123",
+  "scope": "controlled synthetic fixture mutation after owned normal demo exit; not observed Worker error"
+}

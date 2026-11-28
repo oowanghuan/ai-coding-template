@@ -1,0 +1,336 @@
+{
+  "coordinator_sha256": "c78309da98297727306b48ce256e0113946424d70d2900778f4db3960775939d",
+  "engineering_accepted": false,
+  "evidence_level": "synthetic_fixture",
+  "format": "independent-first-delivery-integration/1",
+  "helper_sha256": "e1dcf96a63994869c770ab6bb954294218d529dced2e33b095c6c114bebd63c1",
+  "passed": true,
+  "provider_live": false,
+  "scenarios": {
+    "controlled_negative": {
+      "fixture": "<independent-negative-fixture>",
+      "normal_process": {
+        "argv": [
+          "/usr/bin/python3",
+          "-I",
+          "-B",
+          "-S",
+          "<independent-coordinator>/approved-host-helper.py",
+          "--source",
+          "<workspace>",
+          "--dependencies",
+          "<python-site>"
+        ],
+        "exit_code": 0,
+        "finished_at": "2026-11-28T09:28:41.942248+00:00",
+        "outcome": "observed_exit",
+        "pid": 84219,
+        "started_at": "2026-11-28T09:28:13.353501+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "ff4b7230ee40f88f01a7cc0d886efaf54dda22cbf2e28d53b483d847c6785c56"
+      },
+      "quality": {
+        "artifact_kind": "document",
+        "authority_sha256": "ba0213fe9f0ca849b30174986d0b8163e51f19cda5fd3f59e08d369dc6a997b9",
+        "authority_unchanged": true,
+        "collection": {
+          "argv": [
+            "/usr/bin/python3",
+            "-I",
+            "-B",
+            "-S",
+            "<independent-negative-fixture>/T/quality/collector.py",
+            "--plan",
+            "<independent-negative-fixture>/T/quality/plan.json",
+            "--plan-sha256",
+            "f16815c68265e96a4067cf38d18d653a8db2a0bd92a16fd356108a5c8b2c20e3"
+          ],
+          "exit_code": 0,
+          "finished_at": "2026-11-28T09:28:42.399492+00:00",
+          "outcome": "observed_exit",
+          "pid": 85340,
+          "started_at": "2026-11-28T09:28:42.094873+00:00",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "606e9d17d583d9b06b3a6eb3797a5b106f2fc454e5617d208a1d20461dca7f6b"
+        },
+        "delivery_binding": {
+          "artifact_sha256": "8ddf5f56e667a4779d82f287b042d928456b3b55a6f2106c019f7cfb4dd76ee5",
+          "assignment_id": "assignment-8200ce72af9642f494088d1a1cf40ff3",
+          "authority_sha256": "ba0213fe9f0ca849b30174986d0b8163e51f19cda5fd3f59e08d369dc6a997b9",
+          "baseline_sha": "7b43ca2fc695c2158532650f30f6d1f094ed3bbd",
+          "epoch": 1,
+          "format": "worker-delivery-binding/1",
+          "path": "src/b/output.txt",
+          "provenance": "synthetic_fixture",
+          "scope": "document-artifact",
+          "submit_operation_id": "demo-submit-16",
+          "submit_revision": 17,
+          "token": 1,
+          "worker_id": "worker-b",
+          "workspace_id": "workspace-5b235b5d07c14eb1b49164c36d49ab8c",
+          "wp_id": "WP-B",
+          "wp_revision": 4
+        },
+        "engineering_accepted": false,
+        "evidence_level": "synthetic_fixture",
+        "format": "first-delivery-quality/1",
+        "gate": {
+          "evidence_id": "first-delivery",
+          "evidence_sha256": "e5ec64a5c63072116fcc703b9acaf6e0eb4a6b02fc7ce647244130e2a579660f",
+          "format": "quality-gate/1",
+          "gate_id": "3c0338435058475cb3b5eb72ec149c70a997ff5fe7138f63e9924cbaf755b6c0",
+          "plan_sha256": "f16815c68265e96a4067cf38d18d653a8db2a0bd92a16fd356108a5c8b2c20e3",
+          "reasons": [
+            "case:document-bytes:observed-check-failed"
+          ],
+          "status": "failed",
+          "subject": {
+            "commit": "1af129a64d298552e2875890aa5383cc2ed64531",
+            "manifest_sha256": "95b4c9367fa62ce602cf5809b40d9dfe4a8ceefce167fd450ad475d34725ef04",
+            "tree": "2f382030de81bb561d0e95e8c1ffd88cf9435f77"
+          },
+          "trust_sha256": "bd1e4de7049c4237ddd114e170f255a058626203b9947b18a1039adb011ee1a7",
+          "wp_id": "WP-B",
+          "wp_revision": 4
+        },
+        "gate_process": {
+          "argv": [
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "<independent-negative-fixture>/T/gate-sandbox.sb",
+            "/usr/bin/python3",
+            "-I",
+            "-B",
+            "-S",
+            "<independent-negative-fixture>/T/gate-wrapper.py",
+            "<independent-negative-fixture>/T/gate-config.json"
+          ],
+          "exit_code": 1,
+          "finished_at": "2026-11-28T09:28:42.880849+00:00",
+          "outcome": "observed_exit",
+          "pid": 85345,
+          "started_at": "2026-11-28T09:28:42.401152+00:00",
+          "stderr_sha256": "7b913b1b901ff674eac99fe88938302e8d3dc7b1bd6d27094e8c3a4ba3e9cc7f",
+          "stdout_sha256": "e8aca91ac281a8288a64a1f1879c64ca070f7a564e90e4a8fb6723151a888c90"
+        },
+        "inputs_unchanged": true,
+        "passed": false,
+        "pinned_inputs": {
+          "collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+          "plan.json": "f16815c68265e96a4067cf38d18d653a8db2a0bd92a16fd356108a5c8b2c20e3",
+          "subject/artifact.txt": "8ddf5f56e667a4779d82f287b042d928456b3b55a6f2106c019f7cfb4dd76ee5",
+          "subject/check.py": "31fe5496ec802a3028197f41574455172b354f142f85da099bba0d273d0cb4c0",
+          "subject/delivery-binding.json": "34319dcebca07eba5a7099b48a396c8d85564ede5f0699b6cc9518753913b615",
+          "trust.json": "bd1e4de7049c4237ddd114e170f255a058626203b9947b18a1039adb011ee1a7"
+        },
+        "plan_sha256": "f16815c68265e96a4067cf38d18d653a8db2a0bd92a16fd356108a5c8b2c20e3",
+        "provider_live": false,
+        "run_id": "first-delivery",
+        "status": "failed",
+        "subject": {
+          "commit": "1af129a64d298552e2875890aa5383cc2ed64531",
+          "manifest_sha256": "95b4c9367fa62ce602cf5809b40d9dfe4a8ceefce167fd450ad475d34725ef04",
+          "tree": "2f382030de81bb561d0e95e8c1ffd88cf9435f77"
+        },
+        "subject_scope": "verification capsule, not Worker code commit",
+        "trust_sha256": "bd1e4de7049c4237ddd114e170f255a058626203b9947b18a1039adb011ee1a7"
+      }
+    },
+    "fake_receipt": {
+      "gate": {
+        "evidence_id": null,
+        "evidence_sha256": null,
+        "format": "quality-gate/1",
+        "gate_id": "73c96572fb958c3ec12d6ce022411cf0d157162e6ea5b06378d91c789d761af8",
+        "plan_sha256": null,
+        "reasons": [
+          "trust:unregistered-run"
+        ],
+        "status": "unverifiable",
+        "subject": null,
+        "trust_sha256": "3ee98d983b63827455c33325f4ec132e5c3925405487e5d7f4c9af0e2b43e813",
+        "wp_id": null,
+        "wp_revision": null
+      },
+      "process": {
+        "argv": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "<independent-positive-fixture>/T/fake-gate.sb",
+          "/usr/bin/python3",
+          "-I",
+          "-B",
+          "-S",
+          "<independent-positive-fixture>/T/fake-gate-wrapper.py",
+          "<independent-positive-fixture>/T",
+          "<independent-positive-fixture>/V-fake",
+          "3ee98d983b63827455c33325f4ec132e5c3925405487e5d7f4c9af0e2b43e813"
+        ],
+        "exit_code": 2,
+        "finished_at": "2026-11-28T09:28:43.549022+00:00",
+        "outcome": "observed_exit",
+        "pid": 85380,
+        "started_at": "2026-11-28T09:28:43.120489+00:00",
+        "stderr_sha256": "d9c853b5ab5d3b9b5d099c285050c2d546bbc8510eaf86a46e843508b5574fa3",
+        "stdout_sha256": "5acc98ad5f1ea5464f17f45ec14843b7ea15f6f1b1e43a3ab52c6d404af754d2"
+      },
+      "protected_registry_sha256": "3ee98d983b63827455c33325f4ec132e5c3925405487e5d7f4c9af0e2b43e813",
+      "quality_files_unchanged": true
+    },
+    "intent_replay": {
+      "case_pid_after": 84194,
+      "case_pid_before": 84194,
+      "case_scratch_unchanged": true,
+      "process": {
+        "argv": [
+          "/usr/bin/python3",
+          "-I",
+          "-B",
+          "-S",
+          "<independent-positive-fixture>/T/quality/collector.py",
+          "--plan",
+          "<independent-positive-fixture>/T/quality/plan.json",
+          "--plan-sha256",
+          "67c140557007aaeb1f3feea3766a2d01d2cecb885d242961c23c23f8d4ddfbd2"
+        ],
+        "exit_code": 2,
+        "finished_at": "2026-11-28T09:28:43.115811+00:00",
+        "outcome": "observed_exit",
+        "pid": 85366,
+        "started_at": "2026-11-28T09:28:42.914998+00:00",
+        "stderr_sha256": "92d539afd814905d7251751b290ca3948de7999d376b615e3a40ab0b5b4f2acd",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "quality_files_unchanged": true
+    },
+    "positive": {
+      "fixture": "<independent-positive-fixture>",
+      "process": {
+        "argv": [
+          "/usr/bin/python3",
+          "-I",
+          "-B",
+          "-S",
+          "<independent-coordinator>/approved-host-helper.py",
+          "--source",
+          "<workspace>",
+          "--dependencies",
+          "<python-site>",
+          "--verify-first-delivery"
+        ],
+        "exit_code": 0,
+        "finished_at": "2026-11-28T09:28:13.351077+00:00",
+        "outcome": "observed_exit",
+        "pid": 83439,
+        "started_at": "2026-11-28T09:27:43.613870+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "8e2f3f3dc88312e532fb4b230718b65f111ba4b8635e47d713f9be55f0871004"
+      },
+      "quality": {
+        "artifact_kind": "document",
+        "authority_sha256": "078d3e6a51dbfd5af7146ab89b0750cb59633cbf5ec776946ef30c44cf2656bb",
+        "authority_unchanged": true,
+        "collection": {
+          "argv": [
+            "/usr/bin/python3",
+            "-I",
+            "-B",
+            "-S",
+            "<independent-positive-fixture>/T/quality/collector.py",
+            "--plan",
+            "<independent-positive-fixture>/T/quality/plan.json",
+            "--plan-sha256",
+            "67c140557007aaeb1f3feea3766a2d01d2cecb885d242961c23c23f8d4ddfbd2"
+          ],
+          "exit_code": 0,
+          "finished_at": "2026-11-28T09:28:12.796359+00:00",
+          "outcome": "observed_exit",
+          "pid": 84179,
+          "started_at": "2026-11-28T09:28:12.480019+00:00",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "1e9d41aa03b1e1ed0ad678267f888822810d6b9f942ee837eb465044585f7d84"
+        },
+        "delivery_binding": {
+          "artifact_sha256": "28f17b97909760e33a1eed3acdfd6348a9a70c91fb81772a2c9ac4f2027fe07b",
+          "assignment_id": "assignment-f867bfccea774e98af5ab1d8539cde4d",
+          "authority_sha256": "078d3e6a51dbfd5af7146ab89b0750cb59633cbf5ec776946ef30c44cf2656bb",
+          "baseline_sha": "bb3d3188c1715ab91b52b7efac03529f5641dd25",
+          "epoch": 1,
+          "format": "worker-delivery-binding/1",
+          "path": "src/b/output.txt",
+          "provenance": "synthetic_fixture",
+          "scope": "document-artifact",
+          "submit_operation_id": "demo-submit-16",
+          "submit_revision": 17,
+          "token": 1,
+          "worker_id": "worker-b",
+          "workspace_id": "workspace-9817b9986b934e56ac3e85c49383a4b5",
+          "wp_id": "WP-B",
+          "wp_revision": 4
+        },
+        "engineering_accepted": false,
+        "evidence_level": "synthetic_fixture",
+        "format": "first-delivery-quality/1",
+        "gate": {
+          "evidence_id": "first-delivery",
+          "evidence_sha256": "d476395f58ff2138bdfc6350da181651f531f3012e5f2576c078a224c15fa483",
+          "format": "quality-gate/1",
+          "gate_id": "df8918c404b6953dceebb13d5ea3c200d92bd495a9cae50565354676a7849004",
+          "plan_sha256": "67c140557007aaeb1f3feea3766a2d01d2cecb885d242961c23c23f8d4ddfbd2",
+          "reasons": [],
+          "status": "passed",
+          "subject": {
+            "commit": "7e1ddbed3a91e9a8f8a266751af194e57a59d04a",
+            "manifest_sha256": "c140c06a53d69dcf8d3b9411650733d741b35e288353ac4047cbdaf293eca1bb",
+            "tree": "b78bef32006c6945057d145e673dee4dd93cbd6f"
+          },
+          "trust_sha256": "9b79ab298429a4498e4e0d04e6cf7cfe1d195ae1e193fda61ecb63b48b8fd6c4",
+          "wp_id": "WP-B",
+          "wp_revision": 4
+        },
+        "gate_process": {
+          "argv": [
+            "/usr/bin/sandbox-exec",
+            "-f",
+            "<independent-positive-fixture>/T/gate-sandbox.sb",
+            "/usr/bin/python3",
+            "-I",
+            "-B",
+            "-S",
+            "<independent-positive-fixture>/T/gate-wrapper.py",
+            "<independent-positive-fixture>/T/gate-config.json"
+          ],
+          "exit_code": 0,
+          "finished_at": "2026-11-28T09:28:13.283778+00:00",
+          "outcome": "observed_exit",
+          "pid": 84199,
+          "started_at": "2026-11-28T09:28:12.797971+00:00",
+          "stderr_sha256": "7b913b1b901ff674eac99fe88938302e8d3dc7b1bd6d27094e8c3a4ba3e9cc7f",
+          "stdout_sha256": "e96ad8dd4e3b00249f642ba0f8350b26e8e47dc8714c5437d6c43e3378588d73"
+        },
+        "inputs_unchanged": true,
+        "passed": true,
+        "pinned_inputs": {
+          "collector.py": "f4ad7874c7dc9415f4dc0d1d26f2d4d095b42ef7580b786152f0886452d9ab6f",
+          "plan.json": "67c140557007aaeb1f3feea3766a2d01d2cecb885d242961c23c23f8d4ddfbd2",
+          "subject/artifact.txt": "28f17b97909760e33a1eed3acdfd6348a9a70c91fb81772a2c9ac4f2027fe07b",
+          "subject/check.py": "31fe5496ec802a3028197f41574455172b354f142f85da099bba0d273d0cb4c0",
+          "subject/delivery-binding.json": "aa76327050268557fdb1d2b7bda8764a8189922a1953ba207d47180e4b9aadce",
+          "trust.json": "9b79ab298429a4498e4e0d04e6cf7cfe1d195ae1e193fda61ecb63b48b8fd6c4"
+        },
+        "plan_sha256": "67c140557007aaeb1f3feea3766a2d01d2cecb885d242961c23c23f8d4ddfbd2",
+        "provider_live": false,
+        "run_id": "first-delivery",
+        "status": "passed",
+        "subject": {
+          "commit": "7e1ddbed3a91e9a8f8a266751af194e57a59d04a",
+          "manifest_sha256": "c140c06a53d69dcf8d3b9411650733d741b35e288353ac4047cbdaf293eca1bb",
+          "tree": "b78bef32006c6945057d145e673dee4dd93cbd6f"
+        },
+        "subject_scope": "verification capsule, not Worker code commit",
+        "trust_sha256": "9b79ab298429a4498e4e0d04e6cf7cfe1d195ae1e193fda61ecb63b48b8fd6c4"
+      }
+    }
+  },
+  "source_commit": "7ca3622908937339e6e064fd8e6e49fff8c914a5"
+}

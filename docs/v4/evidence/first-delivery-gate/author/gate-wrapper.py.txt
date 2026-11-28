@@ -1,0 +1,25 @@
+import json,os,runpy,socket,sys
+from pathlib import Path
+config=json.loads(Path(sys.argv[1]).read_bytes())
+t=Path(config['trusted']);v=Path(config['scratch']);quality=t/'quality'
+checks={}
+def denied(name,action):
+    try:action()
+    except PermissionError:checks[name]=True
+    else:checks[name]=False
+denied('gate_root_unlink',lambda:os.rmdir(v))
+denied('quality_receipt_write',lambda:(quality/'evidence.json').write_text('forged'))
+denied('quality_receipt_hardlink',lambda:os.link(quality/'evidence.json',v/'alias'))
+denied('outside_read',lambda:Path(config['forbidden']).read_bytes())
+denied('outside_write',lambda:Path(config['forbidden']).write_text('forged'))
+s=socket.socket()
+try:denied('network_connect',lambda:s.connect(('127.0.0.1',9)))
+finally:s.close()
+checks['credential_environment_absent']=not any(k in os.environ for k in
+ ['GH_TOKEN','GITHUB_TOKEN','OPENAI_API_KEY','ANTHROPIC_API_KEY','SSH_AUTH_SOCK','CODEX_HOME'])
+print(json.dumps({'gate_canaries':checks}),file=sys.stderr,flush=True)
+if not all(checks.values()):raise SystemExit(3)
+sys.path[:0]=[str(t/'source'),str(t/'dependencies')]
+sys.argv=[str(t/'source/scripts/v4_quality.py'),'verify','--trust',str(quality/'trust.json'),
+          '--trust-sha256',config['trust_sha256'],'--run-id','first-delivery']
+runpy.run_path(sys.argv[0],run_name='__main__')

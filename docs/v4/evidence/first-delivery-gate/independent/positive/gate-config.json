@@ -1,0 +1,6 @@
+{
+  "forbidden": "<independent-positive-fixture>/outside/marker",
+  "scratch": "<independent-positive-fixture>/V",
+  "trust_sha256": "9b79ab298429a4498e4e0d04e6cf7cfe1d195ae1e193fda61ecb63b48b8fd6c4",
+  "trusted": "<independent-positive-fixture>/T"
+}

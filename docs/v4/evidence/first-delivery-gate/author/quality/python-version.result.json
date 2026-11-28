@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "--version"
+  ],
+  "exit_code": 0,
+  "finished_at": "2026-11-28T09:21:44.502938+00:00",
+  "outcome": "observed_exit",
+  "pid": 73218,
+  "started_at": "2026-11-28T09:21:44.483650+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "fd0fd4290ad100adc37e4a82e45f821faeacbecae70f4d3eba08e85be138c632"
+}

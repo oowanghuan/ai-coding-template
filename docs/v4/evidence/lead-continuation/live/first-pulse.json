@@ -1,0 +1,39 @@
+{
+  "format": "continuation-live-observation/1",
+  "source": "original scheduled Project Lead launchd job; not manual kick or probe",
+  "run_id": "20261128T091008356729Z",
+  "started_at": "2026-11-28T09:10:08.357828+00:00",
+  "finished_at": "2026-11-28T09:10:58.490831+00:00",
+  "comments_read": 55,
+  "pending_advisor": 0,
+  "previous_read_comment_count": 55,
+  "event": "v4-continue:d8fe544e6eb383016a5f09ae7b59cef502700e37bf0ea73c8cdf744131d6ccb9",
+  "item_id": "first-task-to-gate",
+  "wp_id": "WP-303",
+  "head_sha": "3f10d604557d9053eaab226e22fe4123fbe79711",
+  "document_sha256": "39304226a34a122c888dd0a345182be410b057c7eca15e7f290bd38bb14ad28c",
+  "progress_sha256": "2d830197dd11782b189f31de181ccf45e28d1c1ad37e71785f19171f8c5343f8",
+  "delivery_state_at_poll_end": "queued",
+  "poll_continuation_result": {
+    "state": "queued",
+    "event": "v4-continue:d8fe544e6eb383016a5f09ae7b59cef502700e37bf0ea73c8cdf744131d6ccb9",
+    "reason": "other queue entries take precedence"
+  },
+  "ack_received_at": "2026-11-28T09:11:08.646688+00:00",
+  "ack_identity_matches": true,
+  "ack_completed": false,
+  "explicit_queue_start": "not observed; no start_intent in delivery record",
+  "native_internal_consumption": "unknown; merged queue reason does not prove another item existed",
+  "engineering_result": "scoped synthetic document artifact Gate integration implemented and independently checked; not whole-WP engineering acceptance",
+  "subsequent_poll_deduplication": "not established: next natural run timed out before identity read",
+  "raw_sha256": {
+    "result.json": "9528ee50b3b0e5dd247e9a432f85f3697593bd89862f84d8637ca5a0e50944ea",
+    "d8fe544e6eb383016a5f09ae7b59cef502700e37bf0ea73c8cdf744131d6ccb9.json": "ec61f34034025ac72cc01b5b8145243dddd8a56abb152eb8ef4341acefe18c13",
+    "d8fe544e6eb383016a5f09ae7b59cef502700e37bf0ea73c8cdf744131d6ccb9.ack.json": "c1d9f25b3cfd166fbbbdc6b4d6d394b569b96b5cf3ae98c5a545f91a1d03b0c4",
+    "continuation-owner-read-cache.json": "05a2721841778c75d6e820e1126672710dbb22a25f5f166cd02b801b32bf8762"
+  },
+  "previous_read_owner_comments_exact_match": true,
+  "raw_input_sha256": "6e942452aed2b26418d55f7a887c9cb3e88237275007a28a41890e7da606b55b",
+  "artifact_commit": "7ca3622908937339e6e064fd8e6e49fff8c914a5",
+  "artifact_evidence": "docs/v4/evidence/first-delivery-gate/README.md"
+}

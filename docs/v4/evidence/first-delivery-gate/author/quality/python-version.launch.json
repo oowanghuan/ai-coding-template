@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "--version"
+  ],
+  "exit_code": null,
+  "outcome": "unknown",
+  "pid": 73218,
+  "started_at": "2026-11-28T09:21:44.483650+00:00"
+}

@@ -447,8 +447,8 @@ Team 权威后端取舍仍 proposed，不阻塞本地工作。当前 WP 文档�
 |---|---|---|
 | WP-301 探测完成事件严格准入 | 实现与独立回归完成，限定技术 GO；Adapter 作者/非作者 Reviewer | 代码 `8901f4602b6588177a6ddc9e61520a10b838b8c5`，作者/独立24项各通过；不是原生响应认证 |
 | WP-301 原生执行边界 | 可继续研究和固定系统探针；Lead/独立边界 Reviewer | 核实既有 CLI 的实际工具面/隔离组合，形成能运行的受控启动入口或精确失败证据；不扩大权限、不新增调用费用 |
-| WP-303 首任务至 Gate 集成 | 可并行开发；集成执行者/独立 Reviewer | 将现有任务、固定受控执行与真实证据Gate串成用户入口；先合成任务验证接口，真实CLI两样本另验，不把前者冒充后者 |
-| WP-004 无新评论时的续做 | 原型限定 GO，按既有运维授权接入；运维作者/独立 Reviewer | 同一已加载会话有界投递，保留四次保护上限；部署与真实idle成果分别取证，当前未验收真实续做 |
+| WP-303 首任务至 Gate 集成 | 本批固定文本成果接线已实测并独立复核；真实 CLI / 完整 Alpha 待验 | 代码 `7ca3622908937339e6e064fd8e6e49fff8c914a5`；独立14项边界测试及4个真实正反例，固定演示、真实collector/Gate串联；不将本条done视为整个WP-303 completed |
+| WP-004 无新评论时的续做 | 已自然投递、模型ACK并产生上述实际代码；运维作者/独立 Reviewer | 保留四次上限；09:25后继轮身份查询超时，未进入判断，后续去重仍待自然实证；不把读取失败算通过 |
 | Team Issue主账本试点 | 方案待共同确定；Owner/Lead/Advisor | OD-02选定后单列实施，不先部署控制分支、第二台机器或新服务 |
 
 三条评审已核对：
@@ -472,6 +472,17 @@ Team 权威后端取舍仍 proposed，不阻塞本地工作。当前 WP 文档�
 完成状态必须更新本分支本账本；如更新 Issue，须重新核对并刷新已读事件缓存，
 不能把因新评论保护阻断误报为任务完成去重。
 
+本批自然续做实绩：09:10 UTC 原调度在无新评论、pending=0 时选取首项，
+09:11 模型收到并 ACK；随后实现、测试、独立复核产出上述代码。固定文本成果
+经新的 Git 取证快照进入真实 Gate；错误但摘要自洽的内容、未注册自报通过、
+同一取证 intent 重放均按明确原因拒绝。证据见
+[首交付 Gate](evidence/first-delivery-gate/README.md) 和
+[自然续做](evidence/lead-continuation/live/README.md)。
+有限条目 `first-task-to-gate` 的 `done` 只表示这项合成文本接线交付，不改变
+WP-303 整体未验收、真实供应商未完成的事实。09:25 下一轮身份查询超时，
+后继去重尚未验证；前台只读诊断已恢复，但不作为自然任务验收。下一 ready 条目
+继续 WP-301 原生执行边界，不刷新已有预算，也不重派已完成接线。
+
 <!-- v4-continuation-ready:v1 -->
 ```json
 {
@@ -485,13 +496,14 @@ Team 权威后端取舍仍 proposed，不阻塞本地工作。当前 WP 文档�
     {
       "id": "first-task-to-gate",
       "wp_id": "WP-303",
-      "status": "ready",
+      "status": "done",
       "depends_on": [],
       "progress": {
-        "checkpoint": "f0923f77a3527b7069b50ce3bc1c55b89dda60b5",
-        "milestone": "synthetic-recovery-tested; first-task-to-gate integration remains actionable",
+        "checkpoint": "7ca3622908937339e6e064fd8e6e49fff8c914a5",
+        "milestone": "fixed synthetic document delivery integrated with real collector/Gate; independent positive and negative checks passed; full WP303 and real providers remain unaccepted",
         "evidence_refs": [
-          "docs/v4/evidence/worker-timing/README.md"
+          "docs/v4/evidence/first-delivery-gate/README.md",
+          "docs/v4/evidence/lead-continuation/live/README.md"
         ]
       }
     },

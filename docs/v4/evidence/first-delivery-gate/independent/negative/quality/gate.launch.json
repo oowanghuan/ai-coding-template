@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<independent-negative-fixture>/T/gate-sandbox.sb",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<independent-negative-fixture>/T/gate-wrapper.py",
+    "<independent-negative-fixture>/T/gate-config.json"
+  ],
+  "exit_code": null,
+  "outcome": "unknown",
+  "pid": 85345,
+  "started_at": "2026-11-28T09:28:42.401152+00:00"
+}

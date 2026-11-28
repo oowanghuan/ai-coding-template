@@ -1,0 +1,198 @@
+"""Reviewed independent finite integration coordinator; stdlib only.
+
+runpy loads ONLY the exact pinned, independently approved standalone host helper
+copied into this run's protected directory. It never imports repository modules.
+All Gate/candidate imports remain inside that helper's A01 sandbox.
+"""
+from pathlib import Path
+import base64
+import hashlib
+import json
+import os
+import runpy
+import stat
+import sys
+import tempfile
+
+REPO=Path('<workspace>')
+DEPS=Path('<python-site>')
+HELPER_SHA='e1dcf96a63994869c770ab6bb954294218d529dced2e33b095c6c114bebd63c1'
+CLI_SHA='e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1'
+SOURCE_COMMIT='7ca3622908937339e6e064fd8e6e49fff8c914a5'
+PYTHON='/usr/bin/python3'
+sha=lambda data:hashlib.sha256(data).hexdigest()
+
+FAKE_WRAPPER=r'''import json,os,runpy,socket,sys
+from pathlib import Path
+t=Path(sys.argv[1]);v=Path(sys.argv[2]);pin=sys.argv[3];checks={}
+def denied(name,action):
+    try:action()
+    except PermissionError:checks[name]=True
+    else:checks[name]=False
+denied('scratch_unlink',lambda:os.rmdir(v))
+denied('trust_write',lambda:(t/'unregistered-trust.json').write_text('forged'))
+denied('trusted_hardlink',lambda:os.link(t/'marker',v/'alias'))
+s=socket.socket()
+try:denied('network',lambda:s.connect(('127.0.0.1',9)))
+finally:s.close()
+print(json.dumps({'fake_gate_canaries':checks}),file=sys.stderr,flush=True)
+if not all(checks.values()):raise SystemExit(3)
+# Candidate self-reports, including internally consistent hashes, are not registry entries.
+raw=b'{"status":"passed","passed":1,"failed":0}'
+(v/'passed-report.json').write_bytes(raw)
+import hashlib
+(v/'passed-report.sha256').write_text(hashlib.sha256(raw).hexdigest())
+sys.path[:0]=[str(t/'source'),str(t/'dependencies')]
+sys.argv=[str(t/'source/scripts/v4_quality.py'),'verify','--trust',str(t/'unregistered-trust.json'),
+          '--trust-sha256',pin,'--run-id','first-delivery']
+runpy.run_path(sys.argv[0],run_name='__main__')
+'''
+
+
+def replace_existing_owned(c_root, relative, expected, replacement, allowed):
+    if relative not in allowed or relative.startswith('/') or '..' in Path(relative).parts:
+        raise ValueError('write outside two explicit owned fixture files')
+    path=c_root/relative
+    search=0x40000000 if sys.platform=='darwin' else getattr(os,'O_PATH',os.O_RDONLY)
+    directory=os.open('/',search|os.O_DIRECTORY|os.O_NOFOLLOW)
+    leaf=None
+    try:
+        for part in path.parts[1:-1]:
+            child=os.open(part,search|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=directory)
+            os.close(directory);directory=child
+        leaf=os.open(path.name,os.O_RDWR|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=directory)
+        before=os.fstat(leaf)
+        if not stat.S_ISREG(before.st_mode) or before.st_nlink!=1 or before.st_size>4*1024*1024:
+            raise ValueError('bounded single-link existing fixture required')
+        observed=b''
+        while True:
+            part=os.read(leaf,65536)
+            if not part:break
+            observed+=part
+            if len(observed)>4*1024*1024:raise ValueError('fixture grew during mutation check')
+        signature=lambda x:(x.st_dev,x.st_ino,x.st_mode,x.st_nlink,x.st_size,x.st_mtime_ns,x.st_ctime_ns)
+        if observed!=expected or signature(before)!=signature(os.fstat(leaf)):
+            raise ValueError('fixture changed before controlled mutation')
+        if len(replacement)>4*1024*1024:raise ValueError('replacement too large')
+        os.lseek(leaf,0,os.SEEK_SET)
+        remaining=memoryview(replacement)
+        while remaining:
+            written=os.write(leaf,remaining)
+            if written<=0:raise OSError('short fixture write')
+            remaining=remaining[written:]
+        os.ftruncate(leaf,len(replacement));os.fsync(leaf)
+    finally:
+        if leaf is not None:os.close(leaf)
+        os.close(directory)
+
+
+def main():
+    hostroot=Path(tempfile.mkdtemp(prefix='v4-first-delivery-independent-',dir='/private/tmp'))
+    print('Independent coordinator evidence: '+str(hostroot),flush=True)
+    # Source is copied once then executed only if it is the approved exact program.
+    source=REPO/'scripts/run_worker_demo.py'
+    if source.is_symlink():raise ValueError('linked helper source')
+    raw=source.read_bytes()
+    if sha(raw)!=HELPER_SHA:raise ValueError('unapproved helper bytes')
+    approved=hostroot/'approved-host-helper.py';approved.write_bytes(raw);approved.chmod(0o400)
+    helper=runpy.run_path(str(approved),run_name='approved_standalone_host_helper')
+    regular=helper['regular'];strict=helper['strict_json'];write=helper['write_json'];execute=helper['execute_logged']
+    if sha(regular(approved))!=HELPER_SHA:raise ValueError('helper changed during loading')
+    summary=dict(format='independent-first-delivery-integration/1',source_commit=SOURCE_COMMIT,
+        helper_sha256=HELPER_SHA,coordinator_sha256=sha(regular(Path(__file__).absolute())),
+        evidence_level='synthetic_fixture',provider_live=False,engineering_accepted=False,scenarios={})
+    write(hostroot/'launch.json',summary)
+    environment=dict(HOME=str(hostroot),TMPDIR=str(hostroot),PATH='/usr/bin:/bin',LC_ALL='C',LANG='C')
+    owned=[]
+    def launch(label,verify):
+        argv=[PYTHON,'-I','-B','-S',str(approved),'--source',str(REPO),'--dependencies',str(DEPS)]
+        if verify:argv.append('--verify-first-delivery')
+        run=execute(argv,hostroot,environment,hostroot,label,240)
+        if run['outcome']!='observed_exit' or run['exit_code']!=0:raise ValueError(label+' helper failed/unknown; preserve and do not retry')
+        lines=regular(hostroot/(label+'.stdout.log')).decode().splitlines()
+        found=[x[len('Evidence directory: '):] for x in lines if x.startswith('Evidence directory: ')]
+        if len(found)!=1:raise ValueError('ambiguous owned helper fixture')
+        root=helper['canonical_directory'](found[0])
+        if root.parent!=Path('/private/tmp') or not root.name.startswith('v4-worker-demo-') or root in owned:raise ValueError('invalid/reused owned fixture')
+        owned.append(root)
+        observed=strict(regular(root/'T/result.json'))
+        if observed['launcher_sha256']!=HELPER_SHA or observed['outcome']!='observed_exit' or observed['exit_code']!=0 or observed['passed'] is not True or observed['inputs_unchanged'] is not True:raise ValueError('owned normal outcome not established')
+        return root,run,observed
+    try:
+        positive,run,observed=launch('positive',True)
+        quality=strict(regular(positive/'T/quality/result.json'))
+        if not quality['passed'] or quality['status']!='passed' or quality['engineering_accepted'] is not False or quality['authority_unchanged'] is not True:raise ValueError('positive Gate not established')
+        summary['scenarios']['positive']=dict(fixture=str(positive),process=run,quality=quality)
+        write(hostroot/'result.json',summary)
+        # Default-mode regression exactly once, on a separate new owned fixture.
+        negative,run,observed=launch('negative-normal',False)
+        if sha(regular(approved))!=HELPER_SHA:raise ValueError('approved helper changed')
+        before=helper['extract_first_delivery'](negative/'C/project')
+        state_path=negative/'C/project/.ai-org/state.json';state_raw=regular(state_path);state=strict(state_raw)
+        delivery=state['deliveries']['WP-B'];assignment=next(x for x in state['snapshot']['assignments'] if x['id']==delivery['assignment_id'])
+        artifact=negative/'C/project/.ai-org/workspaces'/assignment['workspace_id']/'src/b/output.txt'
+        actual=regular(artifact)
+        if actual!=before['delivery_bytes'] or sha(state_raw)!=before['authority_sha256']:raise ValueError('negative source changed before mutation')
+        (hostroot/'negative-original-state.json').write_bytes(state_raw)
+        (hostroot/'negative-original-artifact.txt').write_bytes(actual)
+        wrong=b'CONTROLLED NEGATIVE: incorrect first delivery\n';wrong_hash=sha(wrong)
+        delivery.update(sha256=wrong_hash,content_base64=base64.b64encode(wrong).decode())
+        matches=[x for x in state['operations'].values() if x.get('action')=='submit' and x.get('status')=='committed' and x.get('result',{}).get('delivery_id')=='WP-B']
+        if len(matches)!=1:raise ValueError('negative submit receipt ambiguous')
+        matches[0]['result']['sha256']=wrong_hash
+        c_root=negative/'C'
+        state_relative='project/.ai-org/state.json'
+        artifact_relative='project/.ai-org/workspaces/'+assignment['workspace_id']+'/src/b/output.txt'
+        allowed={state_relative,artifact_relative}
+        replace_existing_owned(c_root,artifact_relative,actual,wrong,allowed)
+        replacement=(json.dumps(state,sort_keys=True,indent=2)+'\n').encode()
+        replace_existing_owned(c_root,state_relative,state_raw,replacement,allowed)
+        after=helper['extract_first_delivery'](negative/'C/project')
+        if after['delivery_bytes']!=wrong:raise ValueError('controlled negative provenance not consistent')
+        write(hostroot/'negative-mutation.json',dict(scope='controlled synthetic fixture mutation after owned normal demo exit; not observed Worker error',original=before['binding'],changed=after['binding'],original_authority_sha256=sha(state_raw),changed_authority_sha256=sha(regular(state_path)),original_artifact_sha256=sha(actual),changed_artifact_sha256=wrong_hash,fields=['worktree src/b/output.txt bytes','deliveries.WP-B.sha256/content_base64','committed WP-B submit result.sha256']))
+        # Normal mode intentionally omits the Gate CLI; append a separately pinned
+        # input record without rewriting the original normal-run inputs/receipt.
+        cli=regular(REPO/'scripts/v4_quality.py')
+        if sha(cli)!=CLI_SHA:raise ValueError('Gate CLI source changed')
+        target=negative/'T/source/scripts/v4_quality.py'
+        with target.open('xb') as stream:stream.write(cli)
+        target.chmod(0o400)
+        manifest=strict(regular(negative/'T/inputs.json'))
+        manifest['source/scripts/v4_quality.py']=dict(original=str(REPO/'scripts/v4_quality.py'),sha256=CLI_SHA,bytes=len(cli))
+        write(negative/'T/negative-frozen-inputs.json',manifest)
+        neg_quality=helper['run_first_delivery_gate'](negative,manifest)
+        if neg_quality['status']!='failed' or neg_quality['passed'] is not False or neg_quality['authority_unchanged'] is not True:raise ValueError('wrong self-consistent artifact was not rejected by real Gate')
+        if neg_quality['collection']['exit_code']!=0 or neg_quality['gate_process']['exit_code']!=1:raise ValueError('expected completed collection with failed Gate')
+        summary['scenarios']['controlled_negative']=dict(fixture=str(negative),normal_process=run,quality=neg_quality)
+        write(hostroot/'result.json',summary)
+        # Real collector intent replay: preserve original evidence/logs and cases.
+        q=positive/'T/quality';scratch=positive/'Q'
+        def inventory(root):return {str(p.relative_to(root)):sha(regular(p)) for p in root.rglob('*') if p.is_file()}
+        q_before=inventory(q);scratch_before=sorted(str(p.relative_to(scratch)) for p in scratch.rglob('*'))
+        case_before=strict(regular(q/'evidence.json'))['cases'][0]['pid']
+        replay=execute([PYTHON,'-I','-B','-S',str(q/'collector.py'),'--plan',str(q/'plan.json'),'--plan-sha256',sha(regular(q/'plan.json'))],q,dict(HOME=str(q),TMPDIR=str(scratch),PATH='/usr/bin:/bin',LC_ALL='C',LANG='C'),hostroot,'collector-replay',30)
+        replay_error=strict(regular(hostroot/'collector-replay.stderr.log'))
+        expected_error=str(FileExistsError(17,os.strerror(17),str(q/'intent.json')))
+        if replay['exit_code']!=2 or replay_error!={'error':expected_error}:raise ValueError('replay failed for a reason other than existing collector intent')
+        same=q_before==inventory(q) and scratch_before==sorted(str(p.relative_to(scratch)) for p in scratch.rglob('*'))
+        if replay['outcome']!='observed_exit' or replay['exit_code']==0 or not same:raise ValueError('collector replay modified original evidence or case scratch')
+        summary['scenarios']['intent_replay']=dict(process=replay,quality_files_unchanged=True,case_scratch_unchanged=True,case_pid_before=case_before,case_pid_after=strict(regular(q/'evidence.json'))['cases'][0]['pid'])
+        # New scratch only, protected empty registry. Candidate passed self-report
+        # and matching self-hash cannot register a quality receipt.
+        t=positive/'T';fake=positive/'V-fake';fake.mkdir(mode=0o700)
+        empty=helper['canonical']({'format':'quality-trust/1','runs':{}})
+        (t/'unregistered-trust.json').write_bytes(empty);(t/'fake-gate-wrapper.py').write_text(FAKE_WRAPPER)
+        (t/'fake-gate.sb').write_text(helper['policy'](t,fake))
+        fake_run=execute(['/usr/bin/sandbox-exec','-f',str(t/'fake-gate.sb'),PYTHON,'-I','-B','-S',str(t/'fake-gate-wrapper.py'),str(t),str(fake),sha(empty)],t,dict(HOME=str(fake),TMPDIR=str(fake),PATH='/usr/bin:/bin',LC_ALL='C',LANG='C'),hostroot,'fake-receipt',30)
+        gate=strict(regular(hostroot/'fake-receipt.stdout.log'))
+        if fake_run['outcome']!='observed_exit' or fake_run['exit_code']!=2 or gate['status']!='unverifiable' or gate['reasons']!=['trust:unregistered-run']:raise ValueError('candidate self-report was not rejected specifically as unregistered')
+        if inventory(q)!=q_before:raise ValueError('fake receipt check changed original quality evidence')
+        summary['scenarios']['fake_receipt']=dict(process=fake_run,gate=gate,protected_registry_sha256=sha(empty),quality_files_unchanged=True)
+        summary['passed']=True
+    except BaseException as error:
+        summary.update(passed=False,error_type=type(error).__name__,error=str(error))
+    write(hostroot/'result.json',summary)
+    print(json.dumps({'passed':summary['passed'],'evidence':str(hostroot/'result.json')}))
+    return 0 if summary['passed'] else 1
+
+if __name__=='__main__':raise SystemExit(main())

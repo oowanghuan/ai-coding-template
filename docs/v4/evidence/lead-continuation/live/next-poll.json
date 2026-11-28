@@ -1,0 +1,16 @@
+{
+  "run_id": "20261128T092520662159Z",
+  "trigger": "original scheduled launchd job",
+  "started_at": "2026-11-28T09:25:20.672660+00:00",
+  "finished_at": "2026-11-28T09:27:06.853665+00:00",
+  "status": "failed",
+  "steps": [],
+  "first_breakpoint": "read-only gh api user timed out before identity verification",
+  "comments_read": null,
+  "pending": null,
+  "continuation_entered": false,
+  "activation_records_observed": 1,
+  "ack_records_observed": 1,
+  "deduplication_acceptance": "not established: read failure is not active/done branch verification",
+  "raw_sha256": "08eb3a9d06f8c2b865ca5b9622af2fc10d2e3896a63657e41ed4bb1ca17ccc16"
+}

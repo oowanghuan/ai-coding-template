@@ -1,0 +1,104 @@
+{
+  "format": "independent-first-delivery-review/1",
+  "source_commit": "7ca3622908937339e6e064fd8e6e49fff8c914a5",
+  "evidence_level": "synthetic_fixture",
+  "provider_live": false,
+  "engineering_accepted": false,
+  "roles": {
+    "product_author": "runner_validation",
+    "independent_test_designer_and_executor": "independent_checks",
+    "secondary_read_only_boundary_reviewer": "boundary_review",
+    "independence_limit": "Distinct execution/review contexts, same host and account; no remote identity/provider independence asserted. Secondary read-only review is not an additional test run."
+  },
+  "approved_helper_sha256": "e1dcf96a63994869c770ab6bb954294218d529dced2e33b095c6c114bebd63c1",
+  "approved_coordinator": {
+    "path": "<user-home>/.codex/v4-project-lead/wp303-review-stage/first-delivery-independent/coordinator.py",
+    "sha256": "c78309da98297727306b48ce256e0113946424d70d2900778f4db3960775939d"
+  },
+  "unit": {
+    "path": "<independent-unit-fixture>/T",
+    "result_sha256": "edf3bfb32b684244bd61b18be9a77818bc85e6287b3fd1e39c3926d08e40f6eb",
+    "run": 14,
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0,
+    "canary_assertions_passed": 9,
+    "source_and_frozen_unchanged": true,
+    "scope": "Synthetic authority rejection paths, actual file bytes, true temporary Git capsule hashing; collector_calls=0."
+  },
+  "actual_integration": {
+    "summary": "<independent-coordinator>/result.json",
+    "summary_sha256": "82415ff2b79bdb8d4f70a51610ba1c39ca9278c1d273cf9eb20c99f4ed9c283d",
+    "positive": {
+      "fixture": "<independent-positive-fixture>",
+      "collection_exit": 0,
+      "case_counts": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "not_run": 0
+      },
+      "gate_exit": 0,
+      "gate_status": "passed"
+    },
+    "controlled_negative": {
+      "fixture": "<independent-negative-fixture>",
+      "normal_mode_exit": 0,
+      "collection_exit": 0,
+      "case_exit": 0,
+      "case_counts": {
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0,
+        "not_run": 0
+      },
+      "gate_exit": 1,
+      "gate_status": "failed",
+      "reason": "Actual stdout differs from independent fixed oracle despite delivery/worktree/hash consistency. Mutation was controlled by this test after known owned exit, not an observed real Worker error.",
+      "mutation_record": "<independent-coordinator>/negative-mutation.json"
+    },
+    "intent_replay": {
+      "exit": 2,
+      "exact_reason": "FileExistsError for original quality/intent.json",
+      "original_quality_files_unchanged": true,
+      "case_scratch_unchanged": true,
+      "original_case_pid_before_and_after": 84194
+    },
+    "fake_receipt": {
+      "exit": 2,
+      "gate_status": "unverifiable",
+      "exact_reasons": [
+        "trust:unregistered-run"
+      ],
+      "description": "Candidate scratch has self-reported passed plus matching self-hash; protected registry contains no registered run."
+    },
+    "canaries": {
+      "each_positive_and_negative": {
+        "outer": 8,
+        "collector_case": 5,
+        "gate_wrapper": 7
+      },
+      "fake_gate": 4
+    }
+  },
+  "negative_additional_source": {
+    "original_manifest_preserved": "<independent-negative-fixture>/T/inputs.json",
+    "amended_manifest": "<independent-negative-fixture>/T/negative-frozen-inputs.json",
+    "manifest_sha256": "6430c8457c2d9abcdac002724b66664ded9186ce4de74f872e04c8709d7fb37a",
+    "entry": "source/scripts/v4_quality.py",
+    "cli_sha256": "e9e075cc83a31896015e0c40b411f4f9870140c6c20200d1695bdd63a7e8b0b1",
+    "source_commit": "7ca3622908937339e6e064fd8e6e49fff8c914a5",
+    "reason": "Default-mode helper deliberately omits Gate CLI; fixed exact CLI added under separate manifest for controlled negative preparation, without rewriting original normal-mode evidence."
+  },
+  "not_claimed": [
+    "Code task functional/engineering acceptance",
+    "Live model/provider or quota behavior",
+    "Cross-host authentication",
+    "Full Lite Alpha acceptance",
+    "Repeated independent execution by secondary reviewer"
+  ],
+  "preflight_history": {
+    "broad_unit_harness": "Rejected before execution; replacement fresh T/C harness independently approved.",
+    "negative_writer": "Path-based write candidate rejected before execution; final coordinator uses checked nofollow dirfds and same-fd writes of two explicitly owned files."
+  }
+}
