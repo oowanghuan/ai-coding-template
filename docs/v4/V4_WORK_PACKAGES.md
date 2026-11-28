@@ -525,7 +525,7 @@ fixture等同真实供应商。准确输入、日志及限定范围见上述证�
 
 本节沿用 OD-09，不重建总体规划。输入是当前代码中的三个可定位缺口：
 `AdapterRegistry` 仅装配 planner/classifier；`dispatch-next` 按 ID 顺序选择合格资源；
-`register-worker` 在生命周期启用后拒绝登记。此前有限批次“无 ready”是当时清单
+本节建立时 `register-worker` 在生命周期启用后拒绝登记（B1 实施结果见下文）。此前有限批次“无 ready”是当时清单
 收口状态，不表示后续已授权产品工作只能等待真实 CLI 阻塞解除。
 
 以下是并行工作划分，不声称已经启动新的执行上下文或完成实现。首个下一切片
@@ -549,7 +549,30 @@ B1 的输入为 `framework/local/store.py`、`lifecycle.py`、现有 Worker/Host
 Schema 和 `tests/lifecycle/`。共享状态/schema由Lead单一集成，恢复/Adapter接口
 不维护另一份资源权威。候选变更限于必要本地登记协议及测试，任何未知授权/预算/
 外部操作继续默认拒绝。验收证据需区分故障注入、真实固定进程、真实供应商；本节
-是可执行任务定义，尚无 B1 新产品通过声明。
+是可执行任务定义，实际实施结果及未验边界见下文。
+
+### 16.4 B1 动态登记实施与待复核项
+
+第四次自然续做投递于 12:55 UTC 调度，12:58:23 UTC 模型实际收到并 ACK；
+实现提交 `6c78c133fd483c210317e20d5d400ff6521eeeaf`。已补生命周期启用后的
+原子新成员登记，保留原有效执行权、额度组限制及未决恢复探测；重复 operation
+不重置状态，引用冲突/旧 revision 拒绝。未知认证/授权不可接单，新 Host 仍须
+符合工作包既有授权。没有创建第二状态源、迁移活跃身份或引入供应商二元分支。
+
+13 项新增合成场景在真实 Git/状态文件上通过；另一次完整所选回归108项全部通过
+（包含这13项），0 fail/error/skip，两次各9项隔离检查通过；准确源码、日志
+及边界见 [登记证据](evidence/live-membership/README.md)。当前为作者运行结果，
+独立复核和非作者复跑待完成，因此有限条目先记 `blocked`（等待独立复核），
+不记工程验收完成。后续 Advisor 可按准确 SHA 复核；测试隔离不等同独立验收。
+
+补充 Owner 对 CLI 的澄清：本机已有正常运行的 Coding Agent 实践。此前阻塞描述
+只指 V4 所测试的具体启动/隔离/认证组合，不能推导为“本机 CLI 不可用”。B1 是
+接入已有合法资源的控制器登记能力，尚不声称已完成真实 CLI 自动接入或自动恢复。
+
+本有限续做批次已用 **4/4** 次，未改上限、期限或批次以补充预算。生产 Advisor
+通知轮询保持原配置，但不得承诺同批还会有第五次无人提醒续做。现有授权的产品
+工作未因此宣布完成；下一检查点是 B1 独立复核，以及 WP-301/303 已有接口方案下
+的真实资源接入。没有新增费用、放宽权限、main 合入或发布。
 
 <!-- v4-continuation-ready:v1 -->
 ```json
@@ -605,13 +628,13 @@ Schema 和 `tests/lifecycle/`。共享状态/schema由Lead单一集成，恢复/
     {
       "id": "live-worker-membership",
       "wp_id": "WP-302",
-      "status": "ready",
+      "status": "blocked",
       "depends_on": [],
       "progress": {
-        "checkpoint": "e4c97761543a4c5d23f7fb582d875d0963e5cd7f",
-        "milestone": "Owner-requested resource-pool remediation: bounded B1 atomic new-worker admission into an enabled lifecycle; preserve existing rights, shared quota and explicit verified authorization; plan ready, implementation not started",
+        "checkpoint": "6c78c133fd483c210317e20d5d400ff6521eeeaf",
+        "milestone": "Atomic live membership implemented; 13 author-run isolated tests passed; blocked pending independent review and non-author validation, not product acceptance. Continuation activation budget exhausted at 4/4; no recharge.",
         "evidence_refs": [
-          "docs/v4/V4_WORK_PACKAGES.md",
+          "docs/v4/evidence/live-membership/README.md",
           "framework/local/store.py",
           "framework/local/lifecycle.py"
         ]

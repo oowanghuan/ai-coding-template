@@ -1,0 +1,6 @@
+{
+  "baseline_sha256": "c2f0905e4770a2b9f9016d619e569b62a52cac7559ae57dce503511b7e242abd",
+  "candidate_sha256": "ec25a8c7b72f1a544bc43b9c94ea5276986b0c2b4131ca866776768179069ea7",
+  "change": "Only unittest discovery selector; identical sandbox/canaries/frozen sources/env/launch/timeout. Author static preflight, not independent review.",
+  "provider_calls": 0
+}

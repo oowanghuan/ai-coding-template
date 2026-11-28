@@ -60,3 +60,18 @@ ID/正文指纹与已读缓存完全一致。读取的准确 Git 版本为
 会话 active 后 deferred，没有队列写入，投递仍为三条。见
 [本轮忙碌保护](prepared-recovery-busy-poll.json)。这不是完成后去重证明，
 也不能据此推断原生 idle 检查与入队是原子的。
+
+12:55:34–12:58:15 UTC，原调度读取 62 条评论、pending=0，按准确版本
+`bd3a10b00cdab637e28021ab90224282ab6c1ce7` 选取新增有限条目
+`live-worker-membership`。12:58:23.739255 UTC 模型实际收到并 ACK，随后形成
+实现提交 `6c78c133fd483c210317e20d5d400ff6521eeeaf`。四条各一份投递，
+本批已用 4/4 次，预算未重置。见 [第四次自然投递](live-membership-poll.json)
+及 [实现/实测边界](../../live-membership/README.md)。本轮独立复核仍待完成。
+投递记录仍为 queued / busy after add，不声称观察到显式原生 start，也不把
+ACK 作为任务完成证明。后续新增投递受已耗尽的原预算约束；Advisor 事件的
+既有通知机制未关闭。本记录尚不证明本条完成后的下一自然轮去重。
+
+13:10:06–13:10:41 UTC，下一实际自然轮仍读取62条评论、pending=0，观察既有会话
+active，返回 deferred / no queue writes。四份投递未增加，见
+[忙碌保护记录](live-membership-busy-poll.json)。本次仍是忙碌保护，不以此冒充
+完成后去重、重启或额度恢复验收。

@@ -1,0 +1,89 @@
+{
+  "copies_are_review_artifacts_not_runnable_bundles": true,
+  "files": [
+    {
+      "path": "targeted/result.json",
+      "raw_sha256": "7403aada6ee1151fa898b22be2f6e852e56f163f1346200326d49426b5c87e38",
+      "public_sha256": "23a6e893a9dd4d13cee839666167c72c013b013d4293be6800fb3e2433e50a80",
+      "redacted": true
+    },
+    {
+      "path": "targeted/launch.json",
+      "raw_sha256": "beb407027d89911742cb966e2b0ad7e96e69abed08f740e51d040aace73cdb99",
+      "public_sha256": "dd8ffdeabe589a465ae3d4b16c3868e28f694d6554931f96f6c64408f3dec80f",
+      "redacted": true
+    },
+    {
+      "path": "targeted/stdout.log",
+      "raw_sha256": "e0f561bd53fc468247c4de5a4839ca5be4a2a2b576d9b4f95c95b513aefee170",
+      "public_sha256": "e0f561bd53fc468247c4de5a4839ca5be4a2a2b576d9b4f95c95b513aefee170",
+      "redacted": false
+    },
+    {
+      "path": "targeted/stderr.log",
+      "raw_sha256": "b6eb69d06192955315d62bc9d8ea388d604af3b3116181cbd89d601627e1710a",
+      "public_sha256": "b6eb69d06192955315d62bc9d8ea388d604af3b3116181cbd89d601627e1710a",
+      "redacted": false
+    },
+    {
+      "path": "targeted/harness.py.txt",
+      "raw_sha256": "ec25a8c7b72f1a544bc43b9c94ea5276986b0c2b4131ca866776768179069ea7",
+      "public_sha256": "63658e769868dbe95d0d4790232e9bb3c1415e0966e29805020e5f54469d8178",
+      "redacted": true
+    },
+    {
+      "path": "targeted/wrapper.py",
+      "raw_sha256": "65868adb982c60a91cb4e808e49aac0a0885f7f33d8177683449d359c428bf11",
+      "public_sha256": "65868adb982c60a91cb4e808e49aac0a0885f7f33d8177683449d359c428bf11",
+      "redacted": false
+    },
+    {
+      "path": "targeted/sandbox.sb",
+      "raw_sha256": "1a9d2d7a581bc2e1286c2ca469d9eb96e80855908e2d878342725f636be6f14b",
+      "public_sha256": "f5e9db8270c3540aecfc6bd70bb58ffac89fbba9ce177bc95b64658efaa8fad4",
+      "redacted": true
+    },
+    {
+      "path": "regression/result.json",
+      "raw_sha256": "59557a3b5882f37b591eac0ee5909a263be886382c4a192c3029bb52bde19837",
+      "public_sha256": "9cfc8444cf1e474db11132feb7e6125f70720a4819415bbbe3ef731c9308116d",
+      "redacted": true
+    },
+    {
+      "path": "regression/launch.json",
+      "raw_sha256": "9f0289aa1198059838107ce97df1b2c9339c4d3b569c30c20879efa9037193d3",
+      "public_sha256": "e7a39aa53a839f76aa04708b512d16992cc34830895ceb38f7b759b83f1e5574",
+      "redacted": true
+    },
+    {
+      "path": "regression/stdout.log",
+      "raw_sha256": "e5d7bbbb0f6a3468b0c19acda76b038eff653ce5d66cd92422dab6b28fb58c35",
+      "public_sha256": "e5d7bbbb0f6a3468b0c19acda76b038eff653ce5d66cd92422dab6b28fb58c35",
+      "redacted": false
+    },
+    {
+      "path": "regression/stderr.log",
+      "raw_sha256": "c34464278188200e5e882bf5d1af28ca1ea998cc4aae23449fd23ec639fce534",
+      "public_sha256": "c34464278188200e5e882bf5d1af28ca1ea998cc4aae23449fd23ec639fce534",
+      "redacted": false
+    },
+    {
+      "path": "regression/harness.py.txt",
+      "raw_sha256": "c2f0905e4770a2b9f9016d619e569b62a52cac7559ae57dce503511b7e242abd",
+      "public_sha256": "55d88d40095b2224b3d97e8d592014d14d6655f3f4c2d04afb14c1365d3755ed",
+      "redacted": true
+    },
+    {
+      "path": "regression/wrapper.py",
+      "raw_sha256": "3bcc4c8199b6edc6826a13624a0bca9469a9fab4759e80e9b32f117c071219ad",
+      "public_sha256": "3bcc4c8199b6edc6826a13624a0bca9469a9fab4759e80e9b32f117c071219ad",
+      "redacted": false
+    },
+    {
+      "path": "regression/sandbox.sb",
+      "raw_sha256": "c8311d5756508d73ba3d37b4a3928c626318462a07259144a734f49fb3c2cffc",
+      "public_sha256": "f5e9db8270c3540aecfc6bd70bb58ffac89fbba9ce177bc95b64658efaa8fad4",
+      "redacted": true
+    }
+  ]
+}

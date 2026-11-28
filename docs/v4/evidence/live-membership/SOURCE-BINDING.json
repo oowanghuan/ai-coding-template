@@ -1,0 +1,108 @@
+{
+  "tested_input_commit": "6c78c133fd483c210317e20d5d400ff6521eeeaf",
+  "launch_observed_head": "bd3a10b00cdab637e28021ab90224282ab6c1ce7",
+  "note": "Harness started before implementation commit; every frozen source input compared with the subsequently committed blob. No claim that launch HEAD already included the changes.",
+  "files": {
+    "examples/protocol/in-progress.json": {
+      "sha256": "7cf2fad959882203f00b74d8f15a79e4a6f1a8c524dfb7eaf5468a81e061013e",
+      "matches_commit": true
+    },
+    "framework/core/protocol.py": {
+      "sha256": "e5a4732f2b407b9917623f5050504bda4b321dfdb229fe1b920a1466a44b0933",
+      "matches_commit": true
+    },
+    "framework/local/bootstrap.py": {
+      "sha256": "05d4810f9a748d9785a76598ea2bbd91a3b414d16cec43b71bff506b1c58afa8",
+      "matches_commit": true
+    },
+    "framework/local/external.py": {
+      "sha256": "7d7cb874a054c8e86a0d81f640010d2b9bec6a1b0972ad9c4d21643c45675cd7",
+      "matches_commit": true
+    },
+    "framework/local/handoff.py": {
+      "sha256": "298c7c386f64e5a346e880fe0f14b6ca285e1cd10e410edfc66794741ef829a4",
+      "matches_commit": true
+    },
+    "framework/local/launch_driver.py": {
+      "sha256": "91fd5c807d0e760c354c54ddaec316ad5771c8a5ad9e1af84d8a8e017259d60d",
+      "matches_commit": true
+    },
+    "framework/local/lifecycle.py": {
+      "sha256": "8a7d50fbb32fac8fa702558783368c710bfbb9537e8a88dd72bb3d4ea85aa1f2",
+      "matches_commit": true
+    },
+    "framework/local/runner.py": {
+      "sha256": "c6b06a0fd06f543f25d576cd583df9a22c06b070f501368d7eb9a522aefb74df",
+      "matches_commit": true
+    },
+    "framework/local/storage.py": {
+      "sha256": "af2ddd9d5d717d1f3afe71fc8bcf09f1aaca7b514d3a1e1b1d389f0113a37dea",
+      "matches_commit": true
+    },
+    "framework/local/store.py": {
+      "sha256": "b165552c253b2c320299d0c1315a622854df5f943081fa10251d484fbf0a17b9",
+      "matches_commit": true
+    },
+    "framework/local/worker_process.py": {
+      "sha256": "05188893d5f9d87f3bd9d7c44e3e82be8c7c53293d538c02742fd8204dfee97d",
+      "matches_commit": true
+    },
+    "framework/recovery/admission.py": {
+      "sha256": "94724a7317d649550bfd5e0076c6ad2712bd0834411898e19b44206019a8dddb",
+      "matches_commit": true
+    },
+    "framework/recovery/checkpoint.py": {
+      "sha256": "587d77708c6c3b237684f5390ba8f9b7ddbf9170d9a6fba6c3ce3f67d288b844",
+      "matches_commit": true
+    },
+    "schemas/evidence.schema.json": {
+      "sha256": "5d042d52b3aba58d6b19565a13e176cdbee93191feb76c4b9a88c9dd686186f9",
+      "matches_commit": true
+    },
+    "schemas/governance.schema.json": {
+      "sha256": "b90631154b8fa1f040c2fb3dc3c4d1272a952ae77da17dfad583f9ab3e25cbb7",
+      "matches_commit": true
+    },
+    "schemas/install-plan.schema.json": {
+      "sha256": "b276d52b899267c431274a11e8d0880d72ffda43a399ba94cf1c2235d8f7ebdb",
+      "matches_commit": true
+    },
+    "schemas/local-state.schema.json": {
+      "sha256": "aae186335a1817c572e381c28982ebcdb701184606668774c91b5c74cc4789c9",
+      "matches_commit": true
+    },
+    "schemas/protocol.schema.json": {
+      "sha256": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc",
+      "matches_commit": true
+    },
+    "tests/lifecycle/test_handoff.py": {
+      "sha256": "fe42d95f3b6be59758216678bd97c38a6f1e8e1680ab0bf35ef92e46b6816014",
+      "matches_commit": true
+    },
+    "tests/lifecycle/test_lifecycle.py": {
+      "sha256": "f86252a7b65812bed52bf9d73dfb1995aa771d994ab7958555eaf602fda430f9",
+      "matches_commit": true
+    },
+    "tests/lifecycle/test_unstarted_handoff.py": {
+      "sha256": "afd69de6118adbbf48afda54684002b9465037b60b0afd2be14ae71437a63782",
+      "matches_commit": true
+    },
+    "tests/lifecycle/test_worker_membership.py": {
+      "sha256": "091eeb13dfc62d2a813ac8ff3a7b4debf7704f730a63fb09bebb6b68c1dc3719",
+      "matches_commit": true
+    },
+    "tests/local/test_external.py": {
+      "sha256": "13669f1daa675e48b3f827c099c52bfc63e083c6dad4c2302a3c678798d59203",
+      "matches_commit": true
+    },
+    "tests/local/test_launch_driver.py": {
+      "sha256": "815a62c123f68de3d9af282a7c3105a96415e71b957707afe23e3c878609a8a3",
+      "matches_commit": true
+    }
+  },
+  "runs": [
+    "targeted",
+    "regression"
+  ],
+  "regression_inputs_identical": true
+}
