@@ -57,6 +57,7 @@ WP-303 保存实际输入、界面/CLI 交互记录、必填字段与确认次�
 | S06-Quota-Pause / WP-301 分类，302 保全/停工，303 Alpha 取证 | 任务产生 dirty/untracked 中间成果后注入 quota_exhausted；W-A/W-B 明确共享受限额度组 Q1，W-C 使用独立 Q2；观察一个调度周期 | W-A 保存 checkpoint、未确认外部动作及 pause_reason；Q1 不再分配新任务、不继续提交副作用，Q2 合格任务可继续；中间成果指纹一致。未知的共享额度范围不得假设互相独立 |
 | S06-Quota-Resume / WP-301/302/303 | 先保持配额不可用，验证 next_retry_at 前不探测；恢复可用；触发受限重试/探测；重新检查预算、授权、Owner 状态、任务状态、租约和远端操作；获新执行权后继续至真实交付 | 只能从核实的中间成果继续，旧 token 不可写；恢复后的人工干预次数目标 0，最终逻辑交付数=1，所有中间成果保全；记录额度信号、探测次数/时间、恢复观察到续做/交付延迟、检查点前后指纹及最终测试产物 |
 | S06-Takeover-Team / WP-302/401/403 | 等额期间另一 Worker 接管或已完成 WP；原 Worker 收到两次恢复事件，期间再重启 | 原 Worker 仅回可用资源池，不能夺回任务或再交付；所有时刻有效执行者最多 1，最终逻辑交付仍为 1；恢复事件重复与进程重启不新建重复 Assignment |
+| S06-Completed-Local / WP-302/303 | 同机另一 Worker 已接管并完成任务后，向旧 Worker 投递两次恢复结果；重启控制器后核对 receipt，再重放；无需第二台机器 | 旧 token 不恢复，原任务不重派，状态/交付/已有结果文件不变；固定 writer 的运行次数不增加。真实外部 API 无调用时明确为 0/未验证，不能把本地文件动作宣传为跨服务 exactly-once；Advisor 7235366840 要求在同机阶段补齐 |
 | S06-Stop-Precedence / WP-301/302/303，跨机扩展 403 | 分别在恢复前设置 Owner 暂停、撤销/过期授权、项目预算耗尽；另测上下文容量耗尽但供应商额度仍有 | 前三种保持暂停，不被账号额度恢复覆盖；上下文限制走检查点/新 Session 路径，不把整个额度组判为耗尽。分别保留状态、阻断原因和“没有新增执行/交付”的事件证据 |
 | S06-Unknown-Outcome / WP-302/303，真实共享写入故障 403 | 合成外部动作已发生但 receipt 丢失，再触发额度恢复/重启；另设无法查明远端结果的分支 | 先读回 operation key 对账，确认后续做；未查明保持 blocked，不重复外部动作。断言动作计数=1，或未确认分支没有新调用；合成动作不冒充真实云故障 |
 
@@ -86,6 +87,7 @@ WP-303 保存实际输入、界面/CLI 交互记录、必填字段与确认次�
 | [已加载 idle 会话一次性投递](evidence/idle-probe-03/README.md) | queue/add 的通知真实进入原模型上下文，历史对账匹配，完成后清除一次性 job，生产轮询保持 | 显式 queue/start 分支没有执行；不是新 Advisor 事件、物理重启/离线/额度恢复或产品 Session Adapter 验收 |
 | [WP-201/203 取证与签认](evidence/quality-governance/README.md) | 固定 collector 独立预审；作者/非作者新 T/C 质量 11 场景；治理 5 次真实取证分别 17/19 CLI；独立中断；全量 229 pass/3 skip，49 输入绑定产品提交 | 固定本机 Python stdio 与合成身份；WP-201 后获限定 GO，不证明任意测试设计充分，不是任务自动验收、真实供应商/跨机/Alpha |
 | [锁定基线快照修订](evidence/governance-snapshot/README.md) | Advisor 7226757604 后新增 32 项治理测试、作者及非作者实际临时 Git 目标前移与公开 CLI 前后核验；原签认/候选/策略保全；Advisor 7227662743 对 534c1196738a5ec00d98587c0c77754605e27282 给出限定 GO | 输出明确 locked_baseline/not_observed；不是产品实时 ref 观测。前一行全量记录归属其原提交，本次计划更新未重跑测试 |
+| [Worker 生命周期可运行增量](evidence/worker-lifecycle/README.md) | N-adapter/八状态/共享额度组/确定性 tick 和认领、真实文件检查点；独立固定合成进程中断→停止确认→更高 token 接管→恢复回池→拒绝旧 token/重复交付。十组回归 343 pass/3 原 skip；原 76 输入匹配提交，新增使用 README 的例外保留 | 尚非两家真实 CLI、自然额度恢复或通用 Adapter.start；未安装无人值守供应商调度服务；固定监督器的本地动作不能替代真实外部 API 的未知结果恢复验收 |
 
 P0 的可复跑入口：`python3 tests/p0_audit.py --output <不存在的新目录>`。退出 0 只表示“观测与冻结基线一致”，包括正确复现退出 1 的安装故障。macOS Bash 3.2 为本次环境，其他 Bash/OS 未验收。
 

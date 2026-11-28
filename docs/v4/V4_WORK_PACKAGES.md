@@ -389,3 +389,24 @@ Recovery 作者为非作者的调度/接管逻辑编写 `tests/lifecycle/`，不
 模型任务。已安装 CLI 的只读元数据探测可独立进行；旧 Python 沙盒无法启动原生二进制
 只说明该策略不兼容，不能判断供应商不可用，更不能关闭隔离。Lead 与独立边界 Reviewer
 负责给出可复核的固定启动器或精确阻塞；这不阻止生命周期、文件恢复与合成集成继续。
+
+当前交付检查点：第一项固定合成增量已实际运行并由非作者复跑，入口
+`scripts/run_worker_demo.py`，说明见 [本机演示](../../examples/alpha/README.md)。
+产品代码 `e4a7d974abb481e357106f64dacac2fe2e9d7440`：全量十组 346 项中
+343 pass/3 原 direct skip；76 个原登记输入不变并匹配提交，运行中新增使用说明
+的宽清单例外保留。独立 53 Adapter、26 Recovery、29 Lifecycle/Handoff 和
+固定 helper 进程闭环均有实际记录。此处不将三包标为 completed 或工程验收通过。
+
+计划评审 [7235366840](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7235366840)
+对 PR #11 的准确计划 SHA 给出同机方案限定 GO；不是当前实现 GO。评审提出的
+“其他 Worker 完成后原 Worker 收到两次恢复”已在同机补独立反例，不推迟到 Team：
+重开控制器读取持久状态，两次相同操作重放无变化，同 probe 换操作编号拒绝；
+没有新增 Writer 或文件副作用。真实外部 API 调用为 0，不能宣称跨服务 exactly-once。
+
+仍在关键路径的阻塞有明确责任：Claude 本次受限环境的官方 status 报未登录，
+Owner 使用已有订阅完成一次正常登录后由 Lead 重检；Codex 已识别 ChatGPT 认证，
+但命名最小权限的合成进程环境读取反例失败，附加外层策略又遇到系统禁止嵌套，
+Lead/独立 Reviewer 负责核实安全可用的工具执行边界。二者均没有启用新增费用或
+无隔离回退，真实 CLI/自然额度恢复暂未验收。完整首任务 UX、实际供应商探测/启动/
+停止服务、未启动任务的安全 no-writer 对账及真实质量 Gate 串联继续在 OD-09 范围推进。
+详细结果与未测项见 [证据入口](evidence/worker-lifecycle/README.md)。
