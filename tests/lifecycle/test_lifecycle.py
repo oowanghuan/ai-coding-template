@@ -262,6 +262,53 @@ class LifecycleTests(unittest.TestCase):
         self.change('worker-event',payload,op='same-key')
         with self.assertRaisesRegex(ValueError,'different intent'):
             self.change('worker-event',dict(payload,event='resume'),op='same-key')
+    def test_probe_available_missing_rejected_without_authority_or_receipt_change(self):
+        self.initial();self.enable();self.event('a','quota_limited')
+        probe=self.result('scheduler-tick',{},at=later(5))['probes'][0]
+        before=self.store.path.read_bytes();state=self.state()
+        with self.assertRaisesRegex(ValueError,'probe available must be explicit boolean'):
+            self.change('worker-event',dict(worker_id='worker-a',event='probe-result',probe_id=probe['probe_id']),
+                        at=later(6),op='missing-available')
+        self.assertEqual(self.store.path.read_bytes(),before)
+        self.assertEqual(self.state(),state)
+        self.assertNotIn('missing-available',self.state()['operations'])
+        from framework.local.lifecycle import observe
+        scratch=copy.deepcopy(state)
+        with self.assertRaisesRegex(ValueError,'probe available must be explicit boolean'):
+            observe(scratch,dict(worker_id='worker-a',event='probe-result',probe_id=probe['probe_id']),later(6))
+        self.assertEqual(scratch,state)
+    def test_probe_available_nonboolean_rejected_before_in_memory_or_authority_mutation(self):
+        from framework.local.lifecycle import observe
+        self.initial();self.enable();self.event('a','quota_limited')
+        probe=self.result('scheduler-tick',{},at=later(5))['probes'][0]
+        before=self.store.path.read_bytes();state=self.state()
+        invalid=[None,'true','false','',0,1,0.0,1.0,[],{}]
+        for index,value in enumerate(invalid):
+            payload=dict(worker_id='worker-a',event='probe-result',probe_id=probe['probe_id'],available=value)
+            scratch=copy.deepcopy(state)
+            with self.assertRaisesRegex(ValueError,'probe available must be explicit boolean'):
+                observe(scratch,payload,later(6))
+            self.assertEqual(scratch,state)
+            operation='invalid-available-'+str(index)
+            with self.assertRaisesRegex(ValueError,'probe available must be explicit boolean'):
+                self.change('worker-event',payload,at=later(6),op=operation)
+            self.assertEqual(self.store.path.read_bytes(),before)
+            self.assertEqual(self.state(),state)
+            self.assertNotIn(operation,self.state()['operations'])
+    def test_probe_available_boolean_false_then_true_settle_only_matching_intents(self):
+        self.initial();self.enable();self.event('a','quota_limited')
+        first=self.result('scheduler-tick',{},at=later(5))['probes'][0]
+        negative=self.event('a','probe-result',at=later(6),probe_id=first['probe_id'],available=False)
+        self.assertFalse(negative['stale_probe_result'])
+        group=self.state()['worker_runtime']['groups']['Q1']
+        self.assertTrue(group['limited']);self.assertIsNone(group['pending_probe'])
+        self.assertEqual(group['next_probe_at'],later(16));self.assertEqual(group['attempts'],1)
+        second=self.result('scheduler-tick',{},at=later(16))['probes'][0]
+        positive=self.event('b','probe-result',at=later(17),probe_id=second['probe_id'],available=True)
+        self.assertFalse(positive['stale_probe_result'])
+        group=self.state()['worker_runtime']['groups']['Q1']
+        self.assertFalse(group['limited']);self.assertIsNone(group['pending_probe'])
+        self.assertIsNone(group['next_probe_at']);self.assertEqual(group['attempts'],2)
 
 
 if __name__=='__main__':unittest.main()

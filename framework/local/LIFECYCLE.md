@@ -12,10 +12,10 @@ probe intents and task reservations; it does not yet execute provider probes or
 models. A lost probe response remains pending for reconciliation, never a blind
 second model request. The reviewed observer must resolve it from actual evidence.
 The observer must emit `probe-result` only for a known completed request with an
-explicit boolean `available`. This low-level trusted-controller API does not yet
-strictly reject a missing/non-boolean value (it follows the unavailable branch);
-unknown or malformed provider output must not be translated into this event.
-Strict response admission remains required before wiring a native observer.
+explicit boolean `available`. Missing or non-boolean values are rejected before
+any state/receipt mutation, preserving the pending request. This type check does
+not authenticate provider output or prove completion; a native observer must
+still establish those facts and must not translate unknown results into this event.
 No scheduler service is installed by importing or running `inspect`.
 
 Worker runtime separates its eight lifecycle states from work-package state and

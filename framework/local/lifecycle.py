@@ -142,6 +142,8 @@ def observe(state, payload, at):
     identity = payload['worker_id']
     w = runtime['workers'][identity]
     event = payload['event']
+    if event == 'probe-result' and type(payload.get('available')) is not bool:
+        raise ValueError('probe available must be explicit boolean')
     group = runtime['groups'][w['quota_group']]
     siblings = [key for key, value in runtime['workers'].items() if value['quota_group'] == w['quota_group']]
     w['last_observation'] = {'at': at, 'event': event, 'source': payload.get('source', 'controller')}
