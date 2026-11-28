@@ -87,6 +87,57 @@ class StoreBinding(LaunchReservations):
             except (ValueError, KeyError): return False
         return True
 
+    def runtime_authorize(self, record):
+        if (self._intent is None or record['invocation_id'] != self._intent['invocation_id'] or
+                record['binding_sha256'] != self._intent['binding_sha256']):
+            return False
+        proposal = dict(assignment_id=record['authority']['assignment_id'],
+            work_package_id=record['work_package_id'], baseline_sha=record['baseline_sha'], selection=record['selection'])
+        return self.authorize(record['authority'], proposal)
+
+    def observe_terminal(self, record):
+        """Record bounded process facts, even after fencing; never accept/release.
+
+        Called by the trusted executor after checking protected output hashes.
+        There is no public action accepting model-provided observations.
+        """
+        if record['state'] not in ('exited','stopped','timed_out','output_limited','outcome_unknown'):
+            raise ValueError('process is not terminal')
+        if (record['authority'] != self.authority or record['selection'] != self.selection or
+                record.get('writer_stop_confirmed') is not False or record.get('engineering_accepted') is not False):
+            raise ValueError('invalid terminal authority/acceptance assertion')
+        observation = {key: copy.deepcopy(record.get(key)) for key in
+            ('invocation_id','binding_sha256','intent_sha256','state','exit_code','stdout_sha256',
+             'stderr_sha256','stop_reason','authority_watch')}
+        with authority_lock(self.store.root):
+            state = self.store._read()
+            if state['store_id'] != self.store_id: raise ValueError('Store identity changed')
+            workspace = state['workspaces'][self.authority['workspace_id']]
+            run = workspace['run']
+            if (run is None or run.get('format') != 'provider-launch-intent/1' or
+                    any(run.get(k) != record[k] for k in ('invocation_id','binding_sha256','intent_sha256','authority','selection'))):
+                raise ValueError('terminal observation does not match Store launch intent')
+            previous = run.get('process_observation')
+            result = dict(invocation_id=record['invocation_id'], observed=True,
+                          writer_stop_confirmed=False, engineering_accepted=False, workspace_state=workspace['state'])
+            if previous is not None:
+                if previous != observation: raise ValueError('conflicting terminal observation')
+                return result  # No revision increment or new side effect on retry.
+            if workspace['state'] not in ('launching','running','unknown'):
+                raise ValueError('workspace already reconciled by another trusted path')
+            run['process_observation'] = observation
+            workspace['state'] = 'unknown'  # Main-process exit is not writer-stop proof.
+            result['workspace_state'] = 'unknown'
+            state['revision'] += 1
+            state['snapshot']['project']['revision'] += 1
+            key = 'provider-observed:' + record['invocation_id']
+            if key in state['operations']: raise ValueError('observation operation already recorded')
+            state['operations'][key] = dict(intent=fingerprint(observation), action='provider-process-observed',
+                actor=self.actor, at=now(), status='committed', result=result, revision=state['revision'])
+            shape(state)
+            atomic_json(self.store.path, state)
+            return result
+
     def reserve(self, record, *, cwd, journal_root):
         if cwd != self.cwd or record['selection'] != self.selection:
             raise ValueError('fixed invocation binding changed')

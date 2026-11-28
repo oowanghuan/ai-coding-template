@@ -24,9 +24,13 @@ same selection. Operations are:
   work-package milestone. A restored controller without the owned handle reports
   outcome_unknown for an unfinished record.
 - `registry.stop(adapter_id, invocation_id)`: request termination of the owned
-  process. Poll for its actual exit; do not interpret this return as stopped.
-- `registry.result(adapter_id, invocation_id)`: bounded stdout/stderr, hashes,
-  exit code, exact binding and input identity. Changed output is rejected.
+process. Poll for its actual exit; do not interpret this return as stopped.
+- `registry.result(adapter_id, invocation_id)`: bounded captured stdout/stderr,
+  hashes, exit code, exact binding and input identity. Changed output is rejected.
+  With StoreBinding, this also idempotently records a terminal process observation
+  in the Store. A failed/lost Store write can be reconciled by reading the result
+  again; it never restarts the process. Early stop may leave output uncaptured;
+  these hashes bind captured bytes, not a claim of complete provider output.
 
 The **shared launch reservation root** spans all adapters and controller
 instances of the resource pool, including replacement controllers. It must be
@@ -109,13 +113,41 @@ permission. A second authorization check observes changes before spawn. The
 original bound object can recognize its own committed intent; a replacement
 controller cannot treat a persisted intent as a new start permission.
 
-Transport exit/result stays an observation. This bridge intentionally leaves
-Store execution unresolved until the existing trusted reconciliation/handoff
-protocol obtains sufficient writer-stop evidence. It does not auto-submit,
+Transport exit/result stays an observation. Reading a protected terminal result
+records the matching invocation and output fingerprints in Store, setting the
+workspace to `unknown` pending writer reconciliation. Replay adds no revision or
+new operation; changed observations are rejected. This does not auto-submit,
 accept, release or mark a workspace finished based only on a parent exit code.
-There is no continuous monitor or native provider factory in this module.
-Revocation after `Popen` needs the existing supervisor's owned-process stop and
-checkpoint loop; these prelaunch checks do not continuously enforce a lease or
-prove that a running writer has stopped. This remains a real-deployment gate.
+
+### Runtime authorization and stop
+
+ProcessExecutor automatically binds StoreBinding's `runtime_authorize` and
+`observe_terminal` hooks together. Without those hooks, the plain process
+transport reports runtime authority support as false; it does not claim live
+authorization monitoring. No callback or policy can be supplied by Agent output.
+
+A separate read-only monitor checks the Store immediately after spawn, then
+waits 0.25 seconds between completed checks. The process supervisor remains
+independent of that check: denial, exception, or no successful observation for
+2 seconds triggers a kill/wait of its **owned main process**. A late successful
+check cannot reset an already expired observation. Supervision begins before
+the post-spawn journal write, so a slow write cannot defer the stop loop. The
+record distinguishes authority_revoked, authority_check_error and
+authority_check_timeout. Stale/failing checks do not cause repeated launches.
+
+This is bounded polling under a functioning OS scheduler, not instantaneous
+kernel permission revocation. The last-check-to-spawn window can still start a
+process; the tested behavior is subsequent owned stop, not zero executed
+instructions. The fixed-process tests declare a 5-second observed stop bound;
+that is not a real-provider SLA or a guarantee during OS suspension/starvation.
+A stuck read-only callback can outlive the process and delay Store writes, but
+does not block the separate stop loop. Terminal observation can be retried after
+Store availability returns without restarting work.
+
+Only the owned main process is killed. Descendant/outside writer termination,
+final checkpoint validation, safe handoff and real-provider side effects remain
+separate deployment gates. `writer_stop_confirmed=false` remains unchanged; no
+automatic recovery/release is granted by this monitor. There is no native CLI
+factory or installed continuous host service in this module.
 `tests/adapters/test_store_binding.py` covers real local Store/Git plus fixed
 Python processes under A01, with synthetic authentication/quota observations.

@@ -41,7 +41,7 @@ class StoreBindingTests(unittest.TestCase):
                 live['stop'].set(); live['thread'].join(8)
                 self.assertFalse(live['thread'].is_alive())
 
-    def bound(self, letter='a', credentials=None, journal_name=None):
+    def bound(self, letter='a', credentials=None, journal_name=None, program=None):
         if credentials is None:
             credentials = self.claim(letter)
             prepare(self.root, credentials, 'principal-'+letter, self.state()['revision'], 'prepare-'+letter)
@@ -55,7 +55,7 @@ class StoreBindingTests(unittest.TestCase):
         bridge = StoreBinding(project_root=self.root,reservation_root=self.fence,actor='principal-'+letter,
                               authority=authority,selection=selection,cwd=cwd)
         journal = self.root/(journal_name or 'journal-'+letter); journal.mkdir()
-        program = "from pathlib import Path;p=Path('src/%s/out.txt');p.parent.mkdir(exist_ok=True);p.write_text('fixed result')" % letter
+        program = program or "from pathlib import Path;p=Path('src/%s/out.txt');p.parent.mkdir(exist_ok=True);p.write_text('fixed result')" % letter
         e = ProcessExecutor(selection=selection,argv=['/usr/bin/python3','-I','-B','-S','-c',program],
             cwd=cwd,environment={'PATH':'/usr/bin:/bin'},journal_root=journal,
             pinned_files={'/usr/bin/python3':hashlib.sha256(Path('/usr/bin/python3').read_bytes()).hexdigest()},

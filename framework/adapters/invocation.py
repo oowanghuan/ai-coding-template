@@ -22,6 +22,50 @@ from .runspec import ID, bounded_run_request
 TERMINAL = {'exited', 'stopped', 'timed_out', 'output_limited', 'outcome_unknown'}
 
 
+class AuthorityWatch:
+    """Read-only checks off the supervision thread; a stuck check loses freshness.
+
+    This observes authorization, not kernel write permission. Only the owned
+    process is stopped; descendant isolation/stop proof remains separate.
+    """
+    INTERVAL = 0.25
+    MAX_STALE = 2.0
+
+    def __init__(self, check, record):
+        self.check = check; self.record = copy.deepcopy(record)
+        self.closed = threading.Event(); self.lock = threading.Lock()
+        self.last_valid = time.monotonic(); self.failure = None; self.checks = 0
+        self.last_result = 'pending'
+        self.thread = threading.Thread(target=self._run, daemon=True)
+        self.thread.start()
+
+    def _run(self):
+        while not self.closed.is_set():
+            try:
+                result = self.check(copy.deepcopy(self.record)) is True
+                failure = None if result else 'authority_revoked'
+            except Exception:
+                result = False; failure = 'authority_check_error'
+            with self.lock:
+                self.checks += 1
+                self.last_result = 'valid' if result else 'unavailable'
+                if time.monotonic() - self.last_valid >= self.MAX_STALE:
+                    self.failure = 'authority_check_timeout'
+                elif result: self.last_valid = time.monotonic()
+                else: self.failure = failure
+                failed = self.failure is not None
+            if failed or self.closed.wait(self.INTERVAL): return
+
+    def snapshot(self):
+        with self.lock:
+            # Once a deadline is exceeded, a late successful response cannot
+            # revive the original process or authorize a replacement launch.
+            if self.failure is None and time.monotonic() - self.last_valid >= self.MAX_STALE:
+                self.failure = 'authority_check_timeout'
+            return dict(supported=True, checks=self.checks, last_result=self.last_result,
+                        failure=self.failure, interval_seconds=self.INTERVAL, max_stale_seconds=self.MAX_STALE)
+
+
 class LaunchReservations:
     """Shared protected launch fence, not a task/permission authority.
 
@@ -88,6 +132,12 @@ class ProcessExecutor:
         self.argv = tuple(argv); self.environment = dict(environment)
         self.pins = dict(pinned_files); self.selection = copy.deepcopy(selection)
         self.authorize = authorize; self._live = {}; self._mutex = threading.RLock()
+        self.runtime_guard = getattr(launch_reservations, 'runtime_authorize', None)
+        self.terminal_observer = getattr(launch_reservations, 'observe_terminal', None)
+        if (self.runtime_guard is None) != (self.terminal_observer is None):
+            raise ValueError('runtime authority and terminal observation must be bound together')
+        if self.runtime_guard is not None and not all(callable(x) for x in (self.runtime_guard, self.terminal_observer)):
+            raise ValueError('trusted runtime callbacks required')
         self._check_namespace()
         self._verify_pins()
         self.binding = canonical_sha(dict(argv=self.argv, cwd=str(self.cwd),
@@ -208,24 +258,41 @@ class ProcessExecutor:
                 atomic(path, record); return self._view(record)
             live = dict(process=proc, stop=threading.Event())
             self._live[identity] = live; record.update(state='running')
-            # Even a journal failure after spawn leaves an owned supervisor.
-            try: atomic(path, record)
-            finally:
-                thread = threading.Thread(target=self._supervise,
-                    args=(record, live, fields['timeout_seconds'], fields['max_output_bytes']), daemon=True)
-                live['thread'] = thread; thread.start()
+            # Start supervision before a potentially slow/failing journal write.
+            # Its final write takes this same lock, so cannot precede this one.
+            thread = threading.Thread(target=self._supervise,
+                args=(copy.deepcopy(record), live, fields['timeout_seconds'], fields['max_output_bytes']), daemon=True)
+            live['thread'] = thread
+            try: thread.start()
+            except Exception:
+                if proc.poll() is None: proc.kill()
+                try: proc.wait(timeout=5)
+                finally:
+                    self._live.pop(identity, None)
+                    proc.stdout.close(); proc.stderr.close()
+                    record.update(state='outcome_unknown', reason='supervision thread failed')
+                    atomic(path, record)
+                raise
+            atomic(path, record)
             return copy.deepcopy(record)
 
     def _supervise(self, record, live, seconds, limit):
         proc = live['process']; selector = selectors.DefaultSelector()
         buffers = {'stdout': bytearray(), 'stderr': bytearray()}; reason = None
         deadline = time.monotonic() + seconds
+        watch = None
         for name in buffers:
             pipe = getattr(proc, name); os.set_blocking(pipe.fileno(), False)
             selector.register(pipe, selectors.EVENT_READ, name)
         try:
+            if self.runtime_guard is not None:
+                watch = AuthorityWatch(self.runtime_guard, record)
             while selector.get_map() or proc.poll() is None:
                 if live['stop'].is_set(): reason = 'stopped'
+                if watch is not None:
+                    observed = watch.snapshot()
+                    if observed['failure']:
+                        record['stop_reason'] = observed['failure']; reason = reason or 'stopped'
                 if time.monotonic() >= deadline: reason = reason or 'timed_out'
                 if reason:
                     if proc.poll() is None: proc.kill()  # Only this owned handle.
@@ -243,6 +310,7 @@ class ProcessExecutor:
                     if proc.poll() is None: proc.kill()
             proc.wait(timeout=5)
             record.update(state=reason or 'exited', exit_code=proc.returncode)
+            record['authority_watch'] = watch.snapshot() if watch is not None else {'supported': False}
             for name, data in buffers.items():
                 out = self.root / (record['invocation_id'] + '.' + name)
                 with out.open('xb') as stream: stream.write(data); stream.flush(); os.fsync(stream.fileno())
@@ -257,6 +325,7 @@ class ProcessExecutor:
                 with self._lock(): atomic(self._path(record['invocation_id']), record)
             except Exception: pass  # Prior launch intent remains unknown on recovery.
         finally:
+            if watch is not None: watch.closed.set()
             selector.close(); proc.stdout.close(); proc.stderr.close()
             with self._mutex: self._live.pop(record['invocation_id'], None)
 
@@ -280,4 +349,9 @@ class ProcessExecutor:
                 if hashlib.sha256(data).hexdigest() != record[name + '_sha256']:
                     raise ValueError('result content changed')
                 record[name] = data
-            return record
+        if self.terminal_observer is not None:
+            # Store locking and idempotent write happen outside the invocation
+            # lock. Failure can be reconciled by reading result again, never by
+            # restarting the process. Raw provider output cannot choose actions.
+            record['store_observation'] = self.terminal_observer(copy.deepcopy(record))
+        return record
