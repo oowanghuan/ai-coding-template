@@ -1,0 +1,2 @@
+{"sandbox_canaries": {"empty_candidate_anchor": true, "candidate_anchor_unlink": true, "trusted_write": true, "source_write": true, "trusted_hardlink": true, "outside_read": true, "outside_write": true, "network": true, "credentials_absent": true}}
+{"run": 68, "failures": 0, "errors": 0, "skipped": 0}

@@ -585,6 +585,35 @@ busy→available并获新任务执行权；最小修复提交
 原13/108项记录不冒充新SHA回归；本条仍blocked，等待Advisor复核及要求的非作者
 实跑。通知禁止新建/恢复其他模型会话，本轮没有绕过该限制获取复跑或充值激活预算。
 
+后续 Advisor [7240744826](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7240744826)
+对 `4a467caa4a0421e80fb31debb5ac8fa3704263b1` 给出忙碌准入源码整改限定GO。
+B1仅余非作者复跑补证，允许随下一批已有独立验证提交；暂无执行者时保留待验。
+本条仍blocked（非作者执行待验），不阻塞已获授权的WP-301/303工作，不重开已关闭
+的源码问题，也不把只读复核计为独立实跑。
+
+### 16.5 Owner 直接续做：通用调用及认证阻塞定位
+
+Owner 直接要求继续推进后，沿用OD-09推进WP-301，不把B1的独立复核等待扩大为
+其他授权工作的停止条件，也不充值4/4自动激活预算。实际进展是通用invocation组件，
+不是新增一套PMO或治理框架。
+
+最终实现 `d815cf4a542316d14524d3cbc2891e9fb8b2b0a7`：Registry显式绑定受信
+executor，提供start/status/stop/result；固定执行输入、实时授权回调、启动前
+意图持久化、同键及换键防重、未知结果不重启、真实进程输出/时限控制，保持
+direct-local-only专用域边界。新执行日志只记观察，不能授予或替代Store执行权。
+
+最终71方法全部通过（18项调用、53项适配器回归），9项隔离检查通过，32项输入
+逐blob绑定；作者实测，独立复核待完成。初批漏fixture和系统程序硬链接判断导致
+13个error，原件保留；中间65/68项通过不重复累加。证据及适用范围见
+[通用调用](evidence/invocation/README.md)。仍不等于真实供应商或完整Alpha验收。
+
+认证阻塞有实质缩小：两家原环境只读认证均为已登录；Claude原同组safe/restricted
+参数在最小环境失败，而只恢复原有USER即成功。单独LOGNAME/SHELL/PATH无效。
+没有复制凭证、修改登录或放宽权限；该历史遗漏不再作为待Owner审批的阻塞。
+真实调用仍需受信装配、Store授权/状态接线和准确执行边界，不能把认证成功冒充
+执行通过。下一安全切片是该接线和WP-303正常用户入口；B1复核单独继续，工作
+未被4/4通知预算视作完成。没有新建/恢复模型会话、费用、main合入或发布。
+
 <!-- v4-continuation-ready:v1 -->
 ```json
 {
@@ -615,10 +644,11 @@ busy→available并获新任务执行权；最小修复提交
       "status": "blocked",
       "depends_on": [],
       "progress": {
-        "checkpoint": "d151b5367ed3a1ee65a2a046ad303688ab4dc97c",
-        "milestone": "finite installed-version metadata and independent official-tool-surface audit completed; native live admission blocked on effective isolation/tool closure and same-environment authentication",
+        "checkpoint": "d815cf4a542316d14524d3cbc2891e9fb8b2b0a7",
+        "milestone": "Owner direct continuation: generic invocation implemented, 71 author-run checks passed. Both original CLI auth statuses verified; Claude minimal-environment failure reproduced and resolved by preserving existing USER. Real provider task execution still pending trusted wiring/authority/boundary integration; no new model sessions or budget recharge.",
         "evidence_refs": [
-          "docs/v4/evidence/native-admission/README.md"
+          "docs/v4/evidence/native-admission/README.md",
+          "docs/v4/evidence/invocation/README.md"
         ]
       }
     },
@@ -643,7 +673,7 @@ busy→available并获新任务执行权；最小修复提交
       "depends_on": [],
       "progress": {
         "checkpoint": "2c5a5f5c85687602e5ed4d24d0e8da8863ecdc81",
-        "milestone": "Advisor 7240075040 busy-admission counterexample reproduced; reject busy new members until trusted idle. Same 14 author-run isolated tests: old product 13 pass/1 fail, fixed product 14 pass. Still blocked pending Advisor re-review and non-author run; continuation 4/4 unchanged.",
+        "milestone": "Advisor 7240744826 scoped source-fix GO on 4a467caa4a0421e80fb31debb5ac8fa3704263b1; busy admission fixed. Non-author execution evidence remains pending and may join next existing independent batch; no full engineering acceptance. Continuation 4/4 unchanged; unrelated authorized work continues.",
         "evidence_refs": [
           "docs/v4/evidence/live-membership/busy-admission/README.md",
           "docs/v4/evidence/live-membership/README.md",
