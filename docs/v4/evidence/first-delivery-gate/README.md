@@ -1,6 +1,9 @@
 # 首份交付接入真实证据 Gate
 
 代码提交：`7ca3622908937339e6e064fd8e6e49fff8c914a5`。
+Advisor [7238038580](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7238038580)
+已对受审版本 `d151b5367ed3a1ee65a2a046ad303688ab4dc97c` 给出限定 GO：仅覆盖
+固定文本交付的取证与质量检查。评审为只读查证，不计为新增测试或整个 WP-303 验收。
 入口：`scripts/run_worker_demo.py --verify-first-delivery`，操作方式见
 [Alpha 说明](../../../../examples/alpha/README.md)。本批复用既有 collector/Gate，
 未修改调度、恢复、质量核心或原合成演示。它验证首份文本交付，不是实际供应商

@@ -1,6 +1,10 @@
 # 已准备但未启动工作区的有限恢复
 
 实现提交：`f31e751826ec68b0d4e6eb2868cc9ae21f8e1a04`。
+Advisor [7238039165](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7238039165)
+已对受审版本 `a04d279ba5923fb564b1036cd70652fd79a34309` 给出限定 GO：仅覆盖
+新建 direct-local-only 工作区、固定新控制器/Driver 且无旧外部启动许可的环境。
+只读评审不计为新增实跑，不扩大到旧工作区、真实额度恢复、异机或完整 Alpha。
 本批由第三次自然续做投递接手 WP-302，沿用 OD-09，未新开模型会话。
 
 ## 修复范围

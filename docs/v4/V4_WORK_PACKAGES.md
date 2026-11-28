@@ -447,8 +447,8 @@ Team 权威后端取舍仍 proposed，不阻塞本地工作。当前 WP 文档�
 |---|---|---|
 | WP-301 探测完成事件严格准入 | 实现与独立回归完成，限定技术 GO；Adapter 作者/非作者 Reviewer | 代码 `8901f4602b6588177a6ddc9e61520a10b838b8c5`，作者/独立24项各通过；不是原生响应认证 |
 | WP-301 原生执行边界 | 有限核查完成，native live 准入 blocked；Lead/独立边界 Reviewer | Codex同层进程隔离与完整有效工具面未证，Claude准确受限环境auth=false；[证据及解除条件](evidence/native-admission/README.md)，不重跑无变化失败配置、不新开模型会话 |
-| WP-303 首任务至 Gate 集成 | 本批固定文本成果接线已实测并独立复核；真实 CLI / 完整 Alpha 待验 | 代码 `7ca3622908937339e6e064fd8e6e49fff8c914a5`；独立14项边界测试及4个真实正反例，固定演示、真实collector/Gate串联；不将本条done视为整个WP-303 completed |
-| WP-302 已准备未启动任务恢复 | 专用本地执行域的有限实现及独立验证完成；完整恢复产品待验 | 代码 `f31e751826ec68b0d4e6eb2868cc9ae21f8e1a04`；新域机器排除外部启动、最终快照核对、原子撤权及一次逻辑交付；[真实结果含初批测试缺陷](evidence/prepared-recovery/README.md)，旧/默认工作区不追认 |
+| WP-303 首任务至 Gate 集成 | 固定文本成果接线获 Advisor 限定 GO；真实 CLI / 完整 Alpha 待验 | 受审 `d151b5367ed3a1ee65a2a046ad303688ab4dc97c`，代码 `7ca3622908937339e6e064fd8e6e49fff8c914a5`；独立14项边界测试及4个真实正反例；不将本条done视为整个WP-303 completed |
+| WP-302 已准备未启动任务恢复 | 专用本地执行域恢复获 Advisor 限定 GO；完整恢复产品待验 | 受审 `a04d279ba5923fb564b1036cd70652fd79a34309`，代码 `f31e751826ec68b0d4e6eb2868cc9ae21f8e1a04`；[真实结果含初批测试缺陷](evidence/prepared-recovery/README.md)，旧/默认工作区不追认 |
 | WP-004 无新评论时的续做 | 已自然投递、ACK、实际交付并在正常后继轮跳过done条目；运维作者/独立 Reviewer | 09:25失败保留；09:40读取恢复、选WP301，两条各一投递/ACK。仅本机正常有限路径，重启/撤权/额度恢复另验，四次上限不变 |
 | Team Issue主账本试点 | 方案待共同确定；Owner/Lead/Advisor | OD-02选定后单列实施，不先部署控制分支、第二台机器或新服务 |
 
@@ -461,6 +461,20 @@ Team 权威后端取舍仍 proposed，不阻塞本地工作。当前 WP 文档�
 认可 `e338d1fb259d5784f318e9575e0e21888174a8c0` 的设计与隔离原型。
 均不替代 Owner 授权、真实供应商集成或完整产品验收。本次由 Advisor 通知接手，
 不是无新消息续做的成功记录。
+
+后续两条评审也已按评论 ID、请审记录及受审 SHA 核对：
+
+- [7238038580](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7238038580)
+  回应请求7237343558，对 `d151b5367ed3a1ee65a2a046ad303688ab4dc97c` 的固定文本
+  成果取证与质量检查给出限定GO；同时关闭本机样本中“无人工提醒取得成果且正常
+  后继轮未重派首项”的观察项。不覆盖整个WP-303、原生显式start或重启/额度恢复。
+- [7238039165](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7238039165)
+  回应请求7237985018，对 `a04d279ba5923fb564b1036cd70652fd79a34309` 的新建
+  direct-local-only未启动恢复给出限定GO；仅限固定新控制器/Driver、没有旧外部
+  启动许可的环境。初批测试hook失败和两项目标复跑记录保留，工程验收仍为false。
+
+两条均为只读技术评审，未新增候选代码执行，不构成开工、合入或发布授权。本轮
+只登记评审结论与关闭对应事件，不修改产品代码、有限计划状态或3/4激活预算。
 
 下面是同一账本内的有限计划片段，不是第二主状态。按既有 OD-05 运维和 OD-09
 开发授权，将公开待办批次设为 `running`；本地启用前仍须核对固定受审代码、已读
