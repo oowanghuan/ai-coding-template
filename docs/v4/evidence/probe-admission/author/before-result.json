@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "/public/fixture/quality-governance-regression-02/sandbox.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "/public/fixture/wp301-probe-admission-author/before-runner.py",
+    "/public/fixture/quality-governance-regression-02/config.json"
+  ],
+  "start": "2026-11-28T08:05:05.660137+00:00",
+  "end": "2026-11-28T08:05:13.450128+00:00",
+  "exit_code": 1,
+  "before": {
+    "framework/local/lifecycle.py": "6eec3315d202f890c220fc0357967e8d18eacb38e40183f06fa6767f100ed057",
+    "tests/lifecycle/test_lifecycle.py": "f86252a7b65812bed52bf9d73dfb1995aa771d994ab7958555eaf602fda430f9",
+    "framework/local/store.py": "5b64a57eb47a2883e2ccf13be8e5c70eed5c50a731cc1b935867ede2af1852d6",
+    "schemas/local-state.schema.json": "aae186335a1817c572e381c28982ebcdb701184606668774c91b5c74cc4789c9",
+    "schemas/protocol.schema.json": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc"
+  },
+  "after": {
+    "framework/local/lifecycle.py": "6eec3315d202f890c220fc0357967e8d18eacb38e40183f06fa6767f100ed057",
+    "tests/lifecycle/test_lifecycle.py": "f86252a7b65812bed52bf9d73dfb1995aa771d994ab7958555eaf602fda430f9",
+    "framework/local/store.py": "5b64a57eb47a2883e2ccf13be8e5c70eed5c50a731cc1b935867ede2af1852d6",
+    "schemas/local-state.schema.json": "aae186335a1817c572e381c28982ebcdb701184606668774c91b5c74cc4789c9",
+    "schemas/protocol.schema.json": "b68e2410d419a49dc2c86eb671c076a88112b23a3fe8b9dd21754b8721782fcc"
+  },
+  "unchanged": true
+}

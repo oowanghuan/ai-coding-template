@@ -1,0 +1,24 @@
+test_probe_available_boolean_false_then_true_settle_only_matching_intents (test_lifecycle.LifecycleTests) ... ok
+test_probe_available_missing_rejected_without_authority_or_receipt_change (test_lifecycle.LifecycleTests) ... FAIL
+test_probe_available_nonboolean_rejected_before_in_memory_or_authority_mutation (test_lifecycle.LifecycleTests) ... FAIL
+
+======================================================================
+FAIL: test_probe_available_missing_rejected_without_authority_or_receipt_change (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/public/source/tests/lifecycle/test_lifecycle.py", line 270, in test_probe_available_missing_rejected_without_authority_or_receipt_change
+    self.change('worker-event',dict(worker_id='worker-a',event='probe-result',probe_id=probe['probe_id']),
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_probe_available_nonboolean_rejected_before_in_memory_or_authority_mutation (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/public/source/tests/lifecycle/test_lifecycle.py", line 290, in test_probe_available_nonboolean_rejected_before_in_memory_or_authority_mutation
+    observe(scratch,payload,later(6))
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 7.268s
+
+FAILED (failures=2)
