@@ -1,0 +1,1 @@
+{"quality_canaries": {"case_root_unlink": true, "trusted_plan_write": true, "subject_hardlink_alias": true, "network_connect": true, "credential_environment_absent": true}}

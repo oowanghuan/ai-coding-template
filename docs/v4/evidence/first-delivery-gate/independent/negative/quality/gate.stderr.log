@@ -1,0 +1,1 @@
+{"gate_canaries": {"gate_root_unlink": true, "quality_receipt_write": true, "quality_receipt_hardlink": true, "outside_read": true, "outside_write": true, "network_connect": true, "credential_environment_absent": true}}

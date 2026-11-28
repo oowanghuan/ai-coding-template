@@ -1,0 +1,23 @@
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+python3: error: couldn't create cache file '/tmp/xcrun_db-pDbZpJKB' (errno=Operation not permitted)
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+python3: error: couldn't create cache file '/tmp/xcrun_db-r5xP0BHM' (errno=Operation not permitted)
+test_ancestor_directory_symlink_and_special_leaf_refused (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_bool_or_nonpositive_execution_identity_revision_and_pid_refused (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_duplicate_keys_in_real_authority_are_rejected_before_extract (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_exact_assignment_workspace_wp_and_baseline_bindings (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_extract_actual_bytes_receipt_and_raw_authority_fingerprint_without_mutation (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_fake_passed_report_is_not_a_delivery_receipt (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_fixed_path_and_registered_workspace_cannot_escape (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_interfaces_present (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_only_known_finished_process_and_committed_first_submit_are_accepted (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_real_capsule_binds_complete_subject_and_fixed_independent_oracle (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_receipt_and_actual_byte_or_hash_mismatch (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_strict_json_duplicate_keys_and_nonfinite_constants (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_symlink_and_hardlink_authority_or_artifact_refused (test_first_delivery_gate.FirstDeliveryTests) ... ok
+test_wrong_but_self_consistent_actual_artifact_is_not_the_oracle (test_first_delivery_gate.FirstDeliveryTests) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 2.394s
+
+OK

@@ -1,0 +1,37 @@
+{"sandbox_canaries": {"candidate_root_unlink": true, "trusted_write": true, "source_write": true, "trusted_hardlink_alias": true, "outside_read": true, "outside_write": true, "network_connect": true, "credential_environment_absent": true}}
+{
+  "format": "synthetic-worker-demo/1",
+  "evidence_level": "synthetic_fixture",
+  "provider_live": false,
+  "baseline_sha": "bb3d3188c1715ab91b52b7efac03529f5641dd25",
+  "parallel_processes_observed": true,
+  "original_writer_exit": -15,
+  "checkpoint": {
+    "checkpoint_id": "checkpoint-ceabb5773ce6424bb192a1f10ba059ce",
+    "path": ".ai-org/checkpoints/checkpoint-ceabb5773ce6424bb192a1f10ba059ce",
+    "manifest_sha256": "1ccd11fa3a57c94bf610b44a29c6801b1f79aa54797c4fb067ee891eaff18af2",
+    "binding": "8c91011d1ad65e8f89b9b9f06da39c17c5765924e76f8ef0961bcb6efbcf2e9c",
+    "unknown_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "old_token": 1,
+  "new_token": 2,
+  "new_workspace": "<independent-positive-fixture>/C/project/.ai-org/workspaces/workspace-2f760e4e153e42488a0644d7ee9e5171",
+  "old_workspace": "<independent-positive-fixture>/C/project/.ai-org/workspaces/workspace-18eb8dc00e4a4bc9999baaa37db79e99",
+  "old_worker_recovered_to_pool": true,
+  "old_token_rejected": true,
+  "logical_deliveries": {
+    "WP-A": 1,
+    "WP-B": 1
+  },
+  "duplicate_delivery_rejected": true,
+  "pmo_model_calls": 0,
+  "actual_model_calls": 0,
+  "states": {
+    "worker-a": "available",
+    "worker-b": "available",
+    "worker-c": "available"
+  },
+  "engineering_accepted": false,
+  "scope": "fixed synthetic fixture under enclosing A01; not actual Claude/Codex execution",
+  "passed": true
+}
