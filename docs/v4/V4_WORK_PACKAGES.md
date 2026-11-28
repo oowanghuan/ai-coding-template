@@ -634,6 +634,23 @@ Advisor [7241630681](https://github.com/oowanghuan/ai-coding-template/issues/3#i
 下一安全项仍为受信CLI工厂/Store实时授权状态接线与WP-303正常入口。本意见处理
 不增开模型会话、不扩充4/4激活预算、不改权限或费用、不合入main或发布。
 
+### 16.7 Store 实时执行权接线
+
+Owner 盒盖后明确要求继续，沿用 OD-09 推进WP-301；未重启任务或改动旧4/4自动
+唤起预算。实现 `64704dca23d73a73c433d34d8723d4b6a661fc85` 新增
+`framework/adapters/store_binding.py`：启动前核对现有Store的认领/租约、工作包
+与规范授权、预算、Worker/Host/共享额度和真实Git工作区，原子保存启动意图后
+才允许通用调用入口继续。Store提交后丢回执或下一步失败时保留未明状态。
+
+[实测记录](evidence/store-binding/README.md)：初轮87过，最终88过（11新接线+77
+原回归），0 fail/error/skip；两轮各9项隔离检查通过，最终35项输入绑定提交。
+实际Popen前观察到Store已有唯一启动意图；额度受限组不能启动，独立组仍运行。
+作者运行，状态为 `submitted / independent-review-pending`，不冒充工程验收。
+
+不自动按主进程退出释放执行权；没有部署真实CLI或持续运行控制器。下一切片为
+受信工厂/终态对账、运行中停止与检查点、WP-303正常入口。历史跨Adapter整改、
+B1非作者复跑分别保持各自待复核范围，不阻塞其他已授权代码工作。
+
 <!-- v4-continuation-ready:v1 -->
 ```json
 {
@@ -664,12 +681,13 @@ Advisor [7241630681](https://github.com/oowanghuan/ai-coding-template/issues/3#i
       "status": "blocked",
       "depends_on": [],
       "progress": {
-        "checkpoint": "d27b65724b821443d992ba1f58c2925504436090",
-        "milestone": "Cross-adapter duplicate launch reproduced and repaired with shared protected reservations; author 77 passed, original workspace starts once and independent workspace runs. Advisor re-review/non-author execution pending. Native factory and Store live wiring pending; no full Alpha acceptance.",
+        "checkpoint": "64704dca23d73a73c433d34d8723d4b6a661fc85",
+        "milestone": "Store live prelaunch authority bridge implemented; author final88 passed,35inputs bound. Actual spawn preceded by Store intent; limited group blocked and independent group executed. Native factory, continuous owned-stop/reconciliation and full Alpha still pending; independent review/execution pending.",
         "evidence_refs": [
           "docs/v4/evidence/native-admission/README.md",
           "docs/v4/evidence/invocation/README.md",
-          "docs/v4/evidence/cross-adapter-launch/README.md"
+          "docs/v4/evidence/cross-adapter-launch/README.md",
+          "docs/v4/evidence/store-binding/README.md"
         ]
       }
     },

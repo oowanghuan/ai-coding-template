@@ -1,0 +1,65 @@
+{
+  "implementation_commit": "64704dca23d73a73c433d34d8723d4b6a661fc85",
+  "run_by": "author",
+  "evidence_level": "synthetic_fixture",
+  "provider_model_calls": 0,
+  "engineering_accepted": false,
+  "independent_execution": "pending",
+  "runs": {
+    "initial": {
+      "tests": {
+        "run": 87,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "canaries": 9,
+      "source_unchanged": true,
+      "frozen_unchanged": true,
+      "observations": [
+        {
+          "store_bridge": {
+            "actual_exit_code": 0,
+            "workspace_state": "launching",
+            "writer_stop_confirmed": false,
+            "launch_operations": 1,
+            "task_state": "in_progress",
+            "engineering_accepted": false
+          }
+        }
+      ]
+    },
+    "final": {
+      "tests": {
+        "run": 88,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "canaries": 9,
+      "source_unchanged": true,
+      "frozen_unchanged": true,
+      "observations": [
+        {
+          "store_bridge": {
+            "actual_exit_code": 0,
+            "workspace_state": "launching",
+            "writer_stop_confirmed": false,
+            "launch_operations": 1,
+            "task_state": "in_progress",
+            "engineering_accepted": false,
+            "observed_before_actual_spawn": [
+              {
+                "workspace_state": "launching",
+                "launch_operations": 1,
+                "writer_stop_confirmed": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

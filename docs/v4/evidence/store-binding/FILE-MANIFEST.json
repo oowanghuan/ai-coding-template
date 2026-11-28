@@ -1,0 +1,101 @@
+{
+  "copies_are_review_artifacts_not_runnable_bundles": true,
+  "files": [
+    {
+      "path": "initial/stdout.log",
+      "raw_sha256": "7a7697f4f40fe6328b52ec84e36f6f6e8edb8041951920259bb9e693707b5628",
+      "public_sha256": "7a7697f4f40fe6328b52ec84e36f6f6e8edb8041951920259bb9e693707b5628",
+      "redacted": false
+    },
+    {
+      "path": "initial/stderr.log",
+      "raw_sha256": "1ed5aff3c2d6e874c9f4cbb3987c3993b8b044bc5d2ee23642953132c27dc15e",
+      "public_sha256": "1ed5aff3c2d6e874c9f4cbb3987c3993b8b044bc5d2ee23642953132c27dc15e",
+      "redacted": false
+    },
+    {
+      "path": "initial/launch.json",
+      "raw_sha256": "822fd5488132d9952bdbb86cf29c966adf40539c2c2196e9638963bae9c3b056",
+      "public_sha256": "bdf42c8b0022aa8151b671ce633bef7b5ad91ef98d77bb6eca7a46208bc4fd8f",
+      "redacted": true
+    },
+    {
+      "path": "initial/result.json",
+      "raw_sha256": "39876375dfe03b0afaf847e42381a8e297a780b12a3447d1d723c70a6db60f2a",
+      "public_sha256": "3d87fd7fdadd00911c05cc029848bec5b3da7d92de7bee7d961ec1985500c589",
+      "redacted": true
+    },
+    {
+      "path": "initial/harness.py.txt",
+      "raw_sha256": "bca8949ff04ba3639bae10889ab5607995fdd8bffb83c93f5259a56b58c69370",
+      "public_sha256": "8b71627324ad6702f1635ff33ca234b23e6472639c002012ab56c14b22d255ef",
+      "redacted": true
+    },
+    {
+      "path": "initial/wrapper.py.txt",
+      "raw_sha256": "e666ac0193f4f5be1d80b80f66dee9e5a9c6d3eb235779a618dc4e9d607a6b78",
+      "public_sha256": "e666ac0193f4f5be1d80b80f66dee9e5a9c6d3eb235779a618dc4e9d607a6b78",
+      "redacted": false
+    },
+    {
+      "path": "initial/sandbox.sb",
+      "raw_sha256": "2641796bfbb07b82c31f0f1167e6b5756d43ab5201498892138395118c656a9f",
+      "public_sha256": "f3a4fce7c6b3818d89abb1930054d823f8e6735493447a1ab7e611f1b6f8f472",
+      "redacted": true
+    },
+    {
+      "path": "initial/prototype/framework/adapters/store_binding.py.txt",
+      "raw_sha256": "5dfd4a26db66f84e6dc800b64302bc0b77ff69bf66a71835b62e97cbcc3402ad",
+      "public_sha256": "5dfd4a26db66f84e6dc800b64302bc0b77ff69bf66a71835b62e97cbcc3402ad",
+      "redacted": false
+    },
+    {
+      "path": "initial/prototype/tests/adapters/test_store_binding.py.txt",
+      "raw_sha256": "39afe2531b900c75571d4e7e1754763032d742f0a916c2ab1880e50f4208707c",
+      "public_sha256": "39afe2531b900c75571d4e7e1754763032d742f0a916c2ab1880e50f4208707c",
+      "redacted": false
+    },
+    {
+      "path": "final/stdout.log",
+      "raw_sha256": "3eab0b424f9a93c5638aaa5878cf6cba08b2588e30a56442b6f328cccf2ed0e5",
+      "public_sha256": "3eab0b424f9a93c5638aaa5878cf6cba08b2588e30a56442b6f328cccf2ed0e5",
+      "redacted": false
+    },
+    {
+      "path": "final/stderr.log",
+      "raw_sha256": "470dc66c6c2bc5adcfb6c0069d20820456dde27a5e13a7be396856a16d128727",
+      "public_sha256": "470dc66c6c2bc5adcfb6c0069d20820456dde27a5e13a7be396856a16d128727",
+      "redacted": false
+    },
+    {
+      "path": "final/launch.json",
+      "raw_sha256": "d7d8790b748a0a857718985e3aa783309fc92114ee87b56dd9f93e8ae4d6cd99",
+      "public_sha256": "4d274aa050d7db0ad8f35756f783598e856bde4991cb1eb59a96d80acf94b7cb",
+      "redacted": true
+    },
+    {
+      "path": "final/result.json",
+      "raw_sha256": "4341ba56912c23f166ce24e01acbcb706a94ad5f51b72d82932546a685d8ca33",
+      "public_sha256": "ced2f1ad2b8a8a9f7d0299f9ce751e0f16dfce0acbc80d77a8cea721918fcf33",
+      "redacted": true
+    },
+    {
+      "path": "final/harness.py.txt",
+      "raw_sha256": "bca8949ff04ba3639bae10889ab5607995fdd8bffb83c93f5259a56b58c69370",
+      "public_sha256": "8b71627324ad6702f1635ff33ca234b23e6472639c002012ab56c14b22d255ef",
+      "redacted": true
+    },
+    {
+      "path": "final/wrapper.py.txt",
+      "raw_sha256": "e666ac0193f4f5be1d80b80f66dee9e5a9c6d3eb235779a618dc4e9d607a6b78",
+      "public_sha256": "e666ac0193f4f5be1d80b80f66dee9e5a9c6d3eb235779a618dc4e9d607a6b78",
+      "redacted": false
+    },
+    {
+      "path": "final/sandbox.sb",
+      "raw_sha256": "9d3087984068abebd1e12e67473542de0f9fde375f27bf57889ab6e1d4e0182b",
+      "public_sha256": "f3a4fce7c6b3818d89abb1930054d823f8e6735493447a1ab7e611f1b6f8f472",
+      "redacted": true
+    }
+  ]
+}
