@@ -26,7 +26,13 @@ Other independent groups can continue. A healthy heartbeat cannot clear quota,
 authentication, budget, Owner pause or uncertain stop. Retry-at is nullable;
 locally computed next-probe-at is explicitly policy, not a vendor reset promise.
 Repeated limits preserve the current attempt budget. Probe results bind a durable
-generation/attempt ID. Only a trusted project-budget event changes project budget;
+generation/attempt ID. Each new limit observation advances the generation without
+discarding an outstanding probe. Until that old request is reconciled, ticks do
+not create another request. A late result for the outstanding old generation only
+settles that request; it cannot clear the newer limit or its retry time. A new
+probe must cover the latest generation and satisfy the remaining attempt budget
+and backoff. Replaying the same operation returns its receipt without advancing
+the generation. Only a trusted project-budget event changes project budget;
 per-call or session limits cannot stop unrelated resources.
 
 The single-host controller still trusts its operator and cooperating processes
@@ -41,12 +47,23 @@ operations before a new claim. Stop confirmation requires the controller's owned
 process handle, matching registered PID/group, completed wait and absent process
 group; the launcher must prevent process escape. A PID copied from a file is not
 enough. This does not establish an arbitrary native CLI process-tree guarantee.
+Stop confirmation also compares the actual workspace with the pinned snapshot:
+files, directories, bytes, executable modes and Git HEAD. A checkpoint captured
+before the writer's final change is insufficient; preserve the workspace and take
+a final checkpoint after the writer stops. Claim and restore recheck this binding,
+including after restore writes; an observed change keeps the new workspace
+unexecutable. These checks require the supervisor to exclude other authorized
+writers and do not make filesystem observations atomic against a hostile OS owner.
 
 Handoff restores into a new registered worktree while preserving the previous
 directory. A durable restore intent prevents partially restored output being run
 or delivered. Unknown external operations block; a model's claimed reconciliation
 cannot clear them. Session-native recovery is optional; file checkpoint recovery
 does not depend on restoring another vendor's native Session.
+The current handoff copies assigned changed files and executable bits. Although
+snapshot validation detects empty-directory changes in the old workspace, this
+handoff does not yet reproduce empty-directory topology in the new worktree.
+Do not equate the file-preservation result with complete filesystem-tree replay.
 
 Dedicated, elastic and restricted are registered contribution modes. This
 increment records them; time-window scheduling, restrictions beyond existing

@@ -14,7 +14,7 @@ from framework.local.store import Store, find, now, shape, UNKNOWN
 from framework.local import lifecycle
 from framework.local.runner import git, workspace_entries, prepare, verify_workspace
 from framework.core.protocol import validate, within
-from framework.recovery.checkpoint import create_snapshot, load_snapshot, restore_snapshot
+from framework.recovery.checkpoint import create_snapshot, load_snapshot, restore_snapshot, open_directory, scan
 
 
 def binding(wp):
@@ -93,6 +93,8 @@ def confirm_stopped(root, credentials, actor, process):
 
     The reviewed launcher must have used start_new_session and a policy denying
     process escape. A live process group is unresolved even if its leader exited.
+    A snapshot taken before exit is provisional: final workspace bytes must still
+    match, otherwise preserve them and checkpoint again after the actual stop.
     """
     status = process.poll()
     if status is None:
@@ -141,7 +143,44 @@ def checked_checkpoint(root, state, wp, workspace):
         raise ValueError('latest checkpoint/assignment pin mismatch')
     if context['unknown_operations']:
         raise ValueError('unknown operations require reconciliation before handoff')
+    check_workspace_snapshot(root, workspace, manifest)
     return manifest
+
+
+def check_workspace_snapshot(root, workspace, manifest):
+    """Validate stopped-writer content, not merely a still-valid snapshot pin.
+
+    The authority lock serializes supervisor state, not filesystem writes. The
+    supervisor must keep the stopped workspace without other authorized writers;
+    same-account hostile concurrent writes are outside this single-host contract.
+    Recheck at stop, claim and before/after restore to reject observed late changes.
+    Git administrative metadata is excluded as in create_snapshot; HEAD remains
+    bound and no path/link/type validation is relaxed for a stopped workspace.
+    """
+    source = verify_workspace(root, workspace)
+    head = git(source, 'rev-parse', 'HEAD').decode().strip()
+    if head != manifest['context']['last_valid_commit']:
+        raise ValueError('workspace HEAD differs from checkpoint; preserve and create final checkpoint')
+    fd = open_directory(source)
+    try:
+        first = scan(fd, exclude_git=manifest['excluded_git_metadata'])
+        second = scan(fd, exclude_git=manifest['excluded_git_metadata'])
+    finally:
+        os.close(fd)
+    expected = {name: {key: entry[key] for key in ('sha256', 'size', 'mode')}
+                for name, entry in manifest['files'].items()}
+    if (first != second or first[0] != expected or first[1] != manifest['directories']):
+        raise ValueError('workspace differs from checkpoint; preserve and create final checkpoint after stop')
+    # Also reject a swapped root/HEAD during the scan, without following links.
+    current = verify_workspace(root, workspace)
+    current_fd = open_directory(current)
+    try:
+        if scan(current_fd, exclude_git=manifest['excluded_git_metadata']) != second:
+            raise ValueError('workspace changed while validating final checkpoint')
+    finally:
+        os.close(current_fd)
+    if git(current, 'rev-parse', 'HEAD').decode().strip() != head:
+        raise ValueError('workspace HEAD changed while validating final checkpoint')
 
 
 def prepare_handoff(root, credentials, actor, expected_revision, operation_id):
@@ -193,6 +232,9 @@ def prepare_handoff(root, credentials, actor, expected_revision, operation_id):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(content)
                 path.chmod(0o700 if mode == '100755' else 0o600)
+        # A late old-workspace change must never turn the persisted creating
+        # intent into an executable prepared handoff, even if restore succeeded.
+        checked_checkpoint(store.root, state, wp, old_workspace)
         target['restored'] = {'manifest_sha256': source['manifest_sha256'], 'changed_paths': [e[0] for e in edits]}
         target['state'] = 'prepared'
         commit(store, state, 'restore-handoff', dict(assignment_id=new['id'], **target['restored']))

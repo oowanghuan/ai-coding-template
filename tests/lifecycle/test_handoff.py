@@ -46,7 +46,7 @@ class HandoffTests(unittest.TestCase):
             process.wait(timeout=5)
             if process.stdout:process.stdout.close()
             if process.stderr:process.stderr.close()
-    def start_old(self):
+    def start_old(self, writer_code=None):
         self.old=self.claim('a')
         prepare(self.root,self.old,'principal-a',self.state()['revision'],'prepare-old')
         self.old_workspace=self.state()['workspaces'][self.old['workspace_id']]
@@ -55,8 +55,8 @@ class HandoffTests(unittest.TestCase):
         (self.old_path/'src/a/deleted.txt').unlink()
         (self.old_path/'src/a/draft.txt').write_bytes(b'untracked checkpoint result\n')
         self.result('run-begin',dict(self.old,path='src/a/provider-output.txt',content_sha256='a'*64),actor='principal-a')
-        process=subprocess.Popen([sys.executable,'-B','-S','-c','import time;time.sleep(60)'],cwd=self.old_path,
-            stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True)
+        process=subprocess.Popen([sys.executable,'-B','-S','-c',writer_code or 'import time;time.sleep(60)'],cwd=self.old_path,
+            stdin=subprocess.PIPE if writer_code else subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True)
         self.processes.append(process);self.process=process
         self.assertEqual(os.getpgid(process.pid),process.pid)
         self.store.workspace_phase(self.old,'principal-a','launching','running',run=dict(state='running',pid=process.pid,process_group=process.pid,unknown_operations=[]))
@@ -95,6 +95,75 @@ class HandoffTests(unittest.TestCase):
         self.assertEqual({str(p.relative_to(self.old_path)):p.read_bytes() for p in self.old_path.rglob('*') if p.is_file()},before)
         delivery=self.result('submit',dict(new,path='src/a/draft.txt',sha256=hashlib.sha256(b'untracked checkpoint result\n').hexdigest()),actor='principal-c')
         self.assertFalse(delivery['accepted']);self.assertEqual(len(self.state()['deliveries']),1)
+
+    def test_final_writer_mutation_requires_post_stop_snapshot_before_takeover(self):
+        # The registered child, not this test process, performs the final write.
+        self.start_old("import sys;from pathlib import Path;sys.stdin.readline();Path('src/a/draft.txt').write_bytes(b'final legitimate writer result\\n')")
+        first=self.snapshot()
+        self.process.stdin.write(b'finish\n');self.process.stdin.close();self.process.wait(timeout=5)
+        self.assertEqual(self.process.returncode,0)
+        self.assertEqual((self.old_path/'src/a/draft.txt').read_bytes(),b'final legitimate writer result\n')
+        self.event('a','quota_limited');before=self.store.path.read_bytes()
+        with self.assertRaisesRegex(ValueError,'workspace differs from checkpoint'):
+            handoff.confirm_stopped(self.root,self.old,'principal-a',self.process)
+        self.assertEqual(self.store.path.read_bytes(),before)
+        self.assertEqual(self.state()['workspaces'][self.old['workspace_id']]['state'],'unknown')
+        with self.assertRaises(ValueError):self.claim('c',wp='WP-A')
+        final=self.snapshot();self.assertNotEqual(first['manifest_sha256'],final['manifest_sha256'])
+        handoff.confirm_stopped(self.root,self.old,'principal-a',self.process)
+        new=self.new_claim();handoff.prepare_handoff(self.root,new,'principal-c',self.state()['revision'],'prepare-final-writer')
+        target=self.root/self.state()['workspaces'][new['workspace_id']]['path']
+        self.assertEqual((target/'src/a/draft.txt').read_bytes(),b'final legitimate writer result\n')
+
+    def test_post_stop_workspace_mutations_block_claim_without_authority_write(self):
+        self.ready_for_takeover()
+        draft=self.old_path/'src/a/draft.txt';original=draft.read_bytes()
+        added=self.old_path/'src/a/late.txt';empty=self.old_path/'src/a/empty'
+        variants=[
+            ('changed',lambda:draft.write_bytes(b'late changed bytes'),lambda:draft.write_bytes(original)),
+            ('added',lambda:added.write_bytes(b'late added bytes'),lambda:added.unlink()),
+            ('deleted',lambda:draft.unlink(),lambda:draft.write_bytes(original)),
+            ('executable',lambda:draft.chmod(0o700),lambda:draft.chmod(0o600)),
+            ('empty-directory',lambda:empty.mkdir(),lambda:empty.rmdir()),
+            ('symlink',lambda:added.symlink_to(draft),lambda:added.unlink()),
+            ('hardlink',lambda:os.link(draft,added),lambda:added.unlink()),
+            ('HEAD',lambda:git(self.old_path,'-c','user.name=Synthetic','-c','user.email=fixture@example.invalid','commit','--allow-empty','-qm','late commit'),
+             lambda:git(self.old_path,'reset','--soft',self.sha)),
+        ]
+        for name,mutate,undo in variants:
+            with self.subTest(mutation=name):
+                mutate();before=self.store.path.read_bytes()
+                try:
+                    with self.assertRaises(ValueError):self.claim('c',wp='WP-A')
+                    self.assertEqual(self.store.path.read_bytes(),before)
+                    self.assertEqual(len(self.state()['snapshot']['assignments']),1)
+                finally:undo()
+        self.new_claim()
+
+    def test_post_claim_workspace_change_keeps_new_target_creating(self):
+        self.ready_for_takeover();new=self.new_claim()
+        draft=self.old_path/'src/a/draft.txt';draft.write_bytes(b'post claim unexpected write\n')
+        with self.assertRaisesRegex(ValueError,'workspace differs from checkpoint'):
+            handoff.prepare_handoff(self.root,new,'principal-c',self.state()['revision'],'prepare-post-claim')
+        self.submit_forbidden(new)
+        self.assertEqual(draft.read_bytes(),b'post claim unexpected write\n')
+
+    def test_workspace_change_during_restore_never_publishes_prepared(self):
+        self.ready_for_takeover();new=self.new_claim();original_restore=handoff.restore_snapshot
+        draft=self.old_path/'src/a/draft.txt'
+        def late_change(*args,**kwargs):
+            result=original_restore(*args,**kwargs)
+            draft.write_bytes(b'changed during restore\n')
+            return result
+        with patch('framework.local.handoff.restore_snapshot',side_effect=late_change):
+            with self.assertRaisesRegex(ValueError,'workspace differs from checkpoint'):
+                handoff.prepare_handoff(self.root,new,'principal-c',self.state()['revision'],'prepare-mid-restore')
+        self.submit_forbidden(new)
+        self.assertEqual(draft.read_bytes(),b'changed during restore\n')
+        saved=self.state()['workspaces'][new['workspace_id']]
+        self.assertNotIn('restored',saved)
+        # Partial/new output is retained for reconciliation; never overwrite it.
+        self.assertEqual((self.root/saved['path']/'src/a/draft.txt').read_bytes(),b'untracked checkpoint result\n')
     def test_running_or_unregistered_owned_process_cannot_confirm_stopped(self):
         self.start_old();self.snapshot()
         with self.assertRaisesRegex(ValueError,'still running'):handoff.confirm_stopped(self.root,self.old,'principal-a',self.process)

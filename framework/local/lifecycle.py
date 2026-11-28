@@ -150,8 +150,13 @@ def observe(state, payload, at):
         if retry is not None:
             timestamp(retry)
         if not group['limited']:
-            group.update(attempts=0, pending_probe=None, generation=group['generation'] + 1,
+            group.update(attempts=0, pending_probe=None,
                          next_probe_at=stamp(at, runtime['policy']['initial_backoff']))
+        # Each distinct committed observation supersedes prior availability
+        # evidence. Store operation replay does not re-enter this function.
+        # Keep an outstanding probe until its actual response is reconciled:
+        # superseding its result is not cancellation of the external operation.
+        group['generation'] += 1
         group.update(limited=True, reason=event)
         if retry is not None:
             group['retry_at'] = max(group['retry_at'] or retry, retry)
@@ -187,8 +192,17 @@ def observe(state, payload, at):
     elif event == 'probe-result':
         if group['pending_probe'] is None or payload['probe_id'] != group['pending_probe']:
             raise ValueError('stale/unknown probe result')
+        issued = re.fullmatch(r'probe:' + re.escape(w['quota_group']) + r':(0|[1-9][0-9]*):([1-9][0-9]*)', group['pending_probe'])
+        if (issued is None or int(issued[1]) > group['generation'] or
+                int(issued[2]) != group['attempts']):
+            raise ValueError('invalid pending probe generation/attempt')
+        stale_probe_result = int(issued[1]) < group['generation']
         group['pending_probe'] = None
-        if payload.get('available') is True:
+        if stale_probe_result:
+            # Receipt of this old response resolves only its outstanding intent.
+            # Neither success nor failure changes the newer limit/backoff/budget.
+            pass
+        elif payload.get('available') is True:
             group.update(limited=False, reason=None, retry_at=None, next_probe_at=None)
         else:
             delay = min(runtime['policy']['max_backoff'], runtime['policy']['initial_backoff'] * 2 ** min(group['attempts'], 16))
@@ -197,7 +211,10 @@ def observe(state, payload, at):
         raise ValueError('unsupported worker event')
     for key in runtime['workers']:
         refresh(state, key)
-    return {'worker_id': identity, 'status': w['status'], 'group': copy.deepcopy(group)}
+    result = {'worker_id': identity, 'status': w['status'], 'group': copy.deepcopy(group)}
+    if event == 'probe-result':
+        result['stale_probe_result'] = stale_probe_result
+    return result
 
 
 def tick(state, at, create_probes=True):

@@ -138,7 +138,66 @@ class LifecycleTests(unittest.TestCase):
         after=self.state()['worker_runtime']['groups']['Q1']
         self.assertEqual(after['pending_probe'],pending['probe_id'])
         self.assertEqual(after['attempts'],before['attempts'])
-        self.assertEqual(after['generation'],before['generation'])
+        self.assertGreater(after['generation'],before['generation'])
+        self.assertEqual(self.result('scheduler-tick',{},at=later(20))['probes'],[])
+    def test_newer_shared_quota_limit_cannot_be_cleared_by_older_probe_success(self):
+        self.initial();self.enable();self.event('a','quota_limited',retry_at=later(5))
+        old=self.result('scheduler-tick',{},at=later(5))['probes'][0]
+        self.event('b','rate_limited',at=later(6),retry_at=later(30))
+        self.assertEqual(self.result('scheduler-tick',{},at=later(30))['probes'],[])
+        old_result=self.event('a','probe-result',at=later(31),probe_id=old['probe_id'],available=True)
+        self.assertTrue(old_result['stale_probe_result'])
+        runtime=self.state()['worker_runtime'];group=runtime['groups']['Q1']
+        self.assertTrue(group['limited'])
+        self.assertEqual(group['retry_at'],later(30))
+        self.assertEqual(group['attempts'],1)
+        for worker in ('worker-a','worker-b'):
+            self.assertEqual(runtime['workers'][worker]['status'],'quota_limited')
+        self.assertEqual(runtime['workers']['worker-c']['status'],'available')
+        current=self.result('scheduler-tick',{},at=later(32))['probes'][0]
+        self.assertNotEqual(current['probe_id'],old['probe_id'])
+        current_result=self.event('b','probe-result',at=later(33),probe_id=current['probe_id'],available=True)
+        self.assertFalse(current_result['stale_probe_result'])
+        runtime=self.state()['worker_runtime']
+        self.assertFalse(runtime['groups']['Q1']['limited'])
+        self.assertEqual(runtime['groups']['Q1']['attempts'],2)
+        for worker in ('worker-a','worker-b'):
+            self.assertEqual(runtime['workers'][worker]['status'],'available')
+    def test_new_quota_observation_and_stale_probe_completion_replays_are_idempotent(self):
+        self.initial();self.enable();self.event('a','quota_limited')
+        old=self.result('scheduler-tick',{},at=later(5))['probes'][0]
+        payload=dict(worker_id='worker-b',event='quota_limited',retry_at=later(30))
+        self.change('worker-event',payload,at=later(6),op='new-quota-observation')
+        before=self.store.path.read_bytes()
+        result=self.change('worker-event',payload,at=later(7),op='new-quota-observation')
+        self.assertTrue(result['replayed']);self.assertEqual(self.store.path.read_bytes(),before)
+        completion=dict(worker_id='worker-a',event='probe-result',probe_id=old['probe_id'],available=True)
+        self.change('worker-event',completion,at=later(8),op='old-probe-completion')
+        self.assertTrue(self.state()['worker_runtime']['groups']['Q1']['limited'])
+        before=self.store.path.read_bytes()
+        replay=self.change('worker-event',completion,at=later(9),op='old-probe-completion')
+        self.assertTrue(replay['replayed']);self.assertEqual(self.store.path.read_bytes(),before)
+        with self.assertRaisesRegex(ValueError,'stale/unknown probe result'):
+            self.change('worker-event',completion,at=later(10),op='duplicate-old-completion')
+        self.assertEqual(self.store.path.read_bytes(),before)
+        self.assertEqual(self.result('scheduler-tick',{},at=later(29))['probes'],[])
+    def test_old_failed_probe_preserves_new_retry_and_bounded_attempt_budget(self):
+        self.initial();self.enable();self.event('a','quota_limited')
+        old=self.result('scheduler-tick',{},at=later(5))['probes'][0]
+        self.event('b','quota_limited',at=later(6),retry_at=later(30))
+        before=copy.deepcopy(self.state()['worker_runtime']['groups']['Q1'])
+        self.assertEqual(self.result('scheduler-tick',{},at=later(7))['probes'],[])
+        stale=self.event('b','probe-result',at=later(8),probe_id=old['probe_id'],available=False)
+        self.assertTrue(stale['stale_probe_result'])
+        after=self.state()['worker_runtime']['groups']['Q1']
+        self.assertEqual(after,dict(before,pending_probe=None))
+        self.assertEqual(self.result('scheduler-tick',{},at=later(29))['probes'],[])
+        current=self.result('scheduler-tick',{},at=later(30))['probes'][0]
+        self.event('a','probe-result',at=later(31),probe_id=current['probe_id'],available=False)
+        self.assertEqual(self.state()['worker_runtime']['groups']['Q1']['attempts'],2)
+        self.event('b','quota_limited',at=later(32),retry_at=later(42))
+        self.assertEqual(self.result('scheduler-tick',{},at=later(42))['probes'],[])
+        self.assertEqual(self.state()['worker_runtime']['groups']['Q1']['attempts'],2)
     def test_owner_hold_and_budget_precede_recovered_quota(self):
         self.initial();self.enable();self.event('a','quota_limited')
         probe=self.result('scheduler-tick',{},at=later(5))['probes'][0]
