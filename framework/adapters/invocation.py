@@ -22,6 +22,25 @@ from .runspec import ID, bounded_run_request
 TERMINAL = {'exited', 'stopped', 'timed_out', 'output_limited', 'outcome_unknown'}
 
 
+def _stop_unknown(record, proc, reason):
+    """Best effort on the owned handle only; never assert all writers stopped."""
+    if proc is not None:
+        try:
+            if proc.poll() is None: proc.kill()
+            proc.wait(timeout=5)
+        except Exception: pass  # Preserve uncertainty if OS stop/wait fails.
+    record.update(state='outcome_unknown', exit_code=None if proc is None else proc.returncode,
+                  reason=reason)
+
+
+def _close_resources(*resources):
+    # One failed close must not prevent closing other handles or clearing _live.
+    for resource in resources:
+        if resource is not None:
+            try: resource.close()
+            except Exception: pass
+
+
 class AuthorityWatch:
     """Read-only checks off the supervision thread; a stuck check loses freshness.
 
@@ -248,43 +267,44 @@ class ProcessExecutor:
             self._verify_pins()
             no_links(self.cwd, directory=True)
             self._check_namespace()
+            proc = None
             try:
                 with stdin.open('rb') as stream:
                     proc = subprocess.Popen(self.argv, cwd=self.cwd, env=self.environment,
                         stdin=stream, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                         close_fds=True, start_new_session=True)
             except Exception as error:
-                record.update(state='outcome_unknown', reason=type(error).__name__)
+                _stop_unknown(record, proc, type(error).__name__)
+                if proc is not None: _close_resources(proc.stdout, proc.stderr)
                 atomic(path, record); return self._view(record)
-            live = dict(process=proc, stop=threading.Event())
-            self._live[identity] = live; record.update(state='running')
-            # Start supervision before a potentially slow/failing journal write.
-            # Its final write takes this same lock, so cannot precede this one.
-            thread = threading.Thread(target=self._supervise,
-                args=(copy.deepcopy(record), live, fields['timeout_seconds'], fields['max_output_bytes']), daemon=True)
-            live['thread'] = thread
-            try: thread.start()
+            try:
+                live = dict(process=proc, stop=threading.Event())
+                self._live[identity] = live; record.update(state='running')
+                # Protect construction as well as start after acquiring proc.
+                # Start before a potentially slow/failing journal write. The
+                # final supervisor write takes this same lock.
+                thread = threading.Thread(target=self._supervise,
+                    args=(copy.deepcopy(record), live, fields['timeout_seconds'], fields['max_output_bytes']), daemon=True)
+                live['thread'] = thread
+                thread.start()
             except Exception:
-                if proc.poll() is None: proc.kill()
-                try: proc.wait(timeout=5)
-                finally:
-                    self._live.pop(identity, None)
-                    proc.stdout.close(); proc.stderr.close()
-                    record.update(state='outcome_unknown', reason='supervision thread failed')
-                    atomic(path, record)
+                _stop_unknown(record, proc, 'supervision thread initialization failed')
+                _close_resources(proc.stdout, proc.stderr)
+                self._live.pop(identity, None)
+                atomic(path, record)
                 raise
             atomic(path, record)
             return copy.deepcopy(record)
 
     def _supervise(self, record, live, seconds, limit):
-        proc = live['process']; selector = selectors.DefaultSelector()
-        buffers = {'stdout': bytearray(), 'stderr': bytearray()}; reason = None
-        deadline = time.monotonic() + seconds
-        watch = None
-        for name in buffers:
-            pipe = getattr(proc, name); os.set_blocking(pipe.fileno(), False)
-            selector.register(pipe, selectors.EVENT_READ, name)
+        proc = live['process']; selector = None; watch = None
         try:
+            selector = selectors.DefaultSelector()
+            buffers = {'stdout': bytearray(), 'stderr': bytearray()}; reason = None
+            deadline = time.monotonic() + seconds
+            for name in buffers:
+                pipe = getattr(proc, name); os.set_blocking(pipe.fileno(), False)
+                selector.register(pipe, selectors.EVENT_READ, name)
             if self.runtime_guard is not None:
                 watch = AuthorityWatch(self.runtime_guard, record)
             while selector.get_map() or proc.poll() is None:
@@ -316,17 +336,14 @@ class ProcessExecutor:
                 with out.open('xb') as stream: stream.write(data); stream.flush(); os.fsync(stream.fileno())
                 record[name + '_sha256'] = hashlib.sha256(data).hexdigest()
             with self._lock(): atomic(self._path(record['invocation_id']), record)
-        except Exception:
-            if proc.poll() is None: proc.kill()
-            try: proc.wait(timeout=5)
-            except subprocess.TimeoutExpired: pass
-            record.update(state='outcome_unknown', exit_code=proc.returncode)
+        except Exception as error:
+            _stop_unknown(record, proc, 'supervision failed: ' + type(error).__name__)
             try:
                 with self._lock(): atomic(self._path(record['invocation_id']), record)
             except Exception: pass  # Prior launch intent remains unknown on recovery.
         finally:
             if watch is not None: watch.closed.set()
-            selector.close(); proc.stdout.close(); proc.stderr.close()
+            _close_resources(selector, proc.stdout, proc.stderr)
             with self._mutex: self._live.pop(record['invocation_id'], None)
 
     def status(self, *, invocation_id):

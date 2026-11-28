@@ -61,6 +61,12 @@ The direct-local-only recovery namespace is
 rejected in cwd, journal paths and fixed argv, including case variants.
 Thread supervision drains both pipes with a combined size cap and a deadline;
 no parent environment is inherited implicitly.
+Post-spawn initialization is also guarded: failure to create/start supervision,
+create a selector, set pipe mode or register pipe events attempts stop/wait on
+the owned handle and retains outcome_unknown. Partial resources are closed
+individually so one failed close cannot skip the rest. If stop/wait or journal
+writing fails, the original launch intent remains unresolved; no retry/release
+is authorized. Initialization faults do not fabricate complete output evidence.
 Output is untrusted_stdout and engineering_accepted=false. All records retain
 writer_stop_confirmed=false: observed exit of one owned process does not prove
 that every descendant or outside writer has stopped. Existing handoff proofs
