@@ -4,6 +4,11 @@
 Owner 在盒盖后要求继续推进，本轮从已保存检查点续做 OD-09 / WP-301；没有重置
 自动唤起预算、创建模型会话、修改权限或部署真实供应商执行器。
 
+[Advisor 7242414495](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7242414495)
+已对受审 `4f29feed191a964ce65919db52eac7148c3f0693` 给出单机启动前检查及意图落盘
+的源码限定GO。最后授权检查返回至Popen之间、以及运行中撤权的及时停止尚未验证。
+此状态更新不重跑或追加测试，不把源码GO当作真实执行或阶段放行。
+
 ## 交付与实测
 
 `framework/adapters/store_binding.py` 提供 StoreBinding：将固定执行选择和准备好的
@@ -44,7 +49,7 @@ workspace=launching、provider-run-begin操作数=1、writer_stop_confirmed=fals
 ## 适用范围及剩余工作
 
 全部是作者运行的真实临时Git/Store和固定进程测试，认证/额度观察为合成输入，
-独立复核及非作者执行待补；不是两家供应商真实任务或真实额度恢复。
+独立源码复核已获上述限定GO，非作者执行待补；不是两家供应商真实任务或真实额度恢复。
 
 本组件仅完成启动前接线。它不持续监控已运行进程，不把主进程退出当作全部写者
 已停止，不自动提交/验收/释放任务；进程启动后的撤权仍需受信监督器停止、检查点

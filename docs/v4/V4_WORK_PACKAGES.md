@@ -628,8 +628,11 @@ Advisor [7241630681](https://github.com/oowanghuan/ai-coding-template/issues/3#i
 
 [真实固定进程证据](evidence/cross-adapter-launch/README.md)：修复前72方法中71过、
 1失败，原工作区启动2次；修复后77方法全过，原工作区只启动1次，独立工作区1次。
-两轮各9项隔离检查通过；修复后32项输入逐blob绑定实现。均为作者运行，状态为
-`submitted / independent-review-pending`，不是工程验收。B1非作者补证另行保留。
+两轮各9项隔离检查通过；修复后32项输入逐blob绑定实现。均为作者运行。
+[Advisor 7242413633](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7242413633)
+对 `a8b08e7b440398a4f8707dd590b077233aa84d19` 给出源码整改限定GO，关闭重复启动
+整改；条件仍为同一受保护持久预留域、历史未知操作先对账。非作者执行、安全续做
+及一次交付待验，不是工程验收。B1非作者补证另行保留。
 
 下一安全项仍为受信CLI工厂/Store实时授权状态接线与WP-303正常入口。本意见处理
 不增开模型会话、不扩充4/4激活预算、不改权限或费用、不合入main或发布。
@@ -645,7 +648,14 @@ Owner 盒盖后明确要求继续，沿用 OD-09 推进WP-301；未重启任务�
 [实测记录](evidence/store-binding/README.md)：初轮87过，最终88过（11新接线+77
 原回归），0 fail/error/skip；两轮各9项隔离检查通过，最终35项输入绑定提交。
 实际Popen前观察到Store已有唯一启动意图；额度受限组不能启动，独立组仍运行。
-作者运行，状态为 `submitted / independent-review-pending`，不冒充工程验收。
+作者运行。[Advisor 7242414495](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7242414495)
+对 `4f29feed191a964ce65919db52eac7148c3f0693` 给出单机启动前检查和意图落盘的
+源码限定GO；非作者执行仍待补，不冒充工程验收。
+
+最后一次授权检查返回到实际创建进程之间的撤权窗口尚未验证；当前反例只覆盖
+最后检查之前的撤权。将该窗口及启动后的撤权、owned进程停止、成果保全、终态
+对账列入 [S06-Launch-Revoke-Window](V4_ACCEPTANCE_PLAN.md)；状态not_run，不能
+用启动前GO替代持续授权或真实CLI准入。已有授权内实现无需重复审批。
 
 不自动按主进程退出释放执行权；没有部署真实CLI或持续运行控制器。下一切片为
 受信工厂/终态对账、运行中停止与检查点、WP-303正常入口。历史跨Adapter整改、
@@ -682,7 +692,7 @@ B1非作者复跑分别保持各自待复核范围，不阻塞其他已授权代
       "depends_on": [],
       "progress": {
         "checkpoint": "64704dca23d73a73c433d34d8723d4b6a661fc85",
-        "milestone": "Store live prelaunch authority bridge implemented; author final88 passed,35inputs bound. Actual spawn preceded by Store intent; limited group blocked and independent group executed. Native factory, continuous owned-stop/reconciliation and full Alpha still pending; independent review/execution pending.",
+        "milestone": "Advisor7242413633 scoped source GO on a8b08e7 and7242414495 scoped prelaunch Store source GO on4f29feed; author88 includes77. Non-author execution pending. Last-check-to-spawn revocation window, running owned-stop/checkpoint/reconciliation, native factory and Alpha unverified; no source GO expands deployment authority.",
         "evidence_refs": [
           "docs/v4/evidence/native-admission/README.md",
           "docs/v4/evidence/invocation/README.md",
