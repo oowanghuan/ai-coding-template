@@ -1,0 +1,116 @@
+{
+  "actor": "author",
+  "provider_calls": 0,
+  "evidence_level": "synthetic_fault_real_owned_process",
+  "independent_review": "pending",
+  "runs": {
+    "before": {
+      "counts": {
+        "run": 111,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 1,
+      "started_at": "2026-11-28T19:42:24.751265+00:00",
+      "finished_at": "2026-11-28T19:45:51.054871+00:00",
+      "source_unchanged": true,
+      "frozen_unchanged": true,
+      "canaries": {
+        "empty_candidate_anchor": true,
+        "candidate_anchor_unlink": true,
+        "trusted_write": true,
+        "source_write": true,
+        "trusted_hardlink": true,
+        "outside_read": true,
+        "outside_write": true,
+        "network": true,
+        "credentials_absent": true
+      },
+      "observations": [
+        {
+          "stage": "second-pipe",
+          "actual_process_starts": 1,
+          "main_process_stopped": false,
+          "exit_code": null,
+          "state": "running",
+          "writer_stop_confirmed": false
+        },
+        {
+          "stage": "selector",
+          "actual_process_starts": 1,
+          "main_process_stopped": false,
+          "exit_code": null,
+          "state": "running",
+          "writer_stop_confirmed": false
+        }
+      ]
+    },
+    "final": {
+      "counts": {
+        "run": 114,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "started_at": "2026-11-28T19:46:39.813315+00:00",
+      "finished_at": "2026-11-28T19:50:29.499718+00:00",
+      "source_unchanged": true,
+      "frozen_unchanged": true,
+      "canaries": {
+        "empty_candidate_anchor": true,
+        "candidate_anchor_unlink": true,
+        "trusted_write": true,
+        "source_write": true,
+        "trusted_hardlink": true,
+        "outside_read": true,
+        "outside_write": true,
+        "network": true,
+        "credentials_absent": true
+      },
+      "observations": [
+        {
+          "stage": "nonblocking",
+          "actual_process_starts": 1,
+          "main_process_stopped": true,
+          "exit_code": -9,
+          "state": "outcome_unknown",
+          "writer_stop_confirmed": false
+        },
+        {
+          "stage": "second-pipe",
+          "actual_process_starts": 1,
+          "main_process_stopped": true,
+          "exit_code": -9,
+          "state": "outcome_unknown",
+          "writer_stop_confirmed": false
+        },
+        {
+          "stage": "selector",
+          "actual_process_starts": 1,
+          "main_process_stopped": true,
+          "exit_code": -9,
+          "state": "outcome_unknown",
+          "writer_stop_confirmed": false
+        },
+        {
+          "stage": "thread-construction",
+          "actual_process_starts": 1,
+          "main_process_stopped": true,
+          "exit_code": -9,
+          "state": "outcome_unknown",
+          "writer_stop_confirmed": false
+        },
+        {
+          "stage": "thread-start",
+          "actual_process_starts": 1,
+          "main_process_stopped": true,
+          "exit_code": -9,
+          "state": "outcome_unknown",
+          "writer_stop_confirmed": false
+        }
+      ]
+    }
+  }
+}

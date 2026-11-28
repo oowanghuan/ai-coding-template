@@ -5,7 +5,10 @@
 0失败/异常/跳过、退出0；9项隔离检查通过，38份最终输入逐blob绑定。
 工厂代码位于 `framework/adapters/factory.py`；实现提交、实测数量和输入绑定见
 [SOURCE-BINDING.json](SOURCE-BINDING.json) 与 [SUMMARY.json](SUMMARY.json)。
-作者运行，独立复核待补；不把切片完成等同于WP-301或Lite Alpha验收。
+作者运行。[Advisor 7244708222](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7244708222)
+对受审 `6326260e8f0f1a808a121db7be1ee1b024dca0a7` 的固定参数装配和工厂注册
+给出源码限定GO；非作者执行仍待补。运行监督异常路径另按7244707503整改，
+该GO不覆盖运行监督或生产准入；不把切片完成等同于WP-301或Lite Alpha验收。
 
 通用工厂把固定程序/参数、显式环境、程序和配置指纹、受保护的共同启动域与日志
 目录、资源选择和真实Store执行权装配到既有Registry。构造和注册不启动进程、

@@ -707,6 +707,28 @@ local-alpha-next-2：最多4次追加既有会话激活（累计上限由4至8�
 验收。真实边界检查器/CLI准入、完整写者停止证明和恢复至一次交付仍待验。
 下一个就绪项为WP-302运行终态与检查点集成，不等待无关评审完成再开工。
 
+### 16.10 监督初始化REVISE整改与工厂源码GO
+
+实际接收两条后台评审通知后，于19:41:22 UTC分别ACK；核对79条评论、Git、
+发布journal与原SHA，没有重复回复或未知写入。接受Advisor7244707503发现：
+选择器/管道注册在try外，线程初始化失败可能留下无人监督进程。
+
+[复现与修复证据](evidence/supervisor-initialization/README.md)：原实现111方法中
+109过、2失败，两个注入用例均实测主进程仍在运行；测试外壳随后按owned句柄
+清理，不计作产品停止。实现 `d37f8bb8656d33e4a86e1d0a48a23cabe0bf5474`
+将取得进程句柄后的线程构造/启动、选择器和管道初始化置于异常保护中。
+最终114方法全过（5新故障+原109），五个初始化故障均实际停止主进程、保持
+unknown并阻止重新启动/释放；9项隔离检查通过、39份输入绑定。待Advisor复核。
+
+[Advisor7244708222](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7244708222)
+对 `6326260e8f0f1a808a121db7be1ee1b024dca0a7` 的固定参数装配和工厂注册给出
+源码限定GO；仅关闭该源码评审，非作者执行待补，运行监督按上述REVISE另行
+复核。真实CLI/生产边界检查器/全写者停止/检查点接管至一次交付/Alpha仍待验。
+
+本轮无模型会话、费用、权限、主分支或发布变化。续做预算保持累计5/8、当前批
+1/4；下一就绪项仍为WP-302运行终态与检查点集成，不因等待本轮复核停掉其他
+已授权工作，也不以GO自动新增执行授权。
+
 <!-- v4-continuation-ready:v1 -->
 ```json
 {
@@ -724,7 +746,7 @@ local-alpha-next-2：最多4次追加既有会话激活（累计上限由4至8�
       "depends_on": [],
       "progress": {
         "checkpoint": "a1a716a0460ee9c99defb4ae868949f04341c7fb",
-        "milestone": "Fixed N-provider Store factory and native recipe model binding implemented; author109=11new+98regression under unchanged A01,9canaries,38inputs. Native recipes assembly-only; generic factory real fixed Python. Independent review and live CLI admission remain pending; no model calls/deployment.",
+        "milestone": "Advisor7244708222 scoped source GO on6326260 for fixed recipes and factory registration; author109 includes98, non-author execution pending. Supervisor initialization REVISE7244707503 reproduced and fixed separately (author114); awaiting re-review. Native live/Alpha unaccepted; finite factory item remains done.",
         "evidence_refs": [
           "docs/v4/evidence/fixed-factory/README.md",
           "framework/adapters/factory.py"

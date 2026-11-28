@@ -1,7 +1,10 @@
 # 运行中执行权监督与终态对账
 
 实现提交：`d740ee44158f3e12e9ddbc7f4e5ca5be5956992f`。OD-09 / WP-301/302，
-作者执行；独立复核待补。全部为真实临时 Git/Store、固定 Python 子进程及合成
+作者执行。[Advisor 7244707503](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7244707503)
+对受审 `d39bb9e758578285c5f47365755f0831083d4280` 提出REVISE：进程启动后
+选择器/管道注册初始化在异常保护之外，可能留下无监督进程。原运行日志不覆盖
+该故障；[整改复现与新版本证据](../supervisor-initialization/README.md)单列，不覆盖本轮记录。全部为真实临时 Git/Store、固定 Python 子进程及合成
 额度/认证事件；供应商调用为0，不是两家真实供应商任务或自然额度恢复证据。
 
 `AuthorityWatch` 在独立只读线程持续核对 Store 执行权，间隔0.25秒、有效检查
