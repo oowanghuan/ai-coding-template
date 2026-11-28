@@ -1,0 +1,48 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<EVIDENCE_ROOT>/continuation-author/profile.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "<CANDIDATE_STAGE>",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "environment": {
+    "HOME": "<EVIDENCE_ROOT>/continuation-author/home",
+    "TMPDIR": "<EVIDENCE_ROOT>/continuation-author/tmp",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONPATH": "<CANDIDATE_STAGE>",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "V4_OUTER_SEATBELT": "1"
+  },
+  "started_at": "2026-11-28T08:11:15.067326+00:00",
+  "finished_at": "2026-11-28T08:11:15.749253+00:00",
+  "exit_code": 0,
+  "before": {
+    "continuation.py": "1a560a8f803b027c1630d76221be282253a97b16a0bf2bfcf20d3433a1b1e4aa",
+    "test_continuation.py": "60472440d104ef884e559a1f8ca00d47fca176bb05a4835bdd9119e171d6dbc7",
+    "session_delivery.py": "6b272a3663488ec38085406ceae88162f0642847f54309314c896665fea329b2",
+    "poll.py": "1a864763d010c9452caab186d653e276ab1797e8d417f30140afac32b8a5e514"
+  },
+  "after": {
+    "continuation.py": "1a560a8f803b027c1630d76221be282253a97b16a0bf2bfcf20d3433a1b1e4aa",
+    "test_continuation.py": "60472440d104ef884e559a1f8ca00d47fca176bb05a4835bdd9119e171d6dbc7",
+    "session_delivery.py": "6b272a3663488ec38085406ceae88162f0642847f54309314c896665fea329b2",
+    "poll.py": "1a864763d010c9452caab186d653e276ab1797e8d417f30140afac32b8a5e514"
+  },
+  "source_unchanged": true,
+  "profile_sha256": "42cd3fc1334b7cc42284422ff4cbfe6615f0a31f321c41b96d5b0fde560f6b5c",
+  "evidence_level": "synthetic_fixture",
+  "native_ipc_calls": 0,
+  "github_api_calls": 0,
+  "note": "Author Fake RPC and synthetic GitHub fixture tests only. No deployment or candidate execution outside outer sandbox."
+}

@@ -1,0 +1,10 @@
+{
+  "files": {
+    "continuation.py": "cbceee49b729f89730de517e69df3211e6bf559eb5dd5bf77ef6a7521caaebc8",
+    "poll.py": "1a864763d010c9452caab186d653e276ab1797e8d417f30140afac32b8a5e514",
+    "session_delivery.py": "6b272a3663488ec38085406ceae88162f0642847f54309314c896665fea329b2",
+    "test_continuation.py": "8d9e1d93a4db3e9a0f00bfb6be62c26fe8babcc686d59d4d35c4b3618dad808c",
+    "test_poll_continuation.py": "24eaedc777441bcfab0c9566ac39ff118104d838e140ee92536ab893888b6256",
+    "test_session_delivery.py": "44bf15e770008eafc18951a152e97be6aa21e8bf91229b4b870c591f7e98e041"
+  }
+}

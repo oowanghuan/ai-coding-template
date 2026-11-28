@@ -1,0 +1,139 @@
+{
+  "format": "public-evidence-map/1",
+  "evidence_level": "synthetic_fixture",
+  "provider_live": false,
+  "production_deployed": false,
+  "real_native_calls": 0,
+  "real_github_calls": 0,
+  "warning": "Redacted review copies are not original receipts. All UUID/thread values in test source are synthetic fixtures; production binding/socket/account files are omitted.",
+  "files": [
+    {
+      "source_ref": "<CANDIDATE_STAGE>/README.md",
+      "public_path": "candidate/README.md",
+      "original_sha256": "a0077aa9a24a3f5e6131f9cfa88a59011f54dcbd0833c5c541977888e62d24bd",
+      "public_sha256": "a0077aa9a24a3f5e6131f9cfa88a59011f54dcbd0833c5c541977888e62d24bd",
+      "original_bytes": 6364,
+      "public_bytes": 6364
+    },
+    {
+      "source_ref": "<CANDIDATE_STAGE>/config.example.json",
+      "public_path": "candidate/config.example.json",
+      "original_sha256": "350973fd9d5644cfc3aaa4a91b297f590d09d8c93d2279de8c5f8126a4139a40",
+      "public_sha256": "350973fd9d5644cfc3aaa4a91b297f590d09d8c93d2279de8c5f8126a4139a40",
+      "original_bytes": 365,
+      "public_bytes": 365
+    },
+    {
+      "source_ref": "<CANDIDATE_STAGE>/continuation.py",
+      "public_path": "candidate/continuation.py.txt",
+      "original_sha256": "cbceee49b729f89730de517e69df3211e6bf559eb5dd5bf77ef6a7521caaebc8",
+      "public_sha256": "cbceee49b729f89730de517e69df3211e6bf559eb5dd5bf77ef6a7521caaebc8",
+      "original_bytes": 18824,
+      "public_bytes": 18824
+    },
+    {
+      "source_ref": "<CANDIDATE_STAGE>/poll.py",
+      "public_path": "candidate/poll.py.txt",
+      "original_sha256": "1a864763d010c9452caab186d653e276ab1797e8d417f30140afac32b8a5e514",
+      "public_sha256": "1a864763d010c9452caab186d653e276ab1797e8d417f30140afac32b8a5e514",
+      "original_bytes": 13858,
+      "public_bytes": 13858
+    },
+    {
+      "source_ref": "<CANDIDATE_STAGE>/session_delivery.py",
+      "public_path": "candidate/session_delivery.py.txt",
+      "original_sha256": "6b272a3663488ec38085406ceae88162f0642847f54309314c896665fea329b2",
+      "public_sha256": "6b272a3663488ec38085406ceae88162f0642847f54309314c896665fea329b2",
+      "original_bytes": 13590,
+      "public_bytes": 13590
+    },
+    {
+      "source_ref": "<CANDIDATE_STAGE>/test_continuation.py",
+      "public_path": "candidate/test_continuation.py.txt",
+      "original_sha256": "8d9e1d93a4db3e9a0f00bfb6be62c26fe8babcc686d59d4d35c4b3618dad808c",
+      "public_sha256": "8d9e1d93a4db3e9a0f00bfb6be62c26fe8babcc686d59d4d35c4b3618dad808c",
+      "original_bytes": 14291,
+      "public_bytes": 14291
+    },
+    {
+      "source_ref": "<CANDIDATE_STAGE>/test_poll_continuation.py",
+      "public_path": "candidate/test_poll_continuation.py.txt",
+      "original_sha256": "24eaedc777441bcfab0c9566ac39ff118104d838e140ee92536ab893888b6256",
+      "public_sha256": "24eaedc777441bcfab0c9566ac39ff118104d838e140ee92536ab893888b6256",
+      "original_bytes": 3233,
+      "public_bytes": 3233
+    },
+    {
+      "source_ref": "<CANDIDATE_STAGE>/test_session_delivery.py",
+      "public_path": "candidate/test_session_delivery.py.txt",
+      "original_sha256": "44bf15e770008eafc18951a152e97be6aa21e8bf91229b4b870c591f7e98e041",
+      "public_sha256": "44bf15e770008eafc18951a152e97be6aa21e8bf91229b4b870c591f7e98e041",
+      "original_bytes": 10352,
+      "public_bytes": 10352
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/continuation-author/result-01.json",
+      "public_path": "result-01.json",
+      "original_sha256": "d32132e438404b42e3754424c3c4c78b8f6d01511ec9bb85b2d29f43d1715266",
+      "public_sha256": "20c4b1c8ae00326e35029004d7513e02e722e420b52bf7ffb9d4a186ecc71189",
+      "original_bytes": 1973,
+      "public_bytes": 1810
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/continuation-author/stdout-01.log",
+      "public_path": "stdout-01.log",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_bytes": 0,
+      "public_bytes": 0
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/continuation-author/stderr-01.log",
+      "public_path": "stderr-01.log",
+      "original_sha256": "8aecf80b65205e5cf98a066d9c45c2bf73118c68d0996aec9294e07120001086",
+      "public_sha256": "8aecf80b65205e5cf98a066d9c45c2bf73118c68d0996aec9294e07120001086",
+      "original_bytes": 1716,
+      "public_bytes": 1716
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/continuation-author/result-04.json",
+      "public_path": "result-04.json",
+      "original_sha256": "51b8c5ad8e2ff27fbc902841e958c8573de31970bcdb274549df54276d88634a",
+      "public_sha256": "4c1816b303fc9077859db6f8d364ed57013bc80d0bc9fa85784f055014a9fd3d",
+      "original_bytes": 2375,
+      "public_bytes": 2212
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/continuation-author/stdout-04.log",
+      "public_path": "stdout-04.log",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_bytes": 0,
+      "public_bytes": 0
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/continuation-author/stderr-04.log",
+      "public_path": "stderr-04.log",
+      "original_sha256": "e11e7d972697c7ecc400659c84cacc727cef1b9a3305e503deb1ce5075472bdb",
+      "public_sha256": "cff7b3ad6fc6952b0ebeeb37f591336d8afe64d42c5b7b540561808d301b3718",
+      "original_bytes": 4913,
+      "public_bytes": 4771
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/continuation-author/run.py",
+      "public_path": "harness/run.py.txt",
+      "original_sha256": "51eeacba2069f39db883249b994a4c3a9c852aae6c0e7da757669358689cd099",
+      "public_sha256": "f93d0ada82af3d6c4b4c5c71969383ad51ece6c460930b6c61b178e0977ccb60",
+      "original_bytes": 1680,
+      "public_bytes": 1630
+    },
+    {
+      "source_ref": "<EVIDENCE_ROOT>/continuation-author/profile.sb",
+      "public_path": "harness/profile.sb",
+      "original_sha256": "42cd3fc1334b7cc42284422ff4cbfe6615f0a31f321c41b96d5b0fde560f6b5c",
+      "public_sha256": "88055cc691bf5b3f5aaabb74402bb3ea97868bd9a9612d15b4a1385206db93be",
+      "original_bytes": 1018,
+      "public_bytes": 842
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+test_ack_wrong_session_client_or_content_refused (test_continuation.PulseTests) ... ok
+test_active_never_steers_or_queues (test_continuation.PulseTests) ... ok
+test_advisor_or_unknown_broker_operation_has_priority (test_continuation.PulseTests) ... ok
+test_branch_advance_before_delivery_refuses (test_continuation.PulseTests) ... ok
+test_done_all_no_ready_and_blocked_dependency (test_continuation.PulseTests) ... ok
+test_duplicate_public_authority_keys_never_dispatch (test_continuation.PulseTests) ... ok
+test_git_sha_alone_does_not_reset_stall (test_continuation.PulseTests) ... ok
+test_idle_ready_add_start_and_model_ack_is_not_done (test_continuation.PulseTests) ... ok
+test_idle_to_active_race_keeps_queue_without_start (test_continuation.PulseTests) ... ok
+test_known_queued_race_can_start_once_when_idle_without_second_add (test_continuation.PulseTests) ... ok
+test_new_batch_cannot_recharge_same_progress_or_local_total_budget (test_continuation.PulseTests) ... ok
+test_nonstandard_owner_comment_add_edit_delete_requires_foreground_read_cache (test_continuation.PulseTests) ... ok
+test_out_of_scope_or_unbounded_authority_rejected (test_continuation.PulseTests) ... ok
+test_owner_pause_public_pause_expiry_and_disabled_stop (test_continuation.PulseTests) ... ok
+test_persistent_cooldown_and_restart (test_continuation.PulseTests) ... ok
+test_public_progress_resets_slots_but_total_budget_caps (test_continuation.PulseTests) ... ok
+test_two_acknowledged_pulses_without_progress_then_stalled (test_continuation.PulseTests) ... ok
+test_unacked_acceptance_never_requeues (test_continuation.PulseTests) ... ok
+test_unknown_add_and_start_never_repeat_even_new_progress (test_continuation.PulseTests) ... ok
+test_unloaded_never_creates_or_resumes (test_continuation.PulseTests) ... ok
+test_user_queue_takes_precedence (test_continuation.PulseTests) ... ok
+test_wrong_thread_cwd_rejected (test_continuation.PulseTests) ... ok
+test_fixed_read_paths_do_not_expand_writes (test_poll_continuation.PollTests) ... ok
+test_single_instance_busy_never_runs_api_or_continuation (test_poll_continuation.PollTests) ... <runs>/v4-continuation-independent-l8q3gzn8/T/source/test_poll_continuation.py:37: ResourceWarning: unclosed file <_io.TextIOWrapper name='<runs>/v4-continuation-independent-l8q3gzn8/C/tmp/tmpdn150n2x/poll.lock' mode='a+' encoding='UTF-8'>
+  with patch.object(poll,'api',side_effect=AssertionError('lock bypass')),patch.object(poll,'notify_continuation',side_effect=AssertionError('lock bypass')),contextlib.redirect_stdout(io.StringIO()):poll.main()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_zero_advisor_round_reaches_continuation_under_same_lock (test_poll_continuation.PollTests) ... <runs>/v4-continuation-independent-l8q3gzn8/T/source/test_poll_continuation.py:31: ResourceWarning: unclosed file <_io.TextIOWrapper name='<runs>/v4-continuation-independent-l8q3gzn8/C/tmp/tmp219yx0ry/poll.lock' mode='a+' encoding='UTF-8'>
+  with patch.object(poll,'api',side_effect=self.api),patch.object(poll,'notify_continuation',side_effect=self.pulse),contextlib.redirect_stdout(io.StringIO()):poll.main()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_ack_idempotency_and_real_ack_required (test_session_delivery.DeliveryTests) ... ok
+test_ack_rejects_other_session_client_and_existing_mismatch (test_session_delivery.DeliveryTests) ... ok
+test_active_acceptance_waits_for_ack_and_never_resteers (test_session_delivery.DeliveryTests) ... ok
+test_changed_body_requires_foreground_reconciliation (test_session_delivery.DeliveryTests) ... ok
+test_identity_and_cwd_mismatch_fail_without_write (test_session_delivery.DeliveryTests) ... ok
+test_idle_unique_queue_starts_only_specific_id (test_session_delivery.DeliveryTests) ... ok
+test_other_queue_entry_blocks_both_orderings (test_session_delivery.DeliveryTests) ... ok
+test_queue_add_unknown_reconciles_without_second_add (test_session_delivery.DeliveryTests) ... ok
+test_queue_add_unknown_without_visible_receipt_never_resends (test_session_delivery.DeliveryTests) ... ok
+test_queued_input_mismatch_refuses_start (test_session_delivery.DeliveryTests) ... ok
+test_steer_unknown_never_resends_and_history_can_confirm (test_session_delivery.DeliveryTests) ... ok
+test_unknown_start_absent_queue_never_retries (test_session_delivery.DeliveryTests) ... ok
+test_unknown_start_history_still_requires_model_ack (test_session_delivery.DeliveryTests) ... ok
+test_unknown_start_model_ack_resolves_without_write (test_session_delivery.DeliveryTests) ... ok
+test_unknown_start_visible_queue_never_retries (test_session_delivery.DeliveryTests) ... ok
+test_unloaded_session_and_changed_turn_do_not_start (test_session_delivery.DeliveryTests) ... ok
+
+----------------------------------------------------------------------
+Ran 41 tests in 0.142s
+
+OK

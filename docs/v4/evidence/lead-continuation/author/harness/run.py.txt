@@ -1,0 +1,18 @@
+"""Trusted stdlib outer harness; candidate imports only inside sandbox."""
+from pathlib import Path
+import subprocess,hashlib,json,datetime
+base=Path(__file__).resolve().parent
+stage=Path('<CANDIDATE_STAGE>')
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+files=list(stage.glob('*.py'))
+before={p.name:sha(p) for p in files}
+env={'HOME':str(base/'home'),'TMPDIR':str(base/'tmp'),'PATH':'/usr/bin:/bin:/usr/sbin:/sbin','PYTHONPATH':str(stage),'PYTHONNOUSERSITE':'1','PYTHONDONTWRITEBYTECODE':'1','V4_OUTER_SEATBELT':'1'}
+argv=['/usr/bin/sandbox-exec','-f',str(base/'profile.sb'),'/usr/bin/python3','-B','-S','-m','unittest','discover','-s',str(stage),'-p','test_*.py','-v']
+n=len(list(base.glob('result-*.json')))+1
+now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+start=now();r=subprocess.run(argv,cwd=base,env=env,capture_output=True,timeout=60)
+(base/('stdout-%02d.log'%n)).write_bytes(r.stdout);(base/('stderr-%02d.log'%n)).write_bytes(r.stderr)
+after={p.name:sha(p) for p in files}
+result=dict(argv=argv,environment=env,started_at=start,finished_at=now(),exit_code=r.returncode,before=before,after=after,source_unchanged=before==after,profile_sha256=sha(base/'profile.sb'),evidence_level='synthetic_fixture',native_ipc_calls=0,github_api_calls=0,note='Author Fake RPC and synthetic GitHub fixture tests only. No deployment or candidate execution outside outer sandbox.')
+(base/('result-%02d.json'%n)).write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({'exit_code':r.returncode,'source_unchanged':before==after,'result':str(base/('result-%02d.json'%n))}));raise SystemExit(r.returncode)

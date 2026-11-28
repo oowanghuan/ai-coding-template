@@ -1,0 +1,151 @@
+"""Fake native RPC only. Never opens a socket or invokes NativeClient."""
+import asyncio
+import copy
+import json
+import os
+from pathlib import Path
+import tempfile
+import unittest
+from unittest.mock import patch
+import session_delivery as m
+
+class NeverNative:
+    def __init__(self, *args, **kwargs):
+        raise AssertionError('real NativeClient is forbidden in tests')
+m.NativeClient = NeverNative
+
+THREAD = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
+SHA = 'a' * 40
+COMMENT = {'id': 123, 'body': 'SYNTHETIC ADVISOR BODY MUST NEVER BE COPIED'}
+
+class FakeClient:
+    def __init__(self, state='idle'):
+        self.metadata = {'id': THREAD, 'cwd': '/public/example', 'status': {'type': state}}
+        self.rows = []; self.items = []; self.calls = []; self.fail = None
+        self.turn_status = 'inProgress'
+    async def call(self, method, params):
+        self.calls.append((method, copy.deepcopy(params)))
+        if method == 'thread/read': return {'thread': copy.deepcopy(self.metadata)}
+        if method == 'thread/queue/list': return {'data': copy.deepcopy(self.rows), 'nextCursor': None}
+        if method == 'thread/items/list': return {'data': copy.deepcopy(self.items), 'nextCursor': None}
+        if method == 'thread/turns/list': return {'data': [{'id': 'active-turn', 'status': self.turn_status}]}
+        if method == 'thread/queue/add':
+            queued = {'id': 'our-queue', 'clientUserMessageId': params['clientUserMessageId'], 'input': params['input']}
+            self.rows.append(queued)
+            if self.fail == method: raise TimeoutError('response outcome unknown')
+            return {'queuedSubmission': queued}
+        if method == 'thread/queue/start':
+            if self.fail == method: raise TimeoutError('response outcome unknown')
+            assert params['queuedSubmissionId'] == 'our-queue'
+            self.rows = [r for r in self.rows if r['id'] != 'our-queue']
+            return {'turn': {'id': 'started-turn'}}
+        if method == 'turn/steer':
+            if self.fail == method: raise TimeoutError('response outcome unknown')
+            return {'turnId': 'active-turn'}
+        raise AssertionError('unexpected RPC: ' + method)
+    def count(self, method): return sum(name == method for name, _ in self.calls)
+    def writes(self): return [n for n,p in self.calls if n in ('turn/steer','thread/queue/add','thread/queue/start')]
+
+class DeliveryTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
+        self.base = Path(self.temp.name)
+        self.binding = {'enabled': True, 'thread_id': THREAD, 'cwd': '/public/example'}
+        (self.base/'session-binding.json').write_text(json.dumps(self.binding))
+        self.event = 'v4-pl:123:' + SHA
+        self.path = self.base/'notifications'/(m.digest(self.event)+'.json')
+        self.ack_path = self.path.with_name(m.digest(self.event)+'.ack.json')
+    def deliver(self, client, comment=COMMENT):
+        return asyncio.run(m.deliver(self.base,self.binding,comment,SHA,client))
+    def record(self): return json.loads(self.path.read_text())
+    def history(self, client):
+        r=self.record(); client.items=[{'turnId':'confirmed-turn','item':{'id':'user-item','type':'userMessage','clientId':r['client_id']}}]
+    def lost_start(self):
+        c=FakeClient();c.fail='thread/queue/start'
+        with self.assertRaises(TimeoutError):self.deliver(c)
+        self.assertEqual(self.record()['state'],'start_intent');return c
+    def test_active_acceptance_waits_for_ack_and_never_resteers(self):
+        c=FakeClient('active');r=self.deliver(c)
+        self.assertEqual(r['state'],'awaiting_model_ack');self.assertEqual(r['delivery_state'],'accepted')
+        self.assertEqual(self.deliver(c)['state'],'awaiting_model_ack');self.assertEqual(c.writes(),['turn/steer'])
+        params=next(p for n,p in c.calls if n=='turn/steer')
+        self.assertEqual(params['expectedTurnId'],'active-turn');self.assertEqual(set(params),{'threadId','expectedTurnId','clientUserMessageId','input'})
+        text=params['input'][0]['text'];self.assertNotIn(COMMENT['body'],text);self.assertIn(m.digest(COMMENT['body']),text);self.assertIn(SHA,text)
+    def test_idle_unique_queue_starts_only_specific_id(self):
+        c=FakeClient();r=self.deliver(c)
+        self.assertEqual(r['state'],'awaiting_model_ack');self.assertEqual(c.writes(),['thread/queue/add','thread/queue/start'])
+        self.assertEqual(next(p for n,p in c.calls if n=='thread/queue/start'),{'threadId':THREAD,'queuedSubmissionId':'our-queue'})
+    def test_unknown_start_visible_queue_never_retries(self):
+        c=self.lost_start();before=self.path.read_bytes()
+        for _ in range(3):self.assertEqual(self.deliver(c)['state'],'unknown')
+        self.assertEqual(c.count('thread/queue/start'),1);self.assertEqual(self.path.read_bytes(),before)
+    def test_unknown_start_absent_queue_never_retries(self):
+        c=self.lost_start();c.rows=[]
+        self.assertEqual(self.deliver(c)['state'],'unknown');self.assertEqual(c.count('thread/queue/start'),1)
+    def test_unknown_start_history_still_requires_model_ack(self):
+        c=self.lost_start();self.history(c)
+        r=self.deliver(c);self.assertEqual(r['state'],'awaiting_model_ack');self.assertEqual(r['delivery_state'],'history_confirmed')
+        self.assertEqual(c.count('thread/queue/start'),1)
+    def test_other_queue_entry_blocks_both_orderings(self):
+        for reverse in (False,True):
+            with self.subTest(reverse=reverse), tempfile.TemporaryDirectory() as tmp:
+                c=FakeClient();other={'id':'other','clientUserMessageId':'other-client','input':[]};c.rows=[other]
+                result=asyncio.run(m.deliver(Path(tmp),self.binding,COMMENT,SHA,c))
+                self.assertEqual(result['state'],'queued')
+                if reverse:c.rows.reverse()
+                result=asyncio.run(m.deliver(Path(tmp),self.binding,COMMENT,SHA,c))
+                self.assertEqual(result['state'],'queued');self.assertEqual(c.count('thread/queue/start'),0)
+    def test_queue_add_unknown_reconciles_without_second_add(self):
+        c=FakeClient();c.fail='thread/queue/add'
+        with self.assertRaises(TimeoutError):self.deliver(c)
+        c.fail=None
+        self.assertEqual(self.deliver(c)['state'],'awaiting_model_ack')
+        self.assertEqual(c.count('thread/queue/add'),1);self.assertEqual(c.count('thread/queue/start'),1)
+    def test_queue_add_unknown_without_visible_receipt_never_resends(self):
+        c=FakeClient();c.fail='thread/queue/add'
+        with self.assertRaises(TimeoutError):self.deliver(c)
+        c.rows=[]
+        self.assertEqual(self.deliver(c)['state'],'unknown');self.assertEqual(c.count('thread/queue/add'),1);self.assertEqual(c.count('thread/queue/start'),0)
+    def test_steer_unknown_never_resends_and_history_can_confirm(self):
+        c=FakeClient('active');c.fail='turn/steer'
+        with self.assertRaises(TimeoutError):self.deliver(c)
+        self.assertEqual(self.deliver(c)['state'],'unknown');self.history(c)
+        self.assertEqual(self.deliver(c)['state'],'awaiting_model_ack');self.assertEqual(c.count('turn/steer'),1)
+    def test_changed_body_requires_foreground_reconciliation(self):
+        c=FakeClient('active');self.deliver(c);writes=c.writes()
+        self.assertEqual(self.deliver(c,dict(COMMENT,body='changed'))['state'],'changed_input');self.assertEqual(c.writes(),writes)
+    def test_identity_and_cwd_mismatch_fail_without_write(self):
+        for field,value in [('id','other-thread'),('cwd','/other')]:
+            c=FakeClient();c.metadata[field]=value
+            with self.assertRaisesRegex(RuntimeError,'workspace mismatch'):self.deliver(c)
+            self.assertEqual(c.writes(),[])
+    def test_unloaded_session_and_changed_turn_do_not_start(self):
+        c=FakeClient('notLoaded');self.assertEqual(self.deliver(c)['state'],'waiting_for_existing_session');self.assertFalse(self.path.exists())
+        c=FakeClient('active');c.turn_status='completed';self.assertEqual(self.deliver(c)['state'],'turn_changed');self.assertEqual(c.writes(),[]);self.assertFalse(self.path.exists())
+    def test_ack_idempotency_and_real_ack_required(self):
+        c=FakeClient('active');self.deliver(c);r=self.record()
+        with patch.dict(os.environ,{'CODEX_THREAD_ID':THREAD}):
+            first=m.acknowledge(self.base,self.event,r['client_id']);before=self.ack_path.read_bytes()
+            self.assertEqual(m.acknowledge(self.base,self.event,r['client_id']),first);self.assertEqual(self.ack_path.read_bytes(),before)
+        calls=len(c.calls);self.assertEqual(self.deliver(c)['state'],'received');self.assertEqual(len(c.calls),calls)
+    def test_ack_rejects_other_session_client_and_existing_mismatch(self):
+        c=FakeClient('active');self.deliver(c);r=self.record()
+        with patch.dict(os.environ,{'CODEX_THREAD_ID':'other'}):
+            with self.assertRaisesRegex(RuntimeError,'bound existing session'):m.acknowledge(self.base,self.event,r['client_id'])
+        with patch.dict(os.environ,{'CODEX_THREAD_ID':THREAD}):
+            with self.assertRaisesRegex(RuntimeError,'identity mismatch'):m.acknowledge(self.base,self.event,'wrong')
+            ack=m.acknowledge(self.base,self.event,r['client_id']);ack['body_sha256']='bad';self.ack_path.write_text(json.dumps(ack))
+            with self.assertRaisesRegex(RuntimeError,'acknowledgement mismatch'):m.acknowledge(self.base,self.event,r['client_id'])
+            with self.assertRaisesRegex(RuntimeError,'acknowledgement mismatch'):self.deliver(c)
+    def test_unknown_start_model_ack_resolves_without_write(self):
+        c=self.lost_start();r=self.record()
+        with patch.dict(os.environ,{'CODEX_THREAD_ID':THREAD}):m.acknowledge(self.base,self.event,r['client_id'])
+        self.assertEqual(self.deliver(c)['state'],'received');self.assertEqual(c.count('thread/queue/start'),1)
+    def test_queued_input_mismatch_refuses_start(self):
+        c=FakeClient();c.fail='thread/queue/add'
+        with self.assertRaises(TimeoutError):self.deliver(c)
+        c.rows[0]['input']=[{'type':'text','text':'altered'}]
+        with self.assertRaisesRegex(RuntimeError,'content mismatch'):self.deliver(c)
+        self.assertEqual(c.count('thread/queue/start'),0)
+
+if __name__=='__main__':unittest.main(verbosity=2)

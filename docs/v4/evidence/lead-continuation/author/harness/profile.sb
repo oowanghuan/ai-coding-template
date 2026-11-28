@@ -1,0 +1,18 @@
+(version 1)
+(deny default)
+(allow process*)
+(allow file-read-metadata)
+(allow mach-lookup (global-name "com.apple.system.logger"))
+(allow file-read* (subpath "/System") (subpath "/usr") (subpath "/Library/Developer") (subpath "/Library/Apple") (subpath "/private/var/db/dyld") (literal "/dev/null") (literal "/dev/urandom") (subpath "<REPO>") (subpath "<DEPENDENCIES>") (subpath "<EVIDENCE_ROOT>"))
+(allow file-write* (subpath "<EVIDENCE_ROOT>") (literal "/dev/null"))
+(allow file-map-executable)
+(allow file-read* (subpath "/bin") (subpath "/sbin") (subpath "/private/preboot/Cryptexes"))
+(deny mach-lookup (global-name "com.apple.securityd") (global-name "com.apple.security.agent"))
+
+(allow file-read* (literal "/"))
+
+(allow signal (target children))
+
+(deny process-info* (target others))
+
+(allow file-read* (subpath "<CANDIDATE_STAGE>"))

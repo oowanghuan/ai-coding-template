@@ -1,0 +1,50 @@
+"""Broker integration uses fake APIs; no GH process or NativeClient."""
+import contextlib
+import fcntl
+import io
+import json
+from pathlib import Path
+import tempfile
+import types
+import unittest
+from unittest.mock import patch
+import poll
+
+class PollTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.base=Path(self.tmp.name)
+        self.p=patch.object(poll,'BASE',self.base);self.p.start();self.addCleanup(self.p.stop)
+        self.rows=[];self.pulses=[];self.api_calls=[]
+    def api(self,path,payload=None,paginate=False):
+        self.assertIsNone(payload,'no test GitHub writes');self.api_calls.append(path)
+        if path=='user':return {'login':poll.OWNER}
+        if path==poll.ISSUE_PATH:return {'state':'open'}
+        if path==poll.ISSUE_PATH+'/comments?per_page=100':return [self.rows]
+        if path==poll.REF_PATH:return {'object':{'sha':'a'*40}}
+        raise AssertionError(path)
+    def pulse(self,base,api,**kwargs):
+        # The existing launchd poll lock must remain held across continuation.
+        with (base/'poll.lock').open('a+') as second:
+            with self.assertRaises(BlockingIOError):fcntl.flock(second,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        self.pulses.append(kwargs);return {'state':'disabled'}
+    def test_zero_advisor_round_reaches_continuation_under_same_lock(self):
+        with patch.object(poll,'api',side_effect=self.api),patch.object(poll,'notify_continuation',side_effect=self.pulse),contextlib.redirect_stdout(io.StringIO()):poll.main()
+        self.assertEqual(self.pulses,[{'pending_advisor':False,'unresolved_operations':False}])
+        status=json.loads((self.base/'last-run.json').read_text());self.assertIn('continuation_checked',[x['step'] for x in status['steps']])
+    def test_single_instance_busy_never_runs_api_or_continuation(self):
+        with (self.base/'poll.lock').open('a+') as first:
+            fcntl.flock(first,fcntl.LOCK_EX|fcntl.LOCK_NB)
+            with patch.object(poll,'api',side_effect=AssertionError('lock bypass')),patch.object(poll,'notify_continuation',side_effect=AssertionError('lock bypass')),contextlib.redirect_stdout(io.StringIO()):poll.main()
+        self.assertFalse((self.base/'last-run.json').exists())
+    def test_fixed_read_paths_do_not_expand_writes(self):
+        fake=types.SimpleNamespace(returncode=0,stdout='{}',stderr='')
+        with patch.object(poll.subprocess,'run',return_value=fake) as run:
+            poll.api('repos/'+poll.REPO+'/git/ref/heads/v4/worker-onboarding')
+            poll.api('repos/'+poll.REPO+'/contents/docs/v4/V4_WORK_PACKAGES.md?ref='+'a'*40)
+            for path in ('repos/'+poll.REPO+'/contents/AGENTS.md?ref='+'a'*40,'repos/other/repo/git/ref/heads/v4/test','repos/'+poll.REPO+'/git/ref/heads/main'):
+                with self.assertRaises(RuntimeError):poll.api(path)
+            with self.assertRaises(RuntimeError):poll.api('repos/'+poll.REPO+'/contents/docs/v4/V4_WORK_PACKAGES.md?ref='+'a'*40,payload={'body':'write forbidden'})
+            self.assertEqual(run.call_count,2)
+            for call in run.call_args_list:self.assertEqual(call.args[0][:2],[poll.GH,'api'])
+
+if __name__=='__main__':unittest.main()

@@ -1,0 +1,270 @@
+#!/usr/bin/env python3
+"""Restricted V4 #3 broker: reads, existing-session notifications, reviewed replies.
+
+No candidate execution, new/resumed session, local repository access, Git write or push.
+Notifications target one pre-bound loaded session without changing its permissions.
+Outbox entries are prepared by the foreground Project Lead, outside candidate trees.
+Unprepared requests remain pending for Project Lead, without a new Owner approval gate.
+"""
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import sys
+from datetime import datetime, timezone
+from session_delivery import notify
+from continuation import notify_continuation
+
+BASE = Path(__file__).resolve().parent
+GH = '/opt/homebrew/bin/gh'
+REPO = 'oowanghuan/ai-coding-template'
+OWNER = 'oowanghuan'
+ISSUE_PATH = 'repos/' + REPO + '/issues/3'
+REVIEW_REFS = {name: 'repos/' + REPO + '/git/ref/heads/' + name
+               for name in ('v4/design', 'v4/first-batch', 'v4/next-batch-plan', 'v4/local-execution')}
+REF_PATH = REVIEW_REFS['v4/design']
+SHA = re.compile(r'(?<![0-9a-f])[0-9a-f]{40}(?![0-9a-f])')
+PREFIXES = {'needs_review': '[Project Lead · 请复核]', 'closed': '[Project Lead · 意见处理]',
+            'needs_owner': '[Project Lead · 意见处理]', 'result': '[Project Lead · 意见处理]'}
+os.umask(0o077)
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+def digest(text):
+    return hashlib.sha256(text.encode()).hexdigest()
+
+def atomic(path, value):
+    tmp = path.with_suffix('.tmp')
+    with tmp.open('w') as f:
+        f.write(json.dumps(value, ensure_ascii=False, indent=2) + '\n')
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp, path)
+
+def safe_environment():
+    env = {k: os.environ[k] for k in ('HOME', 'USER', 'LOGNAME', 'TMPDIR', 'LANG', 'LC_ALL') if k in os.environ}
+    env.update(PATH='/opt/homebrew/bin:/usr/bin:/bin', GH_PROMPT_DISABLED='1', GH_HOST='github.com')
+    return env  # Only the fixed GH broker receives Owner authentication, never candidate code.
+
+def api(path, payload=None, paginate=False):
+    allowed_get = path in ('user', ISSUE_PATH, ISSUE_PATH + '/comments?per_page=100') or path in REVIEW_REFS.values()
+    allowed_get |= re.fullmatch(r'repos/' + REPO + r'/git/ref/heads/v4/[A-Za-z0-9._/-]+', path) is not None and '..' not in path
+    allowed_get |= re.fullmatch(r'repos/' + REPO + r'/contents/docs/v4/V4_WORK_PACKAGES\.md\?ref=[0-9a-f]{40}', path) is not None
+    allowed_get |= re.fullmatch(r'repos/' + REPO + r'/compare/[0-9a-f]{40}\.\.\.[0-9a-f]{40}', path) is not None
+    if (payload is None and not allowed_get) or (payload is not None and path != ISSUE_PATH + '/comments'):
+        raise RuntimeError('Endpoint outside the fixed read/Issue-comment boundary')
+    argv = [GH, 'api', path]
+    if paginate:
+        argv += ['--paginate', '--slurp']
+    if payload is not None:
+        if set(payload) != {'body'}:
+            raise RuntimeError('Only a comment body may be published')
+        argv += ['--method', 'POST', '--input', '-']
+    p = subprocess.run(argv, cwd=BASE, env=safe_environment(), capture_output=True, text=True,
+                       input=json.dumps(payload) if payload is not None else None, timeout=90)
+    if p.returncode:
+        raise RuntimeError('GitHub API failed (%s): %s' % (p.returncode, p.stderr[-1000:]))
+    return json.loads(p.stdout)
+
+def comments():
+    return [c for page in api(ISSUE_PATH + '/comments?per_page=100', paginate=True) for c in page]
+
+def key(c, sha):
+    return 'v4-pl:%s:%s' % (c['id'], sha)
+
+def marker(operation):
+    return '<!-- ' + operation + ' -->'
+
+def cites(body, comment_id):
+    return re.search(r'(?<!\d)' + str(comment_id) + r'(?!\d)', body) is not None
+
+def replies(rows, operation):
+    return [c for c in rows if c['user']['login'] == OWNER and
+            c['body'].startswith('[Project Lead ·') and marker(operation) in c['body']]
+
+def review_subjects(body):
+    # Comparison/source URLs are evidence, not additional review targets.
+    plain = re.sub(r'https?://[^\s)<>]+', '', body).replace('**', '')
+    labeled = set(re.findall(
+        r'(?<![原旧整])(?:新完整受审|完整受审|受审)\s*SHA\s*[:：]?\s*[`*]*([0-9a-f]{40})(?![0-9a-f])', plain))
+    candidates = labeled or set(SHA.findall(plain))
+    # Ambiguous/missing targets remain one visible investigation item, never guessed.
+    return sorted(candidates) if len(candidates) == 1 else ['unbound']
+
+def pending(rows):
+    requests = [c for c in rows if c['user']['login'] == OWNER and
+                c['body'].startswith(('[Project Lead · 请评审]', '[Project Lead · 请复核]'))]
+    result = []
+    for c in rows:
+        decision = c['body'].startswith(('[Advisor · Owner 裁定转记]', '[Owner · 裁定]'))
+        if c['user']['login'] != OWNER or not (decision or c['body'].startswith('[Advisor · 评审]')):
+            continue
+        subjects = review_subjects(c['body'])
+        for sha in subjects:
+            # A decision is a distinct governance event, not a reply to a review request.
+            # Detection never grants execution rights: foreground reconciliation is still required.
+            if not decision and not any((sha == 'unbound' or sha in r['body']) and cites(c['body'], r['id']) for r in requests):
+                continue
+            answered = replies(rows, key(c, sha)) or any(
+                r['user']['login'] == OWNER and
+                r['body'].startswith(('[Project Lead · 意见处理]', '[Project Lead · 请复核]', '[Project Lead · 裁定已接收]')) and
+                cites(r['body'], c['id']) and (sha == 'unbound' or sha in r['body']) for r in rows)
+            if not answered:
+                result.append((c, sha))
+    return result
+
+def public_check(body):
+    patterns = [r'/Users/', r'private-research', r'gh[pousr]_[A-Za-z0-9]{20,}',
+                r'github_pat_[A-Za-z0-9]{20,}', r'sk-[A-Za-z0-9]{20,}', r'BEGIN .*PRIVATE KEY']
+    patterns += json.loads((BASE / 'private-denylist.json').read_text())
+    if any(re.search(p, body, re.I) for p in patterns):
+        raise RuntimeError('Public content requires Project Lead inspection')
+
+def reconcile(previous, rows, head, compare):
+    """Read-only recovery. Never repeat an unknown POST or an old push."""
+    found = replies(rows, previous['key'])
+    if found:
+        return dict(previous, state='published', comment_id=found[0]['id'], reconciled_at=now())
+    if previous['state'] in ('posting', 'published'):
+        return dict(previous, blocked_reason='Comment outcome unresolved; no automatic resend')
+    if previous['state'] == 'push_unknown':
+        commit = previous['commit']
+        if commit != head and compare(commit, head) not in ('ahead', 'identical'):
+            return dict(previous, blocked_reason='Legacy push not confirmed; no automatic push')
+        return dict(previous, state='push_confirmed', remote_head=head, reconciled_at=now())
+    return previous
+
+def outbox_ref(entry):
+    branch = entry.get('expected_branch', 'v4/design')
+    if branch not in REVIEW_REFS:
+        raise RuntimeError('Review branch outside the fixed allowlist')
+    return REVIEW_REFS[branch]
+
+def checked_body(entry, comment, sha, head):
+    if entry['comment_id'] != comment['id'] or entry['subject_sha'] != sha:
+        raise RuntimeError('Outbox request identity mismatch')
+    if entry['advisor_body_sha256'] != digest(comment['body']):
+        raise RuntimeError('Advisor text changed since foreground inspection')
+    if entry['expected_head'] != head:
+        raise RuntimeError('Remote advanced; preserve prepared reply for reconciliation')
+    body = entry['body']
+    if entry['body_sha256'] != digest(body) or entry['prepared_by'] != 'Project Lead':
+        raise RuntimeError('Outbox integrity mismatch')
+    if not body.startswith(PREFIXES[entry['disposition']]) or marker(key(comment, sha)) not in body:
+        raise RuntimeError('Incorrect outcome prefix or idempotency marker')
+    if not cites(body, comment['id']) or (sha != 'unbound' and sha not in body):
+        raise RuntimeError('Missing reviewed comment ID/SHA')
+    public_check(body)
+    return body
+
+def main():
+    lock = (BASE / 'poll.lock').open('a+')
+    try:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        print('single_instance_busy')
+        return
+    stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
+    directory = BASE / 'runs' / stamp
+    directory.mkdir(parents=True)
+    status = {'run_id': stamp, 'started_at': now(), 'trigger': os.environ.get('XPC_SERVICE_NAME', 'manual'),
+              'status': 'running', 'mode': 'read_notify_and_reviewed_reply',
+              'runner_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+              'notification_bridge_sha256': hashlib.sha256((Path(__file__).resolve().parent / 'session_delivery.py').read_bytes()).hexdigest(),
+              'processed': 0, 'waiting': [], 'steps': []}
+
+    def save():
+        atomic(directory / 'result.json', status)
+        atomic(BASE / 'last-run.json', status)
+
+    def step(name):
+        status['last_successful_step'] = name
+        status['steps'].append({'step': name, 'at': now()})
+        save()
+
+    try:
+        if api('user')['login'] != OWNER:
+            raise RuntimeError('Unexpected account; Owner recognition required')
+        step('identity_verified')
+        issue = api(ISSUE_PATH)
+        if issue['state'] != 'open':
+            raise RuntimeError('Ledger is closed')
+        step('issue_read')
+        rows = comments()
+        atomic(directory / 'input.json', {'issue': issue, 'comments': rows})
+        jobs = pending(rows)
+        status.update(comments_read=len(rows), pending=len(jobs),
+                      owner_decisions_seen=sum(c['user']['login'] == OWNER and c['body'].startswith(
+                          ('[Advisor · Owner 裁定转记]', '[Owner · 裁定]')) for c in rows))
+        step('pending_selected')
+        head = api(REF_PATH)['object']['sha']
+        status['remote_head'] = head
+        step('remote_head_verified')
+        for journal in BASE.glob('operation-*.json'):
+            previous = json.loads(journal.read_text())
+            updated = reconcile(previous, rows, head, lambda a, b: api('repos/' + REPO + '/compare/' + a + '...' + b)['status'])
+            atomic(journal, updated)
+        step('journals_reconciled')
+        for c, sha in jobs:
+            operation = key(c, sha)
+            journal = BASE / ('operation-' + digest(operation) + '.json')
+            previous = json.loads(journal.read_text()) if journal.exists() else None
+            if previous and previous['state'] in ('posting', 'published', 'push_unknown'):
+                status['waiting'].append({'key': operation, 'reason': previous.get('blocked_reason', 'Inspect existing receipt')})
+                continue
+            outbox = BASE / 'outbox' / (str(c['id']) + '-' + sha + '.json')
+            if not outbox.exists():
+                notification = notify(BASE, c, sha)
+                status['waiting'].append({'key': operation, 'reason': 'Await Project Lead handling; candidate execution remains isolated',
+                                          'notification': notification})
+                step('session_notification_checked')
+                continue
+            entry = json.loads(outbox.read_text())
+            review_ref = outbox_ref(entry)
+            reply_head = head if review_ref == REF_PATH else api(review_ref)['object']['sha']
+            body = checked_body(entry, c, sha, reply_head)
+            step('outbox_verified')
+            fresh = comments()
+            if not any(key(x, s) == operation for x, s in pending(fresh)):
+                step('reply_already_present')
+                continue
+            live = next(x for x in fresh if x['id'] == c['id'])
+            checked_body(entry, live, sha, api(review_ref)['object']['sha'])
+            receipt = {'state': 'posting', 'key': operation, 'subject_sha': sha, 'remote_head': reply_head,
+                       'review_branch': entry.get('expected_branch', 'v4/design'),
+                       'body_sha256': digest(body), 'disposition': entry['disposition'], 'run_id': stamp,
+                       'prepared_body': body, 'created_at': now()}
+            atomic(journal, receipt)
+            step('post_intent_saved')
+            posted = api(ISSUE_PATH + '/comments', payload={'body': body})
+            receipt.update(state='published', comment_id=posted['id'], published_at=now())
+            atomic(journal, receipt)
+            status['processed'] += 1
+            status.setdefault('published_comment_ids', []).append(posted['id'])
+            step('comment_posted')
+            if not replies(comments(), operation):
+                raise RuntimeError('Comment not yet visible; preserve receipt and reconcile next run')
+            step('comment_readback_verified')
+        unresolved = any(json.loads(p.read_text()).get('state') in ('posting', 'push_unknown')
+                         for p in BASE.glob('operation-*.json'))
+        status['continuation'] = notify_continuation(BASE, api, pending_advisor=bool(jobs),
+                                                      unresolved_operations=unresolved)
+        step('continuation_checked')
+        if status['continuation']['state'] not in ('disabled', 'no_ready_work'):
+            status['waiting'].append({'continuation': status['continuation']})
+        status['status'] = 'waiting' if status['waiting'] else 'success'
+        step('complete')
+    except Exception as e:
+        status.update(status='failed', error=str(e))
+    status['finished_at'] = now()
+    save()
+    print(json.dumps(status, ensure_ascii=False))
+    if status['status'] == 'failed':
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main()
