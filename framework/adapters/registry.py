@@ -38,12 +38,20 @@ class AdapterRegistry:
     """Closed by default. New reviewed adapters register without changing core."""
     def __init__(self): self._adapters = {}
 
-    def register(self, descriptor, *, planner, classifier):
+    def register(self, descriptor, *, planner, classifier, executor=None):
         descriptor = validate_descriptor(descriptor)
         identity = descriptor['adapter_id']
         if identity in self._adapters: raise ValueError('duplicate adapter identity')
         if not callable(planner) or not callable(classifier): raise ValueError('explicit trusted callable required')
-        self._adapters[identity] = (descriptor, planner, classifier)
+        execution = ('start', 'status', 'stop')
+        if executor is None and any(descriptor['capabilities'][k] == 'supported' for k in execution):
+            raise ValueError('execution capability requires a trusted executor')
+        if executor is not None:
+            if executor.selection != {k: descriptor[k] for k in SELECTION_FIELDS}:
+                raise ValueError('executor selection mismatch')
+            if not all(callable(getattr(executor, k, None)) for k in (*execution, 'result')):
+                raise ValueError('complete invocation executor required')
+        self._adapters[identity] = (descriptor, planner, classifier, executor)
 
     def _entry(self, identity):
         if not isinstance(identity, str) or identity not in self._adapters: raise ValueError('unregistered adapter')
@@ -53,7 +61,7 @@ class AdapterRegistry:
     def describe(self, identity): return copy.deepcopy(self._entry(identity)[0])
 
     def plan(self, identity, **request):
-        descriptor, planner, _ = self._entry(identity)
+        descriptor, planner, _, _ = self._entry(identity)
         if 'model' in request and request['model'] != descriptor['model']:
             raise ValueError('model must match registered selection')
         request['model'] = descriptor['model']
@@ -67,7 +75,7 @@ class AdapterRegistry:
         return value
 
     def classify(self, identity, raw, **observation):
-        descriptor, _, classifier = self._entry(identity)
+        descriptor, _, classifier, _ = self._entry(identity)
         if descriptor['capabilities']['result'] != 'supported': raise ValueError('result capability unavailable')
         value = classifier(raw, **observation)
         if not isinstance(value, dict) or set(value) != {'kind', 'retry_at', 'provider', 'observed', 'evidence_level'}:
@@ -81,6 +89,30 @@ class AdapterRegistry:
         value = copy.deepcopy(value); value['provider'] = descriptor['model_provider']
         value['observed']['selection'] = {field: descriptor[field] for field in SELECTION_FIELDS}
         return value
+
+    def _invoke(self, identity, action, **kwargs):
+        descriptor, _, _, executor = self._entry(identity)
+        if executor is None or descriptor['capabilities'][action] != 'supported':
+            raise ValueError('invocation capability unavailable')
+        value = getattr(executor, action)(**kwargs)
+        if (not isinstance(value, dict) or value.get('format') != 'provider-invocation/1' or
+                value.get('selection') != {k: descriptor[k] for k in SELECTION_FIELDS} or
+                value.get('engineering_accepted') is not False):
+            raise ValueError('invocation result contract')
+        return copy.deepcopy(value)
+
+    def start(self, identity, *, operation_id, authority, **request):
+        return self._invoke(identity, 'start', operation_id=operation_id, authority=authority,
+                            proposal=self.plan(identity, **request))
+
+    def status(self, identity, invocation_id):
+        return self._invoke(identity, 'status', invocation_id=invocation_id)
+
+    def stop(self, identity, invocation_id):
+        return self._invoke(identity, 'stop', invocation_id=invocation_id)
+
+    def result(self, identity, invocation_id):
+        return self._invoke(identity, 'result', invocation_id=invocation_id)
 
 
 def synthetic_plan(**request):

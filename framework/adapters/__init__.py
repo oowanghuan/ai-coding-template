@@ -1,4 +1,4 @@
-"""Pure planning/parsing adapters. No provider process or authority mutation."""
+"""Planning/parsing plus explicitly bound invocation; default adapters do not execute."""
 from .results import classify_result
 from .runspec import build_run_spec, parse_proposal
 from .entries import render_entries
