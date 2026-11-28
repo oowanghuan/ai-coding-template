@@ -10,10 +10,10 @@ from pathlib import Path
 import uuid
 
 from framework.local.storage import authority_lock, atomic_json, fingerprint, safe_path
-from framework.local.store import Store, find, now, shape, UNKNOWN
+from framework.local.store import Store, find, now, shape, UNKNOWN, LAUNCH_PROTOCOL, DIRECT_WORKSPACE_PREFIX
 from framework.local import lifecycle
 from framework.local.runner import git, workspace_entries, prepare, verify_workspace
-from framework.core.protocol import validate, within
+from framework.core.protocol import validate, within, timestamp
 from framework.recovery.checkpoint import create_snapshot, load_snapshot, restore_snapshot, open_directory, scan
 
 
@@ -125,6 +125,88 @@ def confirm_stopped(root, credentials, actor, process):
             state['worker_runtime']['workers'][worker['id']]['stop_confirmed'] = not others
             lifecycle.refresh(state, worker['id'])
         return commit(store, state, 'confirmed-stop', {'assignment_id': assignment['id'], 'exit_code': status})
+
+
+def recover_prepared(root, credentials, actor, expected_revision, operation_id):
+    """Fence an exactly checkpointed workspace with durable no-launch proof.
+
+    This is limited to cooperative reviewed launchers obeying the versioned
+    persist-before-spawn protocol. It is not an OS process-absence detector.
+    Only a direct-local-only claim uses the reserved workspace namespace. The
+    reviewed external client and driver reject that namespace, including target
+    paths beneath an ancestor job. Existing pinned legacy drivers must not have
+    authority over the new namespace. Out-of-band writers or unknown external
+    authority require separate reconciliation; they are not supported here.
+    The caller first saves a final checkpoint. Same operation/intent replays the
+    committed receipt without writes; a new operation cannot recover it twice.
+    Legacy prepared workspaces without versioned history fail closed.
+    """
+    return Store(root).change('recover-prepared', credentials, actor,
+                              expected_revision, operation_id)
+
+
+def recover_prepared_state(root, state, credentials, actor, at):
+    """Internal Store transaction; caller holds the one authority lock."""
+    assignment, worker, wp, workspace = assigned(state, credentials, actor)
+    if (not workspace['id'].startswith(DIRECT_WORKSPACE_PREFIX) or
+            workspace['path'] != '.ai-org/workspaces/' + workspace['id']):
+        raise ValueError('prepared recovery requires the direct-local-only execution domain')
+    if (assignment['state'] not in ('active', 'revoked', 'expired') or
+            workspace['state'] != 'prepared' or workspace['run'] is not None):
+        raise ValueError('prepared recovery requires an unlaunched current assignment')
+    if wp['id'] in state['deliveries']:
+        raise ValueError('delivered work cannot use prepared recovery')
+    if (not workspace.get('checkpoint') or not assignment['last_checkpoint'] or
+            wp['checkpoint_ref'] != assignment['last_checkpoint']):
+        raise ValueError('final current checkpoint required before prepared recovery')
+    auth = find(state['snapshot']['authorizations'], wp['authorization_ref'])
+    if auth['state'] != 'granted' or timestamp(auth['expires_at']) <= timestamp(at):
+        raise ValueError('authorization changed or expired; preserve for explicit reconciliation')
+    expected = dict(workspace_id=workspace['id'], state='creating', launch_protocol=LAUNCH_PROTOCOL,
+        execution_domain='direct-local-only',
+        assignment_id=assignment['id'], epoch=assignment['authority_epoch'], token=assignment['fencing_token'],
+        work_binding_sha256=binding(wp),
+        authorization_sha256=fingerprint(auth))
+    starts = []
+    checkpoints = []
+    for record in state['operations'].values():
+        result = record['result']
+        if record['action'] == 'run-begin':
+            # An unusable launch history is unknown, not evidence of absence.
+            if not isinstance(result.get('workspace_id'), str):
+                raise ValueError('unverifiable launch history')
+            if result['workspace_id'] == workspace['id']:
+                raise ValueError('persistent launch intent exists; reconcile owned execution')
+        if record['action'] == 'start' and result.get('workspace_id') == workspace['id']:
+            starts.append(record)
+        if record['action'] == 'checkpoint' and result.get('checkpoint_id') == assignment['last_checkpoint']:
+            checkpoints.append(record)
+    if (len(starts) != 1 or starts[0]['status'] != 'committed' or starts[0]['actor'] != actor or
+            starts[0]['result'] != expected or
+            type(starts[0]['result'].get('epoch')) is not int or
+            type(starts[0]['result'].get('token')) is not int):
+        raise ValueError('missing or ambiguous versioned launch-protocol proof')
+    if (len(checkpoints) != 1 or checkpoints[0]['status'] != 'committed' or
+            checkpoints[0]['revision'] <= starts[0]['revision'] or
+            checkpoints[0]['result'] != dict(checkpoint_id=assignment['last_checkpoint'], **workspace['checkpoint'])):
+        raise ValueError('final checkpoint history is not bound to preparation')
+    checked_checkpoint(root, state, wp, workspace)
+    # The same lock protects run-begin. If launch won the race, checks above
+    # reject. If recovery wins, these credentials cannot authorize a later
+    # launch. No PID absence or caller-supplied stopped boolean is consulted.
+    if assignment['state'] == 'active':
+        assignment.update(state='revoked', revocation_reason='prepared-checkpoint-recovery')
+    wp.update(state='paused', revision=wp['revision'] + 1)
+    workspace.update(state='stopped', handoff_required=True)
+    if 'worker_runtime' in state:
+        unresolved = any(w['state'] in UNKNOWN and
+            find(state['snapshot']['assignments'], w['assignment_id'])['worker_ref'] == worker['id']
+            for w in state['workspaces'].values())
+        state['worker_runtime']['workers'][worker['id']]['stop_confirmed'] = not unresolved
+        lifecycle.refresh(state, worker['id'])
+    return dict(assignment_id=assignment['id'], workspace_id=workspace['id'], state='stopped',
+        execution_observed='never_launched', process_stop_observed=False, launch_protocol=LAUNCH_PROTOCOL,
+        checkpoint_id=assignment['last_checkpoint'], manifest_sha256=workspace['checkpoint']['manifest_sha256'])
 
 
 def checked_checkpoint(root, state, wp, workspace):

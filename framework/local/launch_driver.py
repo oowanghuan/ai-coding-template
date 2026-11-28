@@ -21,6 +21,9 @@ ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_-]{0,63}\Z')
 SHA = re.compile(r'[0-9a-f]{64}\Z')
 LIMIT = 262144
 TERMINAL = {'finished', 'stopped', 'rejected', 'unknown'}
+# Standalone reviewed copy intentionally does not import candidate modules.
+# Keep this exclusion aligned with Store's immutable direct-only claim namespace.
+DIRECT_WORKSPACE_PREFIX = 'v4-direct-local-'
 
 
 def utc():
@@ -144,6 +147,8 @@ def validate_config(config):
         if type(job['operation_id']) is not str or not 1 <= len(job['operation_id']) <= 128:
             raise ValueError('invalid operation identity')
         workspace = no_links(job['workspace'], directory=True)
+        if any(part.casefold().startswith(DIRECT_WORKSPACE_PREFIX) for part in workspace.parts):
+            raise ValueError('external launcher cannot authorize the direct-local-only namespace')
         if not beneath(workspace, candidate):
             raise ValueError('workspace outside candidate anchor')
         if workspace == trusted or beneath(workspace, trusted) or beneath(trusted, workspace):
@@ -156,6 +161,8 @@ def validate_config(config):
             raise ValueError('unsafe fixed output')
         no_links((workspace / relative).parent, directory=True)
         target = workspace / relative
+        if any(part.casefold().startswith(DIRECT_WORKSPACE_PREFIX) for part in target.parts):
+            raise ValueError('external launcher cannot authorize the direct-local-only namespace')
         if target.exists() or target.is_symlink():
             no_links(target)
         if type(job['content_sha256']) is not str or not SHA.fullmatch(job['content_sha256']):

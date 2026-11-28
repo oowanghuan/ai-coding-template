@@ -14,7 +14,7 @@ import tempfile
 import time
 
 from framework.local.storage import canonical, safe_path
-from framework.local.store import Store, find
+from framework.local.store import Store, find, DIRECT_WORKSPACE_PREFIX
 from framework.local.runner import verify_workspace
 
 IDENTIFIER = re.compile(r'[A-Za-z0-9][A-Za-z0-9_-]{0,63}\Z')
@@ -78,6 +78,9 @@ def immutable_json(path, value):
 
 class ExternalClient:
     def __init__(self, config_path, job_id, operation_id, workspace, path, content, delay_seconds, timeout):
+        if any(part.casefold().startswith(DIRECT_WORKSPACE_PREFIX)
+               for item in (Path(workspace), Path(workspace) / path) for part in item.parts):
+            raise ValueError('external launcher cannot authorize the direct-local-only namespace')
         if not isinstance(job_id, str) or not IDENTIFIER.fullmatch(job_id):
             raise ValueError('invalid launcher job ID')
         if type(delay_seconds) is not int or type(timeout) is not int:
@@ -167,6 +170,8 @@ def run_external(root, credentials, actor, path, content, operation_id, expected
     assignment = find(before['snapshot']['assignments'], credentials['assignment_id'])
     workspace = before['workspaces'][assignment['workspace_id']]
     worktree = safe_path(store.root, workspace['path'])
+    if any(part.casefold().startswith(DIRECT_WORKSPACE_PREFIX) for part in worktree.parts):
+        raise ValueError('external launcher cannot authorize the direct-local-only namespace')
     client = ExternalClient(config_path, job_id, operation_id, worktree, path, content, delay_seconds, timeout)
     payload = dict(credentials, path=path, content_sha256=sha256(content.encode()),
                    delay_seconds=delay_seconds, timeout=timeout, backend='external',

@@ -109,9 +109,24 @@ Existing-project onboarding, general task authoring, native provider launch/
 monitor/cancel, unattended live probes, operating-system service installation,
 real quota recovery and a second machine remain separate implementation or
 verification items. Dedicated/elastic/restricted mode names are metadata in this
-increment, not fully enforced contribution policies. Prepared-but-never-launched
-tasks are preserved and block automatic handoff until a trusted no-writer
-reconciliation path exists; the positive demo covers a running owned process.
+increment, not fully enforced contribution policies. The positive demo covers a
+running owned process. Prepared-but-never-launched recovery has a separate,
+limited controller API: explicitly claim with
+`execution_domain="direct-local-only"`, prepare, save a final `checkpoint`, then
+call `framework.local.handoff.recover_prepared` with the current revision and a
+unique operation ID before another worker claims and calls `prepare_handoff`.
+Run these operations inside the reviewed execution boundary; they are not a new
+host CLI or an automatic deployment of a trusted launcher.
+
+The direct-only workspace namespace is fixed at claim time. The reviewed
+external client and standalone launch driver reject that namespace, including
+output paths and case aliases. Use newly pinned controller/launcher copies with
+no outstanding old external launch capabilities; installing source does not
+cancel an already running old driver. Default/legacy workspaces cannot opt into
+this recovery after preparation. A committed launch intent, unknown result,
+changed authorization or changed final checkpoint blocks this path. A successful
+receipt says `never_launched` and `process_stop_observed=false`; it does not invent
+a process exit. Real-provider recovery and the full Alpha remain unverified.
 
 Use `scripts/v4_worker.py inspect --root <the-generated-project>` **inside the
 same reviewed execution boundary** to inspect state. Its `cycle` operation can
