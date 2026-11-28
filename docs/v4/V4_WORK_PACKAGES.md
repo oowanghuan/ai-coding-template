@@ -614,6 +614,26 @@ direct-local-only专用域边界。新执行日志只记观察，不能授予或
 执行通过。下一安全切片是该接线和WP-303正常用户入口；B1复核单独继续，工作
 未被4/4通知预算视作完成。没有新建/恢复模型会话、费用、main合入或发布。
 
+### 16.6 跨 Adapter 启动防重整改
+
+Advisor [7241630681](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7241630681)
+对 `321666b7d9c00fd79b01fa24c0a3ad84de18a6d9` 给出单绑定接口源码限定GO、跨适配器
+防重REVISE。已接受并实测复现：旧版在恢复观察unknown后切到另一绑定仍启动第二次。
+旧三适配器成功fixture重复使用执行权，已改为独立任务，历史证据未覆盖或删除。
+
+修复实现 `d27b65724b821443d992ba1f58c2925504436090` 加入显式共享启动预留域，
+跨Adapter/控制器文件锁内先持久化预留；换日志目录、操作ID、token不释放旧预留。
+同一Registry拒绝混用预留域，另一个独立工作区可正常执行；各控制器仍须受信配置
+为同一共享域。未做生产装配或旧日志迁移，Store继续是任务权威。
+
+[真实固定进程证据](evidence/cross-adapter-launch/README.md)：修复前72方法中71过、
+1失败，原工作区启动2次；修复后77方法全过，原工作区只启动1次，独立工作区1次。
+两轮各9项隔离检查通过；修复后32项输入逐blob绑定实现。均为作者运行，状态为
+`submitted / independent-review-pending`，不是工程验收。B1非作者补证另行保留。
+
+下一安全项仍为受信CLI工厂/Store实时授权状态接线与WP-303正常入口。本意见处理
+不增开模型会话、不扩充4/4激活预算、不改权限或费用、不合入main或发布。
+
 <!-- v4-continuation-ready:v1 -->
 ```json
 {
@@ -644,11 +664,12 @@ direct-local-only专用域边界。新执行日志只记观察，不能授予或
       "status": "blocked",
       "depends_on": [],
       "progress": {
-        "checkpoint": "d815cf4a542316d14524d3cbc2891e9fb8b2b0a7",
-        "milestone": "Owner direct continuation: generic invocation implemented, 71 author-run checks passed. Both original CLI auth statuses verified; Claude minimal-environment failure reproduced and resolved by preserving existing USER. Real provider task execution still pending trusted wiring/authority/boundary integration; no new model sessions or budget recharge.",
+        "checkpoint": "d27b65724b821443d992ba1f58c2925504436090",
+        "milestone": "Cross-adapter duplicate launch reproduced and repaired with shared protected reservations; author 77 passed, original workspace starts once and independent workspace runs. Advisor re-review/non-author execution pending. Native factory and Store live wiring pending; no full Alpha acceptance.",
         "evidence_refs": [
           "docs/v4/evidence/native-admission/README.md",
-          "docs/v4/evidence/invocation/README.md"
+          "docs/v4/evidence/invocation/README.md",
+          "docs/v4/evidence/cross-adapter-launch/README.md"
         ]
       }
     },
