@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "<owner-home>/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/bin/codex",
+    "sandbox",
+    "-P",
+    "v4",
+    "-C",
+    "<runs>/v4-codex-native-boundary-82pvykko/candidate",
+    "--",
+    "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "-c",
+    "import json,os,pathlib,socket\nr={}\ntry:r['public_read']=pathlib.Path('public.txt').read_text()=='public fixture'\nexcept OSError as e:r['public_read']=False\ntry:pathlib.Path('allowed.txt').write_text('ok');r['own_write']=True\nexcept OSError:r['own_write']=False\nfor name,op in [('trusted_read',lambda:pathlib.Path(os.environ['CANARY']).read_bytes()),('trusted_write',lambda:pathlib.Path(os.environ['CANARY']).write_bytes(b'bad')),('network',lambda:socket.create_connection(('127.0.0.1',9),timeout=1))]:\n try:op();r[name]={'denied':False}\n except OSError as e:r[name]={'denied':e.errno in (1,13),'errno':e.errno}\nprint(json.dumps(r))\n"
+  ],
+  "env": {
+    "HOME": "<runs>/v4-codex-native-boundary-82pvykko/home",
+    "TMPDIR": "<runs>/v4-codex-native-boundary-82pvykko/tmp",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "CANARY": "<runs>/v4-codex-native-boundary-82pvykko/trusted/secret-canary"
+  },
+  "exit_code": 0,
+  "config": "[permissions.v4.filesystem]\n\":root\" = \"deny\"\n\":minimal\" = \"read\"\n\"<runs>/v4-codex-native-boundary-82pvykko/candidate\" = \"write\"\n\"<runs>/v4-codex-native-boundary-82pvykko/trusted\" = \"deny\"\n\"/Library/Developer\" = \"read\"\n[permissions.v4.network]\nenabled = false\n",
+  "config_sha256": "78cd4ce87c7697887c77d4461311c7f070c4b3238503b91401f85c45ec372518",
+  "canary_preserved": true
+}

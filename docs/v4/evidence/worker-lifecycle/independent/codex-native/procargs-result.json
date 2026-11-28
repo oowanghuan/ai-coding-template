@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "<owner-home>/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/bin/codex",
+    "sandbox",
+    "-P",
+    "v4",
+    "-C",
+    "<runs>/v4-codex-native-boundary-82pvykko/candidate",
+    "--",
+    "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "-c",
+    "import ctypes,json,os\nlib=ctypes.CDLL(None,use_errno=True);mib=(ctypes.c_int*3)(1,49,int(os.environ['OWNED_PID']));size=ctypes.c_size_t(1024*1024);buf=ctypes.create_string_buffer(size.value)\nrc=lib.sysctl(mib,3,buf,ctypes.byref(size),None,0);print(json.dumps({'rc':rc,'errno':ctypes.get_errno(),'synthetic_marker_observed':b'PUBLIC_CANARY_NOT_A_CREDENTIAL' in buf.raw[:size.value] if rc==0 else False}))\n"
+  ],
+  "env": {
+    "HOME": "<runs>/v4-codex-native-boundary-82pvykko/home",
+    "TMPDIR": "<runs>/v4-codex-native-boundary-82pvykko/tmp",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "CANARY": "<runs>/v4-codex-native-boundary-82pvykko/trusted/secret-canary",
+    "OWNED_PID": "20005"
+  },
+  "exit_code": 0,
+  "owned_child_exit": -15
+}

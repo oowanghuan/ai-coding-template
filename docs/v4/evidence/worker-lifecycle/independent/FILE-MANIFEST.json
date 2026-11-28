@@ -1,0 +1,719 @@
+{
+  "format": "v4-independent-public-evidence/1",
+  "files": [
+    {
+      "source_alias": "tests/adapters-result.json",
+      "public_path": "tests/adapters-result.json",
+      "raw_sha256": "94119f224faa646387722499291cf694ce86a46390168212537f7e96f90443e0",
+      "public_sha256": "a57155334b3ebddcd1733fdd9cdd19abac3a3442c1f7d7578b7303a217d19705",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/adapters.stderr.log",
+      "public_path": "tests/adapters.stderr.log",
+      "raw_sha256": "42bc69d2f86563e563b61c69c9a842d0ef0cae3a2ab219eb03c2b2438d8b8c00",
+      "public_sha256": "42bc69d2f86563e563b61c69c9a842d0ef0cae3a2ab219eb03c2b2438d8b8c00",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/adapters.stdout.log",
+      "public_path": "tests/adapters.stdout.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/canary-result.json",
+      "public_path": "tests/canary-result.json",
+      "raw_sha256": "c61d98dd504c33cd3c6de20b71a1f815325860ed56014cf1c7dfb2bf2c2f7d25",
+      "public_sha256": "6ec38dbf8527b5926c19a6d25e36f17bc24c9633282c295a53473bbcb0614e19",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/canary.py",
+      "public_path": "tests/canary.py",
+      "raw_sha256": "08357c7eb6d0ea278f7d040799b22a1e9d187ab8193963428e2943fee997f012",
+      "public_sha256": "08357c7eb6d0ea278f7d040799b22a1e9d187ab8193963428e2943fee997f012",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/canary.stderr.log",
+      "public_path": "tests/canary.stderr.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/canary.stdout.log",
+      "public_path": "tests/canary.stdout.log",
+      "raw_sha256": "1055ad3a59638574ee3bf64669a0a9617706785df53c1b7bc8f35d22297de52e",
+      "public_sha256": "1055ad3a59638574ee3bf64669a0a9617706785df53c1b7bc8f35d22297de52e",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/lifecycle-02.stderr.log",
+      "public_path": "tests/lifecycle-02.stderr.log",
+      "raw_sha256": "18a470c359e4632fa52802a79a3bf206ccff08b86f4ba1597f2f123bf81359f5",
+      "public_sha256": "18a470c359e4632fa52802a79a3bf206ccff08b86f4ba1597f2f123bf81359f5",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/lifecycle-02.stdout.log",
+      "public_path": "tests/lifecycle-02.stdout.log",
+      "raw_sha256": "df28865c315f7cb7b7fd9d3feb1f70d96a1e22a34118ba89773d28bf9d5058ba",
+      "public_sha256": "df28865c315f7cb7b7fd9d3feb1f70d96a1e22a34118ba89773d28bf9d5058ba",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/lifecycle-result-01.json",
+      "public_path": "tests/lifecycle-result-01.json",
+      "raw_sha256": "a0ca95e9db67898d081d77f8360f2fda226a2f39bc685aba61cc393cd88fa413",
+      "public_sha256": "a0ca95e9db67898d081d77f8360f2fda226a2f39bc685aba61cc393cd88fa413",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/lifecycle-result-02.json",
+      "public_path": "tests/lifecycle-result-02.json",
+      "raw_sha256": "9e4d9809e3f4057aac2292bc7a9cd46a74c61a4db2fbe0b9275f11055d083de8",
+      "public_sha256": "9e52638c8beead6123dda07c118e1d717c38794ed0cc8d34180f3c7b61187cd8",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/profile.sb",
+      "public_path": "tests/profile.sb",
+      "raw_sha256": "a5f3487c20c9b2c21896d550f14c223a43db5db086bca55458c7ebc1468c5938",
+      "public_sha256": "16474fabe4f61fb08929a96f815d9472ce7ba328c06f54e2d0d5a8df4114e8c3",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/recovery-result.json",
+      "public_path": "tests/recovery-result.json",
+      "raw_sha256": "bbc4ca6f395693cc4aaecdccff80d632161fec423c9bb1d6e85869be03199d2e",
+      "public_sha256": "ab053fae9e019c64794855842641b71250902863bbcebba427fa4ef5e171a0ec",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/recovery.stderr.log",
+      "public_path": "tests/recovery.stderr.log",
+      "raw_sha256": "6ac640487a23b42005d85e97995b452db71d1852d02b3459ac858ff78a9db3c7",
+      "public_sha256": "6ac640487a23b42005d85e97995b452db71d1852d02b3459ac858ff78a9db3c7",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/recovery.stdout.log",
+      "public_path": "tests/recovery.stdout.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/worker_demo-02.stderr.log",
+      "public_path": "tests/worker_demo-02.stderr.log",
+      "raw_sha256": "24d56f30beeae2cd9c38c1d099feff58f52f602af7a2f201e0548692050f8f9e",
+      "public_sha256": "24d56f30beeae2cd9c38c1d099feff58f52f602af7a2f201e0548692050f8f9e",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/worker_demo-02.stdout.log",
+      "public_path": "tests/worker_demo-02.stdout.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/worker_demo-result-02.json",
+      "public_path": "tests/worker_demo-result-02.json",
+      "raw_sha256": "6f99ba74fb2d69a2d0d1f26f15e8dfd6b9033c375baa09d84c86fb604369e515",
+      "public_sha256": "011e90508669b32a45f7fbb84828e752cb445f873a761f1c22d989687f7c987c",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/probe.py.txt",
+      "public_path": "codex-native/probe.py.txt",
+      "raw_sha256": "e1ab80673cca79500e563bcc9cfa118b9cd888cbe3d9c11ae49519d666d63409",
+      "public_sha256": "e1ab80673cca79500e563bcc9cfa118b9cd888cbe3d9c11ae49519d666d63409",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/procargs-02.stderr.log",
+      "public_path": "codex-native/procargs-02.stderr.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/procargs-02.stdout.log",
+      "public_path": "codex-native/procargs-02.stdout.log",
+      "raw_sha256": "731d4785954cc1ecc2e9b860a7c3b0bccc043490db054cc8eb6db3713e6b6eec",
+      "public_sha256": "731d4785954cc1ecc2e9b860a7c3b0bccc043490db054cc8eb6db3713e6b6eec",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/procargs-host.stdout.log",
+      "public_path": "codex-native/procargs-host.stdout.log",
+      "raw_sha256": "731d4785954cc1ecc2e9b860a7c3b0bccc043490db054cc8eb6db3713e6b6eec",
+      "public_sha256": "731d4785954cc1ecc2e9b860a7c3b0bccc043490db054cc8eb6db3713e6b6eec",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/procargs-result-02.json",
+      "public_path": "codex-native/procargs-result-02.json",
+      "raw_sha256": "f8dac814c0d87bc88823adc05dd47a6cc9d5b6bcf5b45e90eed1f6bee1eac742",
+      "public_sha256": "2fd2d245c65467c4673b06a7736fd677ad861d1969f3c87f146d8f84fcc2bddc",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/procargs-result.json",
+      "public_path": "codex-native/procargs-result.json",
+      "raw_sha256": "22131a667c3c24d9b0da4858cf3f5955e14a189267f683bce3d44b1842f28701",
+      "public_sha256": "9f7bb3e3e4ec7ebfddcc01ea87a4d49cf39fa277f7d0a9d113ca8909e080de43",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/procargs.stderr.log",
+      "public_path": "codex-native/procargs.stderr.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/procargs.stdout.log",
+      "public_path": "codex-native/procargs.stdout.log",
+      "raw_sha256": "aa9f5fb157645442a161742f18953c2edb44b984b177083842624e7536fd2f65",
+      "public_sha256": "aa9f5fb157645442a161742f18953c2edb44b984b177083842624e7536fd2f65",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/result-02.json",
+      "public_path": "codex-native/result-02.json",
+      "raw_sha256": "52a5cbd11f221460a18a79da99943213db45ec45e5b9f398e436f925f29db9d7",
+      "public_sha256": "80004c7f09d22b13c7a12a74942a8b452c497fd062cf4510f2a41bea739c413c",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/result.json",
+      "public_path": "codex-native/result.json",
+      "raw_sha256": "d801160885adad68cbe000b396159f869ebf6647839f8802ff1272ef1b91f382",
+      "public_sha256": "9fed0557d3c46029c05d08890e1b7315ded469f0787e7a1b8eb8df7940d9fbfb",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/stderr-02.log",
+      "public_path": "codex-native/stderr-02.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/stderr.log",
+      "public_path": "codex-native/stderr.log",
+      "raw_sha256": "f3deae9eb6b95a5ede008896d3d33c95687add7d88ff0b540c2f4fcc4312ec59",
+      "public_sha256": "f3deae9eb6b95a5ede008896d3d33c95687add7d88ff0b540c2f4fcc4312ec59",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/stdout-02.log",
+      "public_path": "codex-native/stdout-02.log",
+      "raw_sha256": "6bb307f69c2c50fabdb526d55467f4623d371c2462f85f7c80240be954010205",
+      "public_sha256": "6bb307f69c2c50fabdb526d55467f4623d371c2462f85f7c80240be954010205",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-native/stdout.log",
+      "public_path": "codex-native/stdout.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-layered/outer.sb",
+      "public_path": "codex-layered/outer.sb",
+      "raw_sha256": "fec6c26b270d42c3268e2eb9f950b6fa55204f3249c85dcf313a87b467f9afcf",
+      "public_sha256": "fec6c26b270d42c3268e2eb9f950b6fa55204f3249c85dcf313a87b467f9afcf",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-layered/probe.py.txt",
+      "public_path": "codex-layered/probe.py.txt",
+      "raw_sha256": "2ab12ead02e1039062a3ec78694afec93467605430aa8a3e79324b7975ee350c",
+      "public_sha256": "2ab12ead02e1039062a3ec78694afec93467605430aa8a3e79324b7975ee350c",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-layered/result.json",
+      "public_path": "codex-layered/result.json",
+      "raw_sha256": "58bf74f543189e7e04dc65218fdace34cef063bb233012f05682164ae67b35fa",
+      "public_sha256": "34fff11e9a4613182a922107e19597ea23341530214ec260107319a65472a603",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-layered/stderr.log",
+      "public_path": "codex-layered/stderr.log",
+      "raw_sha256": "d34a4e4359a4dc36526cf5b363da32f7b7594a3a09eea17cbdfd6425b052d93e",
+      "public_sha256": "d34a4e4359a4dc36526cf5b363da32f7b7594a3a09eea17cbdfd6425b052d93e",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "codex-layered/stdout.log",
+      "public_path": "codex-layered/stdout.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/generate-result.json",
+      "public_path": "cli-metadata/generate-result.json",
+      "raw_sha256": "7b92cfdee0a432869efa66992ebf8796d78435ef328bb835add54f09fe21325b",
+      "public_sha256": "c1bc76ca773882b5c3246d7ae7aed824588699b52e370cc5c3ef57fd3b500c5e",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/help-result.json",
+      "public_path": "cli-metadata/help-result.json",
+      "raw_sha256": "4ec607377291357d4dbf1a8ed84766364d4f2186d599da0ef0a1882b21e2e006",
+      "public_sha256": "40d8d0f4f18c54943a0965e62c9a9cf4bdf778ec1ed0ef6a30eedacc51832ac5",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/schema-help.stdout.log",
+      "public_path": "cli-metadata/schema-help.stdout.log",
+      "raw_sha256": "c119fb866c02811bd66e23b7792f76fc16df91452caf8b47b34788c6ac97da1b",
+      "public_sha256": "c119fb866c02811bd66e23b7792f76fc16df91452caf8b47b34788c6ac97da1b",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/claude-managed-metadata.json",
+      "public_path": "cli-metadata/claude-managed-metadata.json",
+      "raw_sha256": "923e344265eb1e836537e2f5a5bdf83e69ea6381eb34c3221c4e024f51a514d8",
+      "public_sha256": "2eabca842090b3ccbe934e6503ccc00dd5b3852b58118a39955c0570fa0462e3",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/ThreadStartParams.json",
+      "public_path": "cli-metadata/ThreadStartParams.json",
+      "raw_sha256": "80a40a7fac15b4bf70efb7f893fb353acc0a0d30c68f54aee4f01923deca85de",
+      "public_sha256": "80a40a7fac15b4bf70efb7f893fb353acc0a0d30c68f54aee4f01923deca85de",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/TurnStartParams.json",
+      "public_path": "cli-metadata/TurnStartParams.json",
+      "raw_sha256": "b64078d4310cb1fa591c7f63344bed6b8c08d216f9f81d86c00045136187a2b6",
+      "public_sha256": "b64078d4310cb1fa591c7f63344bed6b8c08d216f9f81d86c00045136187a2b6",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/sandbox-sandbox.json",
+      "public_path": "cli-metadata/sandbox-sandbox.json",
+      "raw_sha256": "39eb75681b8ea62be1c29535933f874b56a635e44598b22141e7373966056d39",
+      "public_sha256": "5613056682f51ea8b1e895b354f17a50a126f989eea63109ba0c4ef591fbdac1",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/sandbox-sandbox.stderr",
+      "public_path": "cli-metadata/sandbox-sandbox.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/sandbox-macos.stderr",
+      "public_path": "cli-metadata/sandbox-macos.stderr",
+      "raw_sha256": "8b5d77dee0f5066511ccb9ec46b3935c56ff60937c94cd8f28dc813ddffe4614",
+      "public_sha256": "8b5d77dee0f5066511ccb9ec46b3935c56ff60937c94cd8f28dc813ddffe4614",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/sandbox-macos.json",
+      "public_path": "cli-metadata/sandbox-macos.json",
+      "raw_sha256": "35e4a1ff2c9fedbcd53ceeb5f8bd0a2beb29520094a8b319bc376bebadf24fd1",
+      "public_sha256": "60645c5023fd84fff1876d714b1e3746a87c2bc0b2272cdf57728cf99d7d252e",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/sandbox-macos.stdout",
+      "public_path": "cli-metadata/sandbox-macos.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/sandbox-sandbox.stdout",
+      "public_path": "cli-metadata/sandbox-sandbox.stdout",
+      "raw_sha256": "9c1a28dd4817163ccdbe6bd9e808f87402cef5490170c37f4679fbb2c75139bf",
+      "public_sha256": "9c1a28dd4817163ccdbe6bd9e808f87402cef5490170c37f4679fbb2c75139bf",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/claude-auth-result.json",
+      "public_path": "cli-metadata/claude-auth-result.json",
+      "raw_sha256": "e34b8321f1f647b1b9cff96262b663766890a1c26046ddf07d13b50586f0288f",
+      "public_sha256": "3a9966d3bb25ad4112c9634fdcfc50458a1c4ca4560838f3203f2528f8cb1233",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/codex-auth-result.json",
+      "public_path": "cli-metadata/codex-auth-result.json",
+      "raw_sha256": "c4a7f93bcdffa46a4844a9e168568a79425ac3f448f6f227503b54e51d2c53ce",
+      "public_sha256": "beee0cb2f8ca05b47762ec549a11fc36e79d5a0cb8ebcd98de73d8b5ea1bebb0",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "cli-metadata/claude-doctor-result.json",
+      "public_path": "cli-metadata/claude-doctor-result.json",
+      "raw_sha256": "0636298fea64bcd7ea038da09643d60c078fb41ea38bb46b32e5003c55d122d6",
+      "public_sha256": "ec2e655ca7b60cad53561425f805af4ee3c489e6d264dd31efdbbb5731996e74",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/lifecycle-result-03.json",
+      "public_path": "tests/lifecycle-result-03.json",
+      "raw_sha256": "0238be4c82ea491ac5cf87bdee62e99cbeb21ea82c391e5c17d74c5bc663ca90",
+      "public_sha256": "6cbd8784b76096bfe645fa577efb073246064f8ae4447411a9e29d5fee2c8c95",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/lifecycle-03.stdout.log",
+      "public_path": "tests/lifecycle-03.stdout.log",
+      "raw_sha256": "8247c4fdf0d7f281b2f403222992e888494a04738d1d2bb4b3f0ee3e99ff47d5",
+      "public_sha256": "8247c4fdf0d7f281b2f403222992e888494a04738d1d2bb4b3f0ee3e99ff47d5",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "tests/lifecycle-03.stderr.log",
+      "public_path": "tests/lifecycle-03.stderr.log",
+      "raw_sha256": "8d4728daac6105b1dab5868dbf59c0c691a075326b0ae30fabc493d0c6b70be8",
+      "public_sha256": "8d4728daac6105b1dab5868dbf59c0c691a075326b0ae30fabc493d0c6b70be8",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/invocation/stderr.log",
+      "public_path": "helper/invocation/stderr.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/invocation/result.json",
+      "public_path": "helper/invocation/result.json",
+      "raw_sha256": "ebca65413e8ad4c1addfa0fd4a0dd02b80ca29028a92a3c14495eb1356fb7d66",
+      "public_sha256": "0dcb548da123a1086fc96ca9391167e249fd78bcc8058c9950b52b9dc1033fcb",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/invocation/run_worker_demo.py",
+      "public_path": "helper/invocation/run_worker_demo.py",
+      "raw_sha256": "ea4b7505c3a0665278a3278b6661492c5930e943aefc2c5d6e2943530eefc337",
+      "public_sha256": "ea4b7505c3a0665278a3278b6661492c5930e943aefc2c5d6e2943530eefc337",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/invocation/stdout.log",
+      "public_path": "helper/invocation/stdout.log",
+      "raw_sha256": "eda75c9aa7bcf9b52201e2432b70bad00d58506f90c1555ba50686ff84adb00d",
+      "public_sha256": "dc2ff9c07db184aba0433deb606829849048a337bb0fdf97c3d6e18be1644757",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/invocation/invocation.json",
+      "public_path": "helper/invocation/invocation.json",
+      "raw_sha256": "fdbdfb06c3cd25a759c6b20d6f9a5c5efd9c07172c09592345cb21e6a6349f5e",
+      "public_sha256": "8d1c4c1965d3bae0d3c68fcaea79e3cff4cad29cde6d7dc766f03748fdeed208",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/run/result.json",
+      "public_path": "helper/run/result.json",
+      "raw_sha256": "c4d0e79243056388895ec768182356acc42731b214e4ce84f961cdffbe35f0f0",
+      "public_sha256": "95db62a11cf1e640b2ba5131125fb74248ebffe5e9f4e77f9bd6ab4c2db829e6",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/run/launch.json",
+      "public_path": "helper/run/launch.json",
+      "raw_sha256": "2ef50b6d07449cbc154b584c4b4262ea1992e62b3e3418c3eb80a1efc5568d23",
+      "public_sha256": "68fa5c2247bb5cdedc1f666c71eac68bf11b9ba6b7d7f010069c1372b1679d0d",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/run/inputs.json",
+      "public_path": "helper/run/inputs.json",
+      "raw_sha256": "f7beaa1816ccd12b7c910894b3b8ce5f20fffdd899041f9cc774c9a94bf16b4d",
+      "public_sha256": "f90b2556d590e276651b201d551dfb13ff0056500163ac91ed73b75a8d86daad",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/run/wrapper.py",
+      "public_path": "helper/run/wrapper.py",
+      "raw_sha256": "b551041bd45d7576d00974f54bad9651339f8402668a8ca2c3d488a26d986d3b",
+      "public_sha256": "b551041bd45d7576d00974f54bad9651339f8402668a8ca2c3d488a26d986d3b",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/run/config.json",
+      "public_path": "helper/run/config.json",
+      "raw_sha256": "76191863eabff77d9e45f715a058ede2769b2cd07fdf13c06e841d6b3a9cb464",
+      "public_sha256": "bfafc3a5eecd33834b4f4a78482a20ee4d2147f4948bf29d03a6174b11781cda",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/run/sandbox.sb",
+      "public_path": "helper/run/sandbox.sb",
+      "raw_sha256": "ee217eac90793717e0455eaeda831db285d8df4170ea5004f9d7d80c97e401ec",
+      "public_sha256": "e92dd36cf041255ce697179aafdff66dff212b2fe9d95a70c9cdff47b742ac4e",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/run/stdout.log",
+      "public_path": "helper/run/stdout.log",
+      "raw_sha256": "7b93c9781178ddfdffcec4b4f64113c083f47b25aa162a4543decaa15fb0d528",
+      "public_sha256": "506fc4001920e3a9d1fa7f32d70793c2c01f94dc547d1f18b7e9b449a433d3f3",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/run/stderr.log",
+      "public_path": "helper/run/stderr.log",
+      "raw_sha256": "19cf213add5c91b149078c43c332ea994ad42e1831940addbf11513777ff649a",
+      "public_sha256": "19cf213add5c91b149078c43c332ea994ad42e1831940addbf11513777ff649a",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/demo/a.ready.log",
+      "public_path": "helper/demo/a.ready.log",
+      "raw_sha256": "11a4580d5dacc2bf2113ca5998446b9a67e4e66043ef8623f51de3fa040e138e",
+      "public_sha256": "72527df24c5f619ea76db7d6938294892ca80a35a5fe993084b71313fa734c34",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/demo/a.stderr.log",
+      "public_path": "helper/demo/a.stderr.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/demo/b.finished.log",
+      "public_path": "helper/demo/b.finished.log",
+      "raw_sha256": "949df1363f26e6ec2ec7fb8dd1c81e1dd08cf046ab12e425b670b04043f2f8b4",
+      "public_sha256": "949df1363f26e6ec2ec7fb8dd1c81e1dd08cf046ab12e425b670b04043f2f8b4",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/demo/b.ready.log",
+      "public_path": "helper/demo/b.ready.log",
+      "raw_sha256": "13052df9a94e2069292da971f2979c72f9d1dadbe61624a76909ed6a60620872",
+      "public_sha256": "23ab6d2b005bbfda6d8c51eb08a8fc79990d99fb7dc4e2b750a769d3ae25a6d2",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/demo/b.stderr.log",
+      "public_path": "helper/demo/b.stderr.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/demo/checkpoint-manifest.json",
+      "public_path": "helper/demo/checkpoint-manifest.json",
+      "raw_sha256": "95847513dfad1fe8c8df61c3ea0b86678e80f5fa3b022945122fad1fede86ad4",
+      "public_sha256": "95847513dfad1fe8c8df61c3ea0b86678e80f5fa3b022945122fad1fede86ad4",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/demo/final-state.json",
+      "public_path": "helper/demo/final-state.json",
+      "raw_sha256": "40057f74ac672dee44a761fc7ce087bbef693fcc337df027ae0b138eafc3b3dc",
+      "public_sha256": "40057f74ac672dee44a761fc7ce087bbef693fcc337df027ae0b138eafc3b3dc",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/demo/journal.json",
+      "public_path": "helper/demo/journal.json",
+      "raw_sha256": "39607d6e9bd68fef2dc6572d461fcb175caa6c57ccf46e39177f1ed0596eff2b",
+      "public_sha256": "c09199dea3c867b2fce0f678ad5ae260429827ba164c0809a79e55bb84e8e997",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/demo/summary.json",
+      "public_path": "helper/demo/summary.json",
+      "raw_sha256": "4253eb41af0c8358f39a28eae4cbd9807a6c85a7a79951d7ed5898055f027cba",
+      "public_sha256": "3da93e2a63f13539152312f420604df78e745d11b1308f4bd9f5965c6a295d98",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/demo/takeover.finished.log",
+      "public_path": "helper/demo/takeover.finished.log",
+      "raw_sha256": "5bab200c765c6b1fef03345ed99fc64e53647346b11309199814f340ebd350f3",
+      "public_sha256": "5bab200c765c6b1fef03345ed99fc64e53647346b11309199814f340ebd350f3",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/demo/takeover.ready.log",
+      "public_path": "helper/demo/takeover.ready.log",
+      "raw_sha256": "2ff1629fefd6688f4ee17b95ad232af21830b8fe590a60eeaee7b6a4cf97a8cb",
+      "public_sha256": "415c6adca28c83a1f82a0b91c5af0e73f3d1d7028bf6de6d40348eaecd53af5d",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "helper/demo/takeover.stderr.log",
+      "public_path": "helper/demo/takeover.stderr.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/runner/canary-result.json",
+      "public_path": "completed-recovery/runner/canary-result.json",
+      "raw_sha256": "6ab641a409df7ba119c65cc71525ef7d94a37b0fb18a3e71b9e21de1d673c4b1",
+      "public_sha256": "93b75e84834901bf2cd307e95d92425e0e69dc66be02e982fadb7884cc930819",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/runner/canary.py",
+      "public_path": "completed-recovery/runner/canary.py",
+      "raw_sha256": "08357c7eb6d0ea278f7d040799b22a1e9d187ab8193963428e2943fee997f012",
+      "public_sha256": "08357c7eb6d0ea278f7d040799b22a1e9d187ab8193963428e2943fee997f012",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/runner/canary.stderr.log",
+      "public_path": "completed-recovery/runner/canary.stderr.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/runner/canary.stdout.log",
+      "public_path": "completed-recovery/runner/canary.stdout.log",
+      "raw_sha256": "1055ad3a59638574ee3bf64669a0a9617706785df53c1b7bc8f35d22297de52e",
+      "public_sha256": "1055ad3a59638574ee3bf64669a0a9617706785df53c1b7bc8f35d22297de52e",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/runner/marker",
+      "public_path": "completed-recovery/runner/marker",
+      "raw_sha256": "9cc73c204e39e261785b0728dfb68db7309d01fce4bfab74554daf2f90f715e1",
+      "public_sha256": "9cc73c204e39e261785b0728dfb68db7309d01fce4bfab74554daf2f90f715e1",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/runner/profile.sb",
+      "public_path": "completed-recovery/runner/profile.sb",
+      "raw_sha256": "bd6e5a197c7b5d63544c8f84f0430c599c93f98f90ff99e5143d641cddbd31e2",
+      "public_sha256": "bf4536bd6784563e2f619eb3541fbe27e7f1e94a96174e692724a35863af4a91",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/runner/result.json",
+      "public_path": "completed-recovery/runner/result.json",
+      "raw_sha256": "5dc29f9e03bf214c282c2cb5a095b4f17bcd1cbe6a0afb6a2cf73213dbe1ce92",
+      "public_sha256": "9b8cda9121b6ed8030a35a08062ceee400ead9b5e42932e8341673e3db566be7",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/runner/stderr.log",
+      "public_path": "completed-recovery/runner/stderr.log",
+      "raw_sha256": "e97ba3825298a26bf7789a6d3a7dac965c2051eaa5b081179460f9d96e126f9e",
+      "public_sha256": "e97ba3825298a26bf7789a6d3a7dac965c2051eaa5b081179460f9d96e126f9e",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/runner/stdout.log",
+      "public_path": "completed-recovery/runner/stdout.log",
+      "raw_sha256": "53d542df21f5990cd1bf48642f458c0572e74d12ba09f99d63c871e9e8be425a",
+      "public_sha256": "d07e5a28da42874caa0d2e69a9072612535043a72998f8cba1f1accdd462c970",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/observed-result.json",
+      "public_path": "completed-recovery/observed-result.json",
+      "raw_sha256": "cd61f2d1bc63dbe5dc6b5b5d13e0900b659c9ed486801990bb0f4b535b0d2ca0",
+      "public_sha256": "cd61f2d1bc63dbe5dc6b5b5d13e0900b659c9ed486801990bb0f4b535b0d2ca0",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/demo/a.ready.log",
+      "public_path": "completed-recovery/demo/a.ready.log",
+      "raw_sha256": "88bb37af4ce546c59ec2e668318f45c1b6480640cefb742c8f8426dc7706a030",
+      "public_sha256": "8197cdc7e83b1b89cebf4401d786733ef7081004371afe4e4f7eba70a0b00fe5",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/demo/a.stderr.log",
+      "public_path": "completed-recovery/demo/a.stderr.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/demo/b.finished.log",
+      "public_path": "completed-recovery/demo/b.finished.log",
+      "raw_sha256": "29c853b5b981352dfaf9120a845df6740f958312ae2b934382ea6aa925fee919",
+      "public_sha256": "29c853b5b981352dfaf9120a845df6740f958312ae2b934382ea6aa925fee919",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/demo/b.ready.log",
+      "public_path": "completed-recovery/demo/b.ready.log",
+      "raw_sha256": "14b37fbf52700da624fa4dcce7f1c6c5799c5c82642806df4664c4198d84d0a7",
+      "public_sha256": "bc4405c7240d2bffaabedb55b4a1e78181826c8944919636bcb8d7c971998015",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/demo/b.stderr.log",
+      "public_path": "completed-recovery/demo/b.stderr.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/demo/checkpoint-manifest.json",
+      "public_path": "completed-recovery/demo/checkpoint-manifest.json",
+      "raw_sha256": "bfca074bb5fc41bafaec575e5707e5af26ba2d42c9d72038c8ff6b6e04ad5aba",
+      "public_sha256": "bfca074bb5fc41bafaec575e5707e5af26ba2d42c9d72038c8ff6b6e04ad5aba",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/demo/final-state.json",
+      "public_path": "completed-recovery/demo/final-state.json",
+      "raw_sha256": "ddfb10b40581c02f899fb380f3a4ee6a1fc148e98f46de85351604e506eb9d21",
+      "public_sha256": "ddfb10b40581c02f899fb380f3a4ee6a1fc148e98f46de85351604e506eb9d21",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/demo/journal.json",
+      "public_path": "completed-recovery/demo/journal.json",
+      "raw_sha256": "f0ddc75ce7732e5f9f0b023fd7ba26cab54e80f3a89ad743dfed996a6a7524ac",
+      "public_sha256": "b05143c2e55ccb7477de88486b55f876ce6df217c8c0cbb0aa763c18b190a044",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/demo/summary.json",
+      "public_path": "completed-recovery/demo/summary.json",
+      "raw_sha256": "9468bfaa59d004f1bd89391036c25e49b9677b96d86cdfad2b6f4f32f551f977",
+      "public_sha256": "afa9ce50980880e6ded741f2626725825d09ca462a5c9ad0d44bd9ac7b7fcdd8",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/demo/takeover.finished.log",
+      "public_path": "completed-recovery/demo/takeover.finished.log",
+      "raw_sha256": "106f9a00218fbc935d23afb05528ba57fe09229aa388592d4179495f4e174b86",
+      "public_sha256": "106f9a00218fbc935d23afb05528ba57fe09229aa388592d4179495f4e174b86",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/demo/takeover.ready.log",
+      "public_path": "completed-recovery/demo/takeover.ready.log",
+      "raw_sha256": "80bae4c32c2dad6a40cb3b764e74cdb557e7792d0e38c5629722af7ab013432f",
+      "public_sha256": "0a772372b3310a0c2a791230e71667ff5581759a84284ff595f748b7c6af204f",
+      "transformation": "machine paths replaced; no result/count edits"
+    },
+    {
+      "source_alias": "completed-recovery/demo/takeover.stderr.log",
+      "public_path": "completed-recovery/demo/takeover.stderr.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "machine paths replaced; no result/count edits"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+{"canaries": {"checkout_write": true, "trusted_write": true, "private_read": true, "network": true, "no_credential_environment": true}}
+{"group": "protocol", "run": 34, "passed": 34, "failures": 0, "errors": 0, "skipped": 0}

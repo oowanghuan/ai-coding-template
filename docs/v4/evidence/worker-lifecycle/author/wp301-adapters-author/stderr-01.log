@@ -1,0 +1,40 @@
+test_claude_authentication_and_ambiguous_cloud_error (test_adapters.ClassificationTests) ... ok
+test_claude_budget_is_not_provider_quota (test_adapters.ClassificationTests) ... ok
+test_claude_credits_required_is_quota_without_reset_promise (test_adapters.ClassificationTests) ... ok
+test_claude_rate_reset_is_explicit_future_integer_only (test_adapters.ClassificationTests) ... ok
+test_claude_warning_is_not_a_stop (test_adapters.ClassificationTests) ... ok
+test_codex_exec_prose_cannot_become_quota (test_adapters.ClassificationTests) ... ok
+test_codex_network_requires_explicit_no_http_response (test_adapters.ClassificationTests) ... ok
+test_codex_typed_causes_are_distinct (test_adapters.ClassificationTests) ... ok
+test_codex_unknown_code_does_not_guess (test_adapters.ClassificationTests) ... ok
+test_conflicting_reset_times_do_not_guess (test_adapters.ClassificationTests) ... ok
+test_contradictory_causes_fail_conservatively (test_adapters.ClassificationTests) ... ok
+test_default_stdout_is_untrusted_even_terminal_success (test_adapters.ClassificationTests) ... ok
+test_duplicate_nonfinite_and_nonobject_events_are_error (test_adapters.ClassificationTests) ... ok
+test_explicit_timestamp_and_observed_exit_types (test_adapters.ClassificationTests) ... ok
+test_missing_retry_status_is_not_treated_as_final (test_adapters.ClassificationTests) ... ok
+test_nested_agent_text_is_not_a_protocol_event (test_adapters.ClassificationTests) ... ok
+test_observed_signal_is_interruption_not_success (test_adapters.ClassificationTests) ... ok
+test_result_does_not_reflect_private_text_or_claim_acceptance (test_adapters.ClassificationTests) ... ok
+test_retry_in_progress_does_not_release_worker (test_adapters.ClassificationTests) ... ok
+test_specific_credit_signal_refines_generic_rate_error (test_adapters.ClassificationTests) ... ok
+test_stdout_may_not_promote_its_own_provenance (test_adapters.ClassificationTests) ... ok
+test_success_needs_terminal_event_and_observed_zero_exit (test_adapters.ClassificationTests) ... ok
+test_supervisor_can_report_local_budget_without_provider_claim (test_adapters.ClassificationTests) ... ok
+test_unbounded_event_stream_is_rejected (test_adapters.ClassificationTests) ... ok
+test_baseline_scope_and_old_hash_conflicts_rejected (test_adapters.RunAndProposalTests) ... ok
+test_duplicate_paths_and_empty_proposals_rejected (test_adapters.RunAndProposalTests) ... ok
+test_file_content_and_total_size_are_bounded (test_adapters.RunAndProposalTests) ... ok
+test_input_cannot_inject_flags (test_adapters.RunAndProposalTests) ... ok
+test_new_file_requires_explicit_null_old_hash (test_adapters.RunAndProposalTests) ... ok
+test_run_bounds_and_strict_types (test_adapters.RunAndProposalTests) ... ok
+test_same_source_entries_have_identical_rules_and_no_install_side_effect (test_adapters.RunAndProposalTests) ... ok
+test_specs_are_proposals_without_execution_or_extra_permissions (test_adapters.RunAndProposalTests) ... ok
+test_traversal_aliases_and_control_characters_rejected (test_adapters.RunAndProposalTests) ... ok
+test_unknown_fields_cannot_smuggle_commands (test_adapters.RunAndProposalTests) ... ok
+test_valid_proposal_returns_data_only (test_adapters.RunAndProposalTests) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.022s
+
+OK

@@ -399,7 +399,7 @@ Recovery 作者为非作者的调度/接管逻辑编写 `tests/lifecycle/`，不
 
 计划评审 [7235366840](https://github.com/oowanghuan/ai-coding-template/issues/3#issuecomment-7235366840)
 对 PR #11 的准确计划 SHA 给出同机方案限定 GO；不是当前实现 GO。评审提出的
-“其他 Worker 完成后原 Worker 收到两次恢复”已在同机补独立反例，不推迟到 Team：
+“其他 Worker 完成后原 Worker 收到两次恢复”已在同机补反例，不推迟到 Team：
 重开控制器读取持久状态，两次相同操作重放无变化，同 probe 换操作编号拒绝；
 没有新增 Writer 或文件副作用。真实外部 API 调用为 0，不能宣称跨服务 exactly-once。
 

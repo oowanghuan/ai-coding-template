@@ -1,0 +1,49 @@
+{
+  "checked_at": "2026-11-28T06:13:20.397658+00:00",
+  "sources": [
+    {
+      "path": "/Library/Application Support/ClaudeCode/managed-settings.json",
+      "exists": false,
+      "symlink": false
+    },
+    {
+      "path": "/Library/Application Support/ClaudeCode/managed-settings.d",
+      "exists": false,
+      "symlink": false
+    },
+    {
+      "path": "/Library/Application Support/ClaudeCode/managed-mcp.json",
+      "exists": false,
+      "symlink": false
+    },
+    {
+      "path": "/Library/Managed Preferences/com.anthropic.claudecode.plist",
+      "exists": false,
+      "symlink": false
+    },
+    {
+      "path": "/Library/Managed Preferences/<owner>/com.anthropic.claudecode.plist",
+      "exists": false,
+      "symlink": false
+    },
+    {
+      "path": "<owner-home>/.claude/remote-settings.json",
+      "exists": false,
+      "symlink": false
+    }
+  ],
+  "preferences_domain": {
+    "argv": [
+      "/usr/bin/defaults",
+      "export",
+      "com.anthropic.claudecode",
+      "-"
+    ],
+    "exit_code": 0,
+    "stdout_sha256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "keys": []
+  },
+  "remote_current_policy": "not_observed",
+  "conclusion": "No listed local managed/cache file was present; this does not establish a freshly fetched account policy. No values or credentials copied."
+}

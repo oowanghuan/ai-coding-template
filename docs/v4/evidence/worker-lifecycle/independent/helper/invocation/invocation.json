@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-S",
+    "<runs>/v4-helper-independent-wmzpc9dv/run_worker_demo.py",
+    "--source",
+    "<checkout>",
+    "--dependencies",
+    "<owner-home>/Library/Python/3.9/lib/python/site-packages"
+  ],
+  "environment": {
+    "HOME": "<runs>/v4-helper-independent-wmzpc9dv",
+    "TMPDIR": "<runs>/v4-helper-independent-wmzpc9dv",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin"
+  },
+  "helper_sha256": "ea4b7505c3a0665278a3278b6661492c5930e943aefc2c5d6e2943530eefc337",
+  "started_at": "2026-11-28T06:32:29.061360+00:00"
+}

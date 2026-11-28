@@ -1,0 +1,7 @@
+test_final_boolean_epoch_and_token_cannot_alias_integer_execution_rights (test_handoff.HandoffTests) ... ok
+test_final_prepared_or_finished_output_without_checkpoint_blocks_reassignment (test_handoff.HandoffTests) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 13.713s
+
+OK

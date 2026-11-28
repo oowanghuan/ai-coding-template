@@ -1,0 +1,428 @@
+[
+  {
+    "group": "install",
+    "argv": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "<REGRESSION_ROOT>/T/profile.sb",
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "<REGRESSION_ROOT>/T/run_group.py",
+      "<REPOSITORY>",
+      "install",
+      "<REGRESSION_ROOT>/T"
+    ],
+    "started_at": "2026-11-28T06:31:45.209625+00:00",
+    "finished_at": "2026-11-28T06:32:06.860174+00:00",
+    "exit_code": 0,
+    "results": [
+      {
+        "canaries": {
+          "checkout_write": true,
+          "trusted_write": true,
+          "private_read": true,
+          "network": true,
+          "no_credential_environment": true
+        }
+      },
+      {
+        "group": "install",
+        "run": 23,
+        "passed": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  {
+    "group": "protocol",
+    "argv": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "<REGRESSION_ROOT>/T/profile.sb",
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "<REGRESSION_ROOT>/T/run_group.py",
+      "<REPOSITORY>",
+      "protocol",
+      "<REGRESSION_ROOT>/T"
+    ],
+    "started_at": "2026-11-28T06:32:06.863800+00:00",
+    "finished_at": "2026-11-28T06:32:14.084331+00:00",
+    "exit_code": 0,
+    "results": [
+      {
+        "canaries": {
+          "checkout_write": true,
+          "trusted_write": true,
+          "private_read": true,
+          "network": true,
+          "no_credential_environment": true
+        }
+      },
+      {
+        "group": "protocol",
+        "run": 34,
+        "passed": 34,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  {
+    "group": "local",
+    "argv": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "<REGRESSION_ROOT>/T/profile.sb",
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "<REGRESSION_ROOT>/T/run_group.py",
+      "<REPOSITORY>",
+      "local",
+      "<REGRESSION_ROOT>/T"
+    ],
+    "started_at": "2026-11-28T06:32:14.085623+00:00",
+    "finished_at": "2026-11-28T06:34:37.088656+00:00",
+    "exit_code": 0,
+    "results": [
+      {
+        "canaries": {
+          "checkout_write": true,
+          "trusted_write": true,
+          "private_read": true,
+          "network": true,
+          "no_credential_environment": true
+        }
+      },
+      {
+        "group": "local",
+        "run": 71,
+        "passed": 68,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3
+      }
+    ]
+  },
+  {
+    "group": "bootstrap",
+    "argv": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "<REGRESSION_ROOT>/T/profile.sb",
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "<REGRESSION_ROOT>/T/run_group.py",
+      "<REPOSITORY>",
+      "bootstrap",
+      "<REGRESSION_ROOT>/T"
+    ],
+    "started_at": "2026-11-28T06:34:37.089681+00:00",
+    "finished_at": "2026-11-28T06:34:59.742059+00:00",
+    "exit_code": 0,
+    "results": [
+      {
+        "canaries": {
+          "checkout_write": true,
+          "trusted_write": true,
+          "private_read": true,
+          "network": true,
+          "no_credential_environment": true
+        }
+      },
+      {
+        "group": "bootstrap",
+        "run": 22,
+        "passed": 22,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  {
+    "group": "quality",
+    "argv": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "<REGRESSION_ROOT>/T/profile.sb",
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "<REGRESSION_ROOT>/T/run_group.py",
+      "<REPOSITORY>",
+      "quality",
+      "<REGRESSION_ROOT>/T"
+    ],
+    "started_at": "2026-11-28T06:34:59.743528+00:00",
+    "finished_at": "2026-11-28T06:35:31.079724+00:00",
+    "exit_code": 0,
+    "results": [
+      {
+        "canaries": {
+          "checkout_write": true,
+          "trusted_write": true,
+          "private_read": true,
+          "network": true,
+          "no_credential_environment": true
+        }
+      },
+      {
+        "group": "quality",
+        "run": 54,
+        "passed": 54,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  {
+    "group": "governance",
+    "argv": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "<REGRESSION_ROOT>/T/profile.sb",
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "<REGRESSION_ROOT>/T/run_group.py",
+      "<REPOSITORY>",
+      "governance",
+      "<REGRESSION_ROOT>/T"
+    ],
+    "started_at": "2026-11-28T06:35:31.080619+00:00",
+    "finished_at": "2026-11-28T06:35:36.899808+00:00",
+    "exit_code": 0,
+    "results": [
+      {
+        "canaries": {
+          "checkout_write": true,
+          "trusted_write": true,
+          "private_read": true,
+          "network": true,
+          "no_credential_environment": true
+        }
+      },
+      {
+        "group": "governance",
+        "run": 32,
+        "passed": 32,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  {
+    "group": "adapters",
+    "argv": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "<REGRESSION_ROOT>/T/profile.sb",
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "<REGRESSION_ROOT>/T/run_group.py",
+      "<REPOSITORY>",
+      "adapters",
+      "<REGRESSION_ROOT>/T"
+    ],
+    "started_at": "2026-11-28T06:35:36.900593+00:00",
+    "finished_at": "2026-11-28T06:35:37.140073+00:00",
+    "exit_code": 0,
+    "results": [
+      {
+        "canaries": {
+          "checkout_write": true,
+          "trusted_write": true,
+          "private_read": true,
+          "network": true,
+          "no_credential_environment": true
+        }
+      },
+      {
+        "group": "adapters",
+        "run": 53,
+        "passed": 53,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  {
+    "group": "recovery",
+    "argv": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "<REGRESSION_ROOT>/T/profile.sb",
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "<REGRESSION_ROOT>/T/run_group.py",
+      "<REPOSITORY>",
+      "recovery",
+      "<REGRESSION_ROOT>/T"
+    ],
+    "started_at": "2026-11-28T06:35:37.141178+00:00",
+    "finished_at": "2026-11-28T06:35:39.190823+00:00",
+    "exit_code": 0,
+    "results": [
+      {
+        "canaries": {
+          "checkout_write": true,
+          "trusted_write": true,
+          "private_read": true,
+          "network": true,
+          "no_credential_environment": true
+        }
+      },
+      {
+        "group": "recovery",
+        "run": 26,
+        "passed": 26,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  {
+    "group": "lifecycle",
+    "argv": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "<REGRESSION_ROOT>/T/profile.sb",
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "<REGRESSION_ROOT>/T/run_group.py",
+      "<REPOSITORY>",
+      "lifecycle",
+      "<REGRESSION_ROOT>/T"
+    ],
+    "started_at": "2026-11-28T06:35:39.191778+00:00",
+    "finished_at": "2026-11-28T06:38:13.407271+00:00",
+    "exit_code": 0,
+    "results": [
+      {
+        "canaries": {
+          "checkout_write": true,
+          "trusted_write": true,
+          "private_read": true,
+          "network": true,
+          "no_credential_environment": true
+        }
+      },
+      {
+        "owned_handoff_stop": {
+          "pid": 55661,
+          "registered_group": 55661,
+          "wait_exit": -15,
+          "group_absent": true
+        }
+      },
+      {
+        "owned_handoff_stop": {
+          "pid": 56623,
+          "registered_group": 56623,
+          "wait_exit": -15,
+          "group_absent": true
+        }
+      },
+      {
+        "owned_handoff_stop": {
+          "pid": 58112,
+          "registered_group": 58112,
+          "wait_exit": -15,
+          "group_absent": true
+        }
+      },
+      {
+        "owned_handoff_stop": {
+          "pid": 58532,
+          "registered_group": 58532,
+          "wait_exit": -15,
+          "group_absent": true
+        }
+      },
+      {
+        "owned_handoff_stop": {
+          "pid": 59202,
+          "registered_group": 59202,
+          "wait_exit": -15,
+          "group_absent": true
+        }
+      },
+      {
+        "owned_handoff_stop": {
+          "pid": 60371,
+          "registered_group": 60371,
+          "wait_exit": -15,
+          "group_absent": true
+        }
+      },
+      {
+        "owned_handoff_stop": {
+          "pid": 60778,
+          "registered_group": 60778,
+          "wait_exit": -15,
+          "group_absent": true
+        }
+      },
+      {
+        "group": "lifecycle",
+        "run": 29,
+        "passed": 29,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  {
+    "group": "worker_demo",
+    "argv": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "<REGRESSION_ROOT>/T/profile.sb",
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "<REGRESSION_ROOT>/T/run_group.py",
+      "<REPOSITORY>",
+      "worker_demo",
+      "<REGRESSION_ROOT>/T"
+    ],
+    "started_at": "2026-11-28T06:38:13.408395+00:00",
+    "finished_at": "2026-11-28T06:38:36.546717+00:00",
+    "exit_code": 0,
+    "results": [
+      {
+        "canaries": {
+          "checkout_write": true,
+          "trusted_write": true,
+          "private_read": true,
+          "network": true,
+          "no_credential_environment": true
+        }
+      },
+      {
+        "group": "worker_demo",
+        "run": 2,
+        "passed": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  }
+]

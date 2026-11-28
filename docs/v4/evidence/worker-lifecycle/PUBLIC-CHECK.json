@@ -1,0 +1,13 @@
+{
+  "verified_public_hashes": 194,
+  "hash_errors": [],
+  "local_links": 73,
+  "missing_links": [],
+  "sensitive_pattern_hits": [],
+  "note": "Pattern scan plus source/content review, not a claim of exhaustive secret detection.",
+  "raw_output_whitespace_exceptions": [
+    "independent/cli-metadata/sandbox-sandbox.stdout:18",
+    "independent/cli-metadata/schema-help.stdout.log:10"
+  ],
+  "whitespace_note": "Original CLI help blank lines contain spaces. Preserve exact public bytes/fingerprints; all other new changes pass git diff --check."
+}

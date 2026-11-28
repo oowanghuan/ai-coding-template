@@ -1,0 +1,43 @@
+{
+  "after": {
+    "framework/local/lifecycle.py": "ecb085600fd22a8a45276caa704697b67d1b4a233cc02b131b236ce97bcbd50a",
+    "framework/local/store.py": "c06342ebd3f3adf82baa40e70d864790a530cac2ae8e4c70f39708b5f00c866d",
+    "schemas/local-state.schema.json": "55e55f4fd3f58e5bf24337164a3d62adcb46dbbbb15c4bcc287d0a17aff1f25d",
+    "tests/lifecycle/test_lifecycle.py": "b220f4d9723b7c9e13bd8aae4f616463543b69a2f843f26bf3494fca67d819f4"
+  },
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<EVIDENCE_ROOT>/lifecycle-independent/profile.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/lifecycle",
+    "-v"
+  ],
+  "before": {
+    "framework/local/lifecycle.py": "ecb085600fd22a8a45276caa704697b67d1b4a233cc02b131b236ce97bcbd50a",
+    "framework/local/store.py": "c06342ebd3f3adf82baa40e70d864790a530cac2ae8e4c70f39708b5f00c866d",
+    "schemas/local-state.schema.json": "55e55f4fd3f58e5bf24337164a3d62adcb46dbbbb15c4bcc287d0a17aff1f25d",
+    "tests/lifecycle/test_lifecycle.py": "b220f4d9723b7c9e13bd8aae4f616463543b69a2f843f26bf3494fca67d819f4"
+  },
+  "environment": {
+    "HOME": "<EVIDENCE_ROOT>/lifecycle-independent/home",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONPATH": "<REPO>:<DEPENDENCIES>",
+    "TMPDIR": "<EVIDENCE_ROOT>/lifecycle-independent/tmp",
+    "V4_OUTER_SEATBELT": "1"
+  },
+  "exit_code": 0,
+  "finished_at": "2026-11-28T06:07:31.540013+00:00",
+  "note": "Non-author lifecycle/Store tests; real temporary Git/state, trusted synthetic worker observations; product may still be under author development, before/after hashes retained.",
+  "profile_sha256": "782a2296f133c870984acfc8f56573eee0e5fd24041fa8e9f38525e93e8d2537",
+  "source_unchanged": true,
+  "started_at": "2026-11-28T06:06:41.437234+00:00"
+}

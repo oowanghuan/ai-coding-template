@@ -1,0 +1,187 @@
+test_ambiguous_probe_result_and_changed_replay_payload_rejected (test_lifecycle.LifecycleTests) ... ERROR
+test_dispatch_does_not_consume_and_hide_due_probe (test_lifecycle.LifecycleTests) ... ERROR
+test_enable_preserves_offline_unknown_and_requires_explicit_verified_credentials (test_lifecycle.LifecycleTests) ... ERROR
+test_failed_authentication_cannot_be_cleared_by_heartbeat (test_lifecycle.LifecycleTests) ... ERROR
+test_heartbeat_rechecked_on_direct_claim_start_submit (test_lifecycle.LifecycleTests) ... ERROR
+test_only_owner_controller_can_mutate_runtime (test_lifecycle.LifecycleTests) ... ERROR
+test_owner_hold_and_budget_precede_recovered_quota (test_lifecycle.LifecycleTests) ... ERROR
+test_probe_backoff_durable_unknown_and_attempt_limit (test_lifecycle.LifecycleTests) ... ERROR
+test_repeated_limit_does_not_forget_an_unknown_probe_or_reset_budget (test_lifecycle.LifecycleTests) ... ERROR
+test_shared_limit_fences_both_and_third_adapter_can_dispatch_without_pmo (test_lifecycle.LifecycleTests) ... ERROR
+test_tick_commit_response_loss_replays_same_probe_once (test_lifecycle.LifecycleTests) ... ERROR
+test_tick_expires_heartbeat_and_refresh_does_not_restore_old_rights (test_lifecycle.LifecycleTests) ... ERROR
+test_unknown_workspace_blocks_reassignment_even_after_quota_recovers (test_lifecycle.LifecycleTests) ... ERROR
+test_unverified_credentials_do_not_get_live_authority (test_lifecycle.LifecycleTests) ... ERROR
+
+======================================================================
+ERROR: test_ambiguous_probe_result_and_changed_replay_payload_rejected (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 170, in test_ambiguous_probe_result_and_changed_replay_payload_rejected
+    self.initial();self.enable();self.event('a','quota_limited')
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_dispatch_does_not_consume_and_hide_due_probe (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 165, in test_dispatch_does_not_consume_and_hide_due_probe
+    self.initial();self.enable();self.event('a','quota_limited')
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_enable_preserves_offline_unknown_and_requires_explicit_verified_credentials (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 68, in test_enable_preserves_offline_unknown_and_requires_explicit_verified_credentials
+    self.initial(mutate);self.enable()
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_failed_authentication_cannot_be_cleared_by_heartbeat (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 151, in test_failed_authentication_cannot_be_cleared_by_heartbeat
+    self.initial();self.enable();self.event('a','authentication_required');self.event('a','heartbeat',at=later(1))
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_heartbeat_rechecked_on_direct_claim_start_submit (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 104, in test_heartbeat_rechecked_on_direct_claim_start_submit
+    self.initial();self.enable({'heartbeat_timeout':10,'initial_backoff':5,'max_backoff':10,'max_probes':2})
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_only_owner_controller_can_mutate_runtime (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 81, in test_only_owner_controller_can_mutate_runtime
+    self.initial();self.enable()
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_owner_hold_and_budget_precede_recovered_quota (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 143, in test_owner_hold_and_budget_precede_recovered_quota
+    self.initial();self.enable();self.event('a','quota_limited')
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_probe_backoff_durable_unknown_and_attempt_limit (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 121, in test_probe_backoff_durable_unknown_and_attempt_limit
+    self.initial();self.enable();self.event('a','rate_limited',retry_at=later(5))
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_repeated_limit_does_not_forget_an_unknown_probe_or_reset_budget (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 134, in test_repeated_limit_does_not_forget_an_unknown_probe_or_reset_budget
+    self.initial();self.enable();self.event('a','quota_limited')
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_shared_limit_fences_both_and_third_adapter_can_dispatch_without_pmo (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 86, in test_shared_limit_fences_both_and_third_adapter_can_dispatch_without_pmo
+    self.initial();self.enable();credentials={letter:self.claim(letter) for letter in 'ab'}
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_tick_commit_response_loss_replays_same_probe_once (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 155, in test_tick_commit_response_loss_replays_same_probe_once
+    self.initial();self.enable();self.event('a','quota_limited')
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_tick_expires_heartbeat_and_refresh_does_not_restore_old_rights (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 114, in test_tick_expires_heartbeat_and_refresh_does_not_restore_old_rights
+    self.initial();self.enable({'heartbeat_timeout':10,'initial_backoff':5,'max_backoff':10,'max_probes':2})
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_unknown_workspace_blocks_reassignment_even_after_quota_recovers (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 97, in test_unknown_workspace_blocks_reassignment_even_after_quota_recovers
+    self.initial();self.enable();old=self.claim('a');self.result('start',old,actor='principal-a')
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+======================================================================
+ERROR: test_unverified_credentials_do_not_get_live_authority (test_lifecycle.LifecycleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 75, in test_unverified_credentials_do_not_get_live_authority
+    self.initial()
+  File "<REPO>/tests/lifecycle/test_lifecycle.py", line 54, in initial
+    self.store.initialize(snapshot,OWNER,at=AT)
+  File "<REPO>/framework/local/store.py", line 100, in initialize
+    raise ValueError('; '.join(errors))
+ValueError: unknown-principal:WP-A:acceptor; unknown-principal:WP-A:reviewer; unknown-principal:WP-B:acceptor; unknown-principal:WP-B:reviewer; unknown-principal:WP-C:acceptor; unknown-principal:WP-C:reviewer
+
+----------------------------------------------------------------------
+Ran 14 tests in 11.943s
+
+FAILED (errors=14)

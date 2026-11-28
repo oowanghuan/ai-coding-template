@@ -1,0 +1,36 @@
+{
+  "actual_model_calls": 0,
+  "baseline_sha": "4ef219737218b14eb2eb84152fe2ee98ee0a91dd",
+  "checkpoint": {
+    "binding": "bc95acfbd66b695acc20390a905585a77bcda8fade20e0c08d1f0786ace015a4",
+    "checkpoint_id": "checkpoint-ae843c07c8854818872445fedf11733d",
+    "manifest_sha256": "b640d7b38b6f5e7ec27fa1b0686194ef03053dd3beabf424e495bb54924d8641",
+    "path": ".ai-org/checkpoints/checkpoint-ae843c07c8854818872445fedf11733d",
+    "unknown_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "duplicate_delivery_rejected": true,
+  "engineering_accepted": false,
+  "evidence_level": "synthetic_fixture",
+  "format": "synthetic-worker-demo/1",
+  "logical_deliveries": {
+    "WP-A": 1,
+    "WP-B": 1
+  },
+  "new_token": 2,
+  "new_workspace": "<runs>/v4-completed-independent-7hqwcsoj/C/tmp/completed-recovery-z4m3r1ny/project/.ai-org/workspaces/workspace-55c6fa9ba5c44dadba964c8b19c80a66",
+  "old_token": 1,
+  "old_token_rejected": true,
+  "old_worker_recovered_to_pool": true,
+  "old_workspace": "<runs>/v4-completed-independent-7hqwcsoj/C/tmp/completed-recovery-z4m3r1ny/project/.ai-org/workspaces/workspace-5b1326d0fead414ea58157797b66f7b4",
+  "original_writer_exit": -15,
+  "parallel_processes_observed": true,
+  "passed": true,
+  "pmo_model_calls": 0,
+  "provider_live": false,
+  "scope": "fixed synthetic fixture under enclosing A01; not actual Claude/Codex execution",
+  "states": {
+    "worker-a": "available",
+    "worker-b": "available",
+    "worker-c": "available"
+  }
+}

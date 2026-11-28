@@ -1,0 +1,43 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "<EVIDENCE_ROOT>/quality-governance-regression-02/sandbox.sb",
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "<EVIDENCE_ROOT>/wp301-adapters-author/runner.py",
+    "<EVIDENCE_ROOT>/quality-governance-regression-02/config.json"
+  ],
+  "started_at": "2026-11-28T06:05:00.397808+00:00",
+  "finished_at": "2026-11-28T06:05:00.624472+00:00",
+  "exit_code": 0,
+  "before": {
+    "framework/adapters/runspec.py": "5e799b9601d12b4a57f038b9afaae71a9fc44ac51394e1417c13bdbe130c5a96",
+    "framework/adapters/results.py": "8c9bf0774369c187a5d02ca53d7764760f9a067cb61599088293b7bc9805f534",
+    "framework/adapters/registry.py": "35b28f37600a29715431705064f6e5afcae22a152e3dfc22bf4bc3066460b84a",
+    "framework/adapters/__init__.py": "83132090586a39c702aa93886e6e59f7e895d2e3fcb96e3f17bec1cf34e75c06",
+    "framework/adapters/entries.py": "3dd40fc0261568c798a0ce6f2fb65a03c84e5fdd99ea25e39e36a8409856e855",
+    "adapters/OFFICIAL_SUPPORT.md": "4e54097ec8171aec9489a1c40e9c3f39ed9335e09acbdd3f1cb69383c9c9800d",
+    "adapters/README.md": "795c94832920b89901b71af8f9ac5838dd85b8a51ca6711723dd17339c4829f8",
+    "adapters/PROTOCOL.md": "f49fa4c4ecc470a138bced0764fe145f6face14ecf7a3bf04f9bfc22f63f77a9",
+    "adapters/claude-code/CLAUDE.md": "1fdc5575a49b835c783be1d74a65d96316cf3e41828642019aae214dd6998c17",
+    "adapters/codex/AGENTS.md": "1fdc5575a49b835c783be1d74a65d96316cf3e41828642019aae214dd6998c17",
+    "tests/adapters/test_registry.py": "74dad85a90635c8379138b9b91a84b06915d33777f17fc6c1527f0de34874ece",
+    "tests/adapters/test_adapters.py": "531139e34d797383239effdc6f3dc661c958659d5f0d466b48e0b63e5e6da046"
+  },
+  "after": {
+    "framework/adapters/runspec.py": "5e799b9601d12b4a57f038b9afaae71a9fc44ac51394e1417c13bdbe130c5a96",
+    "framework/adapters/results.py": "8c9bf0774369c187a5d02ca53d7764760f9a067cb61599088293b7bc9805f534",
+    "framework/adapters/registry.py": "35b28f37600a29715431705064f6e5afcae22a152e3dfc22bf4bc3066460b84a",
+    "framework/adapters/__init__.py": "83132090586a39c702aa93886e6e59f7e895d2e3fcb96e3f17bec1cf34e75c06",
+    "framework/adapters/entries.py": "3dd40fc0261568c798a0ce6f2fb65a03c84e5fdd99ea25e39e36a8409856e855",
+    "adapters/OFFICIAL_SUPPORT.md": "4e54097ec8171aec9489a1c40e9c3f39ed9335e09acbdd3f1cb69383c9c9800d",
+    "adapters/README.md": "795c94832920b89901b71af8f9ac5838dd85b8a51ca6711723dd17339c4829f8",
+    "adapters/PROTOCOL.md": "f49fa4c4ecc470a138bced0764fe145f6face14ecf7a3bf04f9bfc22f63f77a9",
+    "adapters/claude-code/CLAUDE.md": "1fdc5575a49b835c783be1d74a65d96316cf3e41828642019aae214dd6998c17",
+    "adapters/codex/AGENTS.md": "1fdc5575a49b835c783be1d74a65d96316cf3e41828642019aae214dd6998c17",
+    "tests/adapters/test_registry.py": "74dad85a90635c8379138b9b91a84b06915d33777f17fc6c1527f0de34874ece",
+    "tests/adapters/test_adapters.py": "531139e34d797383239effdc6f3dc661c958659d5f0d466b48e0b63e5e6da046"
+  }
+}
